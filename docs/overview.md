@@ -1,0 +1,45 @@
+---
+id: overview
+slug: /
+title: W7S
+description: Open source deploy platform for GitHub-native apps.
+---
+
+W7S is an open source deploy platform for GitHub-native apps. It powers `w7s.cloud`, and the same core can power other deployment clouds.
+
+The core idea is simple:
+
+1. Put an app in a GitHub repository.
+2. Add the W7S GitHub Action.
+3. Push to GitHub.
+4. W7S verifies the GitHub token, receives the deploy archive, and serves the app.
+
+## Minimal workflow
+
+```yaml
+name: Deploy
+
+on: push
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: ${{ github.token }}
+```
+
+## What W7S can deploy
+
+- Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`.
+- Native backend code from `backend/` or `worker/`.
+- Fullstack apps that include both a backend root and a static frontend root.
+- Custom domains declared with a `CNAME` file.
+
+Continue with [Deploy From GitHub](./deploy-from-github.md).
