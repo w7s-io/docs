@@ -16,6 +16,17 @@ const config: Config = {
       onBrokenMarkdownLinks: 'warn',
     },
   },
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML: `
+        if (window.location.hostname === 'docs.w7s.io' && window.location.pathname === '/') {
+          window.location.replace('/docs/' + window.location.search + window.location.hash);
+        }
+      `,
+    },
+  ],
 
   i18n: {
     defaultLocale: 'en',
