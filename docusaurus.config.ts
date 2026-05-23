@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'W7S',
   tagline: 'Open source deploy platform for GitHub-native apps',
-  url: 'https://docs.w7s.io',
+  url: 'https://community.w7s.io',
   baseUrl: '/docs/',
   trailingSlash: true,
   organizationName: 'w7s-io',
@@ -21,7 +21,7 @@ const config: Config = {
       tagName: 'script',
       attributes: {},
       innerHTML: `
-        if (window.location.hostname === 'docs.w7s.io' && window.location.pathname === '/') {
+        if (window.location.hostname === 'community.w7s.io' && window.location.pathname === '/') {
           window.location.replace('/docs/' + window.location.search + window.location.hash);
         }
       `,

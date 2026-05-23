@@ -7,7 +7,7 @@ description: Serve a W7S deployment from your own hostname.
 Add a `CNAME` file to claim a custom hostname for a deployment.
 
 ```text title="CNAME"
-docs.w7s.io
+community.w7s.io
 ```
 
 W7S reads `CNAME` from the deployed archive. Common locations include:

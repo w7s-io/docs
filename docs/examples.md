@@ -21,7 +21,7 @@ This documentation site is itself deployed through W7S:
 ```text
 https://github.com/w7s-io/docs
 https://w7s-io.w7s.cloud/docs/
-https://docs.w7s.io/
+https://community.w7s.io/docs/
 ```
 
 It builds with Docusaurus and deploys the generated `build/` directory with `w7s-io/w7s-cloud@v1`.

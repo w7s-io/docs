@@ -18,4 +18,4 @@ npm run check
 The build output is deployed through W7S from the `build/` directory. The site is available at:
 
 - `https://w7s-io.w7s.cloud/docs/`
-- `https://docs.w7s.io/`
+- `https://community.w7s.io/docs/`
