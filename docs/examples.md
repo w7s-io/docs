@@ -27,3 +27,17 @@ https://community.w7s.io/docs/
 ```
 
 It builds with Docusaurus and deploys the generated `build/` directory with `w7s-io/w7s-cloud@v1`.
+
+The repo uses the same GitHub Actions deployment flow documented here: install dependencies, build the site, then deploy with the W7S action.
+
+```yaml
+- uses: w7s-io/w7s-cloud@v1
+  with:
+    token: ${{ github.token }}
+```
+
+Its `static/CNAME` file declares the custom domain:
+
+```text
+community.w7s.io
+```
