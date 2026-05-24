@@ -6,6 +6,11 @@ description: Let W7S native backends call each other through internal service bi
 
 Native W7S backends can call other W7S backends without going through public DNS. W7S injects an internal service binding and a per-deployment token into every native backend.
 
+Working example repositories:
+
+- [`w7s-io/example-rpc-datetime`](https://github.com/w7s-io/example-rpc-datetime): target backend that returns the current UTC datetime.
+- [`w7s-io/example-rpc-client`](https://github.com/w7s-io/example-rpc-client): public backend that calls the datetime service through RPC.
+
 ## Runtime bindings
 
 Every native backend receives:

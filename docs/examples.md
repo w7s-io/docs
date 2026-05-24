@@ -16,7 +16,13 @@ This example demonstrates a bundled Hono backend, a React frontend, and a `front
 
 ## Backend RPC
 
-See [Backend RPC](./backend-rpc.md) for small copy-pasteable examples showing:
+- Target service: [w7s-io/example-rpc-datetime](https://github.com/w7s-io/example-rpc-datetime)
+- Client service: [w7s-io/example-rpc-client](https://github.com/w7s-io/example-rpc-client)
+- Live client endpoint: [w7s-io.w7s.cloud/example-rpc-client/datetime](https://w7s-io.w7s.cloud/example-rpc-client/datetime)
+
+The client exposes a public `/datetime` endpoint and gets the current datetime from the target service through `env.W7S_RPC`. Its GitHub Actions workflow includes a smoke test that verifies the response came through W7S RPC.
+
+See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 
 - a target backend route;
 - a caller backend using `env.W7S_RPC`;
