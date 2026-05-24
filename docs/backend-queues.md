@@ -6,9 +6,11 @@ description: Send background work between W7S native backends through internal q
 
 Native W7S backends can declare queues in `w7s.json`. W7S creates the Cloudflare Queue, connects it to the W7S core worker, and delivers batches to the declaring backend.
 
-Working example repository:
+Working example repositories:
 
 - [`w7s-io/example-queue-worker`](https://github.com/w7s-io/example-queue-worker): backend that enqueues work to its own queue and stores the latest processed message.
+- [`w7s-io/example-queue-consumer`](https://github.com/w7s-io/example-queue-consumer): backend that owns and consumes a queue.
+- [`w7s-io/example-queue-producer`](https://github.com/w7s-io/example-queue-producer): separate backend that sends messages to the consumer's queue.
 
 ## Declare a queue
 
@@ -159,6 +161,55 @@ W7S sends this payload to the consumer route:
 ```
 
 Return any `2xx` response after processing. Non-`2xx` responses make W7S throw from the queue consumer, so Cloudflare Queues can retry the batch.
+
+## Separate producer and consumer
+
+A backend does not need to own a queue in order to produce messages. It only needs to be a native W7S backend, because W7S injects `W7S_QUEUE` and `W7S_QUEUE_TOKEN` into every native backend.
+
+The consumer declares and receives the queue:
+
+```json title="w7s.json"
+{
+  "bindings": {
+    "kv": ["STATE"]
+  },
+  "queues": ["jobs"]
+}
+```
+
+The producer sends to that consumer's queue:
+
+```ts title="backend/index.ts"
+await env.W7S_QUEUE.fetch(
+  "https://w7s.internal/api/v1/queues/w7s-io/example-queue-consumer/jobs",
+  {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${env.W7S_QUEUE_TOKEN}`,
+      "content-type": "application/json",
+      "x-w7s-queue-caller": env.W7S_REPOSITORY,
+      "x-w7s-queue-environment": env.W7S_ENVIRONMENT
+    },
+    body: JSON.stringify({
+      id: crypto.randomUUID(),
+      text: "work for the consumer"
+    })
+  }
+);
+```
+
+The live pair is:
+
+- Producer: [`w7s-io/example-queue-producer`](https://github.com/w7s-io/example-queue-producer), served at [`w7s-io.w7s.cloud/example-queue-producer`](https://w7s-io.w7s.cloud/example-queue-producer/)
+- Consumer: [`w7s-io/example-queue-consumer`](https://github.com/w7s-io/example-queue-consumer), served at [`w7s-io.w7s.cloud/example-queue-consumer`](https://w7s-io.w7s.cloud/example-queue-consumer/)
+
+Try the producer:
+
+```sh
+curl -X POST "https://w7s-io.w7s.cloud/example-queue-producer/enqueue?text=hello"
+```
+
+The response includes a `checkDeliveryAt` URL. Queue delivery is asynchronous, so poll that URL until the consumer has processed the message.
 
 ## Authorization
 

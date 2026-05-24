@@ -31,17 +31,29 @@ See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 
 ## Backend Queues
 
+Single backend example:
+
 - GitHub: [w7s-io/example-queue-worker](https://github.com/w7s-io/example-queue-worker)
 - Live enqueue endpoint: [w7s-io.w7s.cloud/example-queue-worker/enqueue](https://w7s-io.w7s.cloud/example-queue-worker/enqueue)
 - Live latest message endpoint: [w7s-io.w7s.cloud/example-queue-worker/last](https://w7s-io.w7s.cloud/example-queue-worker/last)
 
 This example declares a `jobs` queue, sends JSON messages through `env.W7S_QUEUE.fetch("https://w7s.internal/api/v1/queues/w7s-io/example-queue-worker/jobs")`, and consumes the batch at `/_w7s/queues/jobs`.
 
+Separate producer and consumer example:
+
+- Producer GitHub: [w7s-io/example-queue-producer](https://github.com/w7s-io/example-queue-producer)
+- Consumer GitHub: [w7s-io/example-queue-consumer](https://github.com/w7s-io/example-queue-consumer)
+- Live producer endpoint: [w7s-io.w7s.cloud/example-queue-producer/enqueue](https://w7s-io.w7s.cloud/example-queue-producer/enqueue)
+- Live consumer latest message endpoint: [w7s-io.w7s.cloud/example-queue-consumer/last](https://w7s-io.w7s.cloud/example-queue-consumer/last)
+
+The producer sends to `https://w7s.internal/api/v1/queues/w7s-io/example-queue-consumer/jobs`. The consumer declares the queue in `w7s.json`, receives batches at `/_w7s/queues/jobs`, and stores processed messages in KV.
+
 See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
 
 - queue declaration in `w7s.json`;
 - sending messages through the internal queue binding;
 - implementing the backend consumer route;
+- splitting producer and consumer into separate backends;
 - same-owner and cross-owner authorization.
 
 ## Docs site
