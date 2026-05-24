@@ -26,6 +26,15 @@ content-type: application/zip
 
 `application/octet-stream` is also accepted.
 
+Optional runtime value headers are base64url-encoded JSON objects:
+
+```text
+x-w7s-vars: <base64url-json-object>
+x-w7s-secrets: <base64url-json-object>
+```
+
+The official GitHub Action writes these headers from `w7s.json` and the workflow environment.
+
 ## Authentication
 
 W7S checks the token against GitHub:

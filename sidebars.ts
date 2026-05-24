@@ -5,6 +5,7 @@ const sidebars: SidebarsConfig = {
     'overview',
     'deploy-from-github',
     'project-layouts',
+    'storage-bindings',
     'urls-and-routing',
     'custom-domains',
     'deploy-api',

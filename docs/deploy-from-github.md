@@ -31,6 +31,8 @@ jobs:
 
 The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy`, and includes the repository, branch, and commit metadata.
 
+If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as Worker bindings.
+
 ## Build before deploy
 
 W7S does not run your app build for you. Build in GitHub Actions before calling the W7S action.
@@ -63,3 +65,25 @@ If your deployable output lives in a staging directory, use `working-directory`:
 ```
 
 This is useful for static documentation sites and other generated artifacts.
+
+## Pass runtime values
+
+Declare values in `w7s.json`:
+
+```json
+{
+  "vars": ["PUBLIC_API_KEY"],
+  "secrets": ["PRIVATE_API_KEY"]
+}
+```
+
+Then expose them to the deploy step:
+
+```yaml
+- uses: w7s-io/w7s-cloud@v1
+  env:
+    PUBLIC_API_KEY: ${{ vars.PUBLIC_API_KEY }}
+    PRIVATE_API_KEY: ${{ secrets.PRIVATE_API_KEY }}
+  with:
+    token: ${{ github.token }}
+```
