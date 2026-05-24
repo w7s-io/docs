@@ -10,9 +10,11 @@ Use these repositories as starting points.
 
 ```text
 https://github.com/w7s-io/example-fullstack-ts
+https://w7s-io.w7s.cloud/example-fullstack-ts/
+https://fullstack-example.w7s.io/
 ```
 
-This example demonstrates a frontend and backend deployed together through W7S.
+This example demonstrates a bundled Hono backend, a React frontend, and a `frontend/CNAME` custom-domain claim deployed together through W7S.
 
 ## Docs site
 
