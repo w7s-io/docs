@@ -8,11 +8,9 @@ Use these repositories as starting points.
 
 ## Fullstack TypeScript
 
-```text
-https://github.com/w7s-io/example-fullstack-ts
-https://w7s-io.w7s.cloud/example-fullstack-ts/
-https://fullstack-example.w7s.io/
-```
+- GitHub: [w7s-io/example-fullstack-ts](https://github.com/w7s-io/example-fullstack-ts)
+- W7S URL: [w7s-io.w7s.cloud/example-fullstack-ts](https://w7s-io.w7s.cloud/example-fullstack-ts/)
+- Custom domain: [fullstack-example.w7s.io](https://fullstack-example.w7s.io/)
 
 This example demonstrates a bundled Hono backend, a React frontend, and a `frontend/CNAME` custom-domain claim deployed together through W7S.
 
@@ -20,13 +18,10 @@ This example demonstrates a bundled Hono backend, a React frontend, and a `front
 
 This documentation site is itself deployed through W7S:
 
-```text
-https://github.com/w7s-io/docs
-https://w7s-io.w7s.cloud/docs/
-https://community.w7s.io/docs/
-https://w7s.io/
-https://www.w7s.io/
-```
+- GitHub: [w7s-io/docs](https://github.com/w7s-io/docs)
+- W7S URL: [w7s-io.w7s.cloud/docs](https://w7s-io.w7s.cloud/docs/)
+- Custom domain: [community.w7s.io/docs](https://community.w7s.io/docs/)
+- Redirects: [w7s.io](https://w7s.io/) and [www.w7s.io](https://www.w7s.io/)
 
 It builds with Docusaurus and deploys the generated `build/` directory with `w7s-io/w7s-cloud@v1`.
 
