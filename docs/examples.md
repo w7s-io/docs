@@ -14,6 +14,15 @@ Use these repositories as starting points.
 
 This example demonstrates a bundled Hono backend, a React frontend, and a `frontend/CNAME` custom-domain claim deployed together through W7S.
 
+## Backend RPC
+
+See [Backend RPC](./backend-rpc.md) for small copy-pasteable examples showing:
+
+- a target backend route;
+- a caller backend using `env.W7S_RPC`;
+- a reusable RPC helper;
+- same-owner and cross-owner authorization.
+
 ## Docs site
 
 This documentation site is itself deployed through W7S:

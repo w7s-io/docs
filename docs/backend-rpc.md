@@ -53,16 +53,158 @@ const session = await response.json();
 
 The target backend receives the request at `/session` in this example.
 
+## Example: same-owner apps
+
+Assume these two repositories exist under the same GitHub owner:
+
+```text
+github.com/guerrerocarlos/auth
+github.com/guerrerocarlos/notepad
+```
+
+`guerrerocarlos/notepad` can call `guerrerocarlos/auth` without extra configuration because both apps share the same owner.
+
+### Target backend
+
+In `guerrerocarlos/auth`, expose a normal backend route:
+
+```ts title="backend/index.ts"
+export default {
+  async fetch(request: Request) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/session") {
+      return Response.json({
+        ok: true,
+        user: {
+          id: "user_123",
+          email: "hello@example.com"
+        },
+        calledBy: request.headers.get("x-w7s-rpc-caller-repository")
+      });
+    }
+
+    return new Response("Not found", { status: 404 });
+  }
+};
+```
+
+Deploying this repo makes the route available internally as:
+
+```text
+/api/v1/rpc/guerrerocarlos/auth/session
+```
+
+### Caller backend
+
+In `guerrerocarlos/notepad`, call the auth backend through `env.W7S_RPC`:
+
+```ts title="backend/index.ts"
+type Env = {
+  W7S_RPC: Fetcher;
+  W7S_RPC_TOKEN: string;
+  W7S_REPOSITORY: string;
+  W7S_ENVIRONMENT: string;
+};
+
+export default {
+  async fetch(_request: Request, env: Env) {
+    const response = await env.W7S_RPC.fetch(
+      "https://w7s.internal/api/v1/rpc/guerrerocarlos/auth/session",
+      {
+        headers: {
+          authorization: `Bearer ${env.W7S_RPC_TOKEN}`,
+          "x-w7s-rpc-caller": env.W7S_REPOSITORY,
+          "x-w7s-rpc-environment": env.W7S_ENVIRONMENT
+        }
+      }
+    );
+
+    if (!response.ok) {
+      return new Response("Auth service failed", { status: 502 });
+    }
+
+    const session = await response.json();
+    return Response.json({ session });
+  }
+};
+```
+
+## Example: reusable helper
+
+For apps that call multiple W7S services, keep the request headers in one helper:
+
+```ts title="backend/w7s-rpc.ts"
+type W7sRpcEnv = {
+  W7S_RPC: Fetcher;
+  W7S_RPC_TOKEN: string;
+  W7S_REPOSITORY: string;
+  W7S_ENVIRONMENT: string;
+};
+
+export const callW7s = (
+  env: W7sRpcEnv,
+  target: `${string}/${string}`,
+  path: `/${string}`,
+  init: RequestInit = {}
+) => {
+  const headers = new Headers(init.headers);
+  headers.set("authorization", `Bearer ${env.W7S_RPC_TOKEN}`);
+  headers.set("x-w7s-rpc-caller", env.W7S_REPOSITORY);
+  headers.set("x-w7s-rpc-environment", env.W7S_ENVIRONMENT);
+
+  return env.W7S_RPC.fetch(
+    `https://w7s.internal/api/v1/rpc/${target}${path}`,
+    {
+      ...init,
+      headers
+    }
+  );
+};
+```
+
+Use it from a backend:
+
+```ts title="backend/index.ts"
+import { callW7s } from "./w7s-rpc";
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const response = await callW7s(env, "guerrerocarlos/auth", "/session", {
+      headers: {
+        cookie: request.headers.get("cookie") ?? ""
+      }
+    });
+
+    return response.ok
+      ? response
+      : new Response("Auth service failed", { status: 502 });
+  }
+};
+```
+
 ## Authorization
 
 Apps under the same GitHub owner can call each other by default.
 
-For cross-owner calls, the target app must allow the caller in `w7s.json`:
+For cross-owner calls, the target app must allow the caller in `w7s.json`.
+
+To allow one exact repo:
 
 ```json
 {
   "rpc": {
-    "allow": ["guerrerocarlos/notepad", "w7s-io"]
+    "allow": ["guerrerocarlos/notepad"]
+  }
+}
+```
+
+To allow every repo under an owner:
+
+```json
+{
+  "rpc": {
+    "allow": ["guerrerocarlos"]
   }
 }
 ```
