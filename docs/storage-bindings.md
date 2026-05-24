@@ -95,4 +95,4 @@ You can also pass names directly:
 
 Secret values are passed as Worker secret bindings. Deploy summaries show secret counts, not secret values.
 
-W7S also injects platform bindings for native backends, including `W7S_RPC` for backend-to-backend calls. See [Backend RPC](./backend-rpc.md).
+W7S also injects platform bindings for native backends, including `W7S_RPC` for backend-to-backend calls and `W7S_QUEUE` for background work. See [Backend RPC](./backend-rpc.md) and [Backend Queues](./backend-queues.md).

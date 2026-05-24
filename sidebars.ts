@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
     'project-layouts',
     'storage-bindings',
     'backend-rpc',
+    'backend-queues',
     'urls-and-routing',
     'custom-domains',
     'deploy-api',

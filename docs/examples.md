@@ -29,6 +29,21 @@ See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 - a reusable RPC helper;
 - same-owner and cross-owner authorization.
 
+## Backend Queues
+
+- GitHub: [w7s-io/example-queue-worker](https://github.com/w7s-io/example-queue-worker)
+- Live enqueue endpoint: [w7s-io.w7s.cloud/example-queue-worker/enqueue](https://w7s-io.w7s.cloud/example-queue-worker/enqueue)
+- Live latest message endpoint: [w7s-io.w7s.cloud/example-queue-worker/last](https://w7s-io.w7s.cloud/example-queue-worker/last)
+
+This example declares a `jobs` queue, sends JSON messages through `env.W7S_QUEUE.fetch("https://w7s.internal/api/v1/queues/w7s-io/example-queue-worker/jobs")`, and consumes the batch at `/_w7s/queues/jobs`.
+
+See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
+
+- queue declaration in `w7s.json`;
+- sending messages through the internal queue binding;
+- implementing the backend consumer route;
+- same-owner and cross-owner authorization.
+
 ## Docs site
 
 This documentation site is itself deployed through W7S:

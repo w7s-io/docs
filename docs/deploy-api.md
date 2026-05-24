@@ -106,3 +106,41 @@ out/
 ```
 
 Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar Cloudflare/Vite SSR builds.
+
+## App manifest
+
+Native backends can include a `w7s.json` manifest to declare platform resources:
+
+```json
+{
+  "bindings": {
+    "kv": ["CACHE"],
+    "r2": ["FILES"],
+    "d1": [{ "binding": "DB", "migrations": "migrations" }]
+  },
+  "queues": ["jobs"],
+  "rpc": {
+    "allow": ["another-owner/client"]
+  },
+  "queue": {
+    "allow": ["another-owner/client"]
+  },
+  "vars": ["PUBLIC_API_KEY"],
+  "secrets": ["PRIVATE_API_KEY"]
+}
+```
+
+`queues` declares Cloudflare Queues for the app. A string queue declaration uses the default consumer path `/_w7s/queues/<queue>`. Use an object to set a custom consumer path:
+
+```json
+{
+  "queues": [
+    {
+      "name": "jobs",
+      "consumer": "/internal/queues/jobs"
+    }
+  ]
+}
+```
+
+See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of these declarations.
