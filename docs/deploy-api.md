@@ -77,3 +77,32 @@ You can override the environment with either:
 ?environment=staging
 x-w7s-environment: staging
 ```
+
+## Deployable Outputs
+
+Native backend entrypoints:
+
+```text
+backend/index.js
+backend/index.mjs
+backend/index.ts
+backend/index.mts
+worker/index.js
+worker/index.mjs
+worker/index.ts
+worker/index.mts
+dist/server/index.js
+dist/server/index.mjs
+```
+
+Static frontend roots:
+
+```text
+frontend/dist/
+dist/client/
+dist/
+build/
+out/
+```
+
+Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar Cloudflare/Vite SSR builds.

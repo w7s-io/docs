@@ -20,6 +20,13 @@ out/
 
 Each static root should include an `index.html`.
 
+One exception is Cloudflare/Vite SSR output. Frameworks such as TanStack Start may build frontend assets into `dist/client/` without an `index.html`, while rendering HTML from `dist/server/index.js`. W7S supports that paired layout:
+
+```text
+dist/server/index.js
+dist/client/assets/app.js
+```
+
 ## Native backends
 
 W7S publishes native backend code from either:
@@ -35,6 +42,14 @@ worker/index.js
 
 Native backend modules must use local relative imports. If the backend depends on npm packages, bundle it in CI and upload the bundled backend files.
 
+Cloudflare/Vite SSR builds can also publish their generated server entrypoint:
+
+```text
+dist/server/index.js
+```
+
+When `dist/server/wrangler.json` declares compatibility flags such as `nodejs_compat`, W7S includes those flags when uploading the Worker.
+
 ## Fullstack repositories
 
 A repository can include both:
@@ -42,6 +57,13 @@ A repository can include both:
 ```text
 backend/index.ts
 dist/index.html
+```
+
+or a framework SSR build:
+
+```text
+dist/server/index.js
+dist/client/assets/app.js
 ```
 
 Requests go to the backend first. If the backend returns `404` or `405` for a `GET` or `HEAD` request, W7S can fall back to the static frontend's `index.html` for SPA routes.

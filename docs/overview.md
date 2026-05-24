@@ -40,6 +40,7 @@ jobs:
 - Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`.
 - Native backend code from `backend/` or `worker/`.
 - Fullstack apps that include both a backend root and a static frontend root.
+- Backend-to-backend RPC through internal service bindings.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md).
