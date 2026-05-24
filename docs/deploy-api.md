@@ -44,6 +44,24 @@ By default:
 - `main` and `master` deploy to `production`.
 - Other branches deploy to a sanitized branch environment.
 
+Production deployments are served from the owner host:
+
+```text
+https://<owner>.w7s.cloud/<repo>/
+```
+
+Non-production branch deployments are served from a branch-prefixed host:
+
+```text
+https://<branch-name>--<owner>.w7s.cloud/<repo>/
+```
+
+The branch name in the hostname is sanitized for DNS. For example, `feature/login` becomes:
+
+```text
+https://feature-login--owner.w7s.cloud/repo/
+```
+
 You can override the environment with either:
 
 ```text
