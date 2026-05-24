@@ -55,7 +55,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'W7s Community',
+      title: 'W7S Community',
       items: [
         {
           type: 'docSidebar',

@@ -4,10 +4,11 @@ title: Custom Domains
 description: Serve a W7S deployment from your own hostname.
 ---
 
-Add a `CNAME` file to claim a custom hostname for a deployment.
+Add a `CNAME` file to claim one or more custom hostnames for a deployment.
 
 ```text title="CNAME"
 fullstack-example.w7s.io
+www.fullstack-example.w7s.io
 ```
 
 W7S reads `CNAME` from the deployed archive. Common locations include:
@@ -23,7 +24,7 @@ out/CNAME
 
 ## DNS
 
-Create DNS for the hostname and point it at W7S.
+Create DNS for each hostname and point it at W7S.
 
 For a subdomain, create a proxied CNAME:
 
