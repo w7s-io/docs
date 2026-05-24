@@ -95,7 +95,6 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} W7S.`,
     },
     prism: {
       theme: prismThemes.github,
