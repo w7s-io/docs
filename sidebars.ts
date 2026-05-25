@@ -8,6 +8,7 @@ const sidebars: SidebarsConfig = {
     'storage-bindings',
     'backend-rpc',
     'backend-queues',
+    'backend-schedules',
     'urls-and-routing',
     'custom-domains',
     'deploy-api',

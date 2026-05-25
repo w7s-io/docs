@@ -24,7 +24,7 @@ The build output is deployed through W7S from the `build/` directory. The site i
 
 ## Deployment
 
-This documentation site is deployed by the same W7S GitHub Actions workflow shown in the docs. The workflow installs dependencies, builds Docusaurus, then deploys the repo with `w7s-io/w7s-cloud@v1`. The docs also describe W7S storage bindings for KV, R2, D1, vars, secrets, backend-to-backend RPC, and backend queues.
+This documentation site is deployed by the same W7S GitHub Actions workflow shown in the docs. The workflow installs dependencies, builds Docusaurus, then deploys the repo with `w7s-io/w7s-cloud@v1`. The docs also describe W7S storage bindings for KV, R2, D1, vars, secrets, backend-to-backend RPC, backend queues, and backend schedules.
 
 The custom domains are declared in `static/CNAME`:
 

@@ -42,6 +42,7 @@ jobs:
 - Fullstack apps that include both a backend root and a static frontend root.
 - Backend-to-backend RPC through internal service bindings.
 - Background queues delivered to backends/workers.
+- Cron schedules delivered to native backends.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md).

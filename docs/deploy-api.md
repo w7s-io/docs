@@ -119,6 +119,12 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
     "d1": [{ "binding": "DB", "migrations": "migrations" }]
   },
   "queues": ["jobs"],
+  "schedules": [
+    {
+      "cron": "*/5 * * * *",
+      "path": "/_w7s/schedules/sync"
+    }
+  ],
   "rpc": {
     "allow": ["another-owner/client"]
   },
@@ -144,3 +150,5 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
 ```
 
 See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of these declarations.
+
+`schedules` declares cron-driven backend jobs. Each entry has a five-field UTC cron expression and an absolute backend path. See [Backend Schedules](./backend-schedules.md) for examples.
