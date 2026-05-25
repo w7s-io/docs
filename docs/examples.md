@@ -56,6 +56,21 @@ See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
 - splitting producer and consumer into separate backends;
 - same-owner and cross-owner authorization.
 
+## Backend Schedules
+
+- GitHub: [w7s-io/example-schedules](https://github.com/w7s-io/example-schedules)
+- Live app endpoint: [w7s-io.w7s.cloud/example-schedules](https://w7s-io.w7s.cloud/example-schedules/)
+- Live latest tick endpoint: [w7s-io.w7s.cloud/example-schedules/last](https://w7s-io.w7s.cloud/example-schedules/last)
+
+This example declares a `* * * * *` schedule in `w7s.json`, receives the scheduled job at `/_w7s/schedules/tick`, and stores the latest schedule payload in KV. The GitHub Actions workflow polls `/last` until a fresh scheduled tick arrives after deployment.
+
+See [Backend Schedules](./backend-schedules.md) for copy-pasteable examples showing:
+
+- schedule declaration in `w7s.json`;
+- implementing the backend schedule route;
+- persisting schedule results in KV;
+- schedule environment behavior.
+
 ## Docs site
 
 This documentation site is itself deployed through W7S:
