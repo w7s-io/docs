@@ -29,6 +29,21 @@ See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 - a reusable RPC helper;
 - same-owner and cross-owner authorization.
 
+## Durable Objects
+
+- GitHub: [w7s-io/example-durable-counter](https://github.com/w7s-io/example-durable-counter)
+- Live app endpoint: [w7s-io.w7s.cloud/example-durable-counter](https://w7s-io.w7s.cloud/example-durable-counter/)
+- Live current value endpoint: [w7s-io.w7s.cloud/example-durable-counter/value](https://w7s-io.w7s.cloud/example-durable-counter/value)
+
+This example declares a `Counter` Durable Object in `w7s.json`, exports the `Counter` class from `backend/index.js`, and verifies persisted state across W7S redeploys.
+
+See [Durable Objects](./backend-durable-objects.md) for copy-pasteable examples showing:
+
+- Durable Object declaration in `w7s.json`;
+- exporting the Durable Object class;
+- routing requests through the generated binding;
+- redeploy behavior.
+
 ## Backend Queues
 
 Single backend example:

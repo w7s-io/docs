@@ -116,7 +116,13 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
   "bindings": {
     "kv": ["CACHE"],
     "r2": ["FILES"],
-    "d1": [{ "binding": "DB", "migrations": "migrations" }]
+    "d1": [{ "binding": "DB", "migrations": "migrations" }],
+    "durableObjects": [
+      {
+        "binding": "COUNTER",
+        "className": "Counter"
+      }
+    ]
   },
   "queues": ["jobs"],
   "schedules": [
@@ -149,6 +155,8 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
 }
 ```
 
-See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of these declarations.
+`bindings.durableObjects` declares Durable Object classes exported by the native backend. W7S uploads them as `durable_object_namespace` bindings and creates SQLite-backed classes when first deployed. See [Durable Objects](./backend-durable-objects.md) for examples.
+
+See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 
 `schedules` declares cron-driven backend jobs. Each entry has a five-field UTC cron expression and an absolute backend path. See [Backend Schedules](./backend-schedules.md) for examples.

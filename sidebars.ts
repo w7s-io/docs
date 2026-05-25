@@ -6,6 +6,7 @@ const sidebars: SidebarsConfig = {
     'deploy-from-github',
     'project-layouts',
     'storage-bindings',
+    'backend-durable-objects',
     'backend-rpc',
     'backend-queues',
     'backend-schedules',
