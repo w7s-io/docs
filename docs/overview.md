@@ -41,6 +41,7 @@ jobs:
 - Native backend code from `backend/` or `worker/`.
 - Fullstack apps that include both a backend root and a static frontend root.
 - Durable Objects bound directly to native backends.
+- Hyperdrive bindings for external Postgres databases.
 - Backend-to-backend RPC through internal service bindings.
 - Background queues delivered to backends/workers.
 - Cron schedules delivered to native backends.

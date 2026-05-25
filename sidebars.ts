@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
     'project-layouts',
     'storage-bindings',
     'backend-durable-objects',
+    'backend-hyperdrive',
     'backend-rpc',
     'backend-queues',
     'backend-schedules',

@@ -44,6 +44,25 @@ See [Durable Objects](./backend-durable-objects.md) for copy-pasteable examples 
 - routing requests through the generated binding;
 - redeploy behavior.
 
+## Hyperdrive
+
+Hyperdrive support is documented in [Hyperdrive](./backend-hyperdrive.md).
+
+There is no shared live example yet because a useful smoke test requires a real Postgres origin and a Cloudflare Hyperdrive config ID. The W7S binding shape is:
+
+```json
+{
+  "bindings": {
+    "hyperdrive": [
+      {
+        "binding": "DB",
+        "id": "cloudflare-hyperdrive-id"
+      }
+    ]
+  }
+}
+```
+
 ## Backend Queues
 
 Single backend example:

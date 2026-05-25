@@ -122,6 +122,12 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
         "binding": "COUNTER",
         "className": "Counter"
       }
+    ],
+    "hyperdrive": [
+      {
+        "binding": "DB",
+        "id": "cloudflare-hyperdrive-id"
+      }
     ]
   },
   "queues": ["jobs"],
@@ -156,6 +162,8 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
 ```
 
 `bindings.durableObjects` declares Durable Object classes exported by the native backend. W7S uploads them as `durable_object_namespace` bindings and creates SQLite-backed classes when first deployed. See [Durable Objects](./backend-durable-objects.md) for examples.
+
+`bindings.hyperdrive` declares existing Cloudflare Hyperdrive configs by ID. W7S uploads them as `hyperdrive` bindings. See [Hyperdrive](./backend-hyperdrive.md) for examples.
 
 See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 
