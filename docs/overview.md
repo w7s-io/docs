@@ -5,7 +5,7 @@ title: W7S
 description: Open source deploy platform for GitHub-native apps.
 ---
 
-W7S is an open source deploy platform for GitHub-native apps. It powers `w7s.cloud`, and the same core can power other deployment clouds.
+W7S is an open source deploy platform managed directly from GitHub Actions workflows. It powers [w7s.cloud](https://w7s.cloud/), and the same core can power other deployment clouds.
 
 The core idea is simple:
 
@@ -41,7 +41,7 @@ jobs:
 - Native backend code from `backend/` or `worker/`.
 - Fullstack apps that include both a backend root and a static frontend root.
 - Backend-to-backend RPC through internal service bindings.
-- Background queues delivered to native backends.
+- Background queues delivered to backends/workers.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md).
