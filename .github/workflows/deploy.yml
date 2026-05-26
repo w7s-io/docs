@@ -5,12 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
-  schedule:
-    - cron: "17 9 * * *"
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: deploy-main
@@ -22,24 +19,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-        if: github.event_name != 'schedule'
 
       - uses: actions/setup-node@v4
-        if: github.event_name != 'schedule'
         with:
           node-version: 22
           cache: npm
 
       - name: Install dependencies
-        if: github.event_name != 'schedule'
         run: npm ci
 
       - name: Build docs
-        if: github.event_name != 'schedule'
         run: npm run build
 
       - name: Deploy to W7S
         uses: w7s-io/w7s-cloud@v1
         with:
           token: ${{ github.token }}
-          usage-check-only: ${{ github.event_name == 'schedule' }}

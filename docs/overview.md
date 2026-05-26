@@ -24,24 +24,19 @@ on:
     branches:
       - main
   workflow_dispatch:
-  schedule:
-    - cron: "17 9 * * *"
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        if: github.event_name != 'schedule'
 
       - uses: w7s-io/w7s-cloud@v1
         with:
           token: ${{ github.token }}
-          usage-check-only: ${{ github.event_name == 'schedule' }}
 ```
 
 ## What W7S can deploy
@@ -58,4 +53,4 @@ jobs:
 - Daily usage rollups and effective soft limit warnings for deploys, RPC, queues, schedules, and workflows.
 - Custom domains declared with a `CNAME` file.
 
-Continue with [Deploy From GitHub](./deploy-from-github.md).
+Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).

@@ -18,29 +18,23 @@ on:
     branches:
       - main
   workflow_dispatch:
-  schedule:
-    - cron: "17 9 * * *"
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        if: github.event_name != 'schedule'
 
       - uses: w7s-io/w7s-cloud@v1
         with:
           token: ${{ github.token }}
-          usage-check-only: ${{ github.event_name == 'schedule' }}
 ```
 
 The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy`, and includes the repository, branch, and commit metadata.
-
-Push and manual runs deploy the repo. The daily scheduled run skips checkout, packaging, and deploy; it only checks the current day's W7S usage and opens or updates the usage warning issue if the app is near or over a soft limit.
+Push and manual runs deploy the repo. For a separate daily workflow that checks quota and free-tier limits without deploying, see [Recommendations](./recommendations.md).
 
 If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as Worker bindings.
 
@@ -64,20 +58,15 @@ Example for a frontend that builds to `dist/`:
 ```yaml
 steps:
   - uses: actions/checkout@v5
-    if: github.event_name != 'schedule'
   - uses: actions/setup-node@v4
-    if: github.event_name != 'schedule'
     with:
       node-version: 22
       cache: npm
   - run: npm ci
-    if: github.event_name != 'schedule'
   - run: npm run build
-    if: github.event_name != 'schedule'
   - uses: w7s-io/w7s-cloud@v1
     with:
       token: ${{ github.token }}
-      usage-check-only: ${{ github.event_name == 'schedule' }}
 ```
 
 ## Deploy a subdirectory

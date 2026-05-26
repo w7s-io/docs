@@ -1,0 +1,19 @@
+name: W7S Usage Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: ${{ github.token }}
+          usage-check-only: true
