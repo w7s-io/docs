@@ -150,6 +150,17 @@ permissions:
 
 Set `usage-warnings-issue: false` on the action to keep warnings in the workflow summary only.
 
+Scheduled workflows can run the action in usage-check-only mode:
+
+```yaml
+- uses: w7s-io/w7s-cloud@v1
+  with:
+    token: ${{ github.token }}
+    usage-check-only: ${{ github.event_name == 'schedule' }}
+```
+
+In this mode the action does not package or deploy the repository. It only reads the current day's W7S usage and creates or updates the usage warning issue when warnings exist.
+
 ## Enforcement hook
 
 W7S has an internal `checkUsageLimit(...)` helper for upcoming expensive primitives. It reads current usage, applies the effective policy, and reports whether projected usage would exceed the daily limit.
