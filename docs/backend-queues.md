@@ -110,6 +110,8 @@ x-w7s-queue-delay-seconds: 60
 
 The delay value must be an integer from `0` to `86400`.
 
+W7S rejects queue JSON envelopes larger than 64 KB by default. Queue sends also count against daily and short-window limits for the caller repo, owner, and global platform.
+
 ## Receive messages
 
 Create a backend route for the queue consumer path:
@@ -160,7 +162,7 @@ W7S sends this payload to the consumer route:
 }
 ```
 
-Return any `2xx` response after processing. Non-`2xx` responses make W7S throw from the queue consumer, so Cloudflare Queues can retry the batch.
+Return any `2xx` response after processing. Non-`2xx` responses make W7S throw from the queue consumer, so Cloudflare Queues can retry the batch. W7S-created queue consumers use bounded defaults: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
 
 ## Separate producer and consumer
 

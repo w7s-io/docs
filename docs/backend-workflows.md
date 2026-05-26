@@ -98,6 +98,8 @@ export default {
 
 `x-w7s-workflow-instance-id` is optional. If omitted, W7S generates an id.
 
+W7S rejects workflow instance payloads larger than 64 KB by default. Starts also count against daily and short-window limits for the caller repo, owner, and global platform. Target repos are capped at 50 active workflow instances by default.
+
 ## Receive workflow runs
 
 Create a backend route for the workflow consumer path:
@@ -151,7 +153,7 @@ W7S sends this payload to the consumer route:
 }
 ```
 
-Return any `2xx` response after processing. Non-`2xx` responses make the workflow step fail and retry according to W7S core retry policy.
+Return any `2xx` response after processing. Non-`2xx` responses make the workflow step fail and retry according to W7S core retry policy. The default delivery policy is 3 retries, 10 second initial delay, exponential backoff, and 300 second timeout.
 
 ## Status
 

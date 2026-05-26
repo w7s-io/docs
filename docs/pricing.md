@@ -47,6 +47,11 @@ These defaults apply per GitHub repository, per W7S environment, per UTC day.
 | Schedule deliveries | 2,000 deliveries | `schedule.delivery` | Cron-like scheduled dispatches into native backends. |
 | Workflow starts | 1,000 starts | `workflow.create` | Calls to `env.W7S_WORKFLOW.fetch(...)`. |
 | Workflow deliveries | 1,000 deliveries | `workflow.delivery` | Durable step delivery into the app backend. |
+| Worker log ingestion | 5,000 records | `log.write` | Tail Worker console, exception, and outcome records retained in KV. |
+
+W7S also applies owner-level aggregate caps at 10x the repo defaults, and global aggregate caps at 100x the repo defaults. Those aggregate caps are circuit breakers for the shared account; they can block traffic even when one repo is still under its own daily cap.
+
+Short-window burst caps protect fast cost burns before daily counters or hourly Cloudflare analytics can react. The main defaults are 300 runtime requests/minute per repo, 120 RPC or queue sends/minute per repo, 60 workflow starts/minute per repo, 500 log records/minute per repo, and 5 deploys/hour per repo.
 
 Deploy archives also have shape caps:
 

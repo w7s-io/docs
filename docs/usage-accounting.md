@@ -6,7 +6,9 @@ description: Read per-app daily usage rollups for W7S deployments.
 
 W7S records daily usage rollups for each deployed repository and environment. W7S-managed paths update counters directly, and direct Cloudflare resources are synced hourly from Cloudflare analytics into the same rollup.
 
-The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, and internal queue/schedule/workflow deliveries. Direct binding usage such as D1/R2/KV/Durable Object cost is enforced after the hourly Cloudflare sync.
+The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, log ingestion, and internal queue/schedule/workflow deliveries. Direct binding usage such as D1/R2/KV/Durable Object cost is enforced after the hourly Cloudflare sync.
+
+Repo events are also mirrored into owner-level and global aggregate rollups. Runtime guards check repo, owner, and global scopes so a single owner cannot multiply the free tier across many repos, and the shared account has a final circuit breaker.
 
 ## Read usage
 
@@ -145,6 +147,7 @@ queue.delivery
 schedule.delivery
 workflow.create
 workflow.delivery
+log.write
 ```
 
 `count` is the event count. `units` is usually the same value. Batch-like paths can record more units than a single event, such as queue delivery batches, bytes, rows, or CPU milliseconds. Cloudflare-polled metrics can use `source: "cloudflare"` or `source: "cloudflare_estimated"`.
@@ -187,7 +190,10 @@ queue.delivery       10000
 schedule.delivery    2000
 workflow.create      1000
 workflow.delivery    1000
+log.write            5000
 ```
+
+Owner-level default limits are 10x the repo defaults, with minimums of 200 deploys/day and 50 Worker scripts/day. Global default limits are 100x the repo defaults, with minimums of 2,000 deploys/day and 1,000 Worker scripts/day.
 
 Each metric gets one of these statuses:
 
@@ -233,6 +239,7 @@ The hook now reports hard enforcement:
   "mode": "enforce",
   "enforcement": "hard",
   "metric": "workflow.create",
+  "scope": "repo",
   "used": 8,
   "requestedUnits": 3,
   "projectedUnits": 11,
@@ -244,6 +251,20 @@ The hook now reports hard enforcement:
 ```
 
 When `wouldBlock` is true, public APIs return HTTP `429`. Internal queue, schedule, and workflow delivery paths skip dispatch once their delivery metric would exceed the effective daily limit.
+
+W7S also applies short-window burst limits:
+
+```text
+deploy            repo 5/hour      owner 25/hour      global 200/hour
+runtime.request   repo 300/min     owner 2000/min     global 10000/min
+rpc.dispatch      repo 120/min     owner 600/min      global 5000/min
+queue.send        repo 120/min     owner 600/min      global 5000/min
+queue.delivery    repo 300/min     owner 1500/min     global 10000/min
+schedule.delivery repo 30/min      owner 200/min      global 2000/min
+workflow.create   repo 60/min      owner 300/min      global 2000/min
+workflow.delivery repo 120/min     owner 600/min      global 5000/min
+log.write         repo 500/min     owner 2000/min     global 10000/min
+```
 
 ## Hourly Cloudflare sync
 
@@ -261,7 +282,15 @@ app_limit_state:v1:<environment>:<owner>:<repo>
 
 Suspended apps return HTTP `429` before static serving, Worker dispatch, deploys, RPC, queue sends, or workflow starts. Apps automatically resume at the next UTC day unless an operator writes a stricter state.
 
-Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, and Cloudflare dispatch custom CPU limits on user Workers. Static asset storage is capped by deploy shape limits. Durable Object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation analytics; stored bytes are not per-app attributable in the current Cloudflare analytics schema and remain a tracked gap.
+Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and Cloudflare dispatch custom CPU limits on user Workers. Static asset storage is capped by deploy shape limits, and immutable static assets are served through the Worker Cache API using versioned asset keys to reduce R2 reads. Durable Object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation analytics; stored bytes are not per-app attributable in the current Cloudflare analytics schema and remain a tracked gap.
+
+Queue sends reject JSON envelopes larger than 64 KB by default. New Queue consumers use bounded batch and retry settings: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
+
+Workflow starts reject instance payloads larger than 64 KB by default. W7S also tracks active workflow instances and blocks new starts for a target repo at 50 active instances by default.
+
+Worker log ingestion is capped by `log.write`, has short KV retention, truncates large log values, and drops whole tail batches when the target repo would exceed daily or burst log limits.
+
+The scheduled handler also removes stale static assets, expired app suspensions, old usage records, and stale dispatch-namespace Worker scripts.
 
 ## Policy overrides
 
@@ -274,9 +303,13 @@ usage_limit_policy:v1:owner:<owner>
 usage_limit_policy:v1:owner_environment:<environment>:<owner>
 usage_limit_policy:v1:repo:<owner>:<repo>
 usage_limit_policy:v1:repo_environment:<environment>:<owner>:<repo>
+usage_limit_policy:v1:owner_total:<owner>
+usage_limit_policy:v1:owner_total_environment:<environment>:<owner>
+usage_limit_policy:v1:global
+usage_limit_policy:v1:global_environment:<environment>
 ```
 
-Later records override earlier records. Repo/environment overrides are the most specific.
+The first four scopes tune a repo's own daily policy. `owner_total`, `owner_total_environment`, `global`, and `global_environment` tune aggregate guardrails. Later records override earlier records within their own policy family.
 
 Policy record shape:
 
