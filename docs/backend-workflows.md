@@ -73,7 +73,7 @@ type Env = {
 export default {
   async fetch(_request: Request, env: Env) {
     const response = await env.W7S_WORKFLOW.fetch(
-      "https://w7s.internal/api/v1/workflows/w7s-io/example-workflow/process-order",
+      "https://w7s.internal/api/v1/workflows/w7s-io/example-workflows/process-order",
       {
         method: "POST",
         headers: {
@@ -129,18 +129,18 @@ W7S sends this payload to the consumer route:
 {
   "workflow": "process-order",
   "workflowName": "process-order",
-  "instanceId": "production-w7s-io-example-workflow-process-order-abc123",
+  "instanceId": "production-w7s-io-example-workflows-process-order-abc123",
   "createdAt": "2026-05-26T00:00:00.000Z",
   "caller": {
     "orgSlug": "w7s-io",
-    "repoSlug": "example-workflow",
-    "repository": "w7s-io/example-workflow",
+    "repoSlug": "example-workflows",
+    "repository": "w7s-io/example-workflows",
     "environment": "production"
   },
   "target": {
     "orgSlug": "w7s-io",
-    "repoSlug": "example-workflow",
-    "repository": "w7s-io/example-workflow",
+    "repoSlug": "example-workflows",
+    "repository": "w7s-io/example-workflows",
     "environment": "production",
     "workflow": "process-order",
     "path": "/_w7s/workflows/process-order"
