@@ -6,7 +6,7 @@ description: Read per-app daily usage rollups for W7S deployments.
 
 W7S records simple daily usage rollups for each deployed repository and environment. These rollups help app owners see which W7S platform features their repo is using.
 
-The usage response also includes effective daily soft limits and warnings. These are advisory today; W7S does not block traffic from these limits yet.
+The usage response also includes effective daily limits and warnings. W7S enforces those limits on deploys, RPC dispatches, queue sends, workflow starts, and internal queue/schedule/workflow deliveries.
 
 ## Read usage
 
@@ -24,7 +24,7 @@ By default, usage reads the `production` environment. Override the environment w
 x-w7s-environment: staging
 ```
 
-Read the effective soft limit policy without usage counters:
+Read the effective limit policy without usage counters:
 
 ```sh
 curl "https://w7s.cloud/api/v1/limits/<owner>/<repo>" \
@@ -60,14 +60,14 @@ The bearer token must be able to access the same GitHub repository.
     "limits": {
       "version": 1,
       "period": "daily",
-      "mode": "warn",
+      "mode": "enforce",
       "metrics": {
         "workflow.create": {
           "metric": "workflow.create",
           "used": 4,
-          "limit": 10000,
-          "remaining": 9996,
-          "usageRatio": 0.0004,
+          "limit": 1000,
+          "remaining": 996,
+          "usageRatio": 0.004,
           "status": "ok",
           "source": "default"
         }
@@ -77,14 +77,14 @@ The bearer token must be able to access the same GitHub repository.
     "policy": {
       "version": 1,
       "period": "daily",
-      "mode": "warn",
+      "mode": "enforce",
       "environment": "production",
       "orgSlug": "w7s-io",
       "repoSlug": "example-workflows",
       "policy": {
         "workflow.create": {
           "metric": "workflow.create",
-          "dailyUnits": 10000,
+          "dailyUnits": 1000,
           "warningThreshold": 0.8,
           "source": "default"
         }
@@ -114,18 +114,18 @@ workflow.delivery
 
 `count` is the event count. `units` is usually the same value. Batch-like paths can record more units than a single event, such as queue delivery batches.
 
-## Soft limits
+## Daily limits
 
-Current daily soft limits:
+Current default daily limits:
 
 ```text
-deploy               100
-rpc.dispatch         100000
-queue.send           100000
-queue.delivery       100000
-schedule.delivery    10000
-workflow.create      10000
-workflow.delivery    10000
+deploy               50
+rpc.dispatch         10000
+queue.send           10000
+queue.delivery       10000
+schedule.delivery    2000
+workflow.create      1000
+workflow.delivery    1000
 ```
 
 Each metric gets one of these statuses:
@@ -136,7 +136,7 @@ warning   at or above 80%
 exceeded  above 100%
 ```
 
-Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI output.
+Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI output. Requests that would push a metric above its effective daily limit return HTTP `429`.
 
 The `w7s-io/w7s-cloud@v1` GitHub Action reads this API after a successful deploy. When warnings exist, it adds them to the GitHub Actions summary and opens or updates one GitHub issue for that repo/environment.
 
@@ -161,16 +161,16 @@ Daily quota checks can run the action in usage-check-only mode from a separate w
 
 In this mode the action does not package or deploy the repository. It only reads the current day's W7S usage and creates or updates the usage warning issue when warnings exist. See [Recommendations](./recommendations.md) for the complete daily workflow.
 
-## Enforcement hook
+## Enforcement
 
-W7S has an internal `checkUsageLimit(...)` helper for upcoming expensive primitives. It reads current usage, applies the effective policy, and reports whether projected usage would exceed the daily limit.
+W7S has an internal `checkUsageLimit(...)` helper for expensive primitives. It reads current usage, applies the effective policy, and reports whether projected usage would exceed the daily limit.
 
-The hook is report-only today:
+The hook now reports hard enforcement:
 
 ```json
 {
-  "mode": "report",
-  "enforcement": "off",
+  "mode": "enforce",
+  "enforcement": "hard",
   "metric": "workflow.create",
   "used": 8,
   "requestedUnits": 3,
@@ -182,7 +182,7 @@ The hook is report-only today:
 }
 ```
 
-No existing deploy, RPC, queue, schedule, or workflow path blocks on this value yet.
+When `wouldBlock` is true, public APIs return HTTP `429`. Internal queue, schedule, and workflow delivery paths skip dispatch once their delivery metric would exceed the effective daily limit.
 
 ## Policy overrides
 
@@ -245,4 +245,4 @@ npm run limits:delete -- \
 
 Usage rollups are best-effort counters stored by W7S. They are useful for visibility, support, and planning quotas.
 
-They are not billing-grade yet. Concurrent events can be approximate, and W7S does not enforce hard limits from these counters today.
+They are not billing-grade yet. Concurrent events can be approximate, so enforcement is intentionally conservative and should be treated as platform abuse protection rather than exact billing.

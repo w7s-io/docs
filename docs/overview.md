@@ -50,7 +50,7 @@ jobs:
 - Background queues delivered to backends/workers.
 - Cron schedules delivered to native backends.
 - Durable workflow instances delivered to native backends.
-- Daily usage rollups and effective soft limit warnings for deploys, RPC, queues, schedules, and workflows.
+- Daily usage rollups, warning thresholds, and hard daily limits for deploys, RPC, queues, schedules, and workflows.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).

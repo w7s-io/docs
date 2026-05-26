@@ -34,7 +34,7 @@ jobs:
 
 This workflow does not check out the repo, install dependencies, build, package, or deploy. It only asks W7S for the current day's usage for the repository.
 
-If the app is near or over a quota or free-tier soft limit, `w7s-io/w7s-cloud@v1` writes a GitHub Actions summary and opens or updates one GitHub issue for the repo/environment.
+If the app is near or over a quota or free-tier limit, `w7s-io/w7s-cloud@v1` writes a GitHub Actions summary and opens or updates one GitHub issue for the repo/environment.
 
 `issues: write` is only needed so the workflow can create or update that warning issue.
 
@@ -48,4 +48,4 @@ For non-production environments, pass the W7S environment explicitly:
     environment: staging
 ```
 
-See [Usage Accounting](./usage-accounting.md) for the tracked metrics and current soft limits.
+See [Usage Accounting](./usage-accounting.md) for the tracked metrics, current limits, and hard enforcement behavior.

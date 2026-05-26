@@ -171,14 +171,14 @@ See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), 
 
 ## Usage API
 
-W7S also exposes per-app daily usage rollups with soft limit warnings:
+W7S also exposes per-app daily usage rollups with hard daily limits and warning thresholds:
 
 ```text
 GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD
 Authorization: Bearer <github-token>
 ```
 
-Effective soft limit policies are available without usage counters:
+Effective limit policies are available without usage counters:
 
 ```text
 GET https://w7s.cloud/api/v1/limits/<owner>/<repo>

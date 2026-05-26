@@ -38,7 +38,7 @@ Push and manual runs deploy the repo. For a separate daily workflow that checks 
 
 If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as Worker bindings.
 
-After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily soft limits are near or over the effective policy, it adds a warning section to the GitHub Actions summary and opens or updates a single GitHub issue for that repo/environment. These warnings are advisory; W7S does not block traffic from them today.
+After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily limits are near or over the effective policy, it adds a warning section to the GitHub Actions summary and opens or updates a single GitHub issue for that repo/environment. Requests that would exceed a hard daily limit return HTTP `429`.
 
 `issues: write` is only used for W7S usage warning issues. If you want summary-only warnings, remove that permission and set:
 
