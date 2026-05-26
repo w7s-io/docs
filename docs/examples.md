@@ -105,6 +105,22 @@ See [Backend Schedules](./backend-schedules.md) for copy-pasteable examples show
 - persisting schedule results in KV;
 - schedule environment behavior.
 
+## Backend Workflows
+
+- GitHub: [w7s-io/example-workflows](https://github.com/w7s-io/example-workflows)
+- Live app endpoint: [w7s-io.w7s.cloud/example-workflows](https://w7s-io.w7s.cloud/example-workflows/)
+- Live latest workflow endpoint: [w7s-io.w7s.cloud/example-workflows/last](https://w7s-io.w7s.cloud/example-workflows/last)
+
+This example declares a `process-order` workflow in `w7s.json`, starts workflow instances through `env.W7S_WORKFLOW.fetch("https://w7s.internal/api/v1/workflows/w7s-io/example-workflows/process-order")`, and receives each workflow run at `/_w7s/workflows/process-order`.
+
+See [Backend Workflows](./backend-workflows.md) for copy-pasteable examples showing:
+
+- workflow declaration in `w7s.json`;
+- starting workflow instances through the internal workflow binding;
+- implementing the backend workflow route;
+- checking instance status;
+- same-owner and cross-owner authorization.
+
 ## Docs site
 
 This documentation site is itself deployed through W7S:

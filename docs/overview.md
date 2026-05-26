@@ -45,6 +45,7 @@ jobs:
 - Backend-to-backend RPC through internal service bindings.
 - Background queues delivered to backends/workers.
 - Cron schedules delivered to native backends.
+- Durable workflow instances delivered to native backends.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md).

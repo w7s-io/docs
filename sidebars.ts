@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
     'backend-hyperdrive',
     'backend-rpc',
     'backend-queues',
+    'backend-workflows',
     'backend-schedules',
     'urls-and-routing',
     'custom-domains',
