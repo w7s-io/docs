@@ -52,6 +52,7 @@ jobs:
 - Durable workflow instances delivered to native backends.
 - Daily usage rollups, hourly Cloudflare usage sync, app suspension, warning thresholds, and hard daily limits.
 - Platform event analytics exposed through an authenticated API.
+- User Worker console and exception logs exposed through an authenticated API.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).

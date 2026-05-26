@@ -131,6 +131,8 @@ D1 migration SQL bytes  5 MB
 
 Native Workers are dispatched with a custom CPU limit from `W7S_USER_WORKER_CPU_MS`, default `50`, and a subrequest limit from `W7S_USER_WORKER_SUBREQUESTS`, default `25`.
 
+Native Worker uploads include a W7S-managed Tail Worker consumer for user Worker logs unless the platform operator disables it. See [Observability](./observability.md) for the logs API.
+
 ## App manifest
 
 Native backends can include a `w7s.json` manifest to declare platform resources:

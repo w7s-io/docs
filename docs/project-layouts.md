@@ -50,6 +50,8 @@ dist/server/index.js
 
 When `dist/server/wrangler.json` declares compatibility flags such as `nodejs_compat`, W7S includes those flags when uploading the Worker.
 
+Uploaded native backends also get a Tail Worker consumer managed by W7S. That lets W7S expose app `console.*` output and uncaught exceptions through the [Observability](./observability.md) logs API.
+
 ## Fullstack repositories
 
 A repository can include both:
