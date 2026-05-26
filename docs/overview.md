@@ -46,6 +46,7 @@ jobs:
 - Background queues delivered to backends/workers.
 - Cron schedules delivered to native backends.
 - Durable workflow instances delivered to native backends.
+- Daily usage rollups for deploys, RPC, queues, schedules, and workflows.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md).

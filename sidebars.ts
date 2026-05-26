@@ -12,6 +12,7 @@ const sidebars: SidebarsConfig = {
     'backend-queues',
     'backend-workflows',
     'backend-schedules',
+    'usage-accounting',
     'urls-and-routing',
     'custom-domains',
     'deploy-api',

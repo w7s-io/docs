@@ -168,3 +168,14 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
 See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 
 `schedules` declares cron-driven backend jobs. Each entry has a five-field UTC cron expression and an absolute backend path. See [Backend Schedules](./backend-schedules.md) for examples.
+
+## Usage API
+
+W7S also exposes per-app daily usage rollups:
+
+```text
+GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD
+Authorization: Bearer <github-token>
+```
+
+The token must have access to the GitHub repository, just like deploys. See [Usage Accounting](./usage-accounting.md) for the response shape and current limits.
