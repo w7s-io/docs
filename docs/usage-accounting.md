@@ -173,6 +173,30 @@ Policy record shape:
 
 A number is shorthand for `dailyUnits`. `warningThreshold` must be greater than `0` and less than or equal to `1`. Unknown metrics are ignored.
 
+W7S operators can manage these records from the core repo:
+
+```sh
+npm run limits:get -- --owner w7s-io --repo example-workflows
+```
+
+```sh
+npm run limits:set -- \
+  --scope repo \
+  --owner w7s-io \
+  --repo example-workflows \
+  --metric workflow.create \
+  --daily-units 5000 \
+  --warning-threshold 0.7
+```
+
+```sh
+npm run limits:delete -- \
+  --scope repo \
+  --owner w7s-io \
+  --repo example-workflows \
+  --metric workflow.create
+```
+
 ## Current limits caveat
 
 Usage rollups are best-effort counters stored by W7S. They are useful for visibility, support, and planning quotas.
