@@ -140,6 +140,29 @@ Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI ou
 
 The `w7s-io/w7s-cloud@v1` GitHub Action reads this API after a successful deploy and adds any usage warnings to the GitHub Actions summary.
 
+## Enforcement hook
+
+W7S has an internal `checkUsageLimit(...)` helper for upcoming expensive primitives. It reads current usage, applies the effective policy, and reports whether projected usage would exceed the daily limit.
+
+The hook is report-only today:
+
+```json
+{
+  "mode": "report",
+  "enforcement": "off",
+  "metric": "workflow.create",
+  "used": 8,
+  "requestedUnits": 3,
+  "projectedUnits": 11,
+  "limit": 10,
+  "status": "warning",
+  "projectedStatus": "exceeded",
+  "wouldBlock": true
+}
+```
+
+No existing deploy, RPC, queue, schedule, or workflow path blocks on this value yet.
+
 ## Policy overrides
 
 Limit policies are platform-owned. Apps cannot raise or lower their own limits through `w7s.json`.
