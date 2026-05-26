@@ -178,4 +178,11 @@ GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD
 Authorization: Bearer <github-token>
 ```
 
+Effective soft limit policies are available without usage counters:
+
+```text
+GET https://w7s.cloud/api/v1/limits/<owner>/<repo>
+Authorization: Bearer <github-token>
+```
+
 The token must have access to the GitHub repository, just like deploys. See [Usage Accounting](./usage-accounting.md) for the response shape and current limits.
