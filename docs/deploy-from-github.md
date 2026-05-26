@@ -33,6 +33,8 @@ The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy
 
 If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as Worker bindings.
 
+After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily soft limits are near or over the effective policy, it adds a warning section to the GitHub Actions summary. These warnings are advisory; W7S does not block traffic from them today.
+
 ## Build before deploy
 
 W7S does not run your app build for you. Build in GitHub Actions before calling the W7S action.

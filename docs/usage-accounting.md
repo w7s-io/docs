@@ -138,6 +138,8 @@ exceeded  above 100%
 
 Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI output.
 
+The `w7s-io/w7s-cloud@v1` GitHub Action reads this API after a successful deploy and adds any usage warnings to the GitHub Actions summary.
+
 ## Policy overrides
 
 Limit policies are platform-owned. Apps cannot raise or lower their own limits through `w7s.json`.
