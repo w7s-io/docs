@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
     'backend-workflows',
     'backend-schedules',
     'usage-accounting',
+    'observability',
     'urls-and-routing',
     'custom-domains',
     'deploy-api',
