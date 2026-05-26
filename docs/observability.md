@@ -46,6 +46,13 @@ curl "https://w7s.cloud/api/v1/logs/<owner>/<repo>?hours=1&limit=100" \
   -H "Authorization: Bearer $GITHUB_TOKEN"
 ```
 
+For example:
+
+```sh
+curl "https://w7s.cloud/api/v1/logs/w7s-io/example-logs?hours=1&limit=20" \
+  -H "Authorization: Bearer $GITHUB_TOKEN"
+```
+
 Query parameters:
 
 ```text
@@ -60,5 +67,113 @@ cursor       opaque cursor from a previous response
 ```
 
 The response includes `records` ordered newest first. Console records include `level`, structured `message`, and flattened `text`. Exception records include `exception.name`, `exception.message`, and `exception.stack` when Cloudflare provides one.
+
+Example response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "logs": {
+      "repository": "w7s-io/example-logs",
+      "environment": "production",
+      "from": "2026-05-26T13:00:00.000Z",
+      "to": "2026-05-26T14:00:00.000Z",
+      "limit": 20,
+      "cursor": null,
+      "records": [
+        {
+          "version": 1,
+          "id": "log_abc123",
+          "kind": "exception",
+          "timestamp": "2026-05-26T13:42:10.534Z",
+          "observedAt": "2026-05-26T13:42:11.001Z",
+          "environment": "production",
+          "orgSlug": "w7s-io",
+          "repoSlug": "example-logs",
+          "repository": "w7s-io/example-logs",
+          "scriptName": "w7s-io--example-logs--production--6cc5bc0",
+          "outcome": "exception",
+          "level": "error",
+          "text": "Error: example-logs intentional exception",
+          "exception": {
+            "name": "Error",
+            "message": "example-logs intentional exception",
+            "stack": "Error: example-logs intentional exception\n    at Object.fetch (...)"
+          },
+          "request": {
+            "method": "GET",
+            "path": "/throw",
+            "status": 500,
+            "colo": "IAD"
+          }
+        },
+        {
+          "version": 1,
+          "id": "log_def456",
+          "kind": "console",
+          "timestamp": "2026-05-26T13:41:58.112Z",
+          "observedAt": "2026-05-26T13:41:58.600Z",
+          "environment": "production",
+          "orgSlug": "w7s-io",
+          "repoSlug": "example-logs",
+          "repository": "w7s-io/example-logs",
+          "scriptName": "w7s-io--example-logs--production--6cc5bc0",
+          "outcome": "ok",
+          "level": "warn",
+          "message": [
+            "example-logs warning",
+            {
+              "path": "/warn"
+            }
+          ],
+          "text": "example-logs warning {\"path\":\"/warn\"}",
+          "request": {
+            "method": "GET",
+            "path": "/warn",
+            "status": 200,
+            "colo": "IAD"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+## Worker logs in GitHub Actions
+
+Use `w7s-io/w7s-cloud@v1` with `logs-check-only: true` to fetch recent logs into a workflow run without deploying:
+
+```yaml
+name: Logs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  logs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: ${{ github.token }}
+          logs-check-only: true
+          logs-hours: 1
+          logs-limit: 25
+```
+
+The action prints a compact log table in the job output and adds a `W7S Logs` section to the GitHub Actions step summary. Optional filters:
+
+```yaml
+with:
+  token: ${{ github.token }}
+  logs-check-only: true
+  logs-kind: exception
+  logs-limit: 10
+```
 
 Log records are retained for a short operational window. The default W7S retention is seven days. Native backends deployed before this feature need to be redeployed once so their Worker upload metadata includes the Tail Worker consumer.

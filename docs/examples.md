@@ -121,6 +121,22 @@ See [Backend Workflows](./backend-workflows.md) for copy-pasteable examples show
 - checking instance status;
 - same-owner and cross-owner authorization.
 
+## Worker Logs
+
+- GitHub: [w7s-io/example-logs](https://github.com/w7s-io/example-logs)
+- Live app endpoint: [w7s-io.w7s.cloud/example-logs](https://w7s-io.w7s.cloud/example-logs/)
+- Warning endpoint: [w7s-io.w7s.cloud/example-logs/warn](https://w7s-io.w7s.cloud/example-logs/warn)
+- Error endpoint: [w7s-io.w7s.cloud/example-logs/error](https://w7s-io.w7s.cloud/example-logs/error)
+
+This example emits `console.log`, `console.warn`, `console.error`, and an intentional exception. It also includes a manual GitHub Actions workflow that uses `w7s-io/w7s-cloud@v1` with `logs-check-only: true`.
+
+See [Observability](./observability.md) for copy-pasteable examples showing:
+
+- fetching logs with `w7s-io/w7s-cloud@v1`;
+- fetching logs with curl;
+- the JSON shape returned by the logs API;
+- filtering by log kind and level.
+
 ## Docs site
 
 This documentation site is itself deployed through W7S:
