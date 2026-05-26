@@ -6,6 +6,8 @@ description: Read per-app daily usage rollups for W7S deployments.
 
 W7S records simple daily usage rollups for each deployed repository and environment. These rollups help app owners see which W7S platform features their repo is using.
 
+The usage response also includes daily soft limits and warnings. These are advisory today; W7S does not block traffic from these limits yet.
+
 ## Read usage
 
 Use the usage API with a GitHub token that can access the target repo:
@@ -45,12 +47,29 @@ x-w7s-environment: staging
         }
       },
       "updatedAt": "2026-05-26T12:00:00.000Z"
-    }
+    },
+    "limits": {
+      "version": 1,
+      "period": "daily",
+      "mode": "warn",
+      "metrics": {
+        "workflow.create": {
+          "metric": "workflow.create",
+          "used": 4,
+          "limit": 10000,
+          "remaining": 9996,
+          "usageRatio": 0.0004,
+          "status": "ok"
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
   }
 }
 ```
 
-An app with no usage for the requested day returns the same shape with an empty `metrics` object and `updatedAt: null`.
+An app with no usage for the requested day returns the same shape with an empty usage `metrics` object and `updatedAt: null`.
 
 ## Metrics
 
@@ -68,7 +87,31 @@ workflow.delivery
 
 `count` is the event count. `units` is usually the same value. Batch-like paths can record more units than a single event, such as queue delivery batches.
 
-## Current limits
+## Soft limits
+
+Current daily soft limits:
+
+```text
+deploy               100
+rpc.dispatch         100000
+queue.send           100000
+queue.delivery       100000
+schedule.delivery    10000
+workflow.create      10000
+workflow.delivery    10000
+```
+
+Each metric gets one of these statuses:
+
+```text
+ok        below 80%
+warning   at or above 80%
+exceeded  above 100%
+```
+
+Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI output.
+
+## Current limits caveat
 
 Usage rollups are best-effort counters stored by W7S. They are useful for visibility, support, and planning quotas.
 

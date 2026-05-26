@@ -171,7 +171,7 @@ See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), 
 
 ## Usage API
 
-W7S also exposes per-app daily usage rollups:
+W7S also exposes per-app daily usage rollups with soft limit warnings:
 
 ```text
 GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD
