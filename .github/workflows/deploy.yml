@@ -4,6 +4,7 @@ on: push
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: deploy-main
