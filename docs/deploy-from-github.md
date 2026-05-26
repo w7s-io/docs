@@ -17,6 +17,7 @@ on: push
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   deploy:
@@ -33,7 +34,16 @@ The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy
 
 If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as Worker bindings.
 
-After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily soft limits are near or over the effective policy, it adds a warning section to the GitHub Actions summary. These warnings are advisory; W7S does not block traffic from them today.
+After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily soft limits are near or over the effective policy, it adds a warning section to the GitHub Actions summary and opens or updates a single GitHub issue for that repo/environment. These warnings are advisory; W7S does not block traffic from them today.
+
+`issues: write` is only used for W7S usage warning issues. If you want summary-only warnings, remove that permission and set:
+
+```yaml
+- uses: w7s-io/w7s-cloud@v1
+  with:
+    token: ${{ github.token }}
+    usage-warnings-issue: false
+```
 
 ## Build before deploy
 

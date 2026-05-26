@@ -138,7 +138,17 @@ exceeded  above 100%
 
 Non-`ok` metrics are also listed in `warnings` for simpler dashboards and CLI output.
 
-The `w7s-io/w7s-cloud@v1` GitHub Action reads this API after a successful deploy and adds any usage warnings to the GitHub Actions summary.
+The `w7s-io/w7s-cloud@v1` GitHub Action reads this API after a successful deploy. When warnings exist, it adds them to the GitHub Actions summary and opens or updates one GitHub issue for that repo/environment.
+
+Issue notifications require this workflow permission:
+
+```yaml
+permissions:
+  contents: read
+  issues: write
+```
+
+Set `usage-warnings-issue: false` on the action to keep warnings in the workflow summary only.
 
 ## Enforcement hook
 
