@@ -24,7 +24,7 @@ W7S_REPOSITORY
 W7S_ENVIRONMENT
 ```
 
-`W7S_RPC` is a Cloudflare service binding to the W7S core Worker. `W7S_RPC_TOKEN` is a secret used by W7S to prove which deployed app is making the call.
+`W7S_RPC` is an internal service binding to the W7S control plane. `W7S_RPC_TOKEN` is a secret used by W7S to prove which deployed app is making the call.
 
 ## Call another backend
 

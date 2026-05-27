@@ -26,7 +26,7 @@ The build output is deployed through W7S from the `build/` directory. The site i
 
 ## Deployment
 
-This site is deployed by the same W7S GitHub Actions workflow shown in the docs. The workflow installs dependencies, builds Docusaurus under `/docs/`, builds the landing frontend from `landing/` for `/`, then deploys the repo with `w7s-io/w7s-cloud@v1`. The docs also describe W7S storage bindings for KV, R2, D1, Durable Objects, Hyperdrive, vars, secrets, backend-to-backend RPC, backend queues, backend schedules, usage accounting, platform event analytics, and user Worker logs.
+This site is deployed by the same W7S GitHub Actions workflow shown in the docs. The workflow installs dependencies, builds Docusaurus under `/docs/`, builds the landing frontend from `landing/` for `/`, then deploys the repo with `w7s-io/w7s-cloud@v1`. The docs also describe W7S storage bindings, stateful objects, managed Postgres bindings, vars, secrets, backend-to-backend RPC, backend queues, backend schedules, usage accounting, platform event analytics, and backend logs.
 
 The custom domains are declared in `static/CNAME`:
 

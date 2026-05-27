@@ -42,17 +42,17 @@ jobs:
 ## What W7S can deploy
 
 - Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`.
-- Native backend code from `backend/` or `worker/`, authored or built as JavaScript or TypeScript Cloudflare Worker modules.
+- Native backend code from `backend/` or `worker/`, authored or built as JavaScript or TypeScript runtime modules.
 - Fullstack apps that include both a JavaScript/TypeScript backend root and a static frontend root.
-- Durable Objects bound directly to JavaScript/TypeScript native backends.
-- Hyperdrive bindings for external Postgres databases.
+- Stateful object bindings for JavaScript/TypeScript native backends.
+- Managed Postgres bindings for external databases.
 - Backend-to-backend RPC through internal service bindings.
 - Background queues delivered to JavaScript/TypeScript native backends.
 - Cron schedules delivered to JavaScript/TypeScript native backends.
 - Durable workflow instances delivered to JavaScript/TypeScript native backends.
-- Daily usage rollups, hourly Cloudflare usage sync, app suspension, warning thresholds, and hard daily limits.
+- Daily usage rollups, hourly platform usage sync, app suspension, warning thresholds, and daily limits.
 - Platform event analytics exposed through an authenticated API.
-- User Worker console and exception logs exposed through an authenticated API.
+- Backend console and exception logs exposed through an authenticated API.
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).

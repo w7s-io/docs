@@ -4,11 +4,11 @@ title: Usage Accounting
 description: Read per-app daily usage rollups for W7S deployments.
 ---
 
-W7S records daily usage rollups for each deployed repository and environment. W7S-managed paths update counters directly, and direct Cloudflare resources are synced hourly from Cloudflare analytics into the same rollup.
+W7S records daily usage rollups for each deployed repository and environment. W7S-managed paths update counters directly, and direct runtime and storage usage is synced hourly from platform telemetry into the same rollup.
 
-The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, log ingestion, and internal queue/schedule/workflow deliveries. Direct binding usage such as D1/R2/KV/Durable Object cost is enforced after the hourly Cloudflare sync.
+The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, log ingestion, and internal queue/schedule/workflow deliveries. Direct binding usage such as SQL, object storage, key-value, and stateful object cost is enforced after the hourly platform sync.
 
-Repo events are also mirrored into owner-level and global aggregate rollups. Runtime guards check repo, owner, and global scopes so a single owner cannot multiply the free tier across many repos, and the shared account has a final circuit breaker.
+Repo events are also mirrored into owner-level and global aggregate rollups. Runtime guards check repo, owner, and global scopes so a single owner cannot multiply the free tier across many repos, and the shared platform has a final circuit breaker.
 
 ## Read usage
 
@@ -19,7 +19,7 @@ curl "https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=2026-05-26" \
   -H "Authorization: Bearer $GITHUB_TOKEN"
 ```
 
-Include hourly Cloudflare records:
+Include hourly platform records:
 
 ```sh
 curl "https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=2026-05-26&include=hourly" \
@@ -64,8 +64,8 @@ The bearer token must be able to access the same GitHub repository.
           "lastAt": "2026-05-26T12:00:00.000Z"
         }
       },
-      "cloudflareSyncedAt": "2026-05-26T13:03:00.000Z",
-      "cloudflareHours": ["2026-05-26T12"],
+      "platformSyncedAt": "2026-05-26T13:03:00.000Z",
+      "platformHours": ["2026-05-26T12"],
       "updatedAt": "2026-05-26T12:00:00.000Z"
     },
     "limits": {
@@ -111,7 +111,7 @@ An app with no usage for the requested day returns the same shape with an empty 
 
 ## Metrics
 
-Current metric names:
+Current metric IDs:
 
 ```text
 deploy
@@ -150,7 +150,7 @@ workflow.delivery
 log.write
 ```
 
-`count` is the event count. `units` is usually the same value. Batch-like paths can record more units than a single event, such as queue delivery batches, bytes, rows, or CPU milliseconds. Cloudflare-polled metrics can use `source: "cloudflare"` or `source: "cloudflare_estimated"`.
+`count` is the event count. `units` is usually the same value. Batch-like paths can record more units than a single event, such as queue delivery batches, bytes, rows, or CPU milliseconds. Platform-synced metrics can use `source: "platform"` or `source: "platform_estimated"`.
 
 ## Daily limits
 
@@ -193,7 +193,7 @@ workflow.delivery    1000
 log.write            5000
 ```
 
-Owner-level default limits are 10x the repo defaults, with minimums of 200 deploys/day and 50 Worker scripts/day. Global default limits are 100x the repo defaults, with minimums of 2,000 deploys/day and 1,000 Worker scripts/day.
+Owner-level default limits are 10x the repo defaults, with minimums of 200 deploys/day and 50 runtime scripts/day. Global default limits are 100x the repo defaults, with minimums of 2,000 deploys/day and 1,000 runtime scripts/day.
 
 Each metric gets one of these statuses:
 
@@ -266,12 +266,12 @@ workflow.delivery repo 120/min     owner 600/min      global 5000/min
 log.write         repo 500/min     owner 2000/min     global 10000/min
 ```
 
-## Hourly Cloudflare sync
+## Hourly platform sync
 
-The W7S core cron runs once per minute for app schedules and also takes an hourly lock named `usage_collect_lock:v1:<hour>`. The collector queries Cloudflare analytics for the previous closed hour, stores records under:
+The W7S core cron runs once per minute for app schedules and also takes an hourly lock named `usage_collect_lock:v1:<hour>`. The collector queries platform telemetry for the previous closed hour, stores records under:
 
 ```text
-usage_cf_hourly:v1:<hour>:<environment>:<owner>:<repo>
+usage_platform_hourly:v1:<hour>:<environment>:<owner>:<repo>
 ```
 
 Then it merges those hourly records into the daily rollup. If any reliably attributed metric exceeds its effective daily limit, W7S stores:
@@ -280,17 +280,17 @@ Then it merges those hourly records into the daily rollup. If any reliably attri
 app_limit_state:v1:<environment>:<owner>:<repo>
 ```
 
-Suspended apps return HTTP `429` before static serving, Worker dispatch, deploys, RPC, queue sends, or workflow starts. Apps automatically resume at the next UTC day unless an operator writes a stricter state.
+Suspended apps return HTTP `429` before static serving, backend dispatch, deploys, RPC, queue sends, or workflow starts. Apps automatically resume at the next UTC day unless an operator writes a stricter state.
 
-Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and Cloudflare dispatch custom CPU limits on user Workers. Static asset storage is capped by deploy shape limits, and immutable static assets are served through the Worker Cache API using versioned asset keys to reduce R2 reads. Durable Object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation analytics; stored bytes are not per-app attributable in the current Cloudflare analytics schema and remain a tracked gap.
+Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and runtime CPU limits on native backends. Static asset storage is capped by deploy shape limits, and immutable static assets are served through a platform cache using versioned asset keys to reduce object storage reads. Stateful object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation telemetry; stored bytes are not per-app attributable in the current platform telemetry schema and remain a tracked gap.
 
 Queue sends reject JSON envelopes larger than 64 KB by default. New Queue consumers use bounded batch and retry settings: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
 
 Workflow starts reject instance payloads larger than 64 KB by default. W7S also tracks active workflow instances and blocks new starts for a target repo at 50 active instances by default.
 
-Worker log ingestion is capped by `log.write`, has short KV retention, truncates large log values, and drops whole tail batches when the target repo would exceed daily or burst log limits.
+Backend log ingestion is capped by `log.write`, has short operational retention, truncates large log values, and drops whole log batches when the target repo would exceed daily or burst log limits.
 
-The scheduled handler also removes stale static assets, expired app suspensions, old usage records, and stale dispatch-namespace Worker scripts.
+The scheduled handler also removes stale static assets, expired app suspensions, old usage records, and stale runtime scripts.
 
 ## Policy overrides
 
@@ -357,4 +357,4 @@ npm run limits:delete -- \
 
 Usage rollups are best-effort counters stored by W7S. They are useful for visibility, support, and planning quotas.
 
-They are not billing-grade yet. Concurrent events can be approximate, and Cloudflare analytics can arrive late, so enforcement is intentionally conservative and should be treated as free-tier protection rather than exact billing. Metrics marked `cloudflare_estimated` are visible for warnings but are not used to suspend apps.
+They are not billing-grade yet. Concurrent events can be approximate, and platform telemetry can arrive late, so enforcement is intentionally conservative and should be treated as free-tier protection rather than exact billing. Metrics marked `platform_estimated` are visible for warnings but are not used to suspend apps.

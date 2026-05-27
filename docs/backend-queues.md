@@ -4,7 +4,7 @@ title: Backend Queues
 description: Send background work between W7S JavaScript/TypeScript native backends through internal queues.
 ---
 
-JavaScript/TypeScript native W7S backends can declare queues in `w7s.json`. W7S creates the Cloudflare Queue, connects it to the W7S core worker, and delivers batches to the declaring backend.
+JavaScript/TypeScript native W7S backends can declare queues in `w7s.json`. W7S creates the managed queue, connects it to the W7S control plane, and delivers batches to the declaring backend.
 
 Working example repositories:
 
@@ -56,7 +56,7 @@ W7S_REPOSITORY
 W7S_ENVIRONMENT
 ```
 
-`W7S_QUEUE` is a Cloudflare service binding to the W7S core Worker. `W7S_QUEUE_TOKEN` is a secret used by W7S to prove which deployed app is enqueueing the message.
+`W7S_QUEUE` is an internal service binding to the W7S control plane. `W7S_QUEUE_TOKEN` is a secret used by W7S to prove which deployed app is enqueueing the message.
 
 ## Send a message
 
@@ -162,7 +162,7 @@ W7S sends this payload to the consumer route:
 }
 ```
 
-Return any `2xx` response after processing. Non-`2xx` responses make W7S throw from the queue consumer, so Cloudflare Queues can retry the batch. W7S-created queue consumers use bounded defaults: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
+Return any `2xx` response after processing. Non-`2xx` responses make W7S report the queue delivery as failed so the managed queue can retry the batch. W7S-created queue consumers use bounded defaults: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
 
 ## Separate producer and consumer
 

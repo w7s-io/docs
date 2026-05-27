@@ -4,7 +4,7 @@ title: Backend Workflows
 description: Start durable W7S workflow instances from JavaScript/TypeScript native backends.
 ---
 
-JavaScript/TypeScript native W7S backends can declare workflow consumers in `w7s.json`. W7S owns one Cloudflare Workflow in the core worker, creates instances for app requests, and dispatches each instance to the declaring backend through a durable step with retries.
+JavaScript/TypeScript native W7S backends can declare workflow consumers in `w7s.json`. W7S owns the workflow runner, creates instances for app requests, and dispatches each instance to the declaring backend through a durable step with retries.
 
 ## Declare a workflow
 
@@ -50,7 +50,7 @@ W7S_REPOSITORY
 W7S_ENVIRONMENT
 ```
 
-`W7S_WORKFLOW` is a Cloudflare service binding to the W7S core worker. `W7S_WORKFLOW_TOKEN` is a secret used by W7S to prove which deployed app is starting the workflow.
+`W7S_WORKFLOW` is an internal service binding to the W7S control plane. `W7S_WORKFLOW_TOKEN` is a secret used by W7S to prove which deployed app is starting the workflow.
 
 ## Start a workflow
 
@@ -193,6 +193,6 @@ To allow every repo under an owner:
 
 ## Current model
 
-W7S apps do not define Cloudflare `WorkflowEntrypoint` classes directly yet. The first implementation is a core bridge: W7S starts a Cloudflare Workflow instance and dispatches one durable step to the app's HTTP consumer path.
+W7S apps do not define platform-specific workflow classes directly. W7S starts a managed workflow instance and dispatches one durable step to the app's HTTP consumer path.
 
-This keeps the app API simple and works with W7S apps deployed as Workers for Platforms dispatch-namespace scripts.
+This keeps the app API simple and lets W7S keep the underlying workflow implementation transparent to the app.

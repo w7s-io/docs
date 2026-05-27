@@ -1,19 +1,19 @@
 ---
 id: backend-hyperdrive
-title: Hyperdrive
-description: Bind existing Cloudflare Hyperdrive configs to W7S JavaScript/TypeScript native backends.
+title: Postgres Bindings
+description: Bind existing managed Postgres configs to W7S JavaScript/TypeScript native backends.
 ---
 
-JavaScript/TypeScript native W7S backends can declare Cloudflare Hyperdrive bindings in `w7s.json`. Hyperdrive lets Workers connect to external Postgres databases through Cloudflare's connection pooling layer.
+JavaScript/TypeScript native W7S backends can declare managed Postgres bindings in `w7s.json`. These bindings let backend modules connect to external Postgres databases through the W7S-managed connection layer.
 
-W7S currently binds existing Hyperdrive configs by ID. It does not create Hyperdrive configs or rotate database credentials yet.
+W7S currently binds existing managed Postgres configs by ID. It does not create those configs or rotate database credentials yet.
 
-## Create a Hyperdrive config
+## Create a Postgres binding config
 
-Create the Hyperdrive config in Cloudflare first, then copy its ID:
+Create or request the managed Postgres binding config from the W7S operator, then copy its ID:
 
-```sh
-npx wrangler hyperdrive create my-db --connection-string="postgres://user:password@host:5432/database"
+```text
+postgres://user:password@host:5432/database
 ```
 
 ## Declare the binding
@@ -26,24 +26,26 @@ Add `bindings.hyperdrive` to `w7s.json`:
     "hyperdrive": [
       {
         "binding": "DB",
-        "id": "cloudflare-hyperdrive-id"
+        "id": "postgres-binding-id"
       }
     ]
   }
 }
 ```
 
-W7S uploads this as a Cloudflare `hyperdrive` Worker binding. The binding is available at `env.DB`.
+W7S exposes this binding to the backend at `env.DB`.
 
 ## Use it from a backend
 
-Most Postgres clients need to be bundled in CI before deployment. A typical backend uses the Hyperdrive connection string:
+Most Postgres clients need to be bundled in CI before deployment. A typical backend uses the managed connection string:
 
 ```ts title="backend/index.ts"
 import postgres from "postgres";
 
 type Env = {
-  DB: Hyperdrive;
+  DB: {
+    connectionString: string;
+  };
 };
 
 export default {
@@ -62,19 +64,19 @@ Because W7S does not install dependencies or bundle apps during deploy, run your
 
 ## Compatibility flags
 
-Many Postgres drivers require Node.js compatibility in Workers. If your build emits `dist/server/index.js`, include `dist/server/wrangler.json` with compatibility flags:
+Many Postgres drivers require Node.js compatibility in edge runtimes. If your build emits `dist/server/index.js`, include runtime compatibility metadata with the backend output:
 
-```json title="dist/server/wrangler.json"
+```json title="runtime compatibility metadata"
 {
   "compatibility_flags": ["nodejs_compat_v2"]
 }
 ```
 
-W7S reads compatibility flags from that file when uploading the Worker.
+W7S reads supported compatibility flags from the backend output when uploading the backend module.
 
 ## Limitations
 
-- Hyperdrive requires a JavaScript or TypeScript native backend deployment.
-- W7S does not create or update Hyperdrive configs yet.
+- Managed Postgres bindings require a JavaScript or TypeScript native backend deployment.
+- W7S does not create or update managed Postgres configs yet.
 - W7S does not manage origin database credentials.
 - There is no shared public example repo yet, because a useful smoke test requires a real database origin.

@@ -32,7 +32,7 @@ jobs:
           usage-check-only: true
 ```
 
-This workflow does not check out the repo, install dependencies, build, package, or deploy. It only asks W7S for the current day's usage for the repository, including hourly Cloudflare-synced direct resource usage when available.
+This workflow does not check out the repo, install dependencies, build, package, or deploy. It only asks W7S for the current day's usage for the repository, including hourly platform-synced direct resource usage when available.
 
 If the app is near or over a quota or free-tier limit, or W7S has suspended the app until the next UTC day, `w7s-io/w7s-cloud@v1` writes a GitHub Actions summary and opens or updates one GitHub issue for the repo/environment.
 

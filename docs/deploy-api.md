@@ -80,7 +80,7 @@ x-w7s-environment: staging
 
 ## Deployable Outputs
 
-Native backend entrypoints are JavaScript or TypeScript Worker modules only:
+Native backend entrypoints are JavaScript or TypeScript runtime modules only:
 
 ```text
 backend/index.js
@@ -107,7 +107,7 @@ build/
 out/
 ```
 
-Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar Cloudflare/Vite SSR builds.
+Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar SSR builds.
 
 If `backend/`, `worker/`, or `dist/server/` exists but does not contain a supported JavaScript or TypeScript entrypoint, W7S still deploys a valid static frontend and returns a `deploymentWarnings` entry explaining that the backend was skipped. If there is no deployable frontend, the archive is rejected.
 
@@ -121,21 +121,21 @@ uncompressed bytes      100 MB
 static files            1000
 static total bytes      100 MB
 static single file      10 MB
-KV bindings             3
-R2 bindings             3
-D1 bindings             2
-Durable Object classes  2
+Key-value bindings      3
+Object storage bindings 3
+SQL bindings            2
+Stateful object classes 2
 queues                  2
 schedules               5
 workflows               5
 custom domains          3
-D1 migration files      50
-D1 migration SQL bytes  5 MB
+SQL migration files     50
+SQL migration bytes     5 MB
 ```
 
-Native Workers are dispatched with a custom CPU limit from `W7S_USER_WORKER_CPU_MS`, default `50`, and a subrequest limit from `W7S_USER_WORKER_SUBREQUESTS`, default `25`.
+Native backends are dispatched with a custom CPU limit from `W7S_USER_WORKER_CPU_MS`, default `50`, and a subrequest limit from `W7S_USER_WORKER_SUBREQUESTS`, default `25`.
 
-Native Worker uploads include a W7S-managed Tail Worker consumer for user Worker logs unless the platform operator disables it. See [Observability](./observability.md) for the logs API.
+Native backend uploads include W7S-managed log capture unless the platform operator disables it. See [Observability](./observability.md) for the logs API.
 
 ## App manifest
 
@@ -156,7 +156,7 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
     "hyperdrive": [
       {
         "binding": "DB",
-        "id": "cloudflare-hyperdrive-id"
+        "id": "postgres-binding-id"
       }
     ]
   },
@@ -178,7 +178,7 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
 }
 ```
 
-`queues` declares Cloudflare Queues for the app. A string queue declaration uses the default consumer path `/_w7s/queues/<queue>`. Use an object to set a custom consumer path:
+`queues` declares managed background queues for the app. A string queue declaration uses the default consumer path `/_w7s/queues/<queue>`. Use an object to set a custom consumer path:
 
 ```json
 {
@@ -191,9 +191,9 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
 }
 ```
 
-`bindings.durableObjects` declares Durable Object classes exported by the JavaScript/TypeScript native backend. W7S uploads them as `durable_object_namespace` bindings and creates SQLite-backed classes when first deployed. See [Durable Objects](./backend-durable-objects.md) for examples.
+`bindings.durableObjects` declares stateful object classes exported by the JavaScript/TypeScript native backend. W7S creates persistent classes when first deployed. See [Stateful Objects](./backend-durable-objects.md) for examples.
 
-`bindings.hyperdrive` declares existing Cloudflare Hyperdrive configs by ID. W7S uploads them as `hyperdrive` bindings. See [Hyperdrive](./backend-hyperdrive.md) for examples.
+`bindings.hyperdrive` declares existing managed Postgres binding configs by ID. W7S exposes them to the backend at the configured binding name. See [Postgres Bindings](./backend-hyperdrive.md) for examples.
 
 See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 
@@ -201,7 +201,7 @@ See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), 
 
 ## Usage API
 
-W7S also exposes per-app daily usage rollups with hard daily limits and warning thresholds:
+W7S also exposes per-app daily usage rollups with daily limits and warning thresholds:
 
 ```text
 GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD

@@ -1,13 +1,13 @@
 ---
 id: observability
 title: Observability
-description: Read W7S platform event analytics and user Worker logs.
+description: Read W7S platform event analytics and backend logs.
 ---
 
 W7S exposes two observability streams:
 
 - platform analytics from W7S core events;
-- user Worker `console.*`, uncaught exceptions, and non-OK outcomes captured from Cloudflare Tail Worker events.
+- backend `console.*`, uncaught exceptions, and non-OK outcomes captured by W7S-managed log capture.
 
 ## Analytics API
 
@@ -37,9 +37,9 @@ The response includes:
 
 If Analytics Engine is not configured, the endpoint returns `configured: false` with empty arrays.
 
-## Worker logs API
+## Backend logs API
 
-Read recent per-repository user Worker logs with the same kind of GitHub token:
+Read recent per-repository backend logs with the same kind of GitHub token:
 
 ```sh
 curl "https://w7s.cloud/api/v1/logs/<owner>/<repo>?hours=1&limit=100" \
@@ -66,7 +66,7 @@ limit        record limit, 1 to 500, defaults to 100
 cursor       opaque cursor from a previous response
 ```
 
-The response includes `records` ordered newest first. Console records include `level`, structured `message`, and flattened `text`. Exception records include `exception.name`, `exception.message`, and `exception.stack` when Cloudflare provides one.
+The response includes `records` ordered newest first. Console records include `level`, structured `message`, and flattened `text`. Exception records include `exception.name`, `exception.message`, and `exception.stack` when the runtime provides one.
 
 Example response:
 
@@ -141,7 +141,7 @@ Example response:
 }
 ```
 
-## Worker logs in GitHub Actions
+## Backend logs in GitHub Actions
 
 Use `w7s-io/w7s-cloud@v1` with `logs-check-only: true` to fetch recent logs into a workflow run without deploying:
 
@@ -176,4 +176,4 @@ with:
   logs-limit: 10
 ```
 
-Log records are retained for a short operational window. The default W7S retention is seven days. W7S truncates large log values and applies `log.write` daily and burst limits before storing Tail Worker records, so runaway logging is dropped instead of becoming a platform cost burn. JavaScript/TypeScript native backends deployed before this feature need to be redeployed once so their Worker upload metadata includes the Tail Worker consumer.
+Log records are retained for a short operational window. The default W7S retention is seven days. W7S truncates large log values and applies `log.write` daily and burst limits before storing log records, so runaway logging is dropped instead of becoming a platform cost burn. JavaScript/TypeScript native backends deployed before this feature need to be redeployed once so their deployment metadata includes W7S log capture.

@@ -1,7 +1,7 @@
 ---
 id: storage-bindings
 title: Storage Bindings
-description: Declare per-app KV, R2, D1, vars, and secrets for W7S backends.
+description: Declare per-app storage, vars, and secrets for W7S backends.
 ---
 
 JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.json`. W7S creates one set of resources per repository and environment, then reuses them on later deploys.
@@ -25,19 +25,19 @@ JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.
 
 ## Storage
 
-`bindings.kv` creates Workers KV namespaces:
+`bindings.kv` creates key-value namespaces:
 
 ```json
 { "bindings": { "kv": ["CACHE"] } }
 ```
 
-`bindings.r2` creates R2 buckets:
+`bindings.r2` creates object storage buckets:
 
 ```json
 { "bindings": { "r2": ["FILES"] } }
 ```
 
-`bindings.d1` creates D1 databases:
+`bindings.d1` creates SQL databases:
 
 ```json
 { "bindings": { "d1": [{ "binding": "DB" }] } }
@@ -55,9 +55,9 @@ By default, W7S generates resource names from the environment, owner, repo, reso
 }
 ```
 
-## D1 Migrations
+## SQL migrations
 
-Point a D1 binding at a migrations directory:
+Point a SQL binding at a migrations directory:
 
 ```json
 {
@@ -93,6 +93,6 @@ You can also pass names directly:
     vars: PUBLIC_API_KEY
 ```
 
-Secret values are passed as Worker secret bindings. Deploy summaries show secret counts, not secret values.
+Secret values are passed as backend secret bindings. Deploy summaries show secret counts, not secret values.
 
 W7S also injects platform bindings for JavaScript/TypeScript native backends, including `W7S_RPC` for backend-to-backend calls and `W7S_QUEUE` for background work. See [Backend RPC](./backend-rpc.md) and [Backend Queues](./backend-queues.md).

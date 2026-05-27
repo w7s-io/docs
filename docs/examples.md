@@ -29,26 +29,26 @@ See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 - a reusable RPC helper;
 - same-owner and cross-owner authorization.
 
-## Durable Objects
+## Stateful Objects
 
 - GitHub: [w7s-io/example-durable-counter](https://github.com/w7s-io/example-durable-counter)
 - Live app endpoint: [w7s-io.w7s.cloud/example-durable-counter](https://w7s-io.w7s.cloud/example-durable-counter/)
 - Live current value endpoint: [w7s-io.w7s.cloud/example-durable-counter/value](https://w7s-io.w7s.cloud/example-durable-counter/value)
 
-This example declares a `Counter` Durable Object in `w7s.json`, exports the `Counter` class from `backend/index.js`, and verifies persisted state across W7S redeploys.
+This example declares a `Counter` stateful object in `w7s.json`, exports the `Counter` class from `backend/index.js`, and verifies persisted state across W7S redeploys.
 
-See [Durable Objects](./backend-durable-objects.md) for copy-pasteable examples showing:
+See [Stateful Objects](./backend-durable-objects.md) for copy-pasteable examples showing:
 
-- Durable Object declaration in `w7s.json`;
-- exporting the Durable Object class;
+- stateful object declaration in `w7s.json`;
+- exporting the stateful object class;
 - routing requests through the generated binding;
 - redeploy behavior.
 
-## Hyperdrive
+## Postgres Bindings
 
-Hyperdrive support is documented in [Hyperdrive](./backend-hyperdrive.md).
+Managed Postgres support is documented in [Postgres Bindings](./backend-hyperdrive.md).
 
-There is no shared live example yet because a useful smoke test requires a real Postgres origin and a Cloudflare Hyperdrive config ID. The W7S binding shape is:
+There is no shared live example yet because a useful smoke test requires a real Postgres origin and a managed Postgres binding config ID. The W7S binding shape is:
 
 ```json
 {
@@ -56,7 +56,7 @@ There is no shared live example yet because a useful smoke test requires a real 
     "hyperdrive": [
       {
         "binding": "DB",
-        "id": "cloudflare-hyperdrive-id"
+        "id": "postgres-binding-id"
       }
     ]
   }
@@ -80,7 +80,7 @@ Separate producer and consumer example:
 - Live producer endpoint: [w7s-io.w7s.cloud/example-queue-producer/enqueue](https://w7s-io.w7s.cloud/example-queue-producer/enqueue)
 - Live consumer latest message endpoint: [w7s-io.w7s.cloud/example-queue-consumer/last](https://w7s-io.w7s.cloud/example-queue-consumer/last)
 
-The producer sends to `https://w7s.internal/api/v1/queues/w7s-io/example-queue-consumer/jobs`. The consumer declares the queue in `w7s.json`, receives batches at `/_w7s/queues/jobs`, and stores processed messages in KV.
+The producer sends to `https://w7s.internal/api/v1/queues/w7s-io/example-queue-consumer/jobs`. The consumer declares the queue in `w7s.json`, receives batches at `/_w7s/queues/jobs`, and stores processed messages in key-value storage.
 
 See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
 
@@ -96,13 +96,13 @@ See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
 - Live app endpoint: [w7s-io.w7s.cloud/example-schedules](https://w7s-io.w7s.cloud/example-schedules/)
 - Live latest tick endpoint: [w7s-io.w7s.cloud/example-schedules/last](https://w7s-io.w7s.cloud/example-schedules/last)
 
-This example declares a `* * * * *` schedule in `w7s.json`, receives the scheduled job at `/_w7s/schedules/tick`, and stores the latest schedule payload in KV. The GitHub Actions workflow polls `/last` until a fresh scheduled tick arrives after deployment.
+This example declares a `* * * * *` schedule in `w7s.json`, receives the scheduled job at `/_w7s/schedules/tick`, and stores the latest schedule payload in key-value storage. The GitHub Actions workflow polls `/last` until a fresh scheduled tick arrives after deployment.
 
 See [Backend Schedules](./backend-schedules.md) for copy-pasteable examples showing:
 
 - schedule declaration in `w7s.json`;
 - implementing the backend schedule route;
-- persisting schedule results in KV;
+- persisting schedule results in key-value storage;
 - schedule environment behavior.
 
 ## Backend Workflows
@@ -121,7 +121,7 @@ See [Backend Workflows](./backend-workflows.md) for copy-pasteable examples show
 - checking instance status;
 - same-owner and cross-owner authorization.
 
-## Worker Logs
+## Backend Logs
 
 - GitHub: [w7s-io/example-logs](https://github.com/w7s-io/example-logs)
 - Live app endpoint: [w7s-io.w7s.cloud/example-logs](https://w7s-io.w7s.cloud/example-logs/)

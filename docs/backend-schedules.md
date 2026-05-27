@@ -4,11 +4,11 @@ title: Backend Schedules
 description: Run cron-driven background jobs in W7S JavaScript/TypeScript native backends.
 ---
 
-JavaScript/TypeScript native W7S backends can declare cron schedules in `w7s.json`. W7S runs one core Cloudflare Cron Trigger every minute, checks deployed app schedules, and dispatches due jobs to the declaring backend.
+JavaScript/TypeScript native W7S backends can declare cron schedules in `w7s.json`. W7S runs one managed scheduler every minute, checks deployed app schedules, and dispatches due jobs to the declaring backend.
 
 Working example repository:
 
-- [`w7s-io/example-schedules`](https://github.com/w7s-io/example-schedules): backend that receives a one-minute schedule and stores the latest tick in KV.
+- [`w7s-io/example-schedules`](https://github.com/w7s-io/example-schedules): backend that receives a one-minute schedule and stores the latest tick in key-value storage.
 
 ## Declare a schedule
 
@@ -93,7 +93,7 @@ Return any `2xx` response after processing. Non-`2xx` responses make W7S report 
 
 ## With storage
 
-Schedules work well with per-app KV, R2, or D1 bindings. For example, a scheduled backend can keep the latest run in KV:
+Schedules work well with per-app key-value, object storage, or SQL bindings. For example, a scheduled backend can keep the latest run in key-value storage:
 
 ```json title="w7s.json"
 {
@@ -111,7 +111,10 @@ Schedules work well with per-app KV, R2, or D1 bindings. For example, a schedule
 
 ```ts title="backend/index.ts"
 type Env = {
-  STATE: KVNamespace;
+  STATE: {
+    put(key: string, value: string): Promise<void>;
+    get<T = unknown>(key: string, type: "json"): Promise<T | null>;
+  };
 };
 
 export default {
@@ -138,6 +141,6 @@ export default {
 
 Schedules are scoped to the deployment environment. A production deploy and a branch deploy can declare different schedules without sharing the same mapping.
 
-W7S stores schedule mappings in the core deployment KV and removes stale mappings when the app is redeployed.
+W7S stores schedule mappings in its deployment state and removes stale mappings when the app is redeployed.
 
 The live example is served at [`w7s-io.w7s.cloud/example-schedules`](https://w7s-io.w7s.cloud/example-schedules/). Check the latest delivered tick at [`/last`](https://w7s-io.w7s.cloud/example-schedules/last).

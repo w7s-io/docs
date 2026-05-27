@@ -20,7 +20,7 @@ out/
 
 Each static root should include an `index.html`.
 
-One exception is Cloudflare/Vite SSR output. Frameworks such as TanStack Start may build frontend assets into `dist/client/` without an `index.html`, while rendering HTML from `dist/server/index.js`. W7S supports that paired layout:
+One exception is framework SSR output. Frameworks such as TanStack Start may build frontend assets into `dist/client/` without an `index.html`, while rendering HTML from `dist/server/index.js`. W7S supports that paired layout:
 
 ```text
 dist/server/index.js
@@ -29,7 +29,7 @@ dist/client/assets/app.js
 
 ## Native backends
 
-Native backends must be JavaScript or TypeScript Cloudflare Worker modules. W7S publishes native backend code from either:
+Native backends must be JavaScript or TypeScript runtime modules. W7S publishes native backend code from either:
 
 ```text
 backend/index.ts
@@ -44,15 +44,15 @@ Other backend languages are not uploaded directly. Build or bundle them to one o
 
 Native backend modules must use local relative imports. If the backend depends on npm packages, bundle it in CI and upload the bundled backend files.
 
-Cloudflare/Vite SSR builds can also publish their generated JavaScript server entrypoint:
+Framework SSR builds can also publish their generated JavaScript server entrypoint:
 
 ```text
 dist/server/index.js
 ```
 
-When `dist/server/wrangler.json` declares compatibility flags such as `nodejs_compat`, W7S includes those flags when uploading the Worker.
+When an SSR build emits runtime compatibility metadata, W7S includes supported flags such as `nodejs_compat` when uploading the backend module.
 
-Uploaded JavaScript/TypeScript native backends also get a Tail Worker consumer managed by W7S. That lets W7S expose app `console.*` output and uncaught exceptions through the [Observability](./observability.md) logs API.
+Uploaded JavaScript/TypeScript native backends also get W7S-managed log capture. That lets W7S expose app `console.*` output and uncaught exceptions through the [Observability](./observability.md) logs API.
 
 ## Fullstack repositories
 
