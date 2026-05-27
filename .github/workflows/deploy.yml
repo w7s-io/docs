@@ -24,12 +24,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            landing/package.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline
 
       - name: Install landing dependencies
-        run: npm install --prefix landing --no-package-lock --legacy-peer-deps
+        run: npm install --prefix landing --no-package-lock --legacy-peer-deps --prefer-offline
 
       - name: Build site
         run: npm run build
