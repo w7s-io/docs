@@ -77,9 +77,9 @@ export default function Hero() {
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
-            W7S uploads your GitHub Actions build to W7S Cloud and serves it at
-            a public URL. No W7S account, Cloudflare account, or card required
-            for w7s.cloud deploys. Just{" "}
+            GitHub Actions builds your app; W7S ships the deploy output to W7S
+            Live environments and serves it at a public URL. No W7S account,
+            Cloudflare account, or card required for w7s.cloud deploys. Just{" "}
             <span className="text-zinc-100">commit, push, ship.</span>
           </p>
 

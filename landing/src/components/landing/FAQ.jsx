@@ -8,7 +8,7 @@ import {
 const QA = [
   {
     q: "Do I need a W7S or Cloudflare account?",
-    a: "No for w7s.cloud deploys. The GitHub Action authenticates with your repo's GITHUB_TOKEN, uploads the build to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.",
+    a: "No for w7s.cloud deploys. GitHub Actions builds your app, then the W7S action authenticates with your repo's GITHUB_TOKEN and uploads the deploy output for W7S to serve from shared Cloudflare infrastructure.",
   },
   {
     q: "What languages and frameworks are supported?",
