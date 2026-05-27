@@ -7,6 +7,7 @@ const config: Config = {
   tagline: 'Open source deploy platform for GitHub-native apps',
   url: 'https://www.w7s.io',
   baseUrl: '/docs/',
+  favicon: 'https://github.com/w7s-io.png',
   trailingSlash: true,
   organizationName: 'w7s-io',
   projectName: 'docs',

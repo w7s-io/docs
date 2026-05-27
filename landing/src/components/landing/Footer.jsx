@@ -1,8 +1,6 @@
 import { Github, BookOpen, Cloud } from "lucide-react";
 import W7SCloudLink from "./W7SCloudLink";
 
-const W7S_LOGO = "https://github.com/w7s-io.png";
-
 export default function Footer() {
   return (
     <footer
@@ -12,14 +10,7 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-20">
           <div className="md:col-span-5">
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                src={W7S_LOGO}
-                alt="W7S logo"
-                className="h-10 w-10 rounded-md border border-white/10 bg-black object-cover"
-              />
-              <div className="font-display text-3xl text-white">W7S</div>
-            </div>
+            <div className="font-display text-3xl text-white mb-4">W7S</div>
             <p className="text-sm text-zinc-400 max-w-sm leading-relaxed">
               Open source deploy platform for GitHub-native apps. Your
               deployment workflow <span className="text-amber-400">is</span> the
