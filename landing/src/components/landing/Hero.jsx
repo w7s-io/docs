@@ -71,16 +71,16 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            Turn any repo into a <span className="text-amber-400">live app.</span>
+            Skip the <span className="text-amber-400">cloud setup.</span>
             <br />
-            No dashboard, card, or <span className="text-amber-400">cloud setup required.</span>
+            Just <span className="text-amber-400">commit, push, ship.</span>
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
             GitHub Actions builds your app; W7S ships the deploy output to W7S
             Live environments and serves it at a public URL. No W7S account,
-            Cloudflare account, or card required for w7s.cloud deploys. Just{" "}
-            <span className="text-zinc-100">commit, push, ship.</span>
+            Cloudflare account, or card required for w7s.cloud deploys.{" "}
+            <span className="text-zinc-100">Your repo stays the control plane.</span>
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
