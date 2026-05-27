@@ -71,9 +71,9 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            Push to <span className="text-amber-400">GitHub.</span>
+            Turn any repo into a <span className="text-amber-400">live app.</span>
             <br />
-            Live in less than <span className="text-amber-400">30 seconds.</span>
+            No dashboard, card, or <span className="text-amber-400">cloud setup required.</span>
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
