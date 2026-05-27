@@ -71,16 +71,14 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            Skip the <span className="text-amber-400">cloud setup.</span>
-            <br />
-            Just <span className="text-amber-400">commit, push, ship.</span>
+            The Cloud that <em className="text-amber-400 italic">just works</em>.
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
             GitHub Actions builds your app; W7S ships the deploy output to W7S
             Live environments and serves it at a public URL. No W7S account,
             Cloudflare account, or card required for w7s.cloud deploys.{" "}
-            <span className="text-zinc-100">Your repo stays the control plane.</span>
+            <span className="text-zinc-100">Your deployment workflow <em className="italic">is</em> the control plane.</span>
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
