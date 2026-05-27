@@ -7,6 +7,7 @@ const STEPS = [
     title: "Fork the notepad repo",
     desc: "Grab the starter template — a working app with the W7S workflow already wired up.",
     code: "gh repo fork guerrerocarlos/notepad",
+    cli: true,
     span: "col-span-12 md:col-span-5",
   },
   {
@@ -23,14 +24,26 @@ const STEPS = [
     title: "Push to GitHub",
     desc: "GitHub Actions triggers. The W7S action verifies the token and uploads the deploy archive to W7S Cloud.",
     code: "git push origin main",
+    cli: true,
     span: "col-span-12 md:col-span-7",
   },
   {
     n: "04",
     icon: Globe,
     title: "Live on the edge",
-    desc: "W7S serves the app from shared Cloudflare infrastructure. For a custom domain, add a CNAME file and point DNS at w7w.cloud.",
-    code: "https://<your-github>.w7s.cloud/notepad\nCNAME + DNS -> w7w.cloud",
+    desc: (
+      <>
+        W7S serves the app from shared Cloudflare infrastructure. For a custom domain, add a{" "}
+        <a
+          href="/docs/custom-domains/"
+          className="text-amber-400 hover:text-amber-300 underline underline-offset-4"
+        >
+          CNAME file
+        </a>{" "}
+        and point DNS at w7w.cloud.
+      </>
+    ),
+    code: "https://<your-github>.w7s.cloud/notepad\ncustom.domain.com + CNAME file -> w7s.cloud",
     span: "col-span-12 md:col-span-5",
     highlight: true,
   },
@@ -90,10 +103,12 @@ export default function HowItWorks() {
                   className={`font-mono text-xs sm:text-[13px] bg-black border ${s.highlight ? "border-amber-400/40" : "border-white/10"} px-4 py-3 overflow-x-auto`}
                 >
                   {s.code.split("\n").map((ln, idx) => (
-                    <div key={idx} className="flex gap-3">
-                      <span className={s.highlight ? "text-amber-400" : "text-zinc-600"}>
-                        $
-                      </span>
+                    <div key={idx} className={`flex ${s.cli ? "gap-3" : ""}`}>
+                      {s.cli ? (
+                        <span className={s.highlight ? "text-amber-400" : "text-zinc-600"}>
+                          $
+                        </span>
+                      ) : null}
                       <span className={s.highlight ? "text-amber-400" : "text-zinc-200"}>
                         {ln}
                       </span>
