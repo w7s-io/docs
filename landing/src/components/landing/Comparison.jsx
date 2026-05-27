@@ -1,4 +1,5 @@
 import {
+  Cloud,
   Github,
   Layers3,
 } from "lucide-react";
@@ -17,8 +18,15 @@ const OPTIONS = [
     key: "vercel",
     icon: Layers3,
     eyebrow: "Vercel",
-    title: "Managed product platform",
-    desc: "Best when you want a polished hosted platform with previews, teams, billing, and framework conventions managed inside another product account.",
+    title: "Repo workflow over platform workflow",
+    desc: "W7S is better when you want GitHub Actions to stay in charge. No dashboard-first deploy flow, product account setup, or framework-specific hosting conventions between commit and release.",
+  },
+  {
+    key: "cloudflare",
+    icon: Cloud,
+    eyebrow: "Cloudflare",
+    title: "One action over cloud setup",
+    desc: "W7S is better when you want the edge runtime without wiring accounts, CLI auth, worker projects, and deploy scripts yourself. Commit, push, and let W7S serve the app.",
   },
 ];
 
@@ -45,7 +53,7 @@ export default function Comparison() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 border border-white/10 bg-white/10 gap-px">
+        <div className="grid grid-cols-1 md:grid-cols-3 border border-white/10 bg-white/10 gap-px">
           {OPTIONS.map((option) => {
             const Icon = option.icon;
             const isPrimary = option.tone === "primary";

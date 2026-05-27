@@ -60,9 +60,10 @@ const QA = [
     q: "How is this different from Vercel?",
     a: (
       <>
-        Vercel is a full hosted product platform with previews, teams, billing,
-        and framework conventions. <W7SCloudLink /> sits closer to the repo:
-        GitHub Actions deploys with the repo token, and W7S hosts the runtime.
+        <W7SCloudLink /> keeps deployment closer to the repo. GitHub Actions
+        builds with the repo token, the workflow becomes the control plane, and
+        W7S serves the runtime without requiring a separate dashboard, card, or
+        cloud setup.
       </>
     ),
   },
