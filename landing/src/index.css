@@ -113,6 +113,13 @@ body {
     }
 }
 
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+    [data-testid="hero-code-block"].tracing-border::before {
+        display: none;
+        animation: none;
+    }
+}
+
 /* Blinking cursor */
 .cursor::after {
     content: "▮";
