@@ -87,7 +87,7 @@ const PROFILE_VALUES: Record<ProfileId, Inputs> = {
   },
   fullstack: {
     visitorsPerDay: 1_000,
-    pageViewsPerVisitor: 2,
+    pageViewsPerVisitor: 5,
     staticAssetsPerPage: 10,
     backendRequestsPerPage: 1.5,
     averageCpuMs: 8,
