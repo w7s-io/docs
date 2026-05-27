@@ -147,7 +147,7 @@ export default function Comparison() {
           <div className="bg-[#0b0b0c] px-5 py-4 sm:px-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="text-[10px] uppercase tracking-[0.3em] text-amber-400 mb-2">
-                // demand chart
+                // comparison chart
               </div>
               <h3 className="font-display text-2xl sm:text-3xl text-white leading-tight">
                 W7S vs the default cloud path
