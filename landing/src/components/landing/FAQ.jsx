@@ -4,11 +4,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import W7SCloudLink from "./W7SCloudLink";
 
 const QA = [
   {
-    q: "Do I need a W7S or Cloudflare account?",
-    a: "No for w7s.cloud deploys. GitHub Actions builds your app, then the W7S action authenticates with your repo's GITHUB_TOKEN and uploads the deploy output for W7S to serve from shared Cloudflare infrastructure.",
+    q: "Do I need a W7S account?",
+    a: (
+      <>
+        No for <W7SCloudLink /> deploys. GitHub Actions builds your app, then
+        the W7S action authenticates with your repo's GITHUB_TOKEN and uploads
+        the deploy output for W7S to serve.
+      </>
+    ),
   },
   {
     q: "What languages and frameworks are supported?",
@@ -18,8 +25,8 @@ const QA = [
     q: "How does the URL get generated?",
     a: (
       <>
-        Your deploy is served by W7S Cloud at https://&lt;your-github-username&gt;.w7s.cloud/&lt;repo-name&gt;.
-        So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.w7s.cloud/notepad.
+        Your deploy is served by W7S Cloud at https://&lt;your-github-username&gt;.<W7SCloudLink />/&lt;repo-name&gt;.
+        So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.<W7SCloudLink />/notepad.
         Custom domains are a{" "}
         <a
           href="/docs/custom-domains/"
@@ -33,19 +40,31 @@ const QA = [
   },
   {
     q: "Is it really open source?",
-    a: "Yes — the entire platform, including the GitHub Action, the deploy runtime, and the management plane. The same core that powers w7s.cloud can power your own deployment cloud.",
+    a: (
+      <>
+        Yes — the entire platform, including the GitHub Action, the deploy
+        runtime, and the management plane. The same core that powers{" "}
+        <W7SCloudLink /> can power your own deployment cloud.
+      </>
+    ),
   },
   {
     q: "Can I deploy backends, not just static sites?",
     a: "Yes. JavaScript/TypeScript native backends, Durable Objects, Hyperdrive for external Postgres, internal service bindings, background queues, cron schedules and durable workflow instances. Full stack, edge-native.",
   },
   {
-    q: "What about limits and quotas?",
-    a: "w7s.cloud limits apply per GitHub repo, per W7S environment, per UTC day. Owner-level and global caps protect the shared service. W7S exposes usage rollups, warnings, and hard-limit status through an authenticated API.",
+    q: "How does usage and billing work?",
+    a: "W7S exposes usage rollups through an authenticated API so teams can see what each repo is using. Start free; pay per use after the app has real traction.",
   },
   {
-    q: "How is this different from Vercel or Cloudflare?",
-    a: "Vercel is a full hosted product platform with previews, teams, billing, and framework conventions. Cloudflare is direct infrastructure control through your own account. w7s.cloud sits closer to the repo: GitHub Actions deploys with the repo token, W7S hosts the runtime, and repo-scoped limits are built in.",
+    q: "How is this different from Vercel?",
+    a: (
+      <>
+        Vercel is a full hosted product platform with previews, teams, billing,
+        and framework conventions. <W7SCloudLink /> sits closer to the repo:
+        GitHub Actions deploys with the repo token, and W7S hosts the runtime.
+      </>
+    ),
   },
 ];
 

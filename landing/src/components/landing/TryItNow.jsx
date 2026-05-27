@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, ArrowUpRight, Github } from "lucide-react";
 import { toast } from "sonner";
+import W7SCloudLink from "./W7SCloudLink";
 
 const COMMANDS = [
   "gh repo fork guerrerocarlos/notepad --clone",
@@ -43,13 +44,13 @@ export default function TryItNow() {
             // try it now
           </div>
           <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.95]">
-            Three commands.
+            Three lines,
             <br />
-            One live URL.
+            and it's deployed.
           </h2>
           <p className="mt-6 text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
             Clone the notepad reference app and watch it go live. No account,
-            no card, no Cloudflare setup.
+            no card, no cloud setup.
           </p>
         </div>
 
@@ -102,7 +103,15 @@ export default function TryItNow() {
                         : "text-zinc-500"
                   }
                 >
-                  {line || "\u00A0"}
+                  {line.includes("w7s.cloud") ? (
+                    <>
+                      {"  https://<your-github>."}
+                      <W7SCloudLink className="text-amber-400 hover:text-amber-300 underline underline-offset-4" />
+                      {"/notepad"}
+                    </>
+                  ) : (
+                    line || "\u00A0"
+                  )}
                 </div>
               ))}
               <div className="text-amber-400 cursor pt-2">$</div>

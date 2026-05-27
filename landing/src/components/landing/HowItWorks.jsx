@@ -1,4 +1,23 @@
 import { GitFork, FileCode2, GitCommit, Globe } from "lucide-react";
+import W7SCloudLink from "./W7SCloudLink";
+
+function LinkedCodeText({ text, className }) {
+  if (!text.includes("w7s.cloud")) {
+    return text;
+  }
+
+  const parts = text.split("w7s.cloud");
+  return parts.map((part, idx) => (
+    <span key={`${part}-${idx}`}>
+      {part}
+      {idx < parts.length - 1 ? (
+        <W7SCloudLink
+          className={`${className} hover:text-amber-300 underline underline-offset-4`}
+        />
+      ) : null}
+    </span>
+  ));
+}
 
 const STEPS = [
   {
@@ -33,7 +52,7 @@ const STEPS = [
     title: "Live on the edge",
     desc: (
       <>
-        W7S serves the app from shared Cloudflare infrastructure. For a custom domain, add a{" "}
+        W7S serves the app from managed W7S infrastructure. For a custom domain, add a{" "}
         <a
           href="/docs/custom-domains/"
           className="text-amber-400 hover:text-amber-300 underline underline-offset-4"
@@ -110,7 +129,10 @@ export default function HowItWorks() {
                         </span>
                       ) : null}
                       <span className={s.highlight ? "text-amber-400" : "text-zinc-200"}>
-                        {ln}
+                        <LinkedCodeText
+                          text={ln}
+                          className={s.highlight ? "text-amber-400" : "text-zinc-200"}
+                        />
                       </span>
                     </div>
                   ))}

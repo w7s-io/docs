@@ -1,30 +1,38 @@
-import { Gauge, Github, Cloud, ArrowUpRight } from "lucide-react";
+import { CreditCard, Github, Cloud, ArrowUpRight } from "lucide-react";
+import W7SCloudLink from "./W7SCloudLink";
 
 const FACTS = [
   {
     icon: Github,
     k: "No signup",
-    v: "Your GitHub repo token authorizes deploys. There is no W7S account, card, or separate Cloudflare account required for w7s.cloud deploys.",
+    v: (
+      <>
+        Your GitHub repo token authorizes deploys. There is no W7S account,
+        card, or cloud setup required to start on <W7SCloudLink />.
+      </>
+    ),
   },
   {
     icon: Cloud,
     k: "Hosted by W7S",
-    v: "The action uploads your deploy archive to W7S Cloud. W7S serves the app from shared Cloudflare infrastructure at w7s.cloud or your custom domain.",
+    v: (
+      <>
+        The action uploads your deploy archive to W7S Live. W7S serves the app
+        at <W7SCloudLink /> or your custom domain.
+      </>
+    ),
   },
   {
-    icon: Gauge,
-    k: "Hard limits",
-    v: "Default caps apply per GitHub repo, per W7S environment, per UTC day. Owner and global caps protect the shared platform.",
+    icon: CreditCard,
+    k: "Usage-based",
+    v: "Start free. Pay only after your app is a hit, and only for what it uses. No subscriptions just to keep it online.",
   },
 ];
 
-const LIMITS = [
-  ["Deploys", "50/day"],
-  ["Runtime requests", "10k/day"],
-  ["Static files", "1,000"],
-  ["Static size", "100 MB"],
-  ["Worker logs", "5k/day"],
-  ["Workflow starts", "1k/day"],
+const BILLING_POINTS = [
+  ["Start free", "Build and share projects before billing matters."],
+  ["Pay after traction", "Upgrade only when real usage shows up."],
+  ["Per-use billing", "Pay for usage, not a subscription seat."],
 ];
 
 export default function Pricing() {
@@ -41,21 +49,20 @@ export default function Pricing() {
               // pricing
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.95]">
-              Free w7s.cloud deploys.
+              Free <W7SCloudLink className="text-amber-400 hover:text-amber-300" /> deploys.
               <br />
-              Clear limits.
+              Pay only after your app is a hit.
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
-              w7s.cloud is free today. Self-serve paid billing is not live
-              yet. For production workloads that need higher limits, run your
-              own W7S instance on Cloudflare or arrange a hosted limit override.
+              Deploy without a card. For successful apps, billing is usage-based:
+              no subscriptions just to keep an app online.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
                 href="/docs/pricing/"
                 className="inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-5 py-3 text-xs uppercase tracking-[0.2em] font-bold hover:bg-amber-300 transition-colors"
               >
-                Full limits
+                Pricing details
                 <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
               <a
@@ -86,25 +93,19 @@ export default function Pricing() {
             </div>
 
             <div className="mt-6 border border-white/10 bg-white/10">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px">
-                {LIMITS.map(([label, value]) => (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px">
+                {BILLING_POINTS.map(([label, value]) => (
                   <div key={label} className="p-4 bg-black">
-                    <div className="font-display text-2xl text-white leading-none">
-                      {value}
-                    </div>
-                    <div className="mt-2 text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                    <div className="text-sm text-white font-medium">
                       {label}
+                    </div>
+                    <div className="mt-2 text-xs text-zinc-500 leading-relaxed">
+                      {value}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-
-            <p className="mt-4 text-xs text-zinc-500 leading-relaxed">
-              These are w7s.cloud defaults, not isolated Cloudflare accounts per
-              user. W7S tracks repo usage and applies owner/global circuit
-              breakers to keep the shared service available.
-            </p>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Github, BookOpen, Cloud } from "lucide-react";
+import W7SCloudLink from "./W7SCloudLink";
 
 export default function Footer() {
   return (
@@ -11,9 +12,9 @@ export default function Footer() {
           <div className="md:col-span-5">
             <div className="font-display text-3xl text-white mb-4">W7S</div>
             <p className="text-sm text-zinc-400 max-w-sm leading-relaxed">
-              Open source deploy platform for GitHub-native apps. Push to{" "}
-              <span className="text-amber-400">GitHub</span>. Live in less than
-              30 seconds.
+              Open source deploy platform for GitHub-native apps. Your
+              deployment workflow <span className="text-amber-400">is</span> the
+              control plane.
             </p>
           </div>
 
@@ -103,9 +104,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 mb-4">
-              w7s.cloud
-            </div>
+            <W7SCloudLink className="block text-[10px] uppercase tracking-[0.3em] text-zinc-600 hover:text-amber-400 transition-colors mb-4" />
             <div className="flex flex-col gap-3">
               <a
                 href="https://github.com/w7s-io"
@@ -117,7 +116,7 @@ export default function Footer() {
                 <Github className="h-4 w-4" strokeWidth={1.5} /> github.com/w7s-io
               </a>
               <a
-                href="https://w7s.cloud"
+                href="https://w7s.cloud/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="footer-cloud"
