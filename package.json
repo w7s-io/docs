@@ -5,8 +5,10 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build && node scripts/mirror-docs-prefix.mjs",
-    "build:docusaurus": "docusaurus build",
+    "build": "npm run build:docs && npm run build:landing && node scripts/assemble-site.mjs",
+    "build:docs": "docusaurus build",
+    "build:docusaurus": "npm run build:docs",
+    "build:landing": "npm --prefix landing run build",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
     "typecheck": "tsc",

@@ -139,14 +139,15 @@ See [Observability](./observability.md) for copy-pasteable examples showing:
 
 ## Docs site
 
-This documentation site is itself deployed through W7S:
+This docs repo is itself deployed through W7S:
 
 - GitHub: [w7s-io/docs](https://github.com/w7s-io/docs)
 - W7S URL: [w7s-io.w7s.cloud/docs](https://w7s-io.w7s.cloud/docs/)
-- Custom domain: [community.w7s.io/docs](https://community.w7s.io/docs/)
-- Redirects: [w7s.io](https://w7s.io/) and [www.w7s.io](https://www.w7s.io/)
+- Landing page: [www.w7s.io](https://www.w7s.io/)
+- Custom domain: [www.w7s.io/docs](https://www.w7s.io/docs/)
+- Redirects: [w7s.io](https://w7s.io/) and [community.w7s.io](https://community.w7s.io/)
 
-It builds with Docusaurus and deploys the generated `build/` directory with `w7s-io/w7s-cloud@v1`.
+It builds the landing frontend from `landing/`, builds the docs with Docusaurus, assembles them into the generated `build/` directory, and deploys with `w7s-io/w7s-cloud@v1`.
 
 The repo uses the same GitHub Actions deployment flow documented here: install dependencies, build the site, then deploy with the W7S action.
 
@@ -156,12 +157,12 @@ The repo uses the same GitHub Actions deployment flow documented here: install d
     token: ${{ github.token }}
 ```
 
-Its `static/CNAME` file declares the canonical docs host and the apex redirect hosts:
+Its `static/CNAME` file declares the canonical site host, the apex redirect host, and the legacy docs host:
 
 ```text
-community.w7s.io
-w7s.io
 www.w7s.io
+w7s.io
+community.w7s.io
 ```
 
-The repo also ships a small `backend/index.ts` worker that redirects `w7s.io` and `www.w7s.io` to `https://community.w7s.io/docs/`.
+The repo also ships a small `backend/index.ts` worker that redirects `w7s.io` to `https://www.w7s.io/` and legacy `community.w7s.io` docs paths to `https://www.w7s.io/docs/`.

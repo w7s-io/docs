@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'W7S',
   tagline: 'Open source deploy platform for GitHub-native apps',
-  url: 'https://community.w7s.io',
+  url: 'https://www.w7s.io',
   baseUrl: '/docs/',
   trailingSlash: true,
   organizationName: 'w7s-io',
@@ -16,18 +16,6 @@ const config: Config = {
       onBrokenMarkdownLinks: 'warn',
     },
   },
-  headTags: [
-    {
-      tagName: 'script',
-      attributes: {},
-      innerHTML: `
-        if (window.location.hostname === 'community.w7s.io' && window.location.pathname === '/') {
-          window.location.replace('/docs/' + window.location.search + window.location.hash);
-        }
-      `,
-    },
-  ],
-
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -55,7 +43,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'W7S Community',
+      title: 'W7S Docs',
       items: [
         {
           type: 'docSidebar',

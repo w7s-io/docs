@@ -1,16 +1,21 @@
-const CANONICAL_DOCS_URL = "https://community.w7s.io/docs/";
-const REDIRECT_HOSTS = new Set(["w7s.io", "www.w7s.io"]);
+const CANONICAL_ORIGIN = "https://www.w7s.io";
+const APEX_HOST = "w7s.io";
+const LEGACY_DOCS_HOST = "community.w7s.io";
 
-const canonicalDocsUrl = (request: Request) => {
+const canonicalUrl = (request: Request) => {
   const source = new URL(request.url);
-  const target = new URL(CANONICAL_DOCS_URL);
+  const target = new URL(CANONICAL_ORIGIN);
 
-  if (source.pathname === "/" || source.pathname === "/docs" || source.pathname === "/docs/") {
-    target.pathname = "/docs/";
-  } else if (source.pathname.startsWith("/docs/")) {
-    target.pathname = source.pathname;
+  if (source.hostname.toLowerCase() === LEGACY_DOCS_HOST) {
+    if (source.pathname === "/" || source.pathname === "/docs" || source.pathname === "/docs/") {
+      target.pathname = "/docs/";
+    } else if (source.pathname.startsWith("/docs/")) {
+      target.pathname = source.pathname;
+    } else {
+      target.pathname = `/docs${source.pathname}`;
+    }
   } else {
-    target.pathname = `/docs${source.pathname}`;
+    target.pathname = source.pathname;
   }
 
   target.search = source.search;
@@ -20,8 +25,8 @@ const canonicalDocsUrl = (request: Request) => {
 export default {
   fetch(request: Request) {
     const hostname = new URL(request.url).hostname.toLowerCase();
-    if (REDIRECT_HOSTS.has(hostname)) {
-      return Response.redirect(canonicalDocsUrl(request), 308);
+    if (hostname === APEX_HOST || hostname === LEGACY_DOCS_HOST) {
+      return Response.redirect(canonicalUrl(request), 308);
     }
 
     return new Response("Not found.", { status: 404 });
