@@ -30,6 +30,67 @@ const OPTIONS = [
   },
 ];
 
+const COMPARISON_ROWS = [
+  {
+    platform: "W7S",
+    demand: "Launch to real traction",
+    firstDeploy: "GitHub Actions only; no W7S account, card, or cloud setup for community deploys.",
+    controlPlane: "Your deployment workflow is the control plane.",
+    growth: "Start free, then pay per use after the app has real demand.",
+    w7sEdge: "Shortest path from repo to public URL.",
+    primary: true,
+  },
+  {
+    platform: "Vercel",
+    demand: "Frontend teams that want a full product platform.",
+    firstDeploy: "Create a Vercel project and connect the repo to their platform.",
+    controlPlane: "Vercel dashboard and Git integration sit between repo and runtime.",
+    growth: "Usage, teams, previews, and platform features scale inside Vercel.",
+    w7sEdge: "W7S keeps deploys in GitHub Actions when GitHub already owns CI.",
+  },
+  {
+    platform: "AWS",
+    demand: "Teams already standardizing on AWS.",
+    firstDeploy: "AWS account, Amplify app, IAM, and billing context before launch.",
+    controlPlane: "AWS Console and service configuration become part of deployment.",
+    growth: "Powerful pay-as-you-go cloud, with cloud operations entering early.",
+    w7sEdge: "W7S skips AWS setup until the repo actually proves demand.",
+  },
+  {
+    platform: "Azure",
+    demand: "Microsoft and Azure-governed organizations.",
+    firstDeploy: "Azure resource, hosting plan, and portal setup before the app is live.",
+    controlPlane: "Azure Portal plus GitHub Actions or Azure DevOps integration.",
+    growth: "Useful when Azure governance matters more than launch speed.",
+    w7sEdge: "W7S is faster for repos that only need deploy, URL, and usage tracking.",
+  },
+  {
+    platform: "Netlify",
+    demand: "Jamstack teams that want a hosted product workflow.",
+    firstDeploy: "Create a Netlify team/site and connect the Git provider.",
+    controlPlane: "Netlify dashboard and Git app own the deployment surface.",
+    growth: "Usage is shaped by credits, plan choices, and add-on features.",
+    w7sEdge: "W7S keeps the repo central and avoids product-plan decisions upfront.",
+  },
+  {
+    platform: "Google Cloud",
+    demand: "Container and serverless workloads already heading to Google Cloud.",
+    firstDeploy: "Google Cloud project, APIs, IAM, region, and billing setup before production.",
+    controlPlane: "Cloud Run, Cloud Build, gcloud, and project configuration.",
+    growth: "Strong pay-per-use runtime once cloud setup is accepted.",
+    w7sEdge: "W7S avoids project, IAM, and container setup for community deploys.",
+  },
+];
+
+const CHART_COLUMNS = [
+  ["platform", "Platform"],
+  ["demand", "Demand fit"],
+  ["firstDeploy", "First deploy"],
+  ["controlPlane", "Control plane"],
+  ["growth", "When usage grows"],
+  ["w7sEdge", "Why W7S wins"],
+];
+
 export default function Comparison() {
   return (
     <section
@@ -80,6 +141,79 @@ export default function Comparison() {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-8 border border-white/10 bg-white/10">
+          <div className="bg-[#0b0b0c] px-5 py-4 sm:px-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-amber-400 mb-2">
+                // demand chart
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl text-white leading-tight">
+                W7S vs the default cloud path
+              </h3>
+            </div>
+            <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
+              A quick read on what each option asks from a developer before and
+              after an app starts getting real traffic.
+            </p>
+          </div>
+
+          <div className="hidden xl:grid grid-cols-[0.85fr_1fr_1.35fr_1.3fr_1.2fr_1.25fr] gap-px text-xs">
+            {CHART_COLUMNS.map(([, label]) => (
+              <div
+                key={label}
+                className="bg-black px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-zinc-500"
+              >
+                {label}
+              </div>
+            ))}
+
+            {COMPARISON_ROWS.map((row) =>
+              CHART_COLUMNS.map(([key]) => {
+                const isPlatform = key === "platform";
+                return (
+                  <div
+                    key={`${row.platform}-${key}`}
+                    className={`${row.primary ? "bg-[#0c0a06]" : "bg-[#101012]"} px-4 py-4 leading-relaxed ${row.primary ? "text-zinc-200" : "text-zinc-500"}`}
+                  >
+                    {isPlatform ? (
+                      <span className={`font-display text-lg ${row.primary ? "text-amber-400" : "text-white"}`}>
+                        {row.platform}
+                      </span>
+                    ) : (
+                      row[key]
+                    )}
+                  </div>
+                );
+              }),
+            )}
+          </div>
+
+          <div className="xl:hidden grid grid-cols-1 sm:grid-cols-2 gap-px">
+            {COMPARISON_ROWS.map((row) => (
+              <div
+                key={row.platform}
+                className={`${row.primary ? "bg-[#0c0a06]" : "bg-[#101012]"} p-5`}
+              >
+                <div className={`font-display text-2xl mb-4 ${row.primary ? "text-amber-400" : "text-white"}`}>
+                  {row.platform}
+                </div>
+                <dl className="space-y-4">
+                  {CHART_COLUMNS.slice(1).map(([key, label]) => (
+                    <div key={`${row.platform}-${key}`}>
+                      <dt className="text-[10px] uppercase tracking-[0.22em] text-zinc-600 mb-1">
+                        {label}
+                      </dt>
+                      <dd className={`text-xs leading-relaxed ${row.primary ? "text-zinc-200" : "text-zinc-500"}`}>
+                        {row[key]}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
