@@ -1,0 +1,58 @@
+---
+id: pricing
+title: Pricing
+description: Estimate W7S monthly usage from traffic, storage, queues, logs, and stateful backend features.
+---
+
+import PricingCalculator from '@site/src/components/PricingCalculator';
+
+[w7s.cloud](https://w7s.cloud/) is free to start. You do not need a W7S account, a credit card, or a separate cloud setup to deploy through the hosted service.
+
+The hosted service is still intentionally simple: small apps can deploy, test, demo, and share before billing matters. When an app starts getting meaningful traffic, the model should be usage-based instead of a mandatory subscription just to keep the app online.
+
+<PricingCalculator />
+
+## How To Read This
+
+The calculator estimates the underlying Cloudflare-backed cost of running an app on a W7S installation. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
+
+Two toggles matter:
+
+- **Apply Cloudflare monthly included usage** models one installation that still has included account usage available.
+- **Include the $25 Workers for Platforms account plan** models the shared monthly platform floor for a self-hosted W7S installation.
+
+If you are estimating one app inside a busy shared W7S account, turn off included usage to see the raw marginal cost after the account-wide allowances have already been consumed.
+
+## What Drives Cost
+
+| W7S area | Main cost driver | Why it matters |
+| --- | --- | --- |
+| Public traffic | Workers for Platforms requests and CPU | W7S routes requests through the platform Worker and native app Worker. Cloudflare bills one request across the dispatch chain, while CPU is counted across the Workers involved. |
+| Static frontends | R2 storage and R2 Class B reads on cache misses | W7S stores deploy assets in R2 and uses the Worker Cache API for immutable assets. Better cache hit rates reduce R2 reads. |
+| Native backends | CPU milliseconds, storage reads/writes, logs | Expensive handlers, chatty data access, and noisy logging increase cost faster than simple request count. |
+| KV, D1, R2 | Operation counts and stored GB-month | W7S can provision per-app storage bindings; each Cloudflare product has its own included usage and overage rate. |
+| Queues | Operations per message | A normal delivered queue message is roughly one write, one read, and one delete. Retries add more reads. |
+| Durable Objects | Requests, active duration, and storage | Long-lived non-hibernated objects can dominate cost even if request volume is low. |
+| Logs | Events written | W7S exposes app console and exception logs, but log volume should stay intentional. |
+
+## Pricing Sources
+
+The calculator uses public Cloudflare pricing as reviewed on **May 27, 2026**:
+
+| Product | Pricing source |
+| --- | --- |
+| Workers for Platforms | [Cloudflare Workers for Platforms pricing](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/reference/pricing/) |
+| R2 | [Cloudflare R2 pricing](https://developers.cloudflare.com/r2/pricing/) |
+| Workers KV | [Cloudflare Workers KV pricing](https://developers.cloudflare.com/kv/platform/pricing/) |
+| D1 | [Cloudflare D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/) |
+| Queues | [Cloudflare Queues pricing](https://developers.cloudflare.com/queues/platform/pricing/) |
+| Durable Objects | [Cloudflare Durable Objects pricing](https://developers.cloudflare.com/durable-objects/platform/pricing/) |
+| Workers Logs | [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/#workers-logs) |
+
+Cloudflare pricing can change. Treat this page as a planning tool and re-check the source pages before making a committed pricing decision.
+
+## Free-Tier Policy
+
+W7S also has its own free-tier guardrails. These are not billing-grade counters yet; they are operational protections that keep one app, owner, or global account from burning through shared infrastructure unexpectedly.
+
+Use the [Usage Accounting](./usage-accounting.md) API to inspect daily usage, warning thresholds, hard daily caps, hourly Cloudflare-synced resource usage, and the GitHub issue workflow that reports quota pressure back to the repository.
