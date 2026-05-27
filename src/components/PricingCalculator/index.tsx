@@ -86,7 +86,7 @@ const PROFILE_VALUES: Record<ProfileId, Inputs> = {
     runtimeScripts: 1,
   },
   fullstack: {
-    visitorsPerDay: 10_000,
+    visitorsPerDay: 1_000,
     pageViewsPerVisitor: 2,
     staticAssetsPerPage: 10,
     backendRequestsPerPage: 1.5,
@@ -595,9 +595,9 @@ export default function PricingCalculator() {
           id="visitorsPerDay"
           label="Visitors per day"
           help="Human visitors reaching the app each day."
-          min={0}
+          min={100}
           max={100_000}
-          step={1_000}
+          step={100}
           value={inputs.visitorsPerDay}
           valueLabel={formatNumber(inputs.visitorsPerDay)}
           onChange={updateInput}
