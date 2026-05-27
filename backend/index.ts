@@ -2,6 +2,15 @@ const CANONICAL_ORIGIN = "https://www.w7s.io";
 const APEX_HOST = "w7s.io";
 const LEGACY_DOCS_HOST = "community.w7s.io";
 
+const redirect = (url: string) =>
+  new Response(null, {
+    status: 302,
+    headers: {
+      "cache-control": "no-store",
+      location: url,
+    },
+  });
+
 const canonicalUrl = (request: Request) => {
   const source = new URL(request.url);
   const target = new URL(CANONICAL_ORIGIN);
@@ -26,7 +35,7 @@ export default {
   fetch(request: Request) {
     const hostname = new URL(request.url).hostname.toLowerCase();
     if (hostname === APEX_HOST || hostname === LEGACY_DOCS_HOST) {
-      return Response.redirect(canonicalUrl(request), 308);
+      return redirect(canonicalUrl(request));
     }
 
     return new Response("Not found.", { status: 404 });
