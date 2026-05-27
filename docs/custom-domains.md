@@ -31,7 +31,7 @@ For a subdomain, create a proxied CNAME:
 ```text
 Type: CNAME
 Name: fullstack-example
-Target: w7s.cloud
+Target: w7w.cloud
 Proxy: enabled
 ```
 

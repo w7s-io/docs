@@ -16,7 +16,7 @@ const QA = [
   },
   {
     q: "How does the URL get generated?",
-    a: "Your deploy is served by W7S Cloud at https://<your-github-username>.w7s.cloud/<repo-name>. So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.w7s.cloud/notepad. Custom domains work via CNAME file.",
+    a: "Your deploy is served by W7S Cloud at https://<your-github-username>.w7s.cloud/<repo-name>. So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.w7s.cloud/notepad. Custom domains are a CNAME file in the deploy plus DNS pointing at w7w.cloud.",
   },
   {
     q: "Is it really open source?",
