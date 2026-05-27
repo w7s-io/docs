@@ -99,6 +99,8 @@ Static frontend roots:
 
 ```text
 frontend/dist/
+frontend/build/
+frontend/out/
 dist/client/
 dist/
 build/
@@ -106,6 +108,8 @@ out/
 ```
 
 Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar Cloudflare/Vite SSR builds.
+
+If `backend/`, `worker/`, or `dist/server/` exists but does not contain a supported entrypoint, W7S still deploys a valid static frontend and returns a `deploymentWarnings` entry explaining that the backend was skipped. If there is no deployable frontend, the archive is rejected.
 
 ## Free-tier shape caps
 
