@@ -111,6 +111,8 @@ Static roots normally need an `index.html`. `dist/client/` may be asset-only whe
 
 If `backend/`, `worker/`, or `dist/server/` exists but does not contain a supported JavaScript or TypeScript entrypoint, W7S still deploys a valid static frontend and returns a `deploymentWarnings` entry explaining that the backend was skipped. If there is no deployable frontend, the archive is rejected.
 
+See [Project Layouts](./project-layouts.md#native-backend-function-shape) for the native backend handler contract and a Hono example.
+
 ## Free-tier shape caps
 
 W7S rejects deploys that are too large or declare too many resources before anything is published:

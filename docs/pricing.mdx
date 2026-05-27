@@ -14,9 +14,11 @@ The hosted service is still intentionally simple: small apps can deploy, test, d
 
 ## How To Read This
 
-The calculator estimates monthly W7S usage from traffic, storage, queues, logs, and stateful backend features. It also includes W7S platform overhead for routing, usage enforcement, usage counters, log handling, and other control-plane work. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
+The calculator estimates monthly W7S usage from traffic, storage, queues, logs, and stateful backend features. It also includes W7S platform overhead for routing, usage enforcement, usage counters, log handling, and other control-plane work. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted [w7s.cloud](https://w7s.cloud/) bill.
 
-The estimate intentionally does not subtract included monthly usage, free-tier allowances, or account-level plan floors. It estimates operating cost from the selected traffic shape, adds W7S overhead, then applies a 50% gross margin.
+Pick a startup stage first. Each stage sets the sliders to a common traffic and infrastructure shape, and every slider uses whole-number values. The `Free tier` stage is the included baseline and should estimate `$0.00`. Higher stages show billable overage above that baseline.
+
+The estimate subtracts the included baseline first, estimates operating cost from the selected traffic shape, adds W7S overhead, then applies a 50% gross margin to the billable overage.
 
 ## What Drives Cost
 

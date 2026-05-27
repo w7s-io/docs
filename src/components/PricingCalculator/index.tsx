@@ -26,7 +26,7 @@ type Inputs = {
   runtimeScripts: number;
 };
 
-type ProfileId = 'static' | 'fullstack' | 'data' | 'realtime';
+type StageId = 'free' | 'mvp' | 'launch' | 'seed' | 'seriesA' | 'growth';
 
 type CostLine = {
   label: string;
@@ -35,6 +35,35 @@ type CostLine = {
   unitSize: number;
   unitPrice: number;
   priceLabel: string;
+};
+
+type UsageMetrics = {
+  monthlyVisitors: number;
+  pageViews: number;
+  staticAssetRequests: number;
+  backendRequests: number;
+  runtimeRequests: number;
+  runtimeCpuMs: number;
+  queueMessages: number;
+  statefulObjectRequests: number;
+  objectStorageGb: number;
+  objectReadOperations: number;
+  objectWriteOperations: number;
+  keyValueReads: number;
+  keyValueWrites: number;
+  keyValueStorageGb: number;
+  sqlRowsRead: number;
+  sqlRowsWritten: number;
+  sqlStorageGb: number;
+  queueOps: number;
+  statefulObjectGbSeconds: number;
+  statefulObjectStorageGb: number;
+  logEvents: number;
+  runtimeScripts: number;
+  platformExecutions: number;
+  platformCpuMs: number;
+  usageGuardReads: number;
+  usageCounterWrites: number;
 };
 
 const DAYS_PER_MONTH = 30;
@@ -60,39 +89,41 @@ const PRICING = {
   logsPricePerMillion: 0.6,
 };
 
-const PROFILE_VALUES: Record<ProfileId, Inputs> = {
-  static: {
-    visitorsPerDay: 5_000,
-    pageViewsPerVisitor: 2,
-    staticAssetsPerPage: 12,
-    backendRequestsPerPage: 0,
-    averageCpuMs: 1,
-    staticCacheHitRate: 95,
-    keyValueReadsPerVisitor: 0,
-    keyValueWritesPer100Visitors: 0,
-    sqlRowsReadPerVisitor: 0,
-    sqlRowsWrittenPer100Visitors: 0,
-    objectReadsPer100Visitors: 0,
-    objectWritesPer100Visitors: 0,
-    queueMessagesPer100Visitors: 0,
-    statefulObjectCallsPer100Visitors: 0,
-    statefulObjectActiveSecondsPerDay: 0,
-    logEventsPerVisitor: 0,
-    staticStorageGb: 1,
-    keyValueStorageGb: 0,
-    sqlStorageGb: 0,
-    objectStorageGb: 0,
-    statefulObjectStorageGb: 0,
-    runtimeScripts: 1,
-  },
-  fullstack: {
+const FREE_TIER_INPUTS: Inputs = {
+  visitorsPerDay: 100,
+  pageViewsPerVisitor: 5,
+  staticAssetsPerPage: 10,
+  backendRequestsPerPage: 1,
+  averageCpuMs: 5,
+  staticCacheHitRate: 50,
+  keyValueReadsPerVisitor: 1,
+  keyValueWritesPer100Visitors: 1,
+  sqlRowsReadPerVisitor: 10,
+  sqlRowsWrittenPer100Visitors: 1,
+  objectReadsPer100Visitors: 0,
+  objectWritesPer100Visitors: 0,
+  queueMessagesPer100Visitors: 0,
+  statefulObjectCallsPer100Visitors: 0,
+  statefulObjectActiveSecondsPerDay: 0,
+  logEventsPerVisitor: 0,
+  staticStorageGb: 1,
+  keyValueStorageGb: 1,
+  sqlStorageGb: 1,
+  objectStorageGb: 0,
+  statefulObjectStorageGb: 0,
+  runtimeScripts: 1,
+};
+
+const STAGE_VALUES: Record<StageId, Inputs> = {
+  free: FREE_TIER_INPUTS,
+  mvp: {
     visitorsPerDay: 1_000,
     pageViewsPerVisitor: 5,
-    staticAssetsPerPage: 10,
-    backendRequestsPerPage: 1.5,
+    staticAssetsPerPage: 12,
+    backendRequestsPerPage: 2,
     averageCpuMs: 8,
-    staticCacheHitRate: 90,
-    keyValueReadsPerVisitor: 1,
+    staticCacheHitRate: 92,
+    keyValueReadsPerVisitor: 2,
     keyValueWritesPer100Visitors: 2,
     sqlRowsReadPerVisitor: 30,
     sqlRowsWrittenPer100Visitors: 2,
@@ -101,78 +132,137 @@ const PROFILE_VALUES: Record<ProfileId, Inputs> = {
     queueMessagesPer100Visitors: 1,
     statefulObjectCallsPer100Visitors: 0,
     statefulObjectActiveSecondsPerDay: 0,
-    logEventsPerVisitor: 0.4,
+    logEventsPerVisitor: 1,
     staticStorageGb: 2,
-    keyValueStorageGb: 0.2,
+    keyValueStorageGb: 1,
     sqlStorageGb: 1,
     objectStorageGb: 0,
     statefulObjectStorageGb: 0,
     runtimeScripts: 1,
   },
-  data: {
-    visitorsPerDay: 50_000,
-    pageViewsPerVisitor: 3,
-    staticAssetsPerPage: 10,
+  launch: {
+    visitorsPerDay: 5_000,
+    pageViewsPerVisitor: 6,
+    staticAssetsPerPage: 14,
     backendRequestsPerPage: 3,
+    averageCpuMs: 10,
+    staticCacheHitRate: 90,
+    keyValueReadsPerVisitor: 3,
+    keyValueWritesPer100Visitors: 5,
+    sqlRowsReadPerVisitor: 60,
+    sqlRowsWrittenPer100Visitors: 5,
+    objectReadsPer100Visitors: 2,
+    objectWritesPer100Visitors: 1,
+    queueMessagesPer100Visitors: 5,
+    statefulObjectCallsPer100Visitors: 1,
+    statefulObjectActiveSecondsPerDay: 300,
+    logEventsPerVisitor: 2,
+    staticStorageGb: 5,
+    keyValueStorageGb: 2,
+    sqlStorageGb: 3,
+    objectStorageGb: 10,
+    statefulObjectStorageGb: 1,
+    runtimeScripts: 2,
+  },
+  seed: {
+    visitorsPerDay: 20_000,
+    pageViewsPerVisitor: 6,
+    staticAssetsPerPage: 16,
+    backendRequestsPerPage: 4,
     averageCpuMs: 14,
     staticCacheHitRate: 88,
-    keyValueReadsPerVisitor: 2,
+    keyValueReadsPerVisitor: 5,
     keyValueWritesPer100Visitors: 10,
-    sqlRowsReadPerVisitor: 120,
+    sqlRowsReadPerVisitor: 150,
     sqlRowsWrittenPer100Visitors: 15,
     objectReadsPer100Visitors: 10,
-    objectWritesPer100Visitors: 1,
-    queueMessagesPer100Visitors: 8,
-    statefulObjectCallsPer100Visitors: 2,
-    statefulObjectActiveSecondsPerDay: 1_200,
-    logEventsPerVisitor: 1,
-    staticStorageGb: 5,
-    keyValueStorageGb: 1,
-    sqlStorageGb: 8,
-    objectStorageGb: 50,
-    statefulObjectStorageGb: 1,
-    runtimeScripts: 4,
-  },
-  realtime: {
-    visitorsPerDay: 100_000,
-    pageViewsPerVisitor: 4,
-    staticAssetsPerPage: 8,
-    backendRequestsPerPage: 4,
-    averageCpuMs: 18,
-    staticCacheHitRate: 85,
-    keyValueReadsPerVisitor: 2,
-    keyValueWritesPer100Visitors: 20,
-    sqlRowsReadPerVisitor: 80,
-    sqlRowsWrittenPer100Visitors: 20,
-    objectReadsPer100Visitors: 5,
-    objectWritesPer100Visitors: 1,
+    objectWritesPer100Visitors: 3,
     queueMessagesPer100Visitors: 20,
-    statefulObjectCallsPer100Visitors: 40,
-    statefulObjectActiveSecondsPerDay: 28_800,
-    logEventsPerVisitor: 1.5,
-    staticStorageGb: 6,
-    keyValueStorageGb: 2,
+    statefulObjectCallsPer100Visitors: 5,
+    statefulObjectActiveSecondsPerDay: 2_400,
+    logEventsPerVisitor: 3,
+    staticStorageGb: 12,
+    keyValueStorageGb: 5,
     sqlStorageGb: 12,
     objectStorageGb: 100,
     statefulObjectStorageGb: 4,
-    runtimeScripts: 8,
+    runtimeScripts: 5,
+  },
+  seriesA: {
+    visitorsPerDay: 50_000,
+    pageViewsPerVisitor: 7,
+    staticAssetsPerPage: 18,
+    backendRequestsPerPage: 6,
+    averageCpuMs: 18,
+    staticCacheHitRate: 86,
+    keyValueReadsPerVisitor: 8,
+    keyValueWritesPer100Visitors: 20,
+    sqlRowsReadPerVisitor: 300,
+    sqlRowsWrittenPer100Visitors: 35,
+    objectReadsPer100Visitors: 30,
+    objectWritesPer100Visitors: 8,
+    queueMessagesPer100Visitors: 50,
+    statefulObjectCallsPer100Visitors: 20,
+    statefulObjectActiveSecondsPerDay: 14_400,
+    logEventsPerVisitor: 5,
+    staticStorageGb: 30,
+    keyValueStorageGb: 12,
+    sqlStorageGb: 40,
+    objectStorageGb: 500,
+    statefulObjectStorageGb: 20,
+    runtimeScripts: 12,
+  },
+  growth: {
+    visitorsPerDay: 100_000,
+    pageViewsPerVisitor: 8,
+    staticAssetsPerPage: 20,
+    backendRequestsPerPage: 8,
+    averageCpuMs: 24,
+    staticCacheHitRate: 85,
+    keyValueReadsPerVisitor: 12,
+    keyValueWritesPer100Visitors: 40,
+    sqlRowsReadPerVisitor: 600,
+    sqlRowsWrittenPer100Visitors: 80,
+    objectReadsPer100Visitors: 80,
+    objectWritesPer100Visitors: 20,
+    queueMessagesPer100Visitors: 120,
+    statefulObjectCallsPer100Visitors: 60,
+    statefulObjectActiveSecondsPerDay: 43_200,
+    logEventsPerVisitor: 8,
+    staticStorageGb: 60,
+    keyValueStorageGb: 25,
+    sqlStorageGb: 120,
+    objectStorageGb: 2_000,
+    statefulObjectStorageGb: 80,
+    runtimeScripts: 25,
   },
 };
 
-const PROFILE_LABELS: Record<ProfileId, string> = {
-  static: 'Static',
-  fullstack: 'Full-stack',
-  data: 'Data app',
-  realtime: 'Realtime',
+const STAGE_LABELS: Record<StageId, string> = {
+  free: 'Free tier',
+  mvp: 'MVP',
+  launch: 'Launch',
+  seed: 'Seed',
+  seriesA: 'Series A',
+  growth: 'Growth',
 };
+
+const STAGE_DESCRIPTIONS: Record<StageId | 'custom', string> = {
+  free: 'Top of the included free-tier baseline. This stage should estimate $0.00.',
+  mvp: 'A small product with real users, simple data access, and light logs.',
+  launch: 'A public launch with steady daily traffic, queues, storage, and early backend usage.',
+  seed: 'A seed-stage app with meaningful data volume, background work, and observability.',
+  seriesA: 'A larger production app with heavier API use, storage, logs, and stateful work.',
+  growth: 'A high-traffic app pushing the current calculator range.',
+  custom: 'Custom slider values.',
+};
+
+const STAGE_ORDER: StageId[] = ['free', 'mvp', 'launch', 'seed', 'seriesA', 'growth'];
 
 const numberFormatter = new Intl.NumberFormat('en-US');
 const compactFormatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
   maximumFractionDigits: 1,
-});
-const decimalFormatter = new Intl.NumberFormat('en-US', {
-  maximumFractionDigits: 2,
 });
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -189,7 +279,103 @@ const formatCompact = (value: number) => compactFormatter.format(Math.round(valu
 
 const formatNumber = (value: number) => numberFormatter.format(Math.round(value));
 
-const formatDecimal = (value: number) => decimalFormatter.format(value);
+const billable = (usage: number, included: number) =>
+  Math.max(0, usage - included);
+
+const calculateMetrics = (input: Inputs): UsageMetrics => {
+  const monthlyVisitors = input.visitorsPerDay * DAYS_PER_MONTH;
+  const pageViews = monthlyVisitors * input.pageViewsPerVisitor;
+  const staticAssetRequests = pageViews * input.staticAssetsPerPage;
+  const backendRequests = pageViews * input.backendRequestsPerPage;
+  const queueMessages = (monthlyVisitors * input.queueMessagesPer100Visitors) / 100;
+  const statefulObjectRequests = (monthlyVisitors * input.statefulObjectCallsPer100Visitors) / 100;
+  const objectAppReads = (monthlyVisitors * input.objectReadsPer100Visitors) / 100;
+  const objectAppWrites = (monthlyVisitors * input.objectWritesPer100Visitors) / 100;
+  const cacheMissRatio = Math.max(0, Math.min(100, 100 - input.staticCacheHitRate)) / 100;
+  const staticObjectReads = staticAssetRequests * cacheMissRatio;
+  const keyValueReads = monthlyVisitors * input.keyValueReadsPerVisitor;
+  const keyValueWrites = (monthlyVisitors * input.keyValueWritesPer100Visitors) / 100;
+  const sqlRowsRead = monthlyVisitors * input.sqlRowsReadPerVisitor;
+  const sqlRowsWritten = (monthlyVisitors * input.sqlRowsWrittenPer100Visitors) / 100;
+  const queueOps = queueMessages * 3;
+  const logEvents = monthlyVisitors * input.logEventsPerVisitor;
+  const runtimeRequests =
+    pageViews +
+    staticAssetRequests +
+    backendRequests +
+    queueMessages +
+    statefulObjectRequests;
+  const runtimeCpuMs =
+    pageViews * 0.25 +
+    staticAssetRequests * 0.1 +
+    backendRequests * input.averageCpuMs +
+    queueMessages * Math.max(1, input.averageCpuMs * 0.5) +
+    statefulObjectRequests * Math.max(1, input.averageCpuMs * 0.25);
+  const statefulObjectGbSeconds =
+    input.statefulObjectActiveSecondsPerDay * DAYS_PER_MONTH * 0.125;
+  const objectStorageGb = input.staticStorageGb + input.objectStorageGb;
+  const objectReadOperations = staticObjectReads + objectAppReads;
+  const objectWriteOperations = objectAppWrites;
+  const publicRequests = pageViews + staticAssetRequests + backendRequests;
+  const platformExecutions =
+    publicRequests +
+    queueMessages * 2 +
+    statefulObjectRequests +
+    logEvents;
+  const platformCpuMs =
+    pageViews * 0.25 +
+    staticAssetRequests * 0.15 +
+    backendRequests * 0.75 +
+    queueMessages * 2 +
+    statefulObjectRequests * 0.5 +
+    logEvents * 0.15;
+  const usageGuardReads =
+    runtimeRequests +
+    objectReadOperations +
+    objectWriteOperations +
+    keyValueReads +
+    keyValueWrites +
+    sqlRowsRead +
+    sqlRowsWritten +
+    queueOps +
+    logEvents;
+  const usageCounterWrites =
+    runtimeRequests +
+    objectWriteOperations +
+    keyValueWrites +
+    sqlRowsWritten +
+    queueOps +
+    logEvents;
+
+  return {
+    monthlyVisitors,
+    pageViews,
+    staticAssetRequests,
+    backendRequests,
+    runtimeRequests,
+    runtimeCpuMs,
+    queueMessages,
+    statefulObjectRequests,
+    objectStorageGb,
+    objectReadOperations,
+    objectWriteOperations,
+    keyValueReads,
+    keyValueWrites,
+    keyValueStorageGb: input.keyValueStorageGb,
+    sqlRowsRead,
+    sqlRowsWritten,
+    sqlStorageGb: input.sqlStorageGb,
+    queueOps,
+    statefulObjectGbSeconds,
+    statefulObjectStorageGb: input.statefulObjectStorageGb,
+    logEvents,
+    runtimeScripts: input.runtimeScripts,
+    platformExecutions,
+    platformCpuMs,
+    usageGuardReads,
+    usageCounterWrites,
+  };
+};
 
 const lineCost = (line: CostLine) => (line.usage / line.unitSize) * line.unitPrice;
 
@@ -256,248 +442,188 @@ function SliderField({
 }
 
 export default function PricingCalculator() {
-  const [profile, setProfile] = useState<ProfileId>('fullstack');
-  const [inputs, setInputs] = useState<Inputs>(PROFILE_VALUES.fullstack);
+  const [profile, setProfile] = useState<StageId | 'custom'>('free');
+  const [inputs, setInputs] = useState<Inputs>(STAGE_VALUES.free);
 
   const updateInput = (id: keyof Inputs, value: number) => {
+    setProfile('custom');
     setInputs((current) => ({...current, [id]: value}));
   };
 
-  const selectProfile = (nextProfile: ProfileId) => {
+  const selectProfile = (nextProfile: StageId) => {
     setProfile(nextProfile);
-    setInputs(PROFILE_VALUES[nextProfile]);
+    setInputs(STAGE_VALUES[nextProfile]);
   };
 
   const estimate = useMemo(() => {
-    const monthlyVisitors = inputs.visitorsPerDay * DAYS_PER_MONTH;
-    const pageViews = monthlyVisitors * inputs.pageViewsPerVisitor;
-    const staticAssetRequests = pageViews * inputs.staticAssetsPerPage;
-    const backendRequests = pageViews * inputs.backendRequestsPerPage;
-    const queueMessages = (monthlyVisitors * inputs.queueMessagesPer100Visitors) / 100;
-    const statefulObjectRequests = (monthlyVisitors * inputs.statefulObjectCallsPer100Visitors) / 100;
-    const objectAppReads = (monthlyVisitors * inputs.objectReadsPer100Visitors) / 100;
-    const objectAppWrites = (monthlyVisitors * inputs.objectWritesPer100Visitors) / 100;
-    const cacheMissRatio = Math.max(0, Math.min(100, 100 - inputs.staticCacheHitRate)) / 100;
-    const staticObjectReads = staticAssetRequests * cacheMissRatio;
-    const keyValueReads = monthlyVisitors * inputs.keyValueReadsPerVisitor;
-    const keyValueWrites = (monthlyVisitors * inputs.keyValueWritesPer100Visitors) / 100;
-    const sqlRowsRead = monthlyVisitors * inputs.sqlRowsReadPerVisitor;
-    const sqlRowsWritten = (monthlyVisitors * inputs.sqlRowsWrittenPer100Visitors) / 100;
-    const queueOps = queueMessages * 3;
-    const logEvents = monthlyVisitors * inputs.logEventsPerVisitor;
-    const runtimeRequests =
-      pageViews +
-      staticAssetRequests +
-      backendRequests +
-      queueMessages +
-      statefulObjectRequests;
-    const runtimeCpuMs =
-      pageViews * 0.25 +
-      staticAssetRequests * 0.1 +
-      backendRequests * inputs.averageCpuMs +
-      queueMessages * Math.max(1, inputs.averageCpuMs * 0.5) +
-      statefulObjectRequests * Math.max(1, inputs.averageCpuMs * 0.25);
-    const statefulObjectGbSeconds =
-      inputs.statefulObjectActiveSecondsPerDay * DAYS_PER_MONTH * 0.125;
-    const objectStorageGb = inputs.staticStorageGb + inputs.objectStorageGb;
-    const objectReadOperations = staticObjectReads + objectAppReads;
-    const objectWriteOperations = objectAppWrites;
-    const publicRequests = pageViews + staticAssetRequests + backendRequests;
-    const platformExecutions =
-      publicRequests +
-      queueMessages * 2 +
-      statefulObjectRequests +
-      logEvents;
-    const platformCpuMs =
-      pageViews * 0.25 +
-      staticAssetRequests * 0.15 +
-      backendRequests * 0.75 +
-      queueMessages * 2 +
-      statefulObjectRequests * 0.5 +
-      logEvents * 0.15;
-    const usageGuardReads =
-      runtimeRequests +
-      objectReadOperations +
-      objectWriteOperations +
-      keyValueReads +
-      keyValueWrites +
-      sqlRowsRead +
-      sqlRowsWritten +
-      queueOps +
-      logEvents;
-    const usageCounterWrites =
-      runtimeRequests +
-      objectWriteOperations +
-      keyValueWrites +
-      sqlRowsWritten +
-      queueOps +
-      logEvents;
+    const metrics = calculateMetrics(inputs);
+    const included = calculateMetrics(FREE_TIER_INPUTS);
 
     const operatingLines = [
       makeLine(
         'Runtime requests',
-        runtimeRequests,
-        formatCompact(runtimeRequests),
+        billable(metrics.runtimeRequests, included.runtimeRequests),
+        formatCompact(billable(metrics.runtimeRequests, included.runtimeRequests)),
         1_000_000,
         PRICING.runtimeRequestPricePerMillion,
         '$0.30 / 1M',
       ),
       makeLine(
         'Runtime CPU',
-        runtimeCpuMs,
-        `${formatCompact(runtimeCpuMs)} ms`,
+        billable(metrics.runtimeCpuMs, included.runtimeCpuMs),
+        `${formatCompact(billable(metrics.runtimeCpuMs, included.runtimeCpuMs))} ms`,
         1_000_000,
         PRICING.runtimeCpuPricePerMillionMs,
         '$0.02 / 1M ms',
       ),
       makeLine(
         'Deployed runtimes',
-        inputs.runtimeScripts,
-        formatNumber(inputs.runtimeScripts),
+        billable(metrics.runtimeScripts, included.runtimeScripts),
+        formatNumber(billable(metrics.runtimeScripts, included.runtimeScripts)),
         1,
         PRICING.runtimeScriptPrice,
         '$0.02 / runtime',
       ),
       makeLine(
         'Asset and object storage',
-        objectStorageGb,
-        `${formatDecimal(objectStorageGb)} GB`,
+        billable(metrics.objectStorageGb, included.objectStorageGb),
+        `${formatNumber(billable(metrics.objectStorageGb, included.objectStorageGb))} GB`,
         1,
         PRICING.objectStoragePricePerGb,
         '$0.015 / GB',
       ),
       makeLine(
         'Object write operations',
-        objectWriteOperations,
-        formatCompact(objectWriteOperations),
+        billable(metrics.objectWriteOperations, included.objectWriteOperations),
+        formatCompact(billable(metrics.objectWriteOperations, included.objectWriteOperations)),
         1_000_000,
         PRICING.objectWriteOperationsPricePerMillion,
         '$4.50 / 1M',
       ),
       makeLine(
         'Object read operations',
-        objectReadOperations,
-        formatCompact(objectReadOperations),
+        billable(metrics.objectReadOperations, included.objectReadOperations),
+        formatCompact(billable(metrics.objectReadOperations, included.objectReadOperations)),
         1_000_000,
         PRICING.objectReadOperationsPricePerMillion,
         '$0.36 / 1M',
       ),
       makeLine(
         'Key-value reads',
-        keyValueReads,
-        formatCompact(keyValueReads),
+        billable(metrics.keyValueReads, included.keyValueReads),
+        formatCompact(billable(metrics.keyValueReads, included.keyValueReads)),
         1_000_000,
         PRICING.keyValueReadPricePerMillion,
         '$0.50 / 1M',
       ),
       makeLine(
         'Key-value writes',
-        keyValueWrites,
-        formatCompact(keyValueWrites),
+        billable(metrics.keyValueWrites, included.keyValueWrites),
+        formatCompact(billable(metrics.keyValueWrites, included.keyValueWrites)),
         1_000_000,
         PRICING.keyValueWritePricePerMillion,
         '$5.00 / 1M',
       ),
       makeLine(
         'Key-value storage',
-        inputs.keyValueStorageGb,
-        `${formatDecimal(inputs.keyValueStorageGb)} GB`,
+        billable(metrics.keyValueStorageGb, included.keyValueStorageGb),
+        `${formatNumber(billable(metrics.keyValueStorageGb, included.keyValueStorageGb))} GB`,
         1,
         PRICING.keyValueStoragePricePerGb,
         '$0.50 / GB',
       ),
       makeLine(
         'SQL rows read',
-        sqlRowsRead,
-        formatCompact(sqlRowsRead),
+        billable(metrics.sqlRowsRead, included.sqlRowsRead),
+        formatCompact(billable(metrics.sqlRowsRead, included.sqlRowsRead)),
         1_000_000,
         PRICING.sqlRowsReadPricePerMillion,
         '$0.001 / 1M',
       ),
       makeLine(
         'SQL rows written',
-        sqlRowsWritten,
-        formatCompact(sqlRowsWritten),
+        billable(metrics.sqlRowsWritten, included.sqlRowsWritten),
+        formatCompact(billable(metrics.sqlRowsWritten, included.sqlRowsWritten)),
         1_000_000,
         PRICING.sqlRowsWrittenPricePerMillion,
         '$1.00 / 1M',
       ),
       makeLine(
         'SQL storage',
-        inputs.sqlStorageGb,
-        `${formatDecimal(inputs.sqlStorageGb)} GB`,
+        billable(metrics.sqlStorageGb, included.sqlStorageGb),
+        `${formatNumber(billable(metrics.sqlStorageGb, included.sqlStorageGb))} GB`,
         1,
         PRICING.sqlStoragePricePerGb,
         '$0.75 / GB',
       ),
       makeLine(
         'Queue operations',
-        queueOps,
-        formatCompact(queueOps),
+        billable(metrics.queueOps, included.queueOps),
+        formatCompact(billable(metrics.queueOps, included.queueOps)),
         1_000_000,
         PRICING.queueOpsPricePerMillion,
         '$0.40 / 1M',
       ),
       makeLine(
         'Stateful object requests',
-        statefulObjectRequests,
-        formatCompact(statefulObjectRequests),
+        billable(metrics.statefulObjectRequests, included.statefulObjectRequests),
+        formatCompact(billable(metrics.statefulObjectRequests, included.statefulObjectRequests)),
         1_000_000,
         PRICING.statefulObjectRequestPricePerMillion,
         '$0.15 / 1M',
       ),
       makeLine(
         'Stateful object duration',
-        statefulObjectGbSeconds,
-        `${formatCompact(statefulObjectGbSeconds)} GB-s`,
+        billable(metrics.statefulObjectGbSeconds, included.statefulObjectGbSeconds),
+        `${formatCompact(billable(metrics.statefulObjectGbSeconds, included.statefulObjectGbSeconds))} GB-s`,
         1_000_000,
         PRICING.statefulObjectDurationPricePerMillionGbSeconds,
         '$12.50 / 1M GB-s',
       ),
       makeLine(
         'Stateful object storage',
-        inputs.statefulObjectStorageGb,
-        `${formatDecimal(inputs.statefulObjectStorageGb)} GB`,
+        billable(metrics.statefulObjectStorageGb, included.statefulObjectStorageGb),
+        `${formatNumber(billable(metrics.statefulObjectStorageGb, included.statefulObjectStorageGb))} GB`,
         1,
         PRICING.statefulObjectStoragePricePerGb,
         '$0.20 / GB',
       ),
       makeLine(
         'App logs',
-        logEvents,
-        formatCompact(logEvents),
+        billable(metrics.logEvents, included.logEvents),
+        formatCompact(billable(metrics.logEvents, included.logEvents)),
         1_000_000,
         PRICING.logsPricePerMillion,
         '$0.60 / 1M',
       ),
       makeLine(
         'W7S routing executions',
-        platformExecutions,
-        formatCompact(platformExecutions),
+        billable(metrics.platformExecutions, included.platformExecutions),
+        formatCompact(billable(metrics.platformExecutions, included.platformExecutions)),
         1_000_000,
         PRICING.runtimeRequestPricePerMillion,
         '$0.30 / 1M',
       ),
       makeLine(
         'W7S routing CPU',
-        platformCpuMs,
-        `${formatCompact(platformCpuMs)} ms`,
+        billable(metrics.platformCpuMs, included.platformCpuMs),
+        `${formatCompact(billable(metrics.platformCpuMs, included.platformCpuMs))} ms`,
         1_000_000,
         PRICING.runtimeCpuPricePerMillionMs,
         '$0.02 / 1M ms',
       ),
       makeLine(
         'W7S usage guard reads',
-        usageGuardReads,
-        formatCompact(usageGuardReads),
+        billable(metrics.usageGuardReads, included.usageGuardReads),
+        formatCompact(billable(metrics.usageGuardReads, included.usageGuardReads)),
         1_000_000,
         PRICING.keyValueReadPricePerMillion,
         '$0.50 / 1M',
       ),
       makeLine(
         'W7S usage counter writes',
-        usageCounterWrites,
-        formatCompact(usageCounterWrites),
+        billable(metrics.usageCounterWrites, included.usageCounterWrites),
+        formatCompact(billable(metrics.usageCounterWrites, included.usageCounterWrites)),
         1_000_000,
         PRICING.keyValueWritePricePerMillion,
         '$5.00 / 1M',
@@ -523,14 +649,14 @@ export default function PricingCalculator() {
 
     return {
       lines,
-      monthlyVisitors,
-      pageViews,
-      staticAssetRequests,
-      backendRequests,
-      runtimeRequests,
-      runtimeCpuMs,
-      queueMessages,
-      statefulObjectRequests,
+      monthlyVisitors: metrics.monthlyVisitors,
+      pageViews: metrics.pageViews,
+      staticAssetRequests: metrics.staticAssetRequests,
+      backendRequests: metrics.backendRequests,
+      runtimeRequests: metrics.runtimeRequests,
+      runtimeCpuMs: metrics.runtimeCpuMs,
+      queueMessages: metrics.queueMessages,
+      statefulObjectRequests: metrics.statefulObjectRequests,
       usageCost: operatingCost,
       marginAmount,
       totalCost: operatingCost + marginAmount,
@@ -542,23 +668,24 @@ export default function PricingCalculator() {
       <div className={styles.header}>
         <div>
           <p className={styles.kicker}>Interactive estimate</p>
-          <h2>Move the traffic slider first.</h2>
+          <h2>Pick a startup stage.</h2>
           <p>
-            Start with visitors per day, then open the infrastructure sliders when
-            the app needs storage, queues, logs, or stateful backends.
+            Each stage sets the sliders to a common startup shape. The first
+            stage is the top of the included free tier, so it prices at zero.
           </p>
         </div>
         <div className={styles.totalPanel}>
           <span>Estimated monthly cost</span>
           <strong>{formatMoney(estimate.totalCost)}</strong>
           <small>
-            Includes W7S overhead and 50% gross margin.
+            Billable overage after the included free-tier baseline, W7S
+            overhead, and 50% gross margin.
           </small>
         </div>
       </div>
 
-      <div className={styles.profileGroup} role="group" aria-label="App profile">
-        {(Object.keys(PROFILE_VALUES) as ProfileId[]).map((id) => (
+      <div className={styles.profileGroup} role="group" aria-label="Startup stage">
+        {STAGE_ORDER.map((id) => (
           <button
             key={id}
             type="button"
@@ -566,9 +693,10 @@ export default function PricingCalculator() {
             aria-pressed={profile === id}
             onClick={() => selectProfile(id)}
           >
-            {PROFILE_LABELS[id]}
+            {STAGE_LABELS[id]}
           </button>
         ))}
+        <p className={styles.stageDescription}>{STAGE_DESCRIPTIONS[profile]}</p>
       </div>
 
       <div className={styles.summaryGrid}>
@@ -595,7 +723,7 @@ export default function PricingCalculator() {
           id="visitorsPerDay"
           label="Visitors per day"
           help="Human visitors reaching the app each day."
-          min={100}
+          min={FREE_TIER_INPUTS.visitorsPerDay}
           max={100_000}
           step={100}
           value={inputs.visitorsPerDay}
@@ -606,18 +734,18 @@ export default function PricingCalculator() {
           id="pageViewsPerVisitor"
           label="Page views per visitor"
           help="Used to estimate HTML requests and asset delivery."
-          min={1}
+          min={FREE_TIER_INPUTS.pageViewsPerVisitor}
           max={20}
-          step={0.5}
+          step={1}
           value={inputs.pageViewsPerVisitor}
-          valueLabel={formatDecimal(inputs.pageViewsPerVisitor)}
+          valueLabel={formatNumber(inputs.pageViewsPerVisitor)}
           onChange={updateInput}
         />
         <SliderField
           id="staticAssetsPerPage"
           label="Static assets per page"
           help="Scripts, CSS files, images, fonts, and generated files."
-          min={0}
+          min={FREE_TIER_INPUTS.staticAssetsPerPage}
           max={80}
           step={1}
           value={inputs.staticAssetsPerPage}
@@ -628,18 +756,18 @@ export default function PricingCalculator() {
           id="backendRequestsPerPage"
           label="Backend requests per page"
           help="API calls or native backend routes triggered by each page view."
-          min={0}
+          min={FREE_TIER_INPUTS.backendRequestsPerPage}
           max={20}
-          step={0.25}
+          step={1}
           value={inputs.backendRequestsPerPage}
-          valueLabel={formatDecimal(inputs.backendRequestsPerPage)}
+          valueLabel={formatNumber(inputs.backendRequestsPerPage)}
           onChange={updateInput}
         />
         <SliderField
           id="averageCpuMs"
           label="Average backend CPU"
           help="W7S caps backend CPU, but heavier handlers still cost more."
-          min={1}
+          min={FREE_TIER_INPUTS.averageCpuMs}
           max={200}
           step={1}
           value={inputs.averageCpuMs}
@@ -650,7 +778,7 @@ export default function PricingCalculator() {
           id="staticCacheHitRate"
           label="Static cache hit rate"
           help="Higher cache hits reduce origin reads for immutable assets."
-          min={0}
+          min={FREE_TIER_INPUTS.staticCacheHitRate}
           max={100}
           step={1}
           value={inputs.staticCacheHitRate}
@@ -666,7 +794,7 @@ export default function PricingCalculator() {
             id="keyValueReadsPerVisitor"
             label="Key-value reads per visitor"
             help="Sessions, feature flags, config, or cache lookups."
-            min={0}
+            min={FREE_TIER_INPUTS.keyValueReadsPerVisitor}
             max={100}
             step={1}
             value={inputs.keyValueReadsPerVisitor}
@@ -677,7 +805,7 @@ export default function PricingCalculator() {
             id="keyValueWritesPer100Visitors"
             label="Key-value writes per 100 visitors"
             help="Light session or state writes."
-            min={0}
+            min={FREE_TIER_INPUTS.keyValueWritesPer100Visitors}
             max={100}
             step={1}
             value={inputs.keyValueWritesPer100Visitors}
@@ -688,7 +816,7 @@ export default function PricingCalculator() {
             id="sqlRowsReadPerVisitor"
             label="SQL rows read per visitor"
             help="Rows scanned by queries, not just rows returned."
-            min={0}
+            min={FREE_TIER_INPUTS.sqlRowsReadPerVisitor}
             max={2_000}
             step={10}
             value={inputs.sqlRowsReadPerVisitor}
@@ -699,7 +827,7 @@ export default function PricingCalculator() {
             id="sqlRowsWrittenPer100Visitors"
             label="SQL rows written per 100 visitors"
             help="Inserts, updates, deletes, and index writes."
-            min={0}
+            min={FREE_TIER_INPUTS.sqlRowsWrittenPer100Visitors}
             max={1_000}
             step={1}
             value={inputs.sqlRowsWrittenPer100Visitors}
@@ -710,9 +838,9 @@ export default function PricingCalculator() {
             id="objectReadsPer100Visitors"
             label="Object reads per 100 visitors"
             help="App object reads outside the static asset cache."
-            min={0}
+            min={FREE_TIER_INPUTS.objectReadsPer100Visitors}
             max={1_000}
-            step={5}
+            step={1}
             value={inputs.objectReadsPer100Visitors}
             valueLabel={formatNumber(inputs.objectReadsPer100Visitors)}
             onChange={updateInput}
@@ -721,7 +849,7 @@ export default function PricingCalculator() {
             id="objectWritesPer100Visitors"
             label="Object writes per 100 visitors"
             help="Uploads or generated files written to object storage."
-            min={0}
+            min={FREE_TIER_INPUTS.objectWritesPer100Visitors}
             max={500}
             step={1}
             value={inputs.objectWritesPer100Visitors}
@@ -732,7 +860,7 @@ export default function PricingCalculator() {
             id="queueMessagesPer100Visitors"
             label="Queue messages per 100 visitors"
             help="Each delivered message is roughly one write, one read, and one delete."
-            min={0}
+            min={FREE_TIER_INPUTS.queueMessagesPer100Visitors}
             max={500}
             step={1}
             value={inputs.queueMessagesPer100Visitors}
@@ -743,7 +871,7 @@ export default function PricingCalculator() {
             id="statefulObjectCallsPer100Visitors"
             label="Stateful object calls per 100 visitors"
             help="Stateful coordination, counters, rooms, locks, or sessions."
-            min={0}
+            min={FREE_TIER_INPUTS.statefulObjectCallsPer100Visitors}
             max={2_000}
             step={1}
             value={inputs.statefulObjectCallsPer100Visitors}
@@ -754,7 +882,7 @@ export default function PricingCalculator() {
             id="statefulObjectActiveSecondsPerDay"
             label="Stateful object active seconds per day"
             help="Only active non-hibernated wall-clock time is estimated here."
-            min={0}
+            min={FREE_TIER_INPUTS.statefulObjectActiveSecondsPerDay}
             max={86_400}
             step={300}
             value={inputs.statefulObjectActiveSecondsPerDay}
@@ -765,18 +893,18 @@ export default function PricingCalculator() {
             id="logEventsPerVisitor"
             label="Log events per visitor"
             help="Console logs and exceptions retained by W7S."
-            min={0}
+            min={FREE_TIER_INPUTS.logEventsPerVisitor}
             max={20}
-            step={0.1}
+            step={1}
             value={inputs.logEventsPerVisitor}
-            valueLabel={formatDecimal(inputs.logEventsPerVisitor)}
+            valueLabel={formatNumber(inputs.logEventsPerVisitor)}
             onChange={updateInput}
           />
           <SliderField
             id="staticStorageGb"
             label="Static asset storage"
             help="Built frontend files and immutable deploy assets."
-            min={0}
+            min={FREE_TIER_INPUTS.staticStorageGb}
             max={500}
             step={1}
             value={inputs.staticStorageGb}
@@ -787,7 +915,7 @@ export default function PricingCalculator() {
             id="objectStorageGb"
             label="App object storage"
             help="User uploads, generated files, or blobs."
-            min={0}
+            min={FREE_TIER_INPUTS.objectStorageGb}
             max={10_000}
             step={10}
             value={inputs.objectStorageGb}
@@ -798,18 +926,18 @@ export default function PricingCalculator() {
             id="keyValueStorageGb"
             label="Key-value storage"
             help="Key-value data stored by the app."
-            min={0}
+            min={FREE_TIER_INPUTS.keyValueStorageGb}
             max={100}
-            step={0.1}
+            step={1}
             value={inputs.keyValueStorageGb}
-            valueLabel={`${formatDecimal(inputs.keyValueStorageGb)} GB`}
+            valueLabel={`${formatNumber(inputs.keyValueStorageGb)} GB`}
             onChange={updateInput}
           />
           <SliderField
             id="sqlStorageGb"
             label="SQL storage"
             help="SQLite-backed relational data."
-            min={0}
+            min={FREE_TIER_INPUTS.sqlStorageGb}
             max={500}
             step={1}
             value={inputs.sqlStorageGb}
@@ -820,7 +948,7 @@ export default function PricingCalculator() {
             id="statefulObjectStorageGb"
             label="Stateful object storage"
             help="SQLite-backed stateful object data."
-            min={0}
+            min={FREE_TIER_INPUTS.statefulObjectStorageGb}
             max={500}
             step={1}
             value={inputs.statefulObjectStorageGb}
@@ -831,7 +959,7 @@ export default function PricingCalculator() {
             id="runtimeScripts"
             label="Deployed runtimes"
             help="Usually one script per deployed backend/environment."
-            min={1}
+            min={FREE_TIER_INPUTS.runtimeScripts}
             max={5_000}
             step={1}
             value={inputs.runtimeScripts}
@@ -848,7 +976,7 @@ export default function PricingCalculator() {
             <thead>
               <tr>
                 <th>Area</th>
-                <th>Usage</th>
+                <th>Billable usage</th>
                 <th>Rate</th>
                 <th>Estimate</th>
               </tr>
@@ -868,10 +996,10 @@ export default function PricingCalculator() {
       </div>
 
       <p className={styles.disclaimer}>
-        This is a planning estimate, not a bill. It estimates app usage, W7S
-        routing and usage-accounting overhead, then applies a 50% gross margin
-        without subtracting included or free-tier allowances; actual hosted W7S
-        pricing can differ.
+        This is a planning estimate, not a bill. It subtracts the included
+        free-tier baseline first, estimates app usage plus W7S routing and
+        usage-accounting overhead, then applies a 50% gross margin to the
+        billable overage; actual hosted W7S pricing can differ.
       </p>
     </section>
   );
