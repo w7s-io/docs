@@ -224,7 +224,7 @@ To allow one exact repo:
 ```json
 {
   "queue": {
-    "allow": ["guerrerocarlos/notepad"]
+    "allow": ["guerrerocarlos/nodepad"]
   }
 }
 ```
@@ -242,7 +242,7 @@ To allow every repo under an owner:
 Allowlist entries can be:
 
 - a GitHub owner, such as `w7s-io`;
-- an exact GitHub repository, such as `guerrerocarlos/notepad`.
+- an exact GitHub repository, such as `guerrerocarlos/nodepad`.
 
 The target deployment controls this list. The caller cannot grant itself access.
 

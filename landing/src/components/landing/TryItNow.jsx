@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import W7SCloudLink from "./W7SCloudLink";
 
 const COMMANDS = [
-  "gh repo fork guerrerocarlos/notepad --clone",
-  "cd notepad",
+  "gh repo fork guerrerocarlos/nodepad --clone",
+  "cd nodepad",
   "git push origin main",
 ];
 
@@ -17,7 +17,7 @@ const OUTPUT = [
   "› Provisioning edge runtime...",
   "› ✓ Deployed in 28.4s",
   "",
-  "  https://<your-github>.w7s.cloud/notepad",
+  "  https://<your-github>.w7s.cloud/nodepad",
 ];
 
 export default function TryItNow() {
@@ -49,7 +49,7 @@ export default function TryItNow() {
             and it's deployed.
           </h2>
           <p className="mt-6 text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
-            Clone the notepad reference app and watch it go live. No account,
+            Clone the nodepad reference app and watch it go live. No account,
             no card, no cloud setup.
           </p>
         </div>
@@ -107,7 +107,7 @@ export default function TryItNow() {
                     <>
                       {"  https://<your-github>."}
                       <W7SCloudLink className="text-amber-400 hover:text-amber-300 underline underline-offset-4" />
-                      {"/notepad"}
+                      {"/nodepad"}
                     </>
                   ) : (
                     line || "\u00A0"
@@ -121,14 +121,14 @@ export default function TryItNow() {
 
         <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
           <a
-            href="https://github.com/guerrerocarlos/notepad"
+            href="https://github.com/guerrerocarlos/nodepad"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="try-fork-btn"
             className="group inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-6 py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-amber-300 transition-all hover:-translate-y-0.5"
           >
             <Github className="h-4 w-4" strokeWidth={2.5} />
-            Fork notepad on GitHub
+            Fork nodepad on GitHub
             <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2.5} />
           </a>
           <a

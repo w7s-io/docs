@@ -104,7 +104,7 @@ export default function Hero() {
               className="group inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-6 py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-amber-300 transition-all hover:-translate-y-0.5"
             >
               <Zap className="h-4 w-4" strokeWidth={2.5} />
-              Try the notepad demo
+              Try the nodepad demo
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
             </a>
             <a

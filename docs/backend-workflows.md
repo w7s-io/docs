@@ -176,7 +176,7 @@ To allow one exact repo:
 ```json title="w7s.json"
 {
   "workflow": {
-    "allow": ["guerrerocarlos/notepad"]
+    "allow": ["guerrerocarlos/nodepad"]
   }
 }
 ```

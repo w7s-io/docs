@@ -23,9 +23,9 @@ const STEPS = [
   {
     n: "01",
     icon: GitFork,
-    title: "Fork the notepad repo",
+    title: "Fork the nodepad repo",
     desc: "Grab the starter template — a working app with the W7S workflow already wired up.",
-    code: "gh repo fork guerrerocarlos/notepad",
+    code: "gh repo fork guerrerocarlos/nodepad",
     cli: true,
     span: "col-span-12 md:col-span-5",
   },
@@ -62,7 +62,7 @@ const STEPS = [
         and point DNS at w7w.cloud.
       </>
     ),
-    code: "https://<your-github>.w7s.cloud/notepad\ncustom.domain.com + CNAME file -> w7s.cloud",
+    code: "https://<your-github>.w7s.cloud/nodepad\ncustom.domain.com + CNAME file -> w7s.cloud",
     span: "col-span-12 md:col-span-5",
     highlight: true,
   },

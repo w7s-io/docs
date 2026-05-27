@@ -26,7 +26,7 @@ const QA = [
     a: (
       <>
         Your deploy is served by W7S Cloud at https://&lt;your-github-username&gt;.<W7SCloudLink />/&lt;repo-name&gt;.
-        So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.<W7SCloudLink />/notepad.
+        So forking guerrerocarlos/nodepad as your-handle/nodepad gives you https://your-handle.<W7SCloudLink />/nodepad.
         Custom domains are a{" "}
         <a
           href="/docs/custom-domains/"
