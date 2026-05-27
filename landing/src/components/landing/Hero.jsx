@@ -23,23 +23,21 @@ jobs:
           token: \${{ github.token }}`;
 
 const W7S_ACTION = "w7s-io/w7s-cloud@v1";
-
-function highlightW7SAction(text) {
-  if (!text.includes(W7S_ACTION)) {
-    return <span>{text}</span>;
-  }
-
-  const [before, after] = text.split(W7S_ACTION);
-  return (
-    <>
-      <span>{before}</span>
-      <span className="font-bold text-amber-400">{W7S_ACTION}</span>
-      <span>{after}</span>
-    </>
-  );
-}
+const W7S_STEP_LINES = new Set([
+  `      - uses: ${W7S_ACTION}`,
+  "        with:",
+  "          token: ${{ github.token }}",
+]);
 
 function CodeLine({ line }) {
+  if (W7S_STEP_LINES.has(line)) {
+    return (
+      <div className="leading-relaxed font-bold text-amber-400">
+        {line || "\u00A0"}
+      </div>
+    );
+  }
+
   // simple syntax highlighting
   const tokens = [];
   let m;
@@ -50,12 +48,12 @@ function CodeLine({ line }) {
       <span key="i">{m[1]}</span>,
       <span key="k" className="text-zinc-100">{m[2]}</span>,
       <span key="c" className="text-zinc-500">:</span>,
-      <span key="v" className="text-zinc-100">{highlightW7SAction(m[3])}</span>
+      <span key="v" className="text-zinc-100">{m[3]}</span>
     );
   } else if ((m = line.match(/^(\s*-\s*)(.*)$/))) {
     tokens.push(
       <span key="i" className="text-zinc-500">{m[1]}</span>,
-      <span key="v" className="text-zinc-100">{highlightW7SAction(m[2])}</span>
+      <span key="v" className="text-zinc-100">{m[2]}</span>
     );
   } else {
     tokens.push(<span key="t">{line || "\u00A0"}</span>);
