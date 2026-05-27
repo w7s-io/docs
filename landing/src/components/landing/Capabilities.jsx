@@ -14,18 +14,78 @@ import {
 } from "lucide-react";
 
 const ITEMS = [
-  { icon: LayoutTemplate, label: "Static frontends", hint: "dist/, build/, out/" },
-  { icon: Server, label: "Native backends", hint: "backend/, worker/" },
-  { icon: Layers, label: "Fullstack apps", hint: "frontend + backend" },
-  { icon: Box, label: "Durable Objects", hint: "bound to backends" },
-  { icon: Database, label: "Hyperdrive", hint: "external Postgres" },
-  { icon: Network, label: "Service bindings", hint: "backend-to-backend RPC" },
-  { icon: Inbox, label: "Background queues", hint: "delivered to workers" },
-  { icon: Clock, label: "Cron schedules", hint: "cron on native backends" },
-  { icon: Workflow, label: "Durable workflows", hint: "long-running tasks" },
-  { icon: Globe2, label: "Custom domains", hint: "via CNAME file" },
-  { icon: Activity, label: "Usage analytics", hint: "authenticated API" },
-  { icon: Terminal, label: "Console & logs", hint: "exceptions exposed" },
+  {
+    icon: LayoutTemplate,
+    label: "Static frontends",
+    hint: "dist/, build/, out/",
+    href: "/docs/project-layouts/#static-frontends",
+  },
+  {
+    icon: Server,
+    label: "Native backends",
+    hint: "backend/, worker/",
+    href: "/docs/project-layouts/#native-backends",
+  },
+  {
+    icon: Layers,
+    label: "Fullstack apps",
+    hint: "frontend + backend",
+    href: "/docs/project-layouts/#fullstack-repositories",
+  },
+  {
+    icon: Box,
+    label: "Durable Objects",
+    hint: "bound to backends",
+    href: "/docs/backend-durable-objects/",
+  },
+  {
+    icon: Database,
+    label: "Hyperdrive",
+    hint: "external Postgres",
+    href: "/docs/backend-hyperdrive/",
+  },
+  {
+    icon: Network,
+    label: "Service bindings",
+    hint: "backend-to-backend RPC",
+    href: "/docs/backend-rpc/",
+  },
+  {
+    icon: Inbox,
+    label: "Background queues",
+    hint: "delivered to workers",
+    href: "/docs/backend-queues/",
+  },
+  {
+    icon: Clock,
+    label: "Cron schedules",
+    hint: "cron on native backends",
+    href: "/docs/backend-schedules/",
+  },
+  {
+    icon: Workflow,
+    label: "Durable workflows",
+    hint: "long-running tasks",
+    href: "/docs/backend-workflows/",
+  },
+  {
+    icon: Globe2,
+    label: "Custom domains",
+    hint: "via CNAME file",
+    href: "/docs/custom-domains/",
+  },
+  {
+    icon: Activity,
+    label: "Usage analytics",
+    hint: "authenticated API",
+    href: "/docs/usage-accounting/",
+  },
+  {
+    icon: Terminal,
+    label: "Console & logs",
+    hint: "exceptions exposed",
+    href: "/docs/observability/",
+  },
 ];
 
 export default function Capabilities() {
@@ -58,10 +118,12 @@ export default function Capabilities() {
           {ITEMS.map((it, i) => {
             const Icon = it.icon;
             return (
-              <div
+              <a
                 key={it.label}
+                href={it.href}
                 data-testid={`capability-${i}`}
-                className="bg-[#0f0f11] p-6 lg:p-7 hover:bg-[#16161a] transition-colors group cursor-default fade-up"
+                aria-label={`Read docs for ${it.label}`}
+                className="bg-[#0f0f11] p-6 lg:p-7 hover:bg-[#16161a] transition-colors group fade-up focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-inset"
                 style={{ animationDelay: `${i * 0.04}s` }}
               >
                 <Icon
@@ -74,7 +136,7 @@ export default function Capabilities() {
                 <div className="text-[11px] text-zinc-500 font-mono">
                   {it.hint}
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>
