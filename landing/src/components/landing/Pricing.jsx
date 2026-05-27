@@ -4,7 +4,7 @@ const FACTS = [
   {
     icon: Github,
     k: "No signup",
-    v: "Your GitHub repo token authorizes deploys. There is no W7S account, card, or separate Cloudflare account required for the community service.",
+    v: "Your GitHub repo token authorizes deploys. There is no W7S account, card, or separate Cloudflare account required for w7s.cloud deploys.",
   },
   {
     icon: Cloud,
@@ -41,12 +41,12 @@ export default function Pricing() {
               // pricing
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.95]">
-              Free community deploys.
+              Free w7s.cloud deploys.
               <br />
               Clear limits.
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
-              W7S Community is free today. Self-serve paid billing is not live
+              w7s.cloud is free today. Self-serve paid billing is not live
               yet. For production workloads that need higher limits, run your
               own W7S instance on Cloudflare or arrange a hosted limit override.
             </p>
@@ -101,7 +101,7 @@ export default function Pricing() {
             </div>
 
             <p className="mt-4 text-xs text-zinc-500 leading-relaxed">
-              These are community defaults, not isolated Cloudflare accounts per
+              These are w7s.cloud defaults, not isolated Cloudflare accounts per
               user. W7S tracks repo usage and applies owner/global circuit
               breakers to keep the shared service available.
             </p>

@@ -1,4 +1,4 @@
-import { Github, BookOpen, Users } from "lucide-react";
+import { Github, BookOpen, Cloud } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -12,7 +12,8 @@ export default function Footer() {
             <div className="font-display text-3xl text-white mb-4">W7S</div>
             <p className="text-sm text-zinc-400 max-w-sm leading-relaxed">
               Open source deploy platform for GitHub-native apps. Push to{" "}
-              <span className="text-amber-400">main</span>. Live in 30 seconds.
+              <span className="text-amber-400">GitHub</span>. Live in less than
+              30 seconds.
             </p>
           </div>
 
@@ -103,7 +104,7 @@ export default function Footer() {
 
           <div className="md:col-span-3">
             <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 mb-4">
-              Community
+              w7s.cloud
             </div>
             <div className="flex flex-col gap-3">
               <a
@@ -116,13 +117,13 @@ export default function Footer() {
                 <Github className="h-4 w-4" strokeWidth={1.5} /> github.com/w7s-io
               </a>
               <a
-                href="https://www.w7s.io"
+                href="https://w7s.cloud"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-testid="footer-community"
+                data-testid="footer-cloud"
                 className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-amber-400 transition-colors font-mono"
               >
-                <Users className="h-4 w-4" strokeWidth={1.5} /> www.w7s.io
+                <Cloud className="h-4 w-4" strokeWidth={1.5} /> w7s.cloud
               </a>
               <a
                 href="https://www.w7s.io/docs/"

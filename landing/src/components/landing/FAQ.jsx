@@ -8,7 +8,7 @@ import {
 const QA = [
   {
     q: "Do I need a W7S or Cloudflare account?",
-    a: "No for W7S Community. The GitHub Action authenticates with your repo's GITHUB_TOKEN, uploads the build to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.",
+    a: "No for w7s.cloud deploys. The GitHub Action authenticates with your repo's GITHUB_TOKEN, uploads the build to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.",
   },
   {
     q: "What languages and frameworks are supported?",
@@ -28,11 +28,11 @@ const QA = [
   },
   {
     q: "What about limits and quotas?",
-    a: "Community limits apply per GitHub repo, per W7S environment, per UTC day. Owner-level and global caps protect the shared service. W7S exposes usage rollups, warnings, and hard-limit status through an authenticated API.",
+    a: "w7s.cloud limits apply per GitHub repo, per W7S environment, per UTC day. Owner-level and global caps protect the shared service. W7S exposes usage rollups, warnings, and hard-limit status through an authenticated API.",
   },
   {
-    q: "Why not just use the Cloudflare CLI?",
-    a: "Use wrangler when you want to own the Cloudflare account, credentials, resources, billing, and deploy operations. Use W7S when you want GitHub-native deploys hosted by W7S Cloud with repo-scoped defaults and built-in usage guardrails.",
+    q: "How is this different from Vercel or Cloudflare?",
+    a: "Vercel is a full hosted product platform with previews, teams, billing, and framework conventions. Cloudflare is direct infrastructure control through your own account. w7s.cloud sits closer to the repo: GitHub Actions deploys with the repo token, W7S hosts the runtime, and repo-scoped limits are built in.",
   },
 ];
 

@@ -20,7 +20,7 @@ const STEPS = [
   {
     n: "03",
     icon: GitCommit,
-    title: "Push to main",
+    title: "Push to GitHub",
     desc: "GitHub Actions triggers. The W7S action verifies the token and uploads the deploy archive to W7S Cloud.",
     code: "git push origin main",
     span: "col-span-12 md:col-span-7",

@@ -1,17 +1,17 @@
 ---
 id: pricing
 title: Pricing
-description: W7S community free tier and cost examples for usage beyond it.
+description: w7s.cloud free tier and cost examples for usage beyond it.
 ---
 
-W7S Community is free today. You do not need a W7S account, a credit card, or your own Cloudflare account to deploy through the hosted `w7s.cloud` service. The GitHub Action uploads your deploy archive to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.
+w7s.cloud is free today. You do not need a W7S account, a credit card, or your own Cloudflare account to deploy through the hosted `w7s.cloud` service. The GitHub Action uploads your deploy archive to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.
 
-There is no self-serve paid plan yet. For now, usage outside the community free tier means either:
+There is no self-serve paid plan yet. For now, usage outside the w7s.cloud free tier means either:
 
 - run your own W7S instance on a Cloudflare account you control; or
 - arrange an explicit hosted limit override with a W7S operator.
 
-The hosted community service protects its shared Cloudflare account with hard per-repository daily limits. When an app reaches a hard limit, W7S returns `429` or skips the internal delivery that would exceed the cap.
+The hosted w7s.cloud service protects its shared Cloudflare account with hard per-repository daily limits. When an app reaches a hard limit, W7S returns `429` or skips the internal delivery that would exceed the cap.
 
 The cost examples below are estimates from Cloudflare's published pricing and are meant to explain what larger hosted usage would have to cover. They are not active W7S paid plans.
 
@@ -96,7 +96,7 @@ Cloudflare for Platforms and Workers pricing are relevant to the W7S core. R2, K
 
 ## Example estimates
 
-These examples assume usage is authorized outside W7S Community caps. They do not include W7S operator margin, support, domain registration, third-party APIs, or external database hosting.
+These examples assume usage is authorized outside w7s.cloud caps. They do not include W7S operator margin, support, domain registration, third-party APIs, or external database hosting.
 
 ### Static documentation site
 
@@ -116,7 +116,7 @@ Class B ops:  under 10M included         $0.00
 Total:                                    $0.00
 ```
 
-This can still exceed the W7S Community daily `static.r2_class_b` cap if traffic is bursty. The Cloudflare account may have room, but W7S blocks earlier to protect the shared platform.
+This can still exceed the w7s.cloud daily `static.r2_class_b` cap if traffic is bursty. The Cloudflare account may have room, but W7S blocks earlier to protect the shared platform.
 
 ### High-traffic static assets
 
@@ -226,7 +226,7 @@ State:       (2 GB - 1 GB) * $0.20/GB-month           $0.20
 Total:                                                $0.20
 ```
 
-The W7S Community cap is intentionally much lower: 1,000 workflow starts and 1,000 workflow deliveries per day. That keeps the shared platform safe while the workflow integration is still young.
+The w7s.cloud cap is intentionally much lower: 1,000 workflow starts and 1,000 workflow deliveries per day. That keeps the shared platform safe while the workflow integration is still young.
 
 ## What this means for W7S pricing
 
@@ -237,7 +237,7 @@ A practical paid W7S tier would need to include:
 - a buffer for bursty usage and delayed Cloudflare analytics;
 - operator margin for support, incidents, and abuse handling.
 
-Until billing exists, treat W7S Community as a free deployment playground with hard caps. For production apps that need higher limits, the current path is to run your own W7S instance on Cloudflare or arrange explicit hosted limit overrides.
+Until billing exists, treat w7s.cloud as a free deployment playground with hard caps. For production apps that need higher limits, the current path is to run your own W7S instance on Cloudflare or arrange explicit hosted limit overrides.
 
 ## Source pricing pages
 

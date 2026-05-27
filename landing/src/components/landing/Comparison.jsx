@@ -1,47 +1,35 @@
 import {
   Github,
-  GitBranch,
-  Cloud,
-  Lock,
-  Code2,
   Settings2,
-  Gauge,
-  Terminal,
+  Layers3,
+  Workflow,
 } from "lucide-react";
 
-const W7S_TRAITS = [
+const OPTIONS = [
   {
     icon: Github,
-    t: "GitHub is the control plane",
-    d: "Deploys are authorized by the repo token and triggered by the workflow you already review in git.",
+    eyebrow: "w7s.cloud",
+    title: "Repo-native deploys",
+    desc: "Best when the GitHub repo should own the deploy path. The workflow uses GITHUB_TOKEN, W7S hosts the runtime, and usage limits are built in.",
+    tone: "primary",
   },
   {
-    icon: Cloud,
-    t: "W7S hosts the runtime",
-    d: "The community service runs your app on W7S Cloud and gives it a w7s.cloud URL, without a Cloudflare account.",
-  },
-  {
-    icon: Gauge,
-    t: "Limits are built in",
-    d: "Usage is tracked by repository and environment, with hard caps and warnings before shared infrastructure gets expensive.",
-  },
-];
-
-const CLI_TRAITS = [
-  {
-    icon: Terminal,
-    t: "Direct Cloudflare control",
-    d: "Use wrangler when you want to own the Cloudflare account, billing, tokens, resources, and deploy surface.",
+    icon: Layers3,
+    eyebrow: "Vercel",
+    title: "Managed product platform",
+    desc: "Best when you want a polished hosted platform with previews, teams, billing, and framework conventions managed inside another product account.",
   },
   {
     icon: Settings2,
-    t: "More setup to operate",
-    d: "You manage CI auth, resource provisioning, routes, environments, limits, logs, and team access yourself.",
+    eyebrow: "Cloudflare",
+    title: "Direct infrastructure control",
+    desc: "Best when you want to own the Cloudflare account, routes, credentials, resources, limits, observability, and billing yourself.",
   },
   {
-    icon: Lock,
-    t: "Different trust model",
-    d: "W7S trusts GitHub repository access. Wrangler trusts Cloudflare credentials that you create and rotate.",
+    icon: Workflow,
+    eyebrow: "The tradeoff",
+    title: "Less setup, less direct control",
+    desc: "w7s.cloud removes provider setup for default deploys. Use a provider directly when you need full account-level control on day one.",
   },
 ];
 
@@ -58,81 +46,44 @@ export default function Comparison() {
             // why w7s
           </div>
           <h2 className="font-display text-4xl sm:text-5xl lg:text-7xl text-white leading-[0.95] max-w-4xl mx-auto">
-            GitHub-native deploys.
+            Simple hosted deploys.
             <br />
-            <span className="text-amber-400">W7S-hosted runtime.</span>
+            <span className="text-amber-400">Clear alternatives.</span>
           </h2>
           <p className="mt-6 text-sm text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Cloudflare's CLI is powerful when you want direct control of your
-            own Cloudflare account. W7S is for repos that need a fast hosted
-            path from push to production, with less platform setup.
+            w7s.cloud is for projects that want GitHub-native deploys without
+            opening another cloud account first. Vercel and Cloudflare are good
+            choices when you want their full product surfaces directly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 border border-white/10 bg-[#0a0a0c]">
-          <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10">
-            <div className="flex items-center gap-3 mb-2">
-              <GitBranch className="h-6 w-6 text-amber-400" strokeWidth={1.5} />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                choose w7s for
-              </span>
-            </div>
-            <h3 className="font-display text-3xl lg:text-4xl text-white mb-8">
-              repo-owned deploys
-            </h3>
-            <ul className="space-y-6">
-              {W7S_TRAITS.map((tr) => {
-                const Icon = tr.icon;
-                return (
-                  <li key={tr.t} className="flex gap-4">
-                    <div className="shrink-0 w-9 h-9 border border-amber-400/30 flex items-center justify-center">
-                      <Icon className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-white font-medium mb-1">
-                        {tr.t}
-                      </div>
-                      <div className="text-xs text-zinc-500 leading-relaxed">
-                        {tr.d}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <div className="p-8 lg:p-12 bg-[#0c0a06]">
-            <div className="flex items-center gap-3 mb-2">
-              <Code2 className="h-6 w-6 text-white" strokeWidth={1.5} />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                choose wrangler for
-              </span>
-            </div>
-            <h3 className="font-display text-3xl lg:text-4xl text-amber-400 mb-8">
-              direct cloud control
-            </h3>
-            <ul className="space-y-6">
-              {CLI_TRAITS.map((tr) => {
-                const Icon = tr.icon;
-                return (
-                  <li key={tr.t} className="flex gap-4">
-                    <div className="shrink-0 w-9 h-9 border border-white/10 flex items-center justify-center">
-                      <Icon className="h-4 w-4 text-zinc-300" strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-white font-medium mb-1">
-                        {tr.t}
-                      </div>
-                      <div className="text-xs text-zinc-500 leading-relaxed">
-                        {tr.d}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border border-white/10 bg-white/10 gap-px">
+          {OPTIONS.map((option) => {
+            const Icon = option.icon;
+            const isPrimary = option.tone === "primary";
+            return (
+              <div
+                key={option.eyebrow}
+                className={`${isPrimary ? "bg-[#0c0a06]" : "bg-[#0f0f11]"} p-7 lg:p-8 min-h-[260px]`}
+              >
+                <div className="flex items-center justify-between gap-4 mb-8">
+                  <span className={`text-[10px] uppercase tracking-[0.3em] ${isPrimary ? "text-amber-400" : "text-zinc-500"}`}>
+                    {option.eyebrow}
+                  </span>
+                  <Icon
+                    className={`h-5 w-5 ${isPrimary ? "text-amber-400" : "text-zinc-400"}`}
+                    strokeWidth={1.5}
+                  />
+                </div>
+                <h3 className={`font-display text-2xl lg:text-3xl leading-tight mb-4 ${isPrimary ? "text-amber-400" : "text-white"}`}>
+                  {option.title}
+                </h3>
+                <p className="text-xs text-zinc-500 leading-relaxed">
+                  {option.desc}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

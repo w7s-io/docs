@@ -71,15 +71,15 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            Push to <span className="text-amber-400">main.</span>
+            Push to <span className="text-amber-400">GitHub.</span>
             <br />
-            Live in less than <span className="text-amber-400">30s.</span>
+            Live in less than <span className="text-amber-400">30 seconds.</span>
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
             W7S uploads your GitHub Actions build to W7S Cloud and serves it at
             a public URL. No W7S account, Cloudflare account, or card required
-            for community deploys. Just{" "}
+            for w7s.cloud deploys. Just{" "}
             <span className="text-zinc-100">commit, push, ship.</span>
           </p>
 
