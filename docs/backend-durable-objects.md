@@ -1,10 +1,10 @@
 ---
 id: backend-durable-objects
 title: Durable Objects
-description: Bind Cloudflare Durable Objects to W7S native backends.
+description: Bind Cloudflare Durable Objects to W7S JavaScript/TypeScript native backends.
 ---
 
-Native W7S backends can declare Durable Object classes in `w7s.json`. W7S uploads those declarations as Cloudflare `durable_object_namespace` bindings and creates SQLite-backed classes the first time it sees them.
+JavaScript/TypeScript native W7S backends can declare Durable Object classes in `w7s.json`. W7S uploads those declarations as Cloudflare `durable_object_namespace` bindings and creates SQLite-backed classes the first time it sees them.
 
 Working example repository:
 
@@ -59,7 +59,7 @@ export default {
 
 ## Redeploy behavior
 
-Durable Object apps use a stable Worker script name for each GitHub owner, repo, and environment. This is different from regular native backends, which use commit-specific script names.
+Durable Object apps use a stable Worker script name for each GitHub owner, repo, and environment. This is different from regular JavaScript/TypeScript native backends, which use commit-specific script names.
 
 The stable script name is what lets Durable Object state survive W7S redeploys.
 

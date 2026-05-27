@@ -42,14 +42,14 @@ jobs:
 ## What W7S can deploy
 
 - Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`.
-- Native backend code from `backend/` or `worker/`.
-- Fullstack apps that include both a backend root and a static frontend root.
-- Durable Objects bound directly to native backends.
+- Native backend code from `backend/` or `worker/`, authored or built as JavaScript or TypeScript Cloudflare Worker modules.
+- Fullstack apps that include both a JavaScript/TypeScript backend root and a static frontend root.
+- Durable Objects bound directly to JavaScript/TypeScript native backends.
 - Hyperdrive bindings for external Postgres databases.
 - Backend-to-backend RPC through internal service bindings.
-- Background queues delivered to backends/workers.
-- Cron schedules delivered to native backends.
-- Durable workflow instances delivered to native backends.
+- Background queues delivered to JavaScript/TypeScript native backends.
+- Cron schedules delivered to JavaScript/TypeScript native backends.
+- Durable workflow instances delivered to JavaScript/TypeScript native backends.
 - Daily usage rollups, hourly Cloudflare usage sync, app suspension, warning thresholds, and hard daily limits.
 - Platform event analytics exposed through an authenticated API.
 - User Worker console and exception logs exposed through an authenticated API.

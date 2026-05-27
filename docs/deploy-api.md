@@ -80,7 +80,7 @@ x-w7s-environment: staging
 
 ## Deployable Outputs
 
-Native backend entrypoints:
+Native backend entrypoints are JavaScript or TypeScript Worker modules only:
 
 ```text
 backend/index.js
@@ -109,7 +109,7 @@ out/
 
 Static roots normally need an `index.html`. `dist/client/` may be asset-only when paired with `dist/server/index.js`, which is the output produced by TanStack Start and similar Cloudflare/Vite SSR builds.
 
-If `backend/`, `worker/`, or `dist/server/` exists but does not contain a supported entrypoint, W7S still deploys a valid static frontend and returns a `deploymentWarnings` entry explaining that the backend was skipped. If there is no deployable frontend, the archive is rejected.
+If `backend/`, `worker/`, or `dist/server/` exists but does not contain a supported JavaScript or TypeScript entrypoint, W7S still deploys a valid static frontend and returns a `deploymentWarnings` entry explaining that the backend was skipped. If there is no deployable frontend, the archive is rejected.
 
 ## Free-tier shape caps
 
@@ -139,7 +139,7 @@ Native Worker uploads include a W7S-managed Tail Worker consumer for user Worker
 
 ## App manifest
 
-Native backends can include a `w7s.json` manifest to declare platform resources:
+JavaScript/TypeScript native backends can include a `w7s.json` manifest to declare platform resources:
 
 ```json
 {
@@ -191,7 +191,7 @@ Native backends can include a `w7s.json` manifest to declare platform resources:
 }
 ```
 
-`bindings.durableObjects` declares Durable Object classes exported by the native backend. W7S uploads them as `durable_object_namespace` bindings and creates SQLite-backed classes when first deployed. See [Durable Objects](./backend-durable-objects.md) for examples.
+`bindings.durableObjects` declares Durable Object classes exported by the JavaScript/TypeScript native backend. W7S uploads them as `durable_object_namespace` bindings and creates SQLite-backed classes when first deployed. See [Durable Objects](./backend-durable-objects.md) for examples.
 
 `bindings.hyperdrive` declares existing Cloudflare Hyperdrive configs by ID. W7S uploads them as `hyperdrive` bindings. See [Hyperdrive](./backend-hyperdrive.md) for examples.
 

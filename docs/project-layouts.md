@@ -29,7 +29,7 @@ dist/client/assets/app.js
 
 ## Native backends
 
-W7S publishes native backend code from either:
+Native backends must be JavaScript or TypeScript Cloudflare Worker modules. W7S publishes native backend code from either:
 
 ```text
 backend/index.ts
@@ -40,9 +40,11 @@ worker/index.js
 
 `index.mts` and `index.mjs` are also supported.
 
+Other backend languages are not uploaded directly. Build or bundle them to one of the supported JavaScript/TypeScript entrypoints before deploying.
+
 Native backend modules must use local relative imports. If the backend depends on npm packages, bundle it in CI and upload the bundled backend files.
 
-Cloudflare/Vite SSR builds can also publish their generated server entrypoint:
+Cloudflare/Vite SSR builds can also publish their generated JavaScript server entrypoint:
 
 ```text
 dist/server/index.js
@@ -50,7 +52,7 @@ dist/server/index.js
 
 When `dist/server/wrangler.json` declares compatibility flags such as `nodejs_compat`, W7S includes those flags when uploading the Worker.
 
-Uploaded native backends also get a Tail Worker consumer managed by W7S. That lets W7S expose app `console.*` output and uncaught exceptions through the [Observability](./observability.md) logs API.
+Uploaded JavaScript/TypeScript native backends also get a Tail Worker consumer managed by W7S. That lets W7S expose app `console.*` output and uncaught exceptions through the [Observability](./observability.md) logs API.
 
 ## Fullstack repositories
 

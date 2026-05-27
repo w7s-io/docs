@@ -4,7 +4,7 @@ title: Storage Bindings
 description: Declare per-app KV, R2, D1, vars, and secrets for W7S backends.
 ---
 
-Native W7S backends can declare durable resources in `w7s.json`. W7S creates one set of resources per repository and environment, then reuses them on later deploys.
+JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.json`. W7S creates one set of resources per repository and environment, then reuses them on later deploys.
 
 ```json
 {
@@ -95,4 +95,4 @@ You can also pass names directly:
 
 Secret values are passed as Worker secret bindings. Deploy summaries show secret counts, not secret values.
 
-W7S also injects platform bindings for native backends, including `W7S_RPC` for backend-to-backend calls and `W7S_QUEUE` for background work. See [Backend RPC](./backend-rpc.md) and [Backend Queues](./backend-queues.md).
+W7S also injects platform bindings for JavaScript/TypeScript native backends, including `W7S_RPC` for backend-to-backend calls and `W7S_QUEUE` for background work. See [Backend RPC](./backend-rpc.md) and [Backend Queues](./backend-queues.md).

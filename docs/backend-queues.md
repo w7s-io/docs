@@ -1,10 +1,10 @@
 ---
 id: backend-queues
 title: Backend Queues
-description: Send background work between W7S native backends through internal queues.
+description: Send background work between W7S JavaScript/TypeScript native backends through internal queues.
 ---
 
-Native W7S backends can declare queues in `w7s.json`. W7S creates the Cloudflare Queue, connects it to the W7S core worker, and delivers batches to the declaring backend.
+JavaScript/TypeScript native W7S backends can declare queues in `w7s.json`. W7S creates the Cloudflare Queue, connects it to the W7S core worker, and delivers batches to the declaring backend.
 
 Working example repositories:
 
@@ -41,11 +41,11 @@ Use an object when you want a different consumer path:
 }
 ```
 
-Queues require a native backend deployment. Static-only apps cannot declare queues.
+Queues require a JavaScript or TypeScript native backend deployment. Static-only apps cannot declare queues.
 
 ## Runtime bindings
 
-Every native backend receives:
+Every JavaScript/TypeScript native backend receives:
 
 ```text
 W7S_QUEUE
@@ -166,7 +166,7 @@ Return any `2xx` response after processing. Non-`2xx` responses make W7S throw f
 
 ## Separate producer and consumer
 
-A backend does not need to own a queue in order to produce messages. It only needs to be a native W7S backend, because W7S injects `W7S_QUEUE` and `W7S_QUEUE_TOKEN` into every native backend.
+A backend does not need to own a queue in order to produce messages. It only needs to be a JavaScript/TypeScript native W7S backend, because W7S injects `W7S_QUEUE` and `W7S_QUEUE_TOKEN` into every JavaScript/TypeScript native backend.
 
 The consumer declares and receives the queue:
 

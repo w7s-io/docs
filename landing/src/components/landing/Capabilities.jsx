@@ -23,7 +23,7 @@ const ITEMS = [
   {
     icon: Server,
     label: "Native backends",
-    hint: "backend/, worker/",
+    hint: "JS/TS in backend/, worker/",
     href: "/docs/project-layouts/#native-backends",
   },
   {
@@ -59,7 +59,7 @@ const ITEMS = [
   {
     icon: Clock,
     label: "Cron schedules",
-    hint: "cron on native backends",
+    hint: "cron on JS/TS backends",
     href: "/docs/backend-schedules/",
   },
   {
@@ -108,7 +108,7 @@ export default function Capabilities() {
             </h2>
           </div>
           <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
-            W7S deploys static frontends, native backends, fullstack apps and the
+            W7S deploys static frontends, JavaScript/TypeScript native backends, fullstack apps and the
             edge primitives that glue them together — Durable Objects, Hyperdrive,
             queues, cron, workflows.
           </p>

@@ -1,10 +1,10 @@
 ---
 id: backend-hyperdrive
 title: Hyperdrive
-description: Bind existing Cloudflare Hyperdrive configs to W7S native backends.
+description: Bind existing Cloudflare Hyperdrive configs to W7S JavaScript/TypeScript native backends.
 ---
 
-Native W7S backends can declare Cloudflare Hyperdrive bindings in `w7s.json`. Hyperdrive lets Workers connect to external Postgres databases through Cloudflare's connection pooling layer.
+JavaScript/TypeScript native W7S backends can declare Cloudflare Hyperdrive bindings in `w7s.json`. Hyperdrive lets Workers connect to external Postgres databases through Cloudflare's connection pooling layer.
 
 W7S currently binds existing Hyperdrive configs by ID. It does not create Hyperdrive configs or rotate database credentials yet.
 
@@ -74,7 +74,7 @@ W7S reads compatibility flags from that file when uploading the Worker.
 
 ## Limitations
 
-- Hyperdrive requires a native backend deployment.
+- Hyperdrive requires a JavaScript or TypeScript native backend deployment.
 - W7S does not create or update Hyperdrive configs yet.
 - W7S does not manage origin database credentials.
 - There is no shared public example repo yet, because a useful smoke test requires a real database origin.

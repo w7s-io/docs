@@ -1,10 +1,10 @@
 ---
 id: backend-schedules
 title: Backend Schedules
-description: Run cron-driven background jobs in W7S native backends.
+description: Run cron-driven background jobs in W7S JavaScript/TypeScript native backends.
 ---
 
-Native W7S backends can declare cron schedules in `w7s.json`. W7S runs one core Cloudflare Cron Trigger every minute, checks deployed app schedules, and dispatches due jobs to the declaring backend.
+JavaScript/TypeScript native W7S backends can declare cron schedules in `w7s.json`. W7S runs one core Cloudflare Cron Trigger every minute, checks deployed app schedules, and dispatches due jobs to the declaring backend.
 
 Working example repository:
 
@@ -25,7 +25,7 @@ Add a `schedules` array to `w7s.json`:
 }
 ```
 
-Schedules require a native backend deployment. Static-only apps cannot declare schedules.
+Schedules require a JavaScript or TypeScript native backend deployment. Static-only apps cannot declare schedules.
 
 ## Cron format
 

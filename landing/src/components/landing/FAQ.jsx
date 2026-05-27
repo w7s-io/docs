@@ -12,7 +12,7 @@ const QA = [
   },
   {
     q: "What languages and frameworks are supported?",
-    a: "Any static frontend that produces dist/, build/, out/, dist/client/ or frontend/dist/. Native backends from backend/ or worker/. Fullstack apps that combine both. Vite, Next.js, Astro, SvelteKit, Remix, Hono, Express — all supported.",
+    a: "Any static frontend that produces dist/, build/, out/, dist/client/ or frontend/dist/. Native backends must be JavaScript or TypeScript Worker modules from backend/ or worker/. Fullstack apps that combine both. Vite, Next.js, Astro, SvelteKit, Remix, Hono, Express — all supported.",
   },
   {
     q: "How does the URL get generated?",
@@ -24,7 +24,7 @@ const QA = [
   },
   {
     q: "Can I deploy backends, not just static sites?",
-    a: "Yes. Native backends, Durable Objects, Hyperdrive for external Postgres, internal service bindings, background queues, cron schedules and durable workflow instances. Full stack, edge-native.",
+    a: "Yes. JavaScript/TypeScript native backends, Durable Objects, Hyperdrive for external Postgres, internal service bindings, background queues, cron schedules and durable workflow instances. Full stack, edge-native.",
   },
   {
     q: "What about limits and quotas?",

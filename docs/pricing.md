@@ -16,7 +16,7 @@ These defaults apply per GitHub repository, per W7S environment, per UTC day.
 | --- | ---: | --- | --- |
 | Deploys | 50 deploys | `deploy` | Separate from GitHub Actions minutes. |
 | Runtime routing | 10,000 requests | `runtime.request` | Requests handled by W7S routing before static or Worker dispatch. |
-| User Worker requests | 10,000 requests | `worker.request` | Native backend requests dispatched into the app Worker. |
+| User Worker requests | 10,000 requests | `worker.request` | JavaScript/TypeScript native backend requests dispatched into the app Worker. |
 | User Worker CPU | 300,000 ms | `runtime.cpu_ms` | W7S also sets a per-invocation CPU cap on user Workers. |
 | Worker scripts | 5 script versions | `worker.script` | Protects the Cloudflare for Platforms script count. |
 | Static frontend deploy writes | 1,000 R2 Class A ops | `static.r2_class_a` | Static assets are stored in R2. Deploy shape caps also apply. |
@@ -44,7 +44,7 @@ These defaults apply per GitHub repository, per W7S environment, per UTC day.
 | Backend RPC | 10,000 dispatches | `rpc.dispatch` | Internal `env.W7S_RPC.fetch(...)` calls. |
 | Queue sends | 10,000 sends | `queue.send` | W7S API sends; Cloudflare may bill multiple ops for large or retried messages. |
 | Queue deliveries | 10,000 deliveries | `queue.delivery` | Delivery into the target backend consumer route. |
-| Schedule deliveries | 2,000 deliveries | `schedule.delivery` | Cron-like scheduled dispatches into native backends. |
+| Schedule deliveries | 2,000 deliveries | `schedule.delivery` | Cron-like scheduled dispatches into JavaScript/TypeScript native backends. |
 | Workflow starts | 1,000 starts | `workflow.create` | Calls to `env.W7S_WORKFLOW.fetch(...)`. |
 | Workflow deliveries | 1,000 deliveries | `workflow.delivery` | Durable step delivery into the app backend. |
 | Worker log ingestion | 5,000 records | `log.write` | Tail Worker console, exception, and outcome records retained in KV. |

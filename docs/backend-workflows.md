@@ -1,10 +1,10 @@
 ---
 id: backend-workflows
 title: Backend Workflows
-description: Start durable W7S workflow instances from native backends.
+description: Start durable W7S workflow instances from JavaScript/TypeScript native backends.
 ---
 
-Native W7S backends can declare workflow consumers in `w7s.json`. W7S owns one Cloudflare Workflow in the core worker, creates instances for app requests, and dispatches each instance to the declaring backend through a durable step with retries.
+JavaScript/TypeScript native W7S backends can declare workflow consumers in `w7s.json`. W7S owns one Cloudflare Workflow in the core worker, creates instances for app requests, and dispatches each instance to the declaring backend through a durable step with retries.
 
 ## Declare a workflow
 
@@ -35,11 +35,11 @@ Use an object when you want a different consumer path:
 }
 ```
 
-Workflows require a native backend deployment. Static-only apps cannot declare workflows.
+Workflows require a JavaScript or TypeScript native backend deployment. Static-only apps cannot declare workflows.
 
 ## Runtime bindings
 
-Every native backend receives:
+Every JavaScript/TypeScript native backend receives:
 
 ```text
 W7S_WORKFLOW

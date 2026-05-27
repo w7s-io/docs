@@ -1,10 +1,10 @@
 ---
 id: backend-rpc
 title: Backend RPC
-description: Let W7S native backends call each other through internal service bindings.
+description: Let W7S JavaScript/TypeScript native backends call each other through internal service bindings.
 ---
 
-Native W7S backends can call other W7S backends without going through public DNS. W7S injects an internal service binding and a per-deployment token into every native backend.
+JavaScript/TypeScript native W7S backends can call other W7S backends without going through public DNS. W7S injects an internal service binding and a per-deployment token into every JavaScript/TypeScript native backend.
 
 Working example repositories:
 
@@ -13,7 +13,7 @@ Working example repositories:
 
 ## Runtime bindings
 
-Every native backend receives:
+Every JavaScript/TypeScript native backend receives:
 
 ```text
 W7S_RPC

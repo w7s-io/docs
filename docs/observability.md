@@ -176,4 +176,4 @@ with:
   logs-limit: 10
 ```
 
-Log records are retained for a short operational window. The default W7S retention is seven days. W7S truncates large log values and applies `log.write` daily and burst limits before storing Tail Worker records, so runaway logging is dropped instead of becoming a platform cost burn. Native backends deployed before this feature need to be redeployed once so their Worker upload metadata includes the Tail Worker consumer.
+Log records are retained for a short operational window. The default W7S retention is seven days. W7S truncates large log values and applies `log.write` daily and burst limits before storing Tail Worker records, so runaway logging is dropped instead of becoming a platform cost burn. JavaScript/TypeScript native backends deployed before this feature need to be redeployed once so their Worker upload metadata includes the Tail Worker consumer.
