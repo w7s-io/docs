@@ -77,8 +77,9 @@ export default function Hero() {
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
-            W7S is an open source deploy platform managed directly from your
-            GitHub Actions workflow. No dashboards. No lock-in. Just{" "}
+            W7S uploads your GitHub Actions build to W7S Cloud and serves it at
+            a public URL. No W7S account, Cloudflare account, or card required
+            for community deploys. Just{" "}
             <span className="text-zinc-100">commit, push, ship.</span>
           </p>
 
@@ -106,9 +107,9 @@ export default function Hero() {
 
           <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
             {[
-              { k: "Zero", v: "config" },
-              { k: "1 file", v: "to deploy" },
-              { k: "100%", v: "GitHub-native" },
+              { k: "W7S", v: "Cloud hosted" },
+              { k: "No", v: "account needed" },
+              { k: "Repo", v: "daily limits" },
             ].map((s) => (
               <div key={s.k} className="border-l border-white/10 pl-4">
                 <div className="font-display text-2xl text-white">{s.k}</div>

@@ -13,7 +13,7 @@ const STEPS = [
     n: "02",
     icon: FileCode2,
     title: "The workflow is already there",
-    desc: "One file. Five lines that matter. Uses your repo's GITHUB_TOKEN — no secrets, no setup.",
+    desc: "One file. Five lines that matter. Uses your repo's GITHUB_TOKEN, not a W7S API key.",
     code: "uses: w7s-io/w7s-cloud@v1\nwith:\n  token: ${{ github.token }}",
     span: "col-span-12 md:col-span-7",
   },
@@ -21,7 +21,7 @@ const STEPS = [
     n: "03",
     icon: GitCommit,
     title: "Push to main",
-    desc: "GitHub Actions triggers. W7S verifies the token, receives the deploy archive, serves the app.",
+    desc: "GitHub Actions triggers. The W7S action verifies the token and uploads the deploy archive to W7S Cloud.",
     code: "git push origin main",
     span: "col-span-12 md:col-span-7",
   },
@@ -29,7 +29,7 @@ const STEPS = [
     n: "04",
     icon: Globe,
     title: "Live on the edge",
-    desc: "Your app gets a URL built from your handle and your repo name. Nothing else to do.",
+    desc: "W7S serves the app from shared Cloudflare infrastructure at a URL built from your handle and repo name.",
     code: "https://<your-github>.w7s.cloud/notepad",
     span: "col-span-12 md:col-span-5",
     highlight: true,
@@ -57,7 +57,7 @@ export default function HowItWorks() {
           </div>
           <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
             Everything happens inside the repo you already use. Fork, push, done.
-            The deploy lives next to your code, not in someone else's UI.
+            The deploy config lives next to your code, and W7S hosts the result.
           </p>
         </div>
 

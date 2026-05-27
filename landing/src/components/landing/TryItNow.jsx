@@ -12,7 +12,7 @@ const OUTPUT = [
   "› Run actions/checkout@v5",
   "› Run w7s-io/w7s-cloud@v1",
   "› Verifying GitHub token... ok",
-  "› Uploading deploy archive (12.4 kB)...",
+  "› Uploading deploy archive to W7S Cloud (12.4 kB)...",
   "› Provisioning edge runtime...",
   "› ✓ Deployed in 28.4s",
   "",
@@ -49,7 +49,7 @@ export default function TryItNow() {
           </h2>
           <p className="mt-6 text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
             Clone the notepad reference app and watch it go live. No account,
-            no card, no waiting room.
+            no card, no Cloudflare setup.
           </p>
         </div>
 

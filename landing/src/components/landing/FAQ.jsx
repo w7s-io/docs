@@ -7,8 +7,8 @@ import {
 
 const QA = [
   {
-    q: "Do I need an account on w7s.cloud?",
-    a: "No. W7S authenticates via your repo's GitHub token. If you can push to the repo, you can deploy it. No signup, no dashboard, no API keys to rotate.",
+    q: "Do I need a W7S or Cloudflare account?",
+    a: "No for W7S Community. The GitHub Action authenticates with your repo's GITHUB_TOKEN, uploads the build to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.",
   },
   {
     q: "What languages and frameworks are supported?",
@@ -16,7 +16,7 @@ const QA = [
   },
   {
     q: "How does the URL get generated?",
-    a: "Your deploy is served at https://<your-github-username>.w7s.cloud/<repo-name>. So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.w7s.cloud/notepad. Custom domains via CNAME file.",
+    a: "Your deploy is served by W7S Cloud at https://<your-github-username>.w7s.cloud/<repo-name>. So forking guerrerocarlos/notepad as your-handle/notepad gives you https://your-handle.w7s.cloud/notepad. Custom domains work via CNAME file.",
   },
   {
     q: "Is it really open source?",
@@ -28,7 +28,11 @@ const QA = [
   },
   {
     q: "What about limits and quotas?",
-    a: "W7S exposes daily usage rollups, hourly Cloudflare usage sync, warning thresholds and hard daily limits via an authenticated API. You can wire alerts into your existing tooling.",
+    a: "Community limits apply per GitHub repo, per W7S environment, per UTC day. Owner-level and global caps protect the shared service. W7S exposes usage rollups, warnings, and hard-limit status through an authenticated API.",
+  },
+  {
+    q: "Why not just use the Cloudflare CLI?",
+    a: "Use wrangler when you want to own the Cloudflare account, credentials, resources, billing, and deploy operations. Use W7S when you want GitHub-native deploys hosted by W7S Cloud with repo-scoped defaults and built-in usage guardrails.",
   },
 ];
 

@@ -33,7 +33,7 @@ export default function Header() {
           </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-zinc-400">
+        <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-[0.2em] text-zinc-400">
           <a
             href="#how"
             data-testid="nav-how"
@@ -54,6 +54,13 @@ export default function Header() {
             className="hover:text-amber-400 transition-colors"
           >
             Why W7S
+          </a>
+          <a
+            href="#pricing"
+            data-testid="nav-pricing"
+            className="hover:text-amber-400 transition-colors"
+          >
+            Pricing
           </a>
           <a
             href="#faq"

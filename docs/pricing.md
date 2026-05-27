@@ -4,9 +4,16 @@ title: Pricing
 description: W7S community free tier and cost examples for usage beyond it.
 ---
 
-W7S Community is designed to be useful before billing exists. The hosted `w7s.cloud` service currently protects the shared Cloudflare account with hard per-repository daily limits. When an app reaches a hard limit, W7S returns `429` or skips the internal delivery that would exceed the cap.
+W7S Community is free today. You do not need a W7S account, a credit card, or your own Cloudflare account to deploy through the hosted `w7s.cloud` service. The GitHub Action uploads your deploy archive to W7S Cloud, and W7S serves it from shared Cloudflare infrastructure.
 
-Self-serve paid billing is not implemented in this repo yet. For now, usage outside the community free tier means a W7S operator can raise a repo, owner, or environment limit with an explicit usage policy. The cost examples below are estimates from Cloudflare's published pricing and are meant to show what a paid tier would have to cover.
+There is no self-serve paid plan yet. For now, usage outside the community free tier means either:
+
+- run your own W7S instance on a Cloudflare account you control; or
+- arrange an explicit hosted limit override with a W7S operator.
+
+The hosted community service protects its shared Cloudflare account with hard per-repository daily limits. When an app reaches a hard limit, W7S returns `429` or skips the internal delivery that would exceed the cap.
+
+The cost examples below are estimates from Cloudflare's published pricing and are meant to explain what larger hosted usage would have to cover. They are not active W7S paid plans.
 
 ## What the free tier includes
 

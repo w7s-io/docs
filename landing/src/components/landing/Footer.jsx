@@ -48,6 +48,15 @@ export default function Footer() {
                   Try it now
                 </a>
               </li>
+              <li>
+                <a
+                  href="#pricing"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-pricing"
+                >
+                  Pricing
+                </a>
+              </li>
             </ul>
           </div>
 

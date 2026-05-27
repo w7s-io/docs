@@ -9,8 +9,8 @@
     --amber: #f59e0b;
     --amber-hover: #fcd34d;
     --text: #fafafa;
-    --text-muted: #a1a1aa;
-    --text-faint: #71717a;
+    --text-muted: #d4d4d8;
+    --text-faint: #a1a1aa;
     --border: rgba(255, 255, 255, 0.08);
     --border-strong: rgba(255, 255, 255, 0.14);
 }
@@ -42,6 +42,18 @@ body {
 ::selection {
     background: var(--amber);
     color: #000;
+}
+
+.text-zinc-400 {
+    color: #d4d4d8;
+}
+
+.text-zinc-500 {
+    color: #a1a1aa;
+}
+
+.text-zinc-600 {
+    color: #71717a;
 }
 
 /* Noise overlay */
