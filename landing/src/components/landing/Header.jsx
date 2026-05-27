@@ -56,7 +56,7 @@ export default function Header() {
             Why W7S
           </a>
           <a
-            href="#pricing"
+            href="https://www.w7s.io/docs/pricing/"
             data-testid="nav-pricing"
             className="hover:text-amber-400 transition-colors"
           >

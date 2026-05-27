@@ -14,14 +14,9 @@ The hosted service is still intentionally simple: small apps can deploy, test, d
 
 ## How To Read This
 
-The calculator estimates the underlying Cloudflare-backed cost of running an app on a W7S installation. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
+The calculator estimates the underlying Cloudflare-backed usage cost of running an app on a W7S installation. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
 
-Two toggles matter:
-
-- **Apply Cloudflare monthly included usage** models one installation that still has included account usage available.
-- **Include the $25 Workers for Platforms account plan** models the shared monthly platform floor for a self-hosted W7S installation.
-
-If you are estimating one app inside a busy shared W7S account, turn off included usage to see the raw marginal cost after the account-wide allowances have already been consumed.
+The estimate intentionally does not subtract included monthly usage, free-tier allowances, or account-level plan floors. It applies the listed usage rates directly to the traffic shape you choose.
 
 ## What Drives Cost
 
@@ -30,7 +25,7 @@ If you are estimating one app inside a busy shared W7S account, turn off include
 | Public traffic | Workers for Platforms requests and CPU | W7S routes requests through the platform Worker and native app Worker. Cloudflare bills one request across the dispatch chain, while CPU is counted across the Workers involved. |
 | Static frontends | R2 storage and R2 Class B reads on cache misses | W7S stores deploy assets in R2 and uses the Worker Cache API for immutable assets. Better cache hit rates reduce R2 reads. |
 | Native backends | CPU milliseconds, storage reads/writes, logs | Expensive handlers, chatty data access, and noisy logging increase cost faster than simple request count. |
-| KV, D1, R2 | Operation counts and stored GB-month | W7S can provision per-app storage bindings; each Cloudflare product has its own included usage and overage rate. |
+| KV, D1, R2 | Operation counts and stored GB-month | W7S can provision per-app storage bindings; each product has its own metered dimensions and rates. |
 | Queues | Operations per message | A normal delivered queue message is roughly one write, one read, and one delete. Retries add more reads. |
 | Durable Objects | Requests, active duration, and storage | Long-lived non-hibernated objects can dominate cost even if request volume is low. |
 | Logs | Events written | W7S exposes app console and exception logs, but log volume should stay intentional. |

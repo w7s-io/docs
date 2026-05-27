@@ -59,7 +59,7 @@ export default function Pricing() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
-                href="/docs/pricing/"
+                href="https://www.w7s.io/docs/pricing/"
                 className="inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-5 py-3 text-xs uppercase tracking-[0.2em] font-bold hover:bg-amber-300 transition-colors"
               >
                 Pricing details

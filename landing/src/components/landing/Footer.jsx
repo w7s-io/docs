@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#pricing"
+                  href="https://www.w7s.io/docs/pricing/"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-pricing"
                 >

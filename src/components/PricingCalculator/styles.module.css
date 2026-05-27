@@ -75,8 +75,7 @@
   line-height: 1.5;
 }
 
-.profileGroup,
-.optionRow {
+.profileGroup {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -107,25 +106,6 @@
   border-color: rgba(245, 158, 11, 0.6);
   background: rgba(245, 158, 11, 0.12);
   color: var(--w7s-amber-hover);
-}
-
-.optionRow {
-  align-items: center;
-}
-
-.checkOption {
-  display: inline-flex;
-  min-height: 2.25rem;
-  align-items: center;
-  gap: 0.55rem;
-  color: var(--w7s-muted);
-  font-size: 0.78rem;
-}
-
-.checkOption input {
-  width: 1rem;
-  height: 1rem;
-  accent-color: var(--w7s-amber);
 }
 
 .summaryGrid {

@@ -32,8 +32,6 @@ type CostLine = {
   label: string;
   usage: number;
   usageLabel: string;
-  included: number;
-  includedLabel: string;
   unitSize: number;
   unitPrice: number;
   priceLabel: string;
@@ -42,40 +40,22 @@ type CostLine = {
 const DAYS_PER_MONTH = 30;
 
 const PRICING = {
-  wfpBaseMonthly: 25,
-  wfpRequestsIncluded: 20_000_000,
   wfpRequestPricePerMillion: 0.3,
-  wfpCpuIncludedMs: 60_000_000,
   wfpCpuPricePerMillionMs: 0.02,
-  wfpScriptsIncluded: 1_000,
   wfpScriptPrice: 0.02,
-  r2StorageIncludedGb: 10,
   r2StoragePricePerGb: 0.015,
-  r2ClassAIncluded: 1_000_000,
   r2ClassAPricePerMillion: 4.5,
-  r2ClassBIncluded: 10_000_000,
   r2ClassBPricePerMillion: 0.36,
-  kvReadsIncluded: 10_000_000,
   kvReadPricePerMillion: 0.5,
-  kvWritesIncluded: 1_000_000,
   kvWritePricePerMillion: 5,
-  kvStorageIncludedGb: 1,
   kvStoragePricePerGb: 0.5,
-  d1RowsReadIncluded: 25_000_000_000,
   d1RowsReadPricePerMillion: 0.001,
-  d1RowsWrittenIncluded: 50_000_000,
   d1RowsWrittenPricePerMillion: 1,
-  d1StorageIncludedGb: 5,
   d1StoragePricePerGb: 0.75,
-  queueOpsIncluded: 1_000_000,
   queueOpsPricePerMillion: 0.4,
-  durableObjectRequestsIncluded: 1_000_000,
   durableObjectRequestPricePerMillion: 0.15,
-  durableObjectDurationIncludedGbSeconds: 400_000,
   durableObjectDurationPricePerMillionGbSeconds: 12.5,
-  durableObjectStorageIncludedGb: 5,
   durableObjectStoragePricePerGb: 0.2,
-  logsIncludedEvents: 20_000_000,
   logsPricePerMillion: 0.6,
 };
 
@@ -210,17 +190,12 @@ const formatNumber = (value: number) => numberFormatter.format(Math.round(value)
 
 const formatDecimal = (value: number) => decimalFormatter.format(value);
 
-const lineCost = (line: CostLine, applyIncludedUsage: boolean) => {
-  const billable = applyIncludedUsage ? Math.max(0, line.usage - line.included) : line.usage;
-  return (billable / line.unitSize) * line.unitPrice;
-};
+const lineCost = (line: CostLine) => (line.usage / line.unitSize) * line.unitPrice;
 
 const makeLine = (
   label: string,
   usage: number,
   usageLabel: string,
-  included: number,
-  includedLabel: string,
   unitSize: number,
   unitPrice: number,
   priceLabel: string,
@@ -228,8 +203,6 @@ const makeLine = (
   label,
   usage,
   usageLabel,
-  included,
-  includedLabel,
   unitSize,
   unitPrice,
   priceLabel,
@@ -281,8 +254,6 @@ function SliderField({
 export default function PricingCalculator() {
   const [profile, setProfile] = useState<ProfileId>('fullstack');
   const [inputs, setInputs] = useState<Inputs>(PROFILE_VALUES.fullstack);
-  const [applyIncludedUsage, setApplyIncludedUsage] = useState(true);
-  const [includePlatformBase, setIncludePlatformBase] = useState(false);
 
   const updateInput = (id: keyof Inputs, value: number) => {
     setInputs((current) => ({...current, [id]: value}));
@@ -333,8 +304,6 @@ export default function PricingCalculator() {
         'Workers for Platforms requests',
         workerRequests,
         formatCompact(workerRequests),
-        PRICING.wfpRequestsIncluded,
-        '20M',
         1_000_000,
         PRICING.wfpRequestPricePerMillion,
         '$0.30 / 1M',
@@ -343,8 +312,6 @@ export default function PricingCalculator() {
         'Workers for Platforms CPU',
         workerCpuMs,
         `${formatCompact(workerCpuMs)} ms`,
-        PRICING.wfpCpuIncludedMs,
-        '60M ms',
         1_000_000,
         PRICING.wfpCpuPricePerMillionMs,
         '$0.02 / 1M ms',
@@ -353,8 +320,6 @@ export default function PricingCalculator() {
         'Workers for Platforms scripts',
         inputs.workerScripts,
         formatNumber(inputs.workerScripts),
-        PRICING.wfpScriptsIncluded,
-        '1,000',
         1,
         PRICING.wfpScriptPrice,
         '$0.02 / script',
@@ -363,8 +328,6 @@ export default function PricingCalculator() {
         'R2 storage',
         r2StorageGb,
         `${formatDecimal(r2StorageGb)} GB`,
-        PRICING.r2StorageIncludedGb,
-        '10 GB',
         1,
         PRICING.r2StoragePricePerGb,
         '$0.015 / GB',
@@ -373,8 +336,6 @@ export default function PricingCalculator() {
         'R2 Class A',
         r2ClassA,
         formatCompact(r2ClassA),
-        PRICING.r2ClassAIncluded,
-        '1M',
         1_000_000,
         PRICING.r2ClassAPricePerMillion,
         '$4.50 / 1M',
@@ -383,8 +344,6 @@ export default function PricingCalculator() {
         'R2 Class B',
         r2ClassB,
         formatCompact(r2ClassB),
-        PRICING.r2ClassBIncluded,
-        '10M',
         1_000_000,
         PRICING.r2ClassBPricePerMillion,
         '$0.36 / 1M',
@@ -393,8 +352,6 @@ export default function PricingCalculator() {
         'KV reads',
         kvReads,
         formatCompact(kvReads),
-        PRICING.kvReadsIncluded,
-        '10M',
         1_000_000,
         PRICING.kvReadPricePerMillion,
         '$0.50 / 1M',
@@ -403,8 +360,6 @@ export default function PricingCalculator() {
         'KV writes',
         kvWrites,
         formatCompact(kvWrites),
-        PRICING.kvWritesIncluded,
-        '1M',
         1_000_000,
         PRICING.kvWritePricePerMillion,
         '$5.00 / 1M',
@@ -413,8 +368,6 @@ export default function PricingCalculator() {
         'KV storage',
         inputs.kvStorageGb,
         `${formatDecimal(inputs.kvStorageGb)} GB`,
-        PRICING.kvStorageIncludedGb,
-        '1 GB',
         1,
         PRICING.kvStoragePricePerGb,
         '$0.50 / GB',
@@ -423,8 +376,6 @@ export default function PricingCalculator() {
         'D1 rows read',
         d1RowsRead,
         formatCompact(d1RowsRead),
-        PRICING.d1RowsReadIncluded,
-        '25B',
         1_000_000,
         PRICING.d1RowsReadPricePerMillion,
         '$0.001 / 1M',
@@ -433,8 +384,6 @@ export default function PricingCalculator() {
         'D1 rows written',
         d1RowsWritten,
         formatCompact(d1RowsWritten),
-        PRICING.d1RowsWrittenIncluded,
-        '50M',
         1_000_000,
         PRICING.d1RowsWrittenPricePerMillion,
         '$1.00 / 1M',
@@ -443,8 +392,6 @@ export default function PricingCalculator() {
         'D1 storage',
         inputs.d1StorageGb,
         `${formatDecimal(inputs.d1StorageGb)} GB`,
-        PRICING.d1StorageIncludedGb,
-        '5 GB',
         1,
         PRICING.d1StoragePricePerGb,
         '$0.75 / GB',
@@ -453,8 +400,6 @@ export default function PricingCalculator() {
         'Queue operations',
         queueOps,
         formatCompact(queueOps),
-        PRICING.queueOpsIncluded,
-        '1M',
         1_000_000,
         PRICING.queueOpsPricePerMillion,
         '$0.40 / 1M',
@@ -463,8 +408,6 @@ export default function PricingCalculator() {
         'Durable Object requests',
         durableObjectRequests,
         formatCompact(durableObjectRequests),
-        PRICING.durableObjectRequestsIncluded,
-        '1M',
         1_000_000,
         PRICING.durableObjectRequestPricePerMillion,
         '$0.15 / 1M',
@@ -473,8 +416,6 @@ export default function PricingCalculator() {
         'Durable Object duration',
         durableObjectGbSeconds,
         `${formatCompact(durableObjectGbSeconds)} GB-s`,
-        PRICING.durableObjectDurationIncludedGbSeconds,
-        '400K GB-s',
         1_000_000,
         PRICING.durableObjectDurationPricePerMillionGbSeconds,
         '$12.50 / 1M GB-s',
@@ -483,8 +424,6 @@ export default function PricingCalculator() {
         'Durable Object storage',
         inputs.durableObjectStorageGb,
         `${formatDecimal(inputs.durableObjectStorageGb)} GB`,
-        PRICING.durableObjectStorageIncludedGb,
-        '5 GB',
         1,
         PRICING.durableObjectStoragePricePerGb,
         '$0.20 / GB',
@@ -493,8 +432,6 @@ export default function PricingCalculator() {
         'Worker logs',
         logEvents,
         formatCompact(logEvents),
-        PRICING.logsIncludedEvents,
-        '20M',
         1_000_000,
         PRICING.logsPricePerMillion,
         '$0.60 / 1M',
@@ -502,10 +439,9 @@ export default function PricingCalculator() {
     ];
 
     const usageCost = lines.reduce(
-      (total, line) => total + lineCost(line, applyIncludedUsage),
+      (total, line) => total + lineCost(line),
       0,
     );
-    const platformBaseCost = includePlatformBase ? PRICING.wfpBaseMonthly : 0;
 
     return {
       lines,
@@ -518,10 +454,9 @@ export default function PricingCalculator() {
       queueMessages,
       durableObjectRequests,
       usageCost,
-      totalCost: usageCost + platformBaseCost,
-      platformBaseCost,
+      totalCost: usageCost,
     };
-  }, [applyIncludedUsage, includePlatformBase, inputs]);
+  }, [inputs]);
 
   return (
     <section className={styles.calculator} aria-label="W7S monthly cost estimator">
@@ -538,8 +473,7 @@ export default function PricingCalculator() {
           <span>Estimated monthly cost</span>
           <strong>{formatMoney(estimate.totalCost)}</strong>
           <small>
-            {applyIncludedUsage ? 'with Cloudflare included usage' : 'raw marginal usage'}
-            {includePlatformBase ? ' and WFP plan floor' : ''}
+            Raw usage estimate without included/free-tier allowances.
           </small>
         </div>
       </div>
@@ -556,25 +490,6 @@ export default function PricingCalculator() {
             {PROFILE_LABELS[id]}
           </button>
         ))}
-      </div>
-
-      <div className={styles.optionRow}>
-        <label className={styles.checkOption}>
-          <input
-            type="checkbox"
-            checked={applyIncludedUsage}
-            onChange={(event) => setApplyIncludedUsage(event.target.checked)}
-          />
-          <span>Apply Cloudflare monthly included usage</span>
-        </label>
-        <label className={styles.checkOption}>
-          <input
-            type="checkbox"
-            checked={includePlatformBase}
-            onChange={(event) => setIncludePlatformBase(event.target.checked)}
-          />
-          <span>Include the $25 Workers for Platforms account plan</span>
-        </label>
       </div>
 
       <div className={styles.summaryGrid}>
@@ -602,7 +517,7 @@ export default function PricingCalculator() {
           label="Visitors per day"
           help="Human visitors reaching the app each day."
           min={0}
-          max={1_000_000}
+          max={100_000}
           step={1_000}
           value={inputs.visitorsPerDay}
           valueLabel={formatNumber(inputs.visitorsPerDay)}
@@ -855,28 +770,17 @@ export default function PricingCalculator() {
               <tr>
                 <th>Area</th>
                 <th>Usage</th>
-                <th>Included</th>
                 <th>Rate</th>
                 <th>Estimate</th>
               </tr>
             </thead>
             <tbody>
-              {includePlatformBase ? (
-                <tr>
-                  <td>Workers for Platforms account plan</td>
-                  <td>enabled</td>
-                  <td>-</td>
-                  <td>$25 / month</td>
-                  <td>{formatMoney(estimate.platformBaseCost)}</td>
-                </tr>
-              ) : null}
               {estimate.lines.map((line) => (
                 <tr key={line.label}>
                   <td>{line.label}</td>
                   <td>{line.usageLabel}</td>
-                  <td>{applyIncludedUsage ? line.includedLabel : 'not applied'}</td>
                   <td>{line.priceLabel}</td>
-                  <td>{formatMoney(lineCost(line, applyIncludedUsage))}</td>
+                  <td>{formatMoney(lineCost(line))}</td>
                 </tr>
               ))}
             </tbody>
@@ -885,10 +789,9 @@ export default function PricingCalculator() {
       </div>
 
       <p className={styles.disclaimer}>
-        This is a planning estimate, not a bill. W7S usage accounting is designed
-        for visibility and free-tier protection first; exact billing still depends
-        on Cloudflare account-level usage, cache behavior, and the deployed app's
-        actual code paths.
+        This is a planning estimate, not a bill. It applies published usage
+        rates to the selected traffic shape without subtracting included or
+        free-tier allowances; actual hosted W7S pricing can differ.
       </p>
     </section>
   );
