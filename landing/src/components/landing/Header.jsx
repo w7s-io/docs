@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Github, BookOpen, ArrowUpRight } from "lucide-react";
 
+const W7S_LOGO = "https://github.com/w7s-io.png";
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -25,6 +27,11 @@ export default function Header() {
           data-testid="logo-link"
           className="flex items-center gap-2 group"
         >
+          <img
+            src={W7S_LOGO}
+            alt="W7S logo"
+            className="h-8 w-8 rounded-md border border-white/10 bg-black object-cover"
+          />
           <span className="font-display text-2xl tracking-tighter text-white group-hover:text-amber-400 transition-colors">
             W7S
           </span>
