@@ -14,9 +14,9 @@ The hosted service is still intentionally simple: small apps can deploy, test, d
 
 ## How To Read This
 
-The calculator estimates monthly W7S usage from traffic, storage, queues, logs, and stateful backend features. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
+The calculator estimates monthly W7S usage from traffic, storage, queues, logs, and stateful backend features. It also includes W7S platform overhead for routing, usage enforcement, usage counters, log handling, and other control-plane work. It is useful for planning, quota design, and understanding which features multiply cost. It is not a final hosted `w7s.cloud` bill.
 
-The estimate intentionally does not subtract included monthly usage, free-tier allowances, or account-level plan floors. It applies the listed usage rates directly to the traffic shape you choose.
+The estimate intentionally does not subtract included monthly usage, free-tier allowances, or account-level plan floors. It estimates operating cost from the selected traffic shape, adds W7S overhead, then applies a 50% gross margin.
 
 ## What Drives Cost
 
@@ -29,13 +29,14 @@ The estimate intentionally does not subtract included monthly usage, free-tier a
 | Queues | Operations per message | A normal delivered queue message is roughly one write, one read, and one delete. Retries add more reads. |
 | Stateful coordination | Requests, active duration, and storage | Long-lived stateful workloads can dominate cost even if request volume is low. |
 | Logs | Events written | W7S exposes app console and exception logs, but log volume should stay intentional. |
+| W7S platform overhead | Routing, usage guards, counters, and log ingestion | W7S runs extra platform work around each app so deploys, public routing, quota enforcement, and observability keep working. |
 
 ## Pricing Notes
 
-The calculator is a planning tool. It keeps provider details out of the user-facing estimate and shows W7S usage categories instead of infrastructure product names.
+The calculator is a planning tool. It keeps provider details out of the user-facing estimate and shows W7S usage categories instead of infrastructure product names. The final estimate includes a 50% gross margin after W7S overhead, so the public price target is higher than raw infrastructure cost.
 
 ## Free-Tier Policy
 
 W7S also has its own free-tier guardrails. These are not billing-grade counters yet; they are operational protections that keep one app, owner, or global account from burning through shared infrastructure unexpectedly.
 
-Use the [Usage Accounting](./usage-accounting.md) API to inspect daily usage, warning thresholds, hard daily caps, hourly resource usage, and the GitHub issue workflow that reports quota pressure back to the repository.
+Use the [Usage Accounting](./usage-accounting.md) API to inspect daily usage, warning thresholds, daily caps, hourly resource usage, and the GitHub issue workflow that reports quota pressure back to the repository.

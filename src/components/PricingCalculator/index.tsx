@@ -38,6 +38,7 @@ type CostLine = {
 };
 
 const DAYS_PER_MONTH = 30;
+const GROSS_MARGIN_RATE = 0.5;
 
 const PRICING = {
   runtimeRequestPricePerMillion: 0.3,
@@ -192,6 +193,9 @@ const formatDecimal = (value: number) => decimalFormatter.format(value);
 
 const lineCost = (line: CostLine) => (line.usage / line.unitSize) * line.unitPrice;
 
+const marginCost = (operatingCost: number) =>
+  operatingCost / (1 - GROSS_MARGIN_RATE) - operatingCost;
+
 const makeLine = (
   label: string,
   usage: number,
@@ -298,8 +302,38 @@ export default function PricingCalculator() {
     const objectStorageGb = inputs.staticStorageGb + inputs.objectStorageGb;
     const objectReadOperations = staticObjectReads + objectAppReads;
     const objectWriteOperations = objectAppWrites;
+    const publicRequests = pageViews + staticAssetRequests + backendRequests;
+    const platformExecutions =
+      publicRequests +
+      queueMessages * 2 +
+      statefulObjectRequests +
+      logEvents;
+    const platformCpuMs =
+      pageViews * 0.25 +
+      staticAssetRequests * 0.15 +
+      backendRequests * 0.75 +
+      queueMessages * 2 +
+      statefulObjectRequests * 0.5 +
+      logEvents * 0.15;
+    const usageGuardReads =
+      runtimeRequests +
+      objectReadOperations +
+      objectWriteOperations +
+      keyValueReads +
+      keyValueWrites +
+      sqlRowsRead +
+      sqlRowsWritten +
+      queueOps +
+      logEvents;
+    const usageCounterWrites =
+      runtimeRequests +
+      objectWriteOperations +
+      keyValueWrites +
+      sqlRowsWritten +
+      queueOps +
+      logEvents;
 
-    const lines = [
+    const operatingLines = [
       makeLine(
         'Runtime requests',
         runtimeRequests,
@@ -436,12 +470,56 @@ export default function PricingCalculator() {
         PRICING.logsPricePerMillion,
         '$0.60 / 1M',
       ),
+      makeLine(
+        'W7S routing executions',
+        platformExecutions,
+        formatCompact(platformExecutions),
+        1_000_000,
+        PRICING.runtimeRequestPricePerMillion,
+        '$0.30 / 1M',
+      ),
+      makeLine(
+        'W7S routing CPU',
+        platformCpuMs,
+        `${formatCompact(platformCpuMs)} ms`,
+        1_000_000,
+        PRICING.runtimeCpuPricePerMillionMs,
+        '$0.02 / 1M ms',
+      ),
+      makeLine(
+        'W7S usage guard reads',
+        usageGuardReads,
+        formatCompact(usageGuardReads),
+        1_000_000,
+        PRICING.keyValueReadPricePerMillion,
+        '$0.50 / 1M',
+      ),
+      makeLine(
+        'W7S usage counter writes',
+        usageCounterWrites,
+        formatCompact(usageCounterWrites),
+        1_000_000,
+        PRICING.keyValueWritePricePerMillion,
+        '$5.00 / 1M',
+      ),
     ];
 
-    const usageCost = lines.reduce(
+    const operatingCost = operatingLines.reduce(
       (total, line) => total + lineCost(line),
       0,
     );
+    const marginAmount = marginCost(operatingCost);
+    const lines = [
+      ...operatingLines,
+      makeLine(
+        'W7S operating margin',
+        1,
+        '50% gross margin',
+        1,
+        marginAmount,
+        'price target',
+      ),
+    ];
 
     return {
       lines,
@@ -453,8 +531,9 @@ export default function PricingCalculator() {
       runtimeCpuMs,
       queueMessages,
       statefulObjectRequests,
-      usageCost,
-      totalCost: usageCost,
+      usageCost: operatingCost,
+      marginAmount,
+      totalCost: operatingCost + marginAmount,
     };
   }, [inputs]);
 
@@ -473,7 +552,7 @@ export default function PricingCalculator() {
           <span>Estimated monthly cost</span>
           <strong>{formatMoney(estimate.totalCost)}</strong>
           <small>
-            Raw usage estimate without included/free-tier allowances.
+            Includes W7S overhead and 50% gross margin.
           </small>
         </div>
       </div>
@@ -789,9 +868,10 @@ export default function PricingCalculator() {
       </div>
 
       <p className={styles.disclaimer}>
-        This is a planning estimate, not a bill. It applies published usage
-        rates to the selected traffic shape without subtracting included or
-        free-tier allowances; actual hosted W7S pricing can differ.
+        This is a planning estimate, not a bill. It estimates app usage, W7S
+        routing and usage-accounting overhead, then applies a 50% gross margin
+        without subtracting included or free-tier allowances; actual hosted W7S
+        pricing can differ.
       </p>
     </section>
   );
