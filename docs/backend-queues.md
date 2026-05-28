@@ -58,6 +58,8 @@ W7S_ENVIRONMENT
 
 `W7S_QUEUE` is an internal service binding to the W7S control plane. `W7S_QUEUE_TOKEN` is a secret used by W7S to prove which deployed app is enqueueing the message.
 
+Only send the bearer token. W7S resolves the caller repo and deployment environment from that token.
+
 ## Send a message
 
 Send messages through:
@@ -72,8 +74,6 @@ Example:
 type Env = {
   W7S_QUEUE: Fetcher;
   W7S_QUEUE_TOKEN: string;
-  W7S_REPOSITORY: string;
-  W7S_ENVIRONMENT: string;
 };
 
 export default {
@@ -84,9 +84,7 @@ export default {
         method: "POST",
         headers: {
           authorization: `Bearer ${env.W7S_QUEUE_TOKEN}`,
-          "content-type": "application/json",
-          "x-w7s-queue-caller": env.W7S_REPOSITORY,
-          "x-w7s-queue-environment": env.W7S_ENVIRONMENT
+          "content-type": "application/json"
         },
         body: JSON.stringify({
           type: "ping",
@@ -162,7 +160,7 @@ W7S sends this payload to the consumer route:
 }
 ```
 
-Return any `2xx` response after processing. Non-`2xx` responses make W7S report the queue delivery as failed so the managed queue can retry the batch. W7S-created queue consumers use bounded defaults: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
+Return any `2xx` response after processing. Non-`2xx` responses make W7S report the queue delivery as failed so the managed queue can retry the batch. W7S-created queue consumers use bounded defaults: batch size 10, max retries 3, and retry delay 10 seconds.
 
 ## Separate producer and consumer
 
@@ -188,9 +186,7 @@ await env.W7S_QUEUE.fetch(
     method: "POST",
     headers: {
       authorization: `Bearer ${env.W7S_QUEUE_TOKEN}`,
-      "content-type": "application/json",
-      "x-w7s-queue-caller": env.W7S_REPOSITORY,
-      "x-w7s-queue-environment": env.W7S_ENVIRONMENT
+      "content-type": "application/json"
     },
     body: JSON.stringify({
       id: crypto.randomUUID(),

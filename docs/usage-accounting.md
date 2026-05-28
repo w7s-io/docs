@@ -287,7 +287,7 @@ Suspended apps return HTTP `429` before static serving, backend dispatch, deploy
 
 Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and runtime CPU limits on native backends. Static asset storage is capped by deploy shape limits, and immutable static assets are served through a platform cache using versioned asset keys to reduce object storage reads. Stateful object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation telemetry; stored bytes are not per-app attributable in the current platform telemetry schema and remain a tracked gap.
 
-Queue sends reject JSON envelopes larger than 64 KB by default. New Queue consumers use bounded batch and retry settings: batch size 10, max retries 3, retry delay 10 seconds, and visibility timeout 300 seconds.
+Queue sends reject JSON envelopes larger than 64 KB by default. New Queue consumers use bounded batch and retry settings: batch size 10, max retries 3, and retry delay 10 seconds.
 
 Workflow starts reject instance payloads larger than 64 KB by default. W7S also tracks active workflow instances and blocks new starts for a target repo at 50 active instances by default.
 

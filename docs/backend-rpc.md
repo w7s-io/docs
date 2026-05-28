@@ -26,6 +26,8 @@ W7S_ENVIRONMENT
 
 `W7S_RPC` is an internal service binding to the W7S control plane. `W7S_RPC_TOKEN` is a secret used by W7S to prove which deployed app is making the call.
 
+Only send the bearer token. W7S resolves the caller repo and deployment environment from that token.
+
 ## Call another backend
 
 Call the target through:
@@ -42,8 +44,6 @@ const response = await env.W7S_RPC.fetch(
   {
     headers: {
       authorization: `Bearer ${env.W7S_RPC_TOKEN}`,
-      "x-w7s-rpc-caller": env.W7S_REPOSITORY,
-      "x-w7s-rpc-environment": env.W7S_ENVIRONMENT,
       cookie: request.headers.get("cookie") ?? ""
     }
   }
@@ -108,8 +108,6 @@ In `guerrerocarlos/nodepad`, call the auth backend through `env.W7S_RPC`:
 type Env = {
   W7S_RPC: Fetcher;
   W7S_RPC_TOKEN: string;
-  W7S_REPOSITORY: string;
-  W7S_ENVIRONMENT: string;
 };
 
 export default {
@@ -118,9 +116,7 @@ export default {
       "https://w7s.internal/api/v1/rpc/guerrerocarlos/auth/session",
       {
         headers: {
-          authorization: `Bearer ${env.W7S_RPC_TOKEN}`,
-          "x-w7s-rpc-caller": env.W7S_REPOSITORY,
-          "x-w7s-rpc-environment": env.W7S_ENVIRONMENT
+          authorization: `Bearer ${env.W7S_RPC_TOKEN}`
         }
       }
     );
@@ -143,8 +139,6 @@ For apps that call multiple W7S services, keep the request headers in one helper
 type W7sRpcEnv = {
   W7S_RPC: Fetcher;
   W7S_RPC_TOKEN: string;
-  W7S_REPOSITORY: string;
-  W7S_ENVIRONMENT: string;
 };
 
 export const callW7s = (
@@ -155,8 +149,6 @@ export const callW7s = (
 ) => {
   const headers = new Headers(init.headers);
   headers.set("authorization", `Bearer ${env.W7S_RPC_TOKEN}`);
-  headers.set("x-w7s-rpc-caller", env.W7S_REPOSITORY);
-  headers.set("x-w7s-rpc-environment", env.W7S_ENVIRONMENT);
 
   return env.W7S_RPC.fetch(
     `https://w7s.internal/api/v1/rpc/${target}${path}`,

@@ -52,6 +52,8 @@ W7S_ENVIRONMENT
 
 `W7S_WORKFLOW` is an internal service binding to the W7S control plane. `W7S_WORKFLOW_TOKEN` is a secret used by W7S to prove which deployed app is starting the workflow.
 
+Only send the bearer token. W7S resolves the caller repo and deployment environment from that token.
+
 ## Start a workflow
 
 Start workflow instances through:
@@ -66,8 +68,6 @@ Example:
 type Env = {
   W7S_WORKFLOW: Fetcher;
   W7S_WORKFLOW_TOKEN: string;
-  W7S_REPOSITORY: string;
-  W7S_ENVIRONMENT: string;
 };
 
 export default {
@@ -79,8 +79,6 @@ export default {
         headers: {
           authorization: `Bearer ${env.W7S_WORKFLOW_TOKEN}`,
           "content-type": "application/json",
-          "x-w7s-workflow-caller": env.W7S_REPOSITORY,
-          "x-w7s-workflow-environment": env.W7S_ENVIRONMENT,
           "x-w7s-workflow-instance-id": crypto.randomUUID()
         },
         body: JSON.stringify({
@@ -163,7 +161,7 @@ Check an instance through:
 GET /api/v1/workflows/<owner>/<repo>/<workflow>/<instance-id>
 ```
 
-Use the same `Authorization`, `x-w7s-workflow-caller`, and `x-w7s-workflow-environment` headers used to start the workflow.
+Use the same `Authorization: Bearer ${env.W7S_WORKFLOW_TOKEN}` header used to start the workflow.
 
 ## Authorization
 
