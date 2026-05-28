@@ -38,92 +38,125 @@ const CLOUDFLARE_PRIVACY_REFERENCES = [
 
 const TERMS_SECTIONS = [
   {
-    title: "1. Agreement to these terms",
+    title: "1. The Service",
     body: [
-      `${COMPANY_NAME} operates w7s.io, w7s.cloud, and the hosted W7S services. These Terms of Service govern access to W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services. By using W7S, you agree to these terms.`,
-      "If you use W7S for a company or organization, you represent that you have authority to bind that organization. If you do not agree to these terms, do not use the hosted W7S services.",
+      "W7S is an open-source deployment platform for GitHub-native applications. The hosted Service receives build output from GitHub Actions, verifies the GitHub workflow context, and serves deployed applications from public URLs.",
+      "The open-source W7S code is available under the MIT License. These Terms govern only the hosted Service operated by W7S. Self-hosted instances are governed solely by the applicable open-source license.",
     ],
   },
   {
-    title: "2. What W7S provides",
+    title: "2. Your Content and Ownership",
     body: [
-      "W7S is an open source deployment platform for GitHub-native applications. Hosted W7S deployments receive build output from GitHub Actions, verify the GitHub workflow context, and serve the deployed app from a public URL.",
-      "The open source W7S code may be self-hosted under its applicable open source license. These terms do not limit rights granted by open source licenses, but they do govern hosted W7S services operated for the public W7S cloud.",
+      'You retain all ownership rights in your code, repositories, build artifacts, deployment logs, configuration, custom domains, and any other content you submit to the Service ("Your Content").',
+      "You grant W7S a limited, worldwide, non-exclusive, royalty-free license to receive, store, process, transmit, cache, analyze, and serve Your Content solely as necessary to provide, secure, debug, and improve the Service.",
+      "You are solely responsible for Your Content, including ensuring you have all necessary rights to deploy it and that it complies with applicable laws.",
     ],
   },
   {
-    title: "3. Your repositories, deployments, and content",
+    title: "3. GitHub Integration",
     body: [
-      "You retain ownership of code, files, configuration, logs, deploy artifacts, custom domain declarations, and other content that you submit to W7S.",
-      "You grant W7S a limited, worldwide, non-exclusive license to receive, copy, store, cache, route, execute, secure, analyze, and serve that content only as needed to provide, protect, measure, debug, and improve the service.",
-      "You are responsible for your applications, public URLs, dependencies, secrets, configuration, user data, and compliance obligations. Do not deploy content that you do not have the right to deploy.",
+      "The Service operates through GitHub Actions and GitHub OAuth. By using the Service, you authorize W7S to access necessary repository metadata, workflow information, commit data, and deployment artifacts using the permissions you grant via GitHub.",
+      "You are responsible for managing repository access, workflow security, secret rotation, and GitHub permissions.",
     ],
   },
   {
-    title: "4. GitHub Actions and credentials",
+    title: "4. Acceptable Use",
     body: [
-      "W7S is designed to work from GitHub Actions. The W7S deploy action may receive repository metadata, workflow metadata, commit information, branch information, deploy archives, and the GitHub token or token-derived proof required to verify a deployment.",
-      "You are responsible for controlling repository access, rotating secrets, reviewing workflow files, and ensuring that the GitHub account or organization authorizes the deployment.",
+      "You may not use the Service to:",
+    ],
+    list: [
+      "Host, distribute, or promote malware, phishing, spam, scams, or illegal content",
+      "Infringe intellectual property rights",
+      "Engage in harassment, abuse, or harmful behavior",
+      "Perform crypto mining, denial-of-service attacks, or unauthorized scanning",
+      "Bypass platform limits or engage in abusive automation",
+      "Violate any applicable laws or regulations",
+    ],
+    afterList: [
+      "We may monitor, throttle, suspend, or remove any deployment that violates these rules or poses a risk to the Service.",
     ],
   },
   {
-    title: "5. Acceptable use",
+    title: "5. Service Limits and Changes",
     body: [
-      "You may not use W7S to host, distribute, or support malware, phishing, spam, credential theft, illegal content, harassment, intellectual property infringement, abusive automation, denial-of-service activity, unauthorized scanning, crypto mining, deceptive redirects, or attempts to bypass platform limits.",
-      "You may not interfere with W7S, other users, infrastructure providers, or public networks. W7S may throttle, suspend, remove, or block deployments that create security, legal, abuse, reliability, or cost-control risk.",
+      "The Service is provided on a best-effort basis with usage limits. We may modify features, limits, APIs, or infrastructure at any time. We will make reasonable efforts to notify users of material breaking changes.",
     ],
   },
   {
-    title: "6. Service limits, availability, and changes",
+    title: "6. Billing and Payments",
     body: [
-      "Hosted W7S deployments are provided with published limits, abuse controls, and usage controls. Community and free hosted use may be limited, changed, suspended, or discontinued to keep the service available.",
-      "W7S may change features, APIs, limits, pricing, routing behavior, or infrastructure as the platform evolves. W7S will try to avoid breaking documented workflows without notice, but urgent security or reliability changes may happen immediately.",
+      "Usage of the Service may be free or metered according to our pricing page. You are responsible for all charges and taxes incurred through your account or authorized GitHub organizations.",
+      "We use third-party payment processors, such as Stripe. Their terms also apply.",
+      "Refunds: All payments are non-refundable. In exceptional cases, we may issue credits at our sole discretion.",
     ],
   },
   {
-    title: "7. Billing",
+    title: "7. Data Handling and Security",
     body: [
-      "Hosted usage may be free, metered, or paid according to the pricing page, an order form, or another written agreement. You are responsible for charges, taxes, and usage generated by repositories or organizations you authorize.",
-      "If billing is enabled for an account or organization, W7S may use payment processors and billing providers to process payments and manage invoices. Payment provider terms may also apply.",
+      "We store Your Content only temporarily as needed to provide the Service and delete it as soon as operationally feasible, retaining the minimum data necessary for functionality, security, and billing.",
+      "We use reasonable technical and organizational measures to protect the Service. However, no system is completely secure.",
+      "Do not send sensitive regulated data, payment card information, health data, government IDs, etc. to the Service unless we have expressly agreed in writing.",
+      "We use Stripe for billing and Simple Analytics for basic traffic statistics. These providers have their own privacy practices.",
     ],
   },
   {
-    title: "8. Security and sensitive data",
+    title: "8. Third-Party Services",
     body: [
-      "W7S uses reasonable technical and organizational measures to protect the service. No hosted platform can guarantee perfect security or uninterrupted operation.",
-      "Do not send regulated sensitive data, payment card data, health data, government identifiers, or other high-risk personal data to community hosted deployments unless W7S has explicitly agreed in writing to support that use case.",
-      "You should keep independent backups of source code, deploy artifacts, databases, and configuration that matter to your application.",
+      "The Service depends on third parties, including GitHub, infrastructure providers, DNS providers, and other service providers. We are not responsible for their performance or terms.",
     ],
   },
   {
-    title: "9. Third-party and upstream provider terms",
+    title: "9. Indemnification",
     body: [
-      "W7S depends on third-party services such as GitHub, DNS providers, analytics providers, payment processors, infrastructure providers, and other integrations. Their terms, privacy policies, service-specific terms, acceptable use restrictions, platform limits, and abuse controls may apply to your use of W7S.",
-      "Hosted W7S services use Cloudflare infrastructure and platform services, including products used for programmable hosting, routing, storage, security, observability, and network delivery. You may not use W7S in a way that violates Cloudflare terms or policies that apply to the underlying infrastructure W7S uses.",
-      "If upstream provider terms, abuse controls, sanctions restrictions, data-processing obligations, or service limits require W7S to reject, throttle, suspend, remove, block, report, or modify a deployment, W7S may do so without liability.",
-      "W7S is not responsible for third-party services that it does not control.",
+      "You agree to indemnify, defend, and hold harmless W7S, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses, including reasonable legal fees, arising from:",
     ],
-    links: CLOUDFLARE_REFERENCES,
+    list: [
+      "Your Content",
+      "Your use of the Service",
+      "Your violation of these Terms or applicable laws",
+    ],
   },
   {
-    title: "10. Disclaimers and liability",
+    title: "10. Disclaimers and Limitation of Liability",
     body: [
-      "W7S is provided as is and as available. To the fullest extent allowed by law, W7S disclaims implied warranties, including warranties of merchantability, fitness for a particular purpose, non-infringement, and uninterrupted availability.",
-      "To the fullest extent allowed by law, W7S will not be liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or for lost profits, lost revenue, lost data, or business interruption. W7S aggregate liability for hosted services is limited to the greater of USD 100 or the amount you paid to W7S for the affected hosted service in the six months before the event giving rise to the claim.",
+      'The Service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind.',
+      "To the fullest extent permitted by law, W7S disclaims all warranties, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.",
+      "W7S will not be liable for any indirect, incidental, special, consequential, or punitive damages. Our total aggregate liability shall not exceed the greater of USD $100 or the amount you paid to W7S in the six months preceding the claim.",
     ],
   },
   {
     title: "11. Termination",
     body: [
-      "You may stop using W7S at any time. W7S may suspend or terminate access to hosted services if you violate these terms, create risk for the service, exceed limits, fail to pay applicable charges, or use the service in a harmful or unlawful way.",
-      "After termination, W7S may delete deployments, artifacts, logs, and account-related data according to operational retention practices and legal obligations.",
+      "You may stop using the Service at any time. We may suspend or terminate your access if you violate these Terms, create risk for the Service, or fail to pay charges.",
+      "Upon termination, we may delete Your Content according to our data retention practices.",
     ],
   },
   {
-    title: "12. Updates and contact",
+    title: "12. Governing Law and Dispute Resolution",
     body: [
-      "W7S may update these terms from time to time. The updated date above shows when this page was last changed. Continued use of W7S after an update means you accept the updated terms.",
-      "Questions about these terms can be sent to legal@w7s.io.",
+      "These Terms are governed by the laws of the State of Wyoming, USA, without regard to conflict of laws principles.",
+      "Any disputes shall be resolved exclusively in the state or federal courts located in Sheridan, Wyoming.",
+    ],
+  },
+  {
+    title: "13. DMCA and Copyright",
+    body: [
+      "We respect copyright and will respond to valid DMCA takedown notices. Please send notices to legal@w7s.io.",
+    ],
+  },
+  {
+    title: "14. Changes to These Terms",
+    body: [
+      'We may update these Terms from time to time. Continued use of the Service after changes constitutes acceptance of the new Terms. We will update the "Last updated" date above.',
+    ],
+  },
+  {
+    title: "15. Contact",
+    body: [
+      "Questions about these Terms should be sent to: legal@w7s.io",
+      "W7S LLC",
+      "30 N Gould St, STE R",
+      "Sheridan, WY 82801, USA",
     ],
   },
 ];
@@ -224,6 +257,10 @@ const LEGAL_PAGES = {
     eyebrow: "// legal",
     description:
       "The public terms for using W7S websites, hosted deploys, APIs, GitHub Action integrations, and related services.",
+    intro: [
+      'W7S LLC ("W7S", "we", "us", or "our") operates w7s.io, w7s.cloud, and the hosted W7S services. These Terms of Service ("Terms") govern your access to and use of W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services (collectively, the "Service").',
+      "By using the Service, you agree to these Terms. If you are using the Service on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms. If you do not agree to these Terms, do not use the Service.",
+    ],
     icon: FileText,
     sections: TERMS_SECTIONS,
   },
@@ -300,6 +337,15 @@ export default function LegalPage({ type }) {
     <div className="relative z-10 min-h-screen bg-[#050505] text-zinc-100">
       <LegalHeader page={page} />
       <main className="mx-auto max-w-[1100px] px-6 py-14 lg:px-10 lg:py-20">
+        {page.intro ? (
+          <div className="mb-12 border-l-2 border-amber-400/70 pl-5 text-sm leading-relaxed text-zinc-300">
+            <div className="space-y-4">
+              {page.intro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="space-y-10">
           {page.sections.map((section) => (
             <section key={section.title} className="border-t border-white/10 pt-8">
@@ -310,6 +356,18 @@ export default function LegalPage({ type }) {
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
+                {section.list ? (
+                  <ul className="list-disc space-y-2 pl-5">
+                    {section.list.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                {section.afterList
+                  ? section.afterList.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))
+                  : null}
                 {section.links ? (
                   <ul className="space-y-2 pt-2 font-mono text-xs leading-relaxed">
                     {section.links.map((link) => (
