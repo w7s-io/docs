@@ -8,6 +8,10 @@ JavaScript/TypeScript native W7S backends can declare managed Postgres bindings 
 
 W7S currently binds existing managed Postgres configs by ID. It does not create those configs or rotate database credentials yet.
 
+Working example repository:
+
+- [`w7s-io/example-postgres-binding`](https://github.com/w7s-io/example-postgres-binding): backend source, build workflow, runtime compatibility metadata, and manual deploy workflow for a managed Postgres binding.
+
 ## Create a Postgres binding config
 
 Create or request the managed Postgres binding config from the W7S operator, then copy its ID:
@@ -79,4 +83,4 @@ W7S reads supported compatibility flags from the backend output when uploading t
 - Managed Postgres bindings require a JavaScript or TypeScript native backend deployment.
 - W7S does not create or update managed Postgres configs yet.
 - W7S does not manage origin database credentials.
-- There is no shared public example repo yet, because a useful smoke test requires a real database origin.
+- The shared example is manual-deploy because a useful live smoke test requires a real external database and managed Postgres binding config ID.

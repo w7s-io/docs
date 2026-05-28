@@ -41,20 +41,20 @@ jobs:
 
 ## What W7S can deploy
 
-- Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`.
-- Native backend code from `backend/` or `worker/`, authored or built as JavaScript or TypeScript runtime modules.
-- Fullstack apps that include both a JavaScript/TypeScript backend root and a static frontend root.
-- Stateful object bindings for JavaScript/TypeScript native backends.
-- Managed Postgres bindings for external databases.
-- W7S-provided AI service bindings for JavaScript/TypeScript native backends.
-- Backend-to-backend RPC through internal service bindings.
-- Background queues delivered to JavaScript/TypeScript native backends.
-- Cron schedules delivered to JavaScript/TypeScript native backends.
-- Durable workflow instances delivered to JavaScript/TypeScript native backends.
-- Daily usage rollups, hourly platform usage sync, app suspension, warning thresholds, and daily limits.
-- Platform event analytics exposed through an authenticated API.
-- Backend console and exception logs exposed through an authenticated API.
-- Custom domains declared with a `CNAME` file.
+- Static frontends built into `dist/`, `dist/client/`, `build/`, `out/`, or `frontend/dist/`: [`w7s-io/example-static-site`](https://github.com/w7s-io/example-static-site).
+- Native backend code from `backend/` or `worker/`, authored or built as JavaScript or TypeScript runtime modules: [`w7s-io/example-native-backend`](https://github.com/w7s-io/example-native-backend).
+- Fullstack apps that include both a JavaScript/TypeScript backend root and a static frontend root: [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts).
+- Stateful object bindings for JavaScript/TypeScript native backends: [`w7s-io/example-durable-counter`](https://github.com/w7s-io/example-durable-counter).
+- Managed Postgres bindings for external databases: [`w7s-io/example-postgres-binding`](https://github.com/w7s-io/example-postgres-binding).
+- W7S-provided AI service bindings for JavaScript/TypeScript native backends: [`w7s-io/example-ai-joke`](https://github.com/w7s-io/example-ai-joke).
+- Backend-to-backend RPC through internal service bindings: [`w7s-io/example-rpc-client`](https://github.com/w7s-io/example-rpc-client) and [`w7s-io/example-rpc-datetime`](https://github.com/w7s-io/example-rpc-datetime).
+- Background queues delivered to JavaScript/TypeScript native backends: [`w7s-io/example-queue-worker`](https://github.com/w7s-io/example-queue-worker), [`w7s-io/example-queue-producer`](https://github.com/w7s-io/example-queue-producer), and [`w7s-io/example-queue-consumer`](https://github.com/w7s-io/example-queue-consumer).
+- Cron schedules delivered to JavaScript/TypeScript native backends: [`w7s-io/example-schedules`](https://github.com/w7s-io/example-schedules).
+- Durable workflow instances delivered to JavaScript/TypeScript native backends: [`w7s-io/example-workflows`](https://github.com/w7s-io/example-workflows).
+- Daily usage rollups, hourly platform usage sync, app suspension, warning thresholds, and daily limits: [`w7s-io/example-usage-check`](https://github.com/w7s-io/example-usage-check).
+- Platform event analytics exposed through an authenticated API: [`w7s-io/example-logs`](https://github.com/w7s-io/example-logs).
+- Backend console and exception logs exposed through an authenticated API: [`w7s-io/example-logs`](https://github.com/w7s-io/example-logs).
+- Custom domains declared with a `CNAME` file: [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts).
 
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).
 

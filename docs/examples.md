@@ -6,6 +6,25 @@ description: Example repositories for W7S deployments.
 
 Use these repositories as starting points.
 
+## Static Site
+
+- GitHub: [w7s-io/example-static-site](https://github.com/w7s-io/example-static-site)
+- W7S URL: [w7s-io.w7s.cloud/example-static-site](https://w7s-io.w7s.cloud/example-static-site/)
+
+This example demonstrates a static-only deploy with `dist/index.html` and no build step.
+
+See [Project Layouts](./project-layouts.md#static-frontends) for the static frontend output roots W7S detects.
+
+## Native Backend
+
+- GitHub: [w7s-io/example-native-backend](https://github.com/w7s-io/example-native-backend)
+- Live health endpoint: [w7s-io.w7s.cloud/example-native-backend/api/health](https://w7s-io.w7s.cloud/example-native-backend/api/health)
+- Live greeting endpoint: [w7s-io.w7s.cloud/example-native-backend/api/greeting](https://w7s-io.w7s.cloud/example-native-backend/api/greeting)
+
+This example demonstrates a single JavaScript/TypeScript native backend module that default-exports a `fetch(request, env, ctx)` handler.
+
+See [Project Layouts](./project-layouts.md#native-backend-function-shape) for the backend contract and Hono example.
+
 ## Fullstack TypeScript
 
 - GitHub: [w7s-io/example-fullstack-ts](https://github.com/w7s-io/example-fullstack-ts)
@@ -56,9 +75,11 @@ See [Stateful Objects](./backend-durable-objects.md) for copy-pasteable examples
 
 ## Postgres Bindings
 
-Managed Postgres support is documented in [Postgres Bindings](./backend-hyperdrive.md).
+- GitHub: [w7s-io/example-postgres-binding](https://github.com/w7s-io/example-postgres-binding)
 
-There is no shared live example yet because a useful smoke test requires a real Postgres origin and a managed Postgres binding config ID. The W7S binding shape is:
+This example demonstrates the source, build, runtime compatibility metadata, and `w7s.json` shape for a backend that reads a W7S-managed Postgres binding from `env.DB`. It is manual-deploy because a real external database and managed Postgres binding config ID are required.
+
+The W7S binding shape is:
 
 ```json
 {
@@ -72,6 +93,8 @@ There is no shared live example yet because a useful smoke test requires a real 
   }
 }
 ```
+
+See [Postgres Bindings](./backend-hyperdrive.md) for the full setup flow.
 
 ## Backend Queues
 
@@ -131,17 +154,27 @@ See [Backend Workflows](./backend-workflows.md) for copy-pasteable examples show
 - checking instance status;
 - same-owner and cross-owner authorization.
 
-## Backend Logs
+## Usage Check
+
+- GitHub: [w7s-io/example-usage-check](https://github.com/w7s-io/example-usage-check)
+- Live app endpoint: [w7s-io.w7s.cloud/example-usage-check](https://w7s-io.w7s.cloud/example-usage-check/)
+
+This example deploys a tiny static app and includes a separate scheduled workflow that runs `w7s-io/w7s-cloud@v1` with `usage-check-only: true`. That reads usage and limit status without redeploying the app.
+
+See [Usage Accounting](./usage-accounting.md) for the API response shape and limit behavior.
+
+## Observability
 
 - GitHub: [w7s-io/example-logs](https://github.com/w7s-io/example-logs)
 - Live app endpoint: [w7s-io.w7s.cloud/example-logs](https://w7s-io.w7s.cloud/example-logs/)
 - Warning endpoint: [w7s-io.w7s.cloud/example-logs/warn](https://w7s-io.w7s.cloud/example-logs/warn)
 - Error endpoint: [w7s-io.w7s.cloud/example-logs/error](https://w7s-io.w7s.cloud/example-logs/error)
 
-This example emits `console.log`, `console.warn`, `console.error`, and an intentional exception. It also includes a manual GitHub Actions workflow that uses `w7s-io/w7s-cloud@v1` with `logs-check-only: true`.
+This example emits `console.log`, `console.warn`, `console.error`, and an intentional exception. It also includes manual GitHub Actions workflows for `logs-check-only: true` and the W7S analytics API.
 
 See [Observability](./observability.md) for copy-pasteable examples showing:
 
+- fetching platform analytics with curl;
 - fetching logs with `w7s-io/w7s-cloud@v1`;
 - fetching logs with curl;
 - the JSON shape returned by the logs API;
