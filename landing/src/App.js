@@ -1,16 +1,26 @@
 import "@/App.css";
 import { Toaster } from "sonner";
 import LandingPage from "./pages/LandingPage";
+import LegalPage from "./pages/LegalPage";
 import StatusPage from "./pages/StatusPage";
 
 function App() {
   const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
-  const Page = pathname === "/status" ? StatusPage : LandingPage;
+  const page =
+    pathname === "/status" ? (
+      <StatusPage />
+    ) : pathname === "/terms" ? (
+      <LegalPage type="terms" />
+    ) : pathname === "/privacy" ? (
+      <LegalPage type="privacy" />
+    ) : (
+      <LandingPage />
+    );
 
   return (
     <div className="App relative min-h-screen bg-[#050505] text-zinc-100 overflow-x-hidden">
       <div className="noise-overlay" aria-hidden="true" />
-      <Page />
+      {page}
       <Toaster
         theme="dark"
         position="bottom-center"

@@ -179,14 +179,22 @@ export default function Footer() {
           <div>
             © {new Date().getFullYear()} W7S · Open source under permissive license
           </div>
-          <a
-            href="/status"
-            className="flex items-center gap-2 transition-colors hover:text-amber-400"
-            data-testid="footer-status-indicator"
-          >
-            <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
-            All systems operational
-          </a>
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="/terms" className="transition-colors hover:text-amber-400">
+              Terms
+            </a>
+            <a href="/privacy" className="transition-colors hover:text-amber-400">
+              Privacy
+            </a>
+            <a
+              href="/status"
+              className="flex items-center gap-2 transition-colors hover:text-amber-400"
+              data-testid="footer-status-indicator"
+            >
+              <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
+              All systems operational
+            </a>
+          </div>
         </div>
       </div>
     </footer>
