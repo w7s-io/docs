@@ -14,6 +14,14 @@ Use these repositories as starting points.
 
 This example demonstrates a bundled Hono backend, a React frontend, and a `frontend/CNAME` custom-domain claim deployed together through W7S.
 
+## AI Joke Generator
+
+- GitHub: [w7s-io/example-ai-joke](https://github.com/w7s-io/example-ai-joke)
+- W7S URL: [w7s-io.w7s.cloud/example-ai-joke](https://w7s-io.w7s.cloud/example-ai-joke/)
+- Backend health endpoint: [w7s-io.w7s.cloud/example-ai-joke/api/status](https://w7s-io.w7s.cloud/example-ai-joke/api/status)
+
+This example demonstrates a Vite React frontend, a Hono backend, and a backend-only call to Cloudflare Workers AI. The browser calls `/api/joke`; the backend keeps `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` as secret bindings declared in `w7s.json`.
+
 ## Backend RPC
 
 - Target service: [w7s-io/example-rpc-datetime](https://github.com/w7s-io/example-rpc-datetime)
