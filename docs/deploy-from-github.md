@@ -51,7 +51,40 @@ After a successful deploy, the action checks that repo's W7S usage for the deplo
 
 ## Telegram notifications
 
-The W7S Telegram bot can tell you the `telegram-chat-id` to add to the deploy action. Start a chat with the bot and send `/start`; it replies with your chat id and a workflow snippet.
+The W7S Telegram bot can tell you the `telegram-chat-id` to add to the deploy action. Start a chat with the bot and send `/start`; it replies with copyable code blocks for the chat id and a complete workflow example.
+
+The reply looks like this:
+
+````text
+W7S Telegram notifications
+
+Use this chat id in your GitHub Actions workflow:
+
+```
+telegram-chat-id: "123456789"
+```
+
+Example:
+
+```
+name: Deploy
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: ${{ github.token }}
+          telegram-chat-id: "123456789"
+          telegram-events: deploy_success,deploy_warning,deploy_error,app_suspended,payment_request
+```
+````
 
 Add that chat id to the deploy step:
 
