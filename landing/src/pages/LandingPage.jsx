@@ -2,6 +2,7 @@ import Header from "../components/landing/Header";
 import Hero from "../components/landing/Hero";
 import HowItWorks from "../components/landing/HowItWorks";
 import Capabilities from "../components/landing/Capabilities";
+import BatteriesIncluded from "../components/landing/BatteriesIncluded";
 import Comparison from "../components/landing/Comparison";
 import Pricing from "../components/landing/Pricing";
 import TryItNow from "../components/landing/TryItNow";
@@ -17,6 +18,7 @@ export default function LandingPage() {
         <Hero />
         <HowItWorks />
         <Capabilities />
+        <BatteriesIncluded />
         <Comparison />
         <Pricing />
         <TryItNow />

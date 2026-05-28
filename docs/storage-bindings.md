@@ -6,6 +6,8 @@ description: Declare per-app storage, vars, and secrets for W7S backends.
 
 JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.json`. W7S creates one set of resources per repository and environment, then reuses them on later deploys.
 
+For relational app data, the batteries-included path is `bindings.d1`: a serverless SQL database that W7S provisions with the app. Most apps can start there without creating an external database account. If the app really needs an existing Postgres service, use a [Postgres binding](./backend-hyperdrive.md) instead.
+
 ```json
 {
   "bindings": {
@@ -37,7 +39,7 @@ JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.
 { "bindings": { "r2": ["FILES"] } }
 ```
 
-`bindings.d1` creates SQL databases:
+`bindings.d1` creates serverless SQL databases:
 
 ```json
 { "bindings": { "d1": [{ "binding": "DB" }] } }

@@ -50,7 +50,7 @@ const QA = [
   },
   {
     q: "Can I deploy backends, not just static sites?",
-    a: "Yes. JavaScript/TypeScript native backends, Durable Objects, Hyperdrive for external Postgres, internal service bindings, background queues, cron schedules and durable workflow instances. Full stack, edge-native.",
+    a: "Yes. JavaScript/TypeScript native backends, D1 serverless SQL databases, Durable Objects, Postgres bindings for external databases, internal service bindings, background queues, cron schedules and durable workflow instances. Full stack, edge-native.",
   },
   {
     q: "How does usage and billing work?",

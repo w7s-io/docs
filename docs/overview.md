@@ -49,7 +49,7 @@ jobs:
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
 - Stateful object bindings for JavaScript/TypeScript native backends.
   - [`w7s-io/example-durable-counter`](https://github.com/w7s-io/example-durable-counter)
-- Managed Postgres bindings for external databases.
+- Postgres bindings for external databases.
   - [`w7s-io/example-postgres-binding`](https://github.com/w7s-io/example-postgres-binding)
 - W7S-provided AI service bindings for JavaScript/TypeScript native backends.
   - [`w7s-io/example-ai-joke`](https://github.com/w7s-io/example-ai-joke)
@@ -80,7 +80,8 @@ jobs:
 | GitHub-native deployment | Yes (one Action) | Good | Manual | Good |
 | Open Source + Self-hostable | Yes | No | Partial | No |
 | Native JS/TS Backends | Yes | Serverless Functions | Workers | Yes |
-| Managed Postgres | Yes | Yes (paid) | D1 | Yes |
+| Serverless SQL database | D1 included | Add-on | D1 | External |
+| External Postgres | Supported | Yes (paid) | Manual | Yes |
 | Queues, Cron & Workflows | Native | Limited | Yes | Yes |
 | Vendor Lock-in | None | High | Medium | High |
 | Pricing | Free self-host + hosted | Usage-based | Usage-based | Usage-based |

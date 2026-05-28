@@ -43,6 +43,15 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="#batteries"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-batteries"
+                >
+                  Batteries included
+                </a>
+              </li>
+              <li>
+                <a
                   href="#try"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-try"

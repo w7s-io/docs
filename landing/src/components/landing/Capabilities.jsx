@@ -40,7 +40,13 @@ const ITEMS = [
   },
   {
     icon: Database,
-    label: "Hyperdrive",
+    label: "D1 databases",
+    hint: "serverless SQL",
+    href: "/docs/storage-bindings/#storage",
+  },
+  {
+    icon: Database,
+    label: "Postgres bindings",
     hint: "external Postgres",
     href: "/docs/backend-hyperdrive/",
   },
@@ -109,7 +115,7 @@ export default function Capabilities() {
           </div>
           <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
             W7S deploys static frontends, JavaScript/TypeScript native backends, fullstack apps and the
-            edge primitives that glue them together — Durable Objects, Hyperdrive,
+            edge primitives that glue them together — D1 databases, Durable Objects,
             queues, cron, workflows.
           </p>
         </div>
