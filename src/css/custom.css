@@ -401,6 +401,16 @@ pre,
 }
 
 @media (max-width: 996px) {
+  .navbar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .navbar-sidebar {
+    height: 100vh;
+    height: 100dvh;
+  }
+
   .theme-doc-sidebar-container {
     background: var(--w7s-bg);
   }
