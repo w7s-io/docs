@@ -61,7 +61,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.w7s.io/docs/pricing/"
+                  href="https://w7s.io/docs/pricing/"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-pricing"
                 >
@@ -78,7 +78,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-zinc-400 font-mono">
               <li>
                 <a
-                  href="https://www.w7s.io/docs/"
+                  href="https://w7s.io/docs/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-400 transition-colors"
@@ -89,7 +89,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.w7s.io/docs/deploy-from-github/"
+                  href="https://w7s.io/docs/deploy-from-github/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-400 transition-colors"
@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.w7s.io/docs/recommendations/"
+                  href="https://w7s.io/docs/recommendations/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-400 transition-colors"
@@ -111,7 +111,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.w7s.io/docs/self-host/"
+                  href="https://w7s.io/docs/self-host/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-400 transition-colors"
@@ -154,7 +154,7 @@ export default function Footer() {
                 <Cloud className="h-4 w-4" strokeWidth={1.5} /> w7s.cloud
               </a>
               <a
-                href="https://www.w7s.io/docs/"
+                href="https://w7s.io/docs/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="footer-docs-link"

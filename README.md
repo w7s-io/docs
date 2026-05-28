@@ -19,9 +19,9 @@ npm run check
 The build output is deployed through W7S from the `build/` directory. The site is available at:
 
 - `https://w7s-io.w7s.cloud/docs/`
-- `https://www.w7s.io/`
-- `https://www.w7s.io/docs/`
-- `https://w7s.io/` redirects to `https://www.w7s.io/`
+- `https://w7s.io/`
+- `https://w7s.io/docs/`
+- `https://www.w7s.io/` redirects to `https://w7s.io/`
 
 ## Deployment
 
@@ -30,8 +30,8 @@ This site is deployed by the same W7S GitHub Actions workflow shown in the docs.
 The custom domains are declared in `static/CNAME`:
 
 ```text
-www.w7s.io
 w7s.io
+www.w7s.io
 ```
 
-The small backend in `backend/index.ts` redirects the apex `w7s.io` host to `www.w7s.io`. Requests for `www.w7s.io` return 404 from the backend so W7S can serve the generated static frontend at `/` and the docs at `/docs/`.
+The small backend in `backend/index.ts` redirects the `www.w7s.io` host to `w7s.io`. Requests for `w7s.io` return 404 from the backend so W7S can serve the generated static frontend at `/` and the docs at `/docs/`.

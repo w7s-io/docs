@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'W7S',
   tagline: 'Open source deploy platform for GitHub-native apps',
-  url: 'https://www.w7s.io',
+  url: 'https://w7s.io',
   baseUrl: '/docs/',
   favicon: 'https://github.com/w7s-io.png',
   trailingSlash: true,

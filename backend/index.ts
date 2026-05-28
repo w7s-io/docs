@@ -1,5 +1,5 @@
-const CANONICAL_ORIGIN = "https://www.w7s.io";
-const APEX_HOST = "w7s.io";
+const CANONICAL_ORIGIN = "https://w7s.io";
+const WWW_HOST = "www.w7s.io";
 const STATUS_PATH = "/status.json";
 const STATUS_API_URL = "https://w7s.cloud/api/v1/status";
 
@@ -32,15 +32,15 @@ export default {
     const url = new URL(request.url);
     const hostname = url.hostname.toLowerCase();
 
+    if (hostname === WWW_HOST) {
+      return redirect(canonicalUrl(request));
+    }
+
     if (request.method === "OPTIONS" && url.pathname === STATUS_PATH) {
       return new Response(null, {
         status: 204,
         headers: statusHeaders,
       });
-    }
-
-    if (hostname === APEX_HOST) {
-      return redirect(canonicalUrl(request));
     }
 
     if (request.method === "GET" && url.pathname === STATUS_PATH) {

@@ -108,7 +108,7 @@ export default function Hero() {
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
             </a>
             <a
-              href="https://www.w7s.io/docs/"
+              href="https://w7s.io/docs/"
               target="_blank"
               rel="noopener noreferrer"
               data-testid="hero-cta-secondary"
@@ -118,7 +118,7 @@ export default function Hero() {
               Read the docs
             </a>
             <a
-              href="https://www.w7s.io/docs/self-host/"
+              href="https://w7s.io/docs/self-host/"
               target="_blank"
               rel="noopener noreferrer"
               data-testid="hero-cta-self-host"

@@ -186,9 +186,9 @@ This docs repo is itself deployed through W7S:
 
 - GitHub: [w7s-io/docs](https://github.com/w7s-io/docs)
 - W7S URL: [w7s-io.w7s.cloud/docs](https://w7s-io.w7s.cloud/docs/)
-- Landing page: [www.w7s.io](https://www.w7s.io/)
-- Custom domain: [www.w7s.io/docs](https://www.w7s.io/docs/)
-- Redirect: [w7s.io](https://w7s.io/)
+- Landing page: [w7s.io](https://w7s.io/)
+- Docs: [w7s.io/docs](https://w7s.io/docs/)
+- Redirect: [www.w7s.io](https://www.w7s.io/)
 
 It builds the landing frontend from `landing/`, builds the docs with Docusaurus, assembles them into the generated `build/` directory, and deploys with `w7s-io/w7s-cloud@v1`.
 
@@ -200,11 +200,11 @@ The repo uses the same GitHub Actions deployment flow documented here: install d
     token: ${{ github.token }}
 ```
 
-Its `static/CNAME` file declares the canonical site host and the apex redirect host:
+Its `static/CNAME` file declares the canonical apex host and the `www` redirect host:
 
 ```text
-www.w7s.io
 w7s.io
+www.w7s.io
 ```
 
-The repo also ships a small `backend/index.ts` worker that redirects `w7s.io` to `https://www.w7s.io/`.
+The repo also ships a small `backend/index.ts` worker that redirects `www.w7s.io` to `https://w7s.io/`.
