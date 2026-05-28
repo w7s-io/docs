@@ -49,6 +49,22 @@ After a successful deploy, the action checks that repo's W7S usage for the deplo
     usage-warnings-issue: false
 ```
 
+## Telegram notifications
+
+The W7S Telegram bot can tell you the `telegram-chat-id` to add to the deploy action. Start a chat with the bot and send `/start`; it replies with your chat id and a workflow snippet.
+
+Add that chat id to the deploy step:
+
+```yaml
+- uses: w7s-io/w7s-cloud@v1
+  with:
+    token: ${{ github.token }}
+    telegram-chat-id: "123456789"
+    telegram-events: deploy_success,deploy_warning,deploy_error,app_suspended,payment_request
+```
+
+W7S links the chat id to the repo/environment after a successful authenticated deploy. That lets W7S send deploy notifications, app suspension alerts, and future payment-request notifications for that repo.
+
 ## Build before deploy
 
 W7S does not run your app build for you. Build in GitHub Actions before calling the W7S action.
