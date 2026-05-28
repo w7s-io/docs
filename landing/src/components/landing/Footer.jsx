@@ -159,10 +159,14 @@ export default function Footer() {
           <div>
             © {new Date().getFullYear()} W7S · Open source under permissive license
           </div>
-          <div className="flex items-center gap-2">
+          <a
+            href="/status"
+            className="flex items-center gap-2 transition-colors hover:text-amber-400"
+            data-testid="footer-status-indicator"
+          >
             <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
             All systems operational
-          </div>
+          </a>
         </div>
       </div>
     </footer>
