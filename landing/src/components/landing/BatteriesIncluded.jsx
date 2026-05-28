@@ -43,10 +43,10 @@ export default function BatteriesIncluded() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
-                href="/docs/storage-bindings/#storage"
+                href="/docs/serverless-database/"
                 className="inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-5 py-3 text-xs uppercase tracking-[0.2em] font-bold hover:bg-amber-300 transition-colors"
               >
-                Storage bindings
+                Serverless database
                 <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
               <a

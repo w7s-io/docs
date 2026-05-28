@@ -73,6 +73,21 @@ See [Stateful Objects](./backend-durable-objects.md) for copy-pasteable examples
 - routing requests through the generated binding;
 - redeploy behavior.
 
+## Serverless Database
+
+- GitHub: [w7s-io/example-serverless-database](https://github.com/w7s-io/example-serverless-database)
+- Live app endpoint: [w7s-io.w7s.cloud/example-serverless-database](https://w7s-io.w7s.cloud/example-serverless-database/)
+- Live notes endpoint: [w7s-io.w7s.cloud/example-serverless-database/api/notes](https://w7s-io.w7s.cloud/example-serverless-database/api/notes)
+
+This example declares a W7S serverless SQL database in `w7s.json`, stores plain SQL migrations in `migrations/`, and queries the database from a JavaScript/TypeScript native backend with Drizzle ORM.
+
+See [Serverless Database](./serverless-database.md) for copy-pasteable examples showing:
+
+- database declaration in `w7s.json`;
+- sorted SQL migrations;
+- Drizzle schema and query code;
+- deployment workflow and smoke test shape.
+
 ## Postgres Bindings
 
 - GitHub: [w7s-io/example-postgres-binding](https://github.com/w7s-io/example-postgres-binding)

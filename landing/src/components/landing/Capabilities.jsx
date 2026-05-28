@@ -42,7 +42,7 @@ const ITEMS = [
     icon: Database,
     label: "D1 databases",
     hint: "serverless SQL",
-    href: "/docs/storage-bindings/#storage",
+    href: "/docs/serverless-database/",
   },
   {
     icon: Database,

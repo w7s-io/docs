@@ -9,6 +9,7 @@ const sidebars: SidebarsConfig = {
     'pricing',
     'project-layouts',
     'storage-bindings',
+    'serverless-database',
     'backend-durable-objects',
     'backend-hyperdrive',
     'backend-ai',

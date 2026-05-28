@@ -10,7 +10,7 @@ import PricingCalculator from '@site/src/components/PricingCalculator';
 
 The hosted service is still intentionally simple: small apps can deploy, test, demo, and share before billing matters. When an app starts getting meaningful traffic, the model should be usage-based instead of a mandatory subscription just to keep the app online.
 
-Serverless SQL is part of that model. If an app uses a W7S-managed D1 database, database reads, writes, and stored data are included in the W7S usage estimate instead of requiring a separate database bill to understand the real cost shape. External Postgres is still possible when an app needs it.
+Serverless SQL is part of that model. If an app uses the [W7S serverless database](./serverless-database.md), database reads, writes, and stored data are included in the W7S usage estimate instead of requiring a separate database bill to understand the real cost shape. External Postgres is still possible when an app needs it.
 
 <PricingCalculator />
 

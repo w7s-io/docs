@@ -49,6 +49,8 @@ jobs:
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
 - Stateful object bindings for JavaScript/TypeScript native backends.
   - [`w7s-io/example-durable-counter`](https://github.com/w7s-io/example-durable-counter)
+- Serverless SQL databases for JavaScript/TypeScript native backends.
+  - [`w7s-io/example-serverless-database`](https://github.com/w7s-io/example-serverless-database)
 - Postgres bindings for external databases.
   - [`w7s-io/example-postgres-binding`](https://github.com/w7s-io/example-postgres-binding)
 - W7S-provided AI service bindings for JavaScript/TypeScript native backends.
