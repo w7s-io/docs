@@ -57,3 +57,5 @@ jobs:
 - Custom domains declared with a `CNAME` file.
 
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).
+
+To run your own W7S cloud on a Cloudflare account and domain you control, see [Self Host W7S](./self-host.md).

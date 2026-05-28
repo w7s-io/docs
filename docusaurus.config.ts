@@ -84,7 +84,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/w7s-io/w7s-io',
+          href: 'https://github.com/w7s-io/w7s-core',
           label: 'Core',
           position: 'right',
         },
@@ -103,13 +103,14 @@ const config: Config = {
           items: [
             {label: 'Getting Started', to: '/'},
             {label: 'Deploy From GitHub', to: '/deploy-from-github/'},
+            {label: 'Self Host W7S', to: '/self-host/'},
             {label: 'Custom Domains', to: '/custom-domains/'},
           ],
         },
         {
           title: 'GitHub',
           items: [
-            {label: 'W7S Core', href: 'https://github.com/w7s-io/w7s-io'},
+            {label: 'W7S Core', href: 'https://github.com/w7s-io/w7s-core'},
             {label: 'Deploy Action', href: 'https://github.com/w7s-io/w7s-cloud'},
             {label: 'Examples', href: 'https://github.com/w7s-io/example-fullstack-ts'},
           ],

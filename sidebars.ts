@@ -4,6 +4,7 @@ const sidebars: SidebarsConfig = {
   docs: [
     'overview',
     'deploy-from-github',
+    'self-host',
     'recommendations',
     'pricing',
     'project-layouts',

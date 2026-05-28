@@ -102,6 +102,17 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="https://www.w7s.io/docs/self-host/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-self-host"
+                >
+                  Self host
+                </a>
+              </li>
+              <li>
+                <a
                   href="/status"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-status"

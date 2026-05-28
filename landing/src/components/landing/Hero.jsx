@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ArrowRight, Terminal, Zap } from "lucide-react";
+import { Copy, Check, ArrowRight, Terminal, Zap, Cloud } from "lucide-react";
 import { toast } from "sonner";
 import W7SCloudLink from "./W7SCloudLink";
 
@@ -116,6 +116,16 @@ export default function Hero() {
             >
               <Terminal className="h-4 w-4" strokeWidth={2} />
               Read the docs
+            </a>
+            <a
+              href="https://www.w7s.io/docs/self-host/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="hero-cta-self-host"
+              className="inline-flex items-center justify-center gap-2 border border-white/20 text-zinc-100 px-6 py-4 text-xs uppercase tracking-[0.2em] hover:border-amber-400 hover:text-amber-400 transition-all"
+            >
+              <Cloud className="h-4 w-4" strokeWidth={2} />
+              Self host
             </a>
           </div>
 

@@ -56,6 +56,13 @@ export default function Header() {
             Why W7S
           </a>
           <a
+            href="https://www.w7s.io/docs/self-host/"
+            data-testid="nav-self-host"
+            className="hover:text-amber-400 transition-colors"
+          >
+            Self host
+          </a>
+          <a
             href="https://www.w7s.io/docs/pricing/"
             data-testid="nav-pricing"
             className="hover:text-amber-400 transition-colors"
