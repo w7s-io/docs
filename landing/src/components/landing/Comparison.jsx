@@ -34,6 +34,7 @@ const COMPARISON_ROWS = [
   {
     feature: "GitHub-native deployment",
     w7s: "Yes (one Action)",
+    href: "/docs/deploy-from-github/",
     vercel: "Good",
     cloudflare: "Manual",
     railwayFly: "Good",
@@ -42,6 +43,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Open Source + Self-hostable",
     w7s: "Yes",
+    href: "/docs/self-host/",
     vercel: "No",
     cloudflare: "Partial",
     railwayFly: "No",
@@ -50,6 +52,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Native JS/TS Backends",
     w7s: "Yes",
+    href: "/docs/project-layouts/#native-backends",
     vercel: "Serverless Functions",
     cloudflare: "Workers",
     railwayFly: "Yes",
@@ -58,6 +61,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Serverless SQL database",
     w7s: "D1 included",
+    href: "/docs/serverless-database/",
     vercel: "Add-on",
     cloudflare: "D1",
     railwayFly: "External",
@@ -66,6 +70,7 @@ const COMPARISON_ROWS = [
   {
     feature: "External Postgres",
     w7s: "Supported",
+    href: "/docs/backend-hyperdrive/",
     vercel: "Yes (paid)",
     cloudflare: "Manual",
     railwayFly: "Yes",
@@ -74,6 +79,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Queues, Cron & Workflows",
     w7s: "Native",
+    href: "/docs/backend-queues/",
     vercel: "Limited",
     cloudflare: "Yes",
     railwayFly: "Yes",
@@ -82,6 +88,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Vendor Lock-in",
     w7s: "None",
+    href: "/docs/self-host/",
     vercel: "High",
     cloudflare: "Medium",
     railwayFly: "High",
@@ -90,6 +97,7 @@ const COMPARISON_ROWS = [
   {
     feature: "Pricing",
     w7s: "Free self-host + hosted",
+    href: "/docs/pricing/",
     vercel: "Usage-based",
     cloudflare: "Usage-based",
     railwayFly: "Usage-based",
@@ -107,13 +115,24 @@ const CHART_COLUMNS = [
 
 const startsWithYes = (value) => String(value).startsWith("Yes");
 
-function ComparisonValue({ value, highlight = false }) {
+function ComparisonValue({ value, href, label, highlight = false }) {
   if (!highlight && !startsWithYes(value)) {
     return value;
   }
 
+  const className =
+    "font-semibold text-amber-400 underline-offset-4 hover:text-amber-300 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400";
+
+  if (href) {
+    return (
+      <a href={href} aria-label={label} className={className}>
+        {value}
+      </a>
+    );
+  }
+
   return (
-    <span className="font-semibold text-amber-400">
+    <span className={className}>
       {value}
     </span>
   );
@@ -211,9 +230,18 @@ export default function Comparison() {
                         {row.feature}
                       </span>
                     ) : isW7S ? (
-                      <ComparisonValue value={row[key]} highlight />
+                      <ComparisonValue
+                        value={row[key]}
+                        href={row.href}
+                        label={`Read W7S docs for ${row.feature}`}
+                        highlight
+                      />
                     ) : (
-                      <ComparisonValue value={row[key]} />
+                      <ComparisonValue
+                        value={row[key]}
+                        href={startsWithYes(row[key]) ? row.href : undefined}
+                        label={`Read W7S docs for ${row.feature}`}
+                      />
                     )}
                   </div>
                 );
@@ -237,7 +265,12 @@ export default function Comparison() {
                         {label}
                       </dt>
                       <dd className={`text-xs leading-relaxed ${key === "w7s" ? "font-semibold text-amber-400" : "text-zinc-500"}`}>
-                        <ComparisonValue value={row[key]} highlight={key === "w7s"} />
+                        <ComparisonValue
+                          value={row[key]}
+                          href={key === "w7s" || startsWithYes(row[key]) ? row.href : undefined}
+                          label={`Read W7S docs for ${row.feature}`}
+                          highlight={key === "w7s"}
+                        />
                       </dd>
                     </div>
                   ))}
