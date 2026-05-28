@@ -46,7 +46,7 @@ export default {
         "x-w7s-ai-environment": env.W7S_AI_ENVIRONMENT
       },
       body: JSON.stringify({
-        model: "@cf/meta/llama-3.1-8b-instruct-fp8",
+        model: "@w7s/meta/llama-3.1-8b-instruct-fp8",
         input: {
           prompt: "Write one short, original deployment joke."
         }
@@ -64,7 +64,7 @@ The response is JSON:
 {
   "status": "success",
   "data": {
-    "model": "@cf/meta/llama-3.1-8b-instruct-fp8",
+    "model": "@w7s/meta/llama-3.1-8b-instruct-fp8",
     "result": {
       "response": "..."
     }
@@ -74,6 +74,6 @@ The response is JSON:
 
 ## Limits
 
-W7S validates the deployment token, checks app suspension, applies `ai.run` usage limits, and then calls the platform-owned AI binding. The first supported model is `@cf/meta/llama-3.1-8b-instruct-fp8`; more models can be enabled by the W7S platform operator.
+W7S validates the deployment token, checks app suspension, applies `ai.run` usage limits, and then calls the platform-owned AI binding. The first supported model is `@w7s/meta/llama-3.1-8b-instruct-fp8`; more models can be enabled by the W7S platform operator.
 
 See [`w7s-io/example-ai-joke`](https://github.com/w7s-io/example-ai-joke) for a full frontend plus backend example.
