@@ -2,6 +2,11 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+const socialTitle = 'W7S - GitHub-native app deployment';
+const socialDescription =
+  'Open source deploy platform for GitHub-native apps. Ship frontend apps and JavaScript/TypeScript backends from GitHub Actions to W7S Cloud, with no dashboard, card, or cloud setup required.';
+const socialImage = 'https://github.com/w7s-io.png';
+
 const config: Config = {
   title: 'W7S',
   tagline: 'Open source deploy platform for GitHub-native apps',
@@ -69,6 +74,23 @@ const config: Config = {
   ],
 
   themeConfig: {
+    image: socialImage,
+    metadata: [
+      {name: 'application-name', content: 'W7S'},
+      {property: 'og:type', content: 'website'},
+      {property: 'og:site_name', content: 'W7S'},
+      {property: 'og:locale', content: 'en_US'},
+      {property: 'og:image:secure_url', content: socialImage},
+      {property: 'og:image:type', content: 'image/png'},
+      {property: 'og:image:alt', content: 'W7S logo'},
+      {name: 'twitter:card', content: 'summary'},
+      {name: 'twitter:title', content: socialTitle},
+      {name: 'twitter:description', content: socialDescription},
+      {name: 'twitter:image', content: socialImage},
+      {name: 'twitter:image:alt', content: 'W7S logo'},
+      {name: 'twitter:domain', content: 'w7s.io'},
+      {name: 'twitter:url', content: 'https://w7s.io/docs/'},
+    ],
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: true,
