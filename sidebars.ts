@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
     'storage-bindings',
     'backend-durable-objects',
     'backend-hyperdrive',
+    'backend-ai',
     'backend-rpc',
     'backend-queues',
     'backend-workflows',

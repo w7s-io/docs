@@ -160,7 +160,8 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
         "binding": "DB",
         "id": "postgres-binding-id"
       }
-    ]
+    ],
+    "ai": ["W7S_AI"]
   },
   "queues": ["jobs"],
   "schedules": [
@@ -197,7 +198,9 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
 
 `bindings.hyperdrive` declares existing managed Postgres binding configs by ID. W7S exposes them to the backend at the configured binding name. See [Postgres Bindings](./backend-hyperdrive.md) for examples.
 
-See [Storage Bindings](./storage-bindings.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
+`bindings.ai` declares W7S-provided AI service bindings. W7S exposes the requested service binding plus a generated token and caller metadata, so the repo does not need provider credentials. See [Backend AI](./backend-ai.md) for examples.
+
+See [Storage Bindings](./storage-bindings.md), [Backend AI](./backend-ai.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 
 `schedules` declares cron-driven backend jobs. Each entry has a five-field UTC cron expression and an absolute backend path. See [Backend Schedules](./backend-schedules.md) for examples.
 

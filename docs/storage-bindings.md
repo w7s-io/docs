@@ -95,4 +95,4 @@ You can also pass names directly:
 
 Secret values are passed as backend secret bindings. Deploy summaries show secret counts, not secret values.
 
-W7S also injects platform bindings for JavaScript/TypeScript native backends, including `W7S_RPC` for backend-to-backend calls and `W7S_QUEUE` for background work. See [Backend RPC](./backend-rpc.md) and [Backend Queues](./backend-queues.md).
+W7S also injects platform bindings for JavaScript/TypeScript native backends, including `W7S_RPC` for backend-to-backend calls, `W7S_QUEUE` for background work, and declared `W7S_AI` bindings for model calls. See [Backend RPC](./backend-rpc.md), [Backend Queues](./backend-queues.md), and [Backend AI](./backend-ai.md).

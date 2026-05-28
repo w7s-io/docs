@@ -147,6 +147,7 @@ queue.delivery
 schedule.delivery
 workflow.create
 workflow.delivery
+ai.run
 log.write
 ```
 
@@ -190,6 +191,7 @@ queue.delivery       10000
 schedule.delivery    2000
 workflow.create      1000
 workflow.delivery    1000
+ai.run              100
 log.write            5000
 ```
 
@@ -263,6 +265,7 @@ queue.delivery    repo 300/min     owner 1500/min     global 10000/min
 schedule.delivery repo 30/min      owner 200/min      global 2000/min
 workflow.create   repo 60/min      owner 300/min      global 2000/min
 workflow.delivery repo 120/min     owner 600/min      global 5000/min
+ai.run            repo 30/min      owner 150/min      global 1000/min
 log.write         repo 500/min     owner 2000/min     global 10000/min
 ```
 

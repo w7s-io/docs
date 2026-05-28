@@ -20,7 +20,9 @@ This example demonstrates a bundled Hono backend, a React frontend, and a `front
 - W7S URL: [w7s-io.w7s.cloud/example-ai-joke](https://w7s-io.w7s.cloud/example-ai-joke/)
 - Backend health endpoint: [w7s-io.w7s.cloud/example-ai-joke/api/status](https://w7s-io.w7s.cloud/example-ai-joke/api/status)
 
-This example demonstrates a Vite React frontend, a Hono backend, and a backend-only call to Cloudflare Workers AI. The browser calls `/api/joke`; the backend keeps `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` as secret bindings declared in `w7s.json`.
+This example demonstrates a Vite React frontend, a Hono backend, and a backend-only call through the W7S AI service binding. The browser calls `/api/joke`; the backend calls `env.W7S_AI` with a W7S-generated deployment token, so the repo does not need provider account IDs, provider API tokens, or GitHub secrets.
+
+See [Backend AI](./backend-ai.md) for the binding declaration and request shape.
 
 ## Backend RPC
 

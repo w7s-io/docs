@@ -46,6 +46,7 @@ jobs:
 - Fullstack apps that include both a JavaScript/TypeScript backend root and a static frontend root.
 - Stateful object bindings for JavaScript/TypeScript native backends.
 - Managed Postgres bindings for external databases.
+- W7S-provided AI service bindings for JavaScript/TypeScript native backends.
 - Backend-to-backend RPC through internal service bindings.
 - Background queues delivered to JavaScript/TypeScript native backends.
 - Cron schedules delivered to JavaScript/TypeScript native backends.
