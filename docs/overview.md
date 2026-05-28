@@ -73,6 +73,18 @@ jobs:
 - Custom domains declared with a `CNAME` file.
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
 
+## W7S vs Others
+
+| Feature | W7S | Vercel | Cloudflare Pages + Workers | Railway / Fly.io |
+| --- | --- | --- | --- | --- |
+| GitHub-native deployment | Yes (one Action) | Good | Manual | Good |
+| Open Source + Self-hostable | Yes | No | Partial | No |
+| Native JS/TS Backends | Yes | Serverless Functions | Workers | Yes |
+| Managed Postgres | Yes | Yes (paid) | D1 | Yes |
+| Queues, Cron & Workflows | Native | Limited | Yes | Yes |
+| Vendor Lock-in | None | High | Medium | High |
+| Pricing | Free self-host + hosted | Usage-based | Usage-based | Usage-based |
+
 Continue with [Deploy From GitHub](./deploy-from-github.md), then add the [daily quota check recommendation](./recommendations.md).
 
 To run your own W7S cloud on a Cloudflare account and domain you control, see [Self Host W7S](./self-host.md).
