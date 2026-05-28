@@ -34,7 +34,7 @@ const COMPARISON_ROWS = [
   {
     platform: "W7S",
     demand: "Launch to real traction",
-    firstDeploy: "GitHub Actions only; no W7S account, card, or cloud setup for community deploys.",
+    firstDeploy: "GitHub Actions only; no W7S account, card, or cloud setup for hosted deploys.",
     controlPlane: "Your deployment workflow is the control plane.",
     growth: "Start free, then pay per use after the app has real demand.",
     w7sEdge: "Shortest path from repo to public URL.",
@@ -78,7 +78,7 @@ const COMPARISON_ROWS = [
     firstDeploy: "Google Cloud project, APIs, IAM, region, and billing setup before production.",
     controlPlane: "Cloud Run, Cloud Build, gcloud, and project configuration.",
     growth: "Strong pay-per-use runtime once cloud setup is accepted.",
-    w7sEdge: "W7S avoids project, IAM, and container setup for community deploys.",
+    w7sEdge: "W7S avoids project, IAM, and container setup for hosted deploys.",
   },
 ];
 

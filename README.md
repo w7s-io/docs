@@ -22,7 +22,6 @@ The build output is deployed through W7S from the `build/` directory. The site i
 - `https://www.w7s.io/`
 - `https://www.w7s.io/docs/`
 - `https://w7s.io/` redirects to `https://www.w7s.io/`
-- `https://community.w7s.io/docs/` redirects to `https://www.w7s.io/docs/`
 
 ## Deployment
 
@@ -33,7 +32,6 @@ The custom domains are declared in `static/CNAME`:
 ```text
 www.w7s.io
 w7s.io
-community.w7s.io
 ```
 
-The small backend in `backend/index.ts` redirects the apex `w7s.io` host to `www.w7s.io` and the legacy `community.w7s.io` docs host to `www.w7s.io/docs/`. Requests for `www.w7s.io` return 404 from the backend so W7S can serve the generated static frontend at `/` and the docs at `/docs/`.
+The small backend in `backend/index.ts` redirects the apex `w7s.io` host to `www.w7s.io`. Requests for `www.w7s.io` return 404 from the backend so W7S can serve the generated static frontend at `/` and the docs at `/docs/`.

@@ -23,7 +23,7 @@ W7S injects these bindings during deploy:
 - `W7S_AI_CALLER`: the deployed `<owner>/<repo>`.
 - `W7S_AI_ENVIRONMENT`: the deployed environment.
 
-No W7S account, provider account, provider API token, card, or GitHub secret is required for community deploys that use this binding.
+No W7S account, provider account, provider API token, card, or GitHub secret is required for hosted deploys that use this binding.
 
 ## Run a Model
 
