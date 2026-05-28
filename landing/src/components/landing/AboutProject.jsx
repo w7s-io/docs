@@ -30,8 +30,7 @@ export default function AboutProject() {
             </h2>
             <div className="mt-6 max-w-2xl space-y-4 text-sm text-zinc-400 leading-relaxed">
               <p>
-                W7S is an open source deployment project by Carlos Guerrero.
-                W7S LLC is the company behind w7s.io and w7s.cloud, built
+                W7S is an open source deployment project by Carlos Guerrero
                 around a simple idea: your GitHub repo should be enough to
                 build, deploy, and serve an app.
               </p>
