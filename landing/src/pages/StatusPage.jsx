@@ -9,6 +9,8 @@ import {
   XCircle,
 } from "lucide-react";
 
+const STATUS_API_URL = "https://w7s.cloud/api/v1/status";
+
 const STATUS_META = {
   operational: {
     label: "Operational",
@@ -131,10 +133,6 @@ function ComponentRow({ component }) {
       </div>
       <div className="mt-4 font-mono text-xs text-zinc-500 md:mt-0 md:text-right">
         <div>{component.endpoint}</div>
-        <div>
-          HTTP {component.status_code ?? "none"}
-          {component.response_time_ms ? ` / ${component.response_time_ms}ms` : ""}
-        </div>
       </div>
       <div className="mt-4 text-xs uppercase tracking-[0.2em] text-zinc-600 md:mt-0 md:text-right">
         {formatDate(component.checked_at)}
@@ -152,8 +150,8 @@ function IncidentPanel({ incidents = [] }) {
           <h2 className="font-display text-2xl text-white">No active incidents.</h2>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-          Live checks are passing for the W7S public delivery, control plane,
-          and runtime feature surfaces.
+          W7S public delivery, control plane, and runtime feature surfaces are
+          currently marked operational.
         </p>
       </div>
     );
@@ -192,7 +190,7 @@ export default function StatusPage() {
     setError(null);
 
     try {
-      const response = await fetch("/status.json", { cache: "no-store" });
+      const response = await fetch(STATUS_API_URL, { cache: "no-store" });
       if (!response.ok) throw new Error(`Status API returned HTTP ${response.status}`);
       setSummary(await response.json());
     } catch (nextError) {
