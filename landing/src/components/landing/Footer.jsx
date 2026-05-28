@@ -52,6 +52,15 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="#about"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-about"
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.w7s.io/docs/pricing/"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-pricing"
