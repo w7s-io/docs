@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   CheckCircle2,
   Clock,
+  Globe2,
   RefreshCw,
   XCircle,
 } from "lucide-react";
@@ -105,6 +106,39 @@ const groupComponents = (components = []) =>
 const componentMeta = (status) => STATUS_META[status] || STATUS_META.unknown;
 const overallMeta = (indicator) => OVERALL_META[indicator] || OVERALL_META.unknown;
 
+const REGION_COLORS = {
+  operational: {
+    fill: "#34d399",
+    glow: "rgba(52, 211, 153, 0.28)",
+    line: "rgba(52, 211, 153, 0.45)",
+  },
+  degraded_performance: {
+    fill: "#fbbf24",
+    glow: "rgba(251, 191, 36, 0.28)",
+    line: "rgba(251, 191, 36, 0.45)",
+  },
+  partial_outage: {
+    fill: "#fb923c",
+    glow: "rgba(251, 146, 60, 0.28)",
+    line: "rgba(251, 146, 60, 0.45)",
+  },
+  major_outage: {
+    fill: "#f87171",
+    glow: "rgba(248, 113, 113, 0.28)",
+    line: "rgba(248, 113, 113, 0.45)",
+  },
+  unknown: {
+    fill: "#71717a",
+    glow: "rgba(113, 113, 122, 0.22)",
+    line: "rgba(113, 113, 122, 0.35)",
+  },
+};
+
+const mapPoint = (region) => ({
+  x: ((region.longitude + 180) / 360) * 1000,
+  y: ((90 - region.latitude) / 180) * 500,
+});
+
 function StatusBadge({ status }) {
   const meta = componentMeta(status);
   const Icon = meta.icon;
@@ -138,6 +172,104 @@ function ComponentRow({ component }) {
         {formatDate(component.checked_at)}
       </div>
     </div>
+  );
+}
+
+function EdgeRegionMap({ regions = [] }) {
+  const operationalCount = regions.filter((region) => region.status === "operational").length;
+  const regionCount = regions.length;
+
+  return (
+    <section className="mt-8 border border-white/10 bg-[#08080a] p-6 lg:p-8">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <div className="flex items-center gap-3 text-emerald-300">
+            <Globe2 className="h-5 w-5" strokeWidth={2} />
+            <p className="text-[10px] uppercase tracking-[0.3em] text-emerald-300">
+              Edge regions
+            </p>
+          </div>
+          <h2 className="mt-3 font-display text-3xl text-white">Global W7S Edge</h2>
+        </div>
+        <div className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
+          {regionCount ? `${operationalCount}/${regionCount} operational` : "Checking regions"}
+        </div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-stretch">
+        <div className="relative overflow-hidden border border-white/10 bg-[#050506]">
+          <svg
+            viewBox="0 0 1000 500"
+            role="img"
+            aria-label="W7S edge region status map"
+            className="h-full min-h-[280px] w-full"
+          >
+            <defs>
+              <radialGradient id="status-map-glow" cx="50%" cy="50%" r="65%">
+                <stop offset="0%" stopColor="rgba(52,211,153,0.10)" />
+                <stop offset="55%" stopColor="rgba(251,191,36,0.05)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              </radialGradient>
+              <pattern id="status-map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path
+                  d="M 40 0 L 0 0 0 40"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.035)"
+                  strokeWidth="1"
+                />
+              </pattern>
+            </defs>
+            <rect width="1000" height="500" fill="#050506" />
+            <rect width="1000" height="500" fill="url(#status-map-grid)" />
+            <rect width="1000" height="500" fill="url(#status-map-glow)" />
+            <g fill="#141418" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5">
+              <path d="M116 128 177 92 266 112 307 164 284 220 221 235 178 204 111 208 76 171Z" />
+              <path d="M276 251 334 287 350 361 319 447 271 381 248 304Z" />
+              <path d="M468 132 526 116 572 151 543 204 478 197 441 162Z" />
+              <path d="M502 208 562 207 613 264 586 373 521 352 482 271Z" />
+              <path d="M586 126 720 104 854 147 899 223 816 260 733 225 649 250 570 200Z" />
+              <path d="M765 313 842 299 895 337 872 395 794 390 738 348Z" />
+            </g>
+            <g opacity="0.45" stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+              <path d="M0 250H1000" />
+              <path d="M500 0V500" />
+            </g>
+            {regions.map((region) => {
+              const point = mapPoint(region);
+              const colors = REGION_COLORS[region.status] || REGION_COLORS.unknown;
+
+              return (
+                <g key={region.id} transform={`translate(${point.x} ${point.y})`}>
+                  <circle r="28" fill={colors.glow} />
+                  <circle r="10" fill={colors.fill} stroke="#050506" strokeWidth="3" />
+                  <circle r="15" fill="none" stroke={colors.line} strokeWidth="2" />
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        <div className="grid gap-px border border-white/10 bg-white/10">
+          {regions.map((region) => (
+            <div key={region.id} className="bg-[#0b0b0d] p-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-display text-xl text-white">{region.name}</h3>
+                  <p className="mt-1 font-mono text-xs text-zinc-500">{region.endpoint}</p>
+                </div>
+                <StatusBadge status={region.status} />
+              </div>
+            </div>
+          ))}
+
+          {!regionCount && (
+            <div className="bg-[#0b0b0d] p-5 text-sm text-zinc-400">
+              Checking W7S edge regions...
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -219,6 +351,10 @@ export default function StatusPage() {
     (component) => component.status === "operational",
   ).length || 0;
   const componentCount = summary?.components?.length || 0;
+  const operationalRegionCount = summary?.regions?.filter(
+    (region) => region.status === "operational",
+  ).length || 0;
+  const regionCount = summary?.regions?.length || 0;
 
   return (
     <div className="relative z-10 min-h-screen bg-[#050505] text-zinc-100">
@@ -278,13 +414,21 @@ export default function StatusPage() {
             </button>
           </div>
 
-          <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-3">
+          <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-4">
             <div className="bg-[#09090b] p-5">
               <div className="text-[10px] uppercase tracking-[0.25em] text-zinc-600">
                 Components
               </div>
               <div className="mt-2 font-display text-3xl text-white">
                 {componentCount ? `${operationalCount}/${componentCount}` : "Checking"}
+              </div>
+            </div>
+            <div className="bg-[#09090b] p-5">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-zinc-600">
+                Edge regions
+              </div>
+              <div className="mt-2 font-display text-3xl text-white">
+                {regionCount ? `${operationalRegionCount}/${regionCount}` : "Checking"}
               </div>
             </div>
             <div className="bg-[#09090b] p-5">
@@ -316,6 +460,8 @@ export default function StatusPage() {
         <section className="mt-8">
           <IncidentPanel incidents={summary?.incidents || []} />
         </section>
+
+        <EdgeRegionMap regions={summary?.regions || []} />
 
         <section className="mt-12 space-y-10">
           {Object.entries(groupedComponents).map(([group, components]) => (
