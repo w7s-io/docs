@@ -97,6 +97,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
+      copyright: `Copyright ${new Date().getFullYear()} W7S LLC`,
       links: [
         {
           title: 'Docs',

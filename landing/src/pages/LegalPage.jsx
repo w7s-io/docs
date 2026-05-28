@@ -3,12 +3,13 @@ import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import Footer from "../components/landing/Footer";
 
 const UPDATED_AT = "May 28, 2026";
+const COMPANY_NAME = "W7S LLC";
 
 const TERMS_SECTIONS = [
   {
     title: "1. Agreement to these terms",
     body: [
-      "These Terms of Service govern access to W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services. By using W7S, you agree to these terms.",
+      `${COMPANY_NAME} operates w7s.io, w7s.cloud, and the hosted W7S services. These Terms of Service govern access to W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services. By using W7S, you agree to these terms.`,
       "If you use W7S for a company or organization, you represent that you have authority to bind that organization. If you do not agree to these terms, do not use the hosted W7S services.",
     ],
   },
@@ -97,7 +98,7 @@ const PRIVACY_SECTIONS = [
   {
     title: "1. Scope",
     body: [
-      "This Privacy Policy explains how W7S collects and uses information when you visit w7s.io, read the documentation, use hosted W7S deployment services, call W7S APIs, or deploy through the W7S GitHub Action.",
+      `This Privacy Policy explains how ${COMPANY_NAME} collects and uses information when you visit w7s.io, read the documentation, use hosted W7S deployment services on w7s.cloud, call W7S APIs, or deploy through the W7S GitHub Action.`,
       "If you self-host W7S on infrastructure you control, W7S does not receive that self-hosted deployment data unless you separately send it to a hosted W7S service.",
     ],
   },
