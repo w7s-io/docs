@@ -91,6 +91,11 @@ body::before {
   color: #000;
 }
 
+.w7s-compare-yes {
+  color: var(--w7s-amber-hover);
+  font-weight: 700;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

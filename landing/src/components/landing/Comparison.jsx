@@ -105,6 +105,20 @@ const CHART_COLUMNS = [
   ["railwayFly", "Railway / Fly.io"],
 ];
 
+const startsWithYes = (value) => String(value).startsWith("Yes");
+
+function ComparisonValue({ value, highlight = false }) {
+  if (!highlight && !startsWithYes(value)) {
+    return value;
+  }
+
+  return (
+    <span className="font-semibold text-amber-400">
+      {value}
+    </span>
+  );
+}
+
 export default function Comparison() {
   return (
     <section
@@ -197,11 +211,9 @@ export default function Comparison() {
                         {row.feature}
                       </span>
                     ) : isW7S ? (
-                      <span className="font-semibold text-amber-400">
-                        {row[key]}
-                      </span>
+                      <ComparisonValue value={row[key]} highlight />
                     ) : (
-                      row[key]
+                      <ComparisonValue value={row[key]} />
                     )}
                   </div>
                 );
@@ -225,7 +237,7 @@ export default function Comparison() {
                         {label}
                       </dt>
                       <dd className={`text-xs leading-relaxed ${key === "w7s" ? "font-semibold text-amber-400" : "text-zinc-500"}`}>
-                        {row[key]}
+                        <ComparisonValue value={row[key]} highlight={key === "w7s"} />
                       </dd>
                     </div>
                   ))}
