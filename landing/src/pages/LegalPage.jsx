@@ -5,6 +5,37 @@ import Footer from "../components/landing/Footer";
 const UPDATED_AT = "May 28, 2026";
 const COMPANY_NAME = "W7S LLC";
 
+const CLOUDFLARE_REFERENCES = [
+  {
+    label: "Cloudflare Self-Serve Subscription Agreement",
+    href: "https://www.cloudflare.com/terms/",
+  },
+  {
+    label: "Cloudflare Service-Specific Terms",
+    href: "https://www.cloudflare.com/service-specific-terms-application-services/",
+  },
+  {
+    label: "Cloudflare for Platforms documentation",
+    href: "https://developers.cloudflare.com/cloudflare-for-platforms/",
+  },
+  {
+    label: "Cloudflare Workers for Platforms documentation",
+    href: "https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/",
+  },
+];
+
+const CLOUDFLARE_PRIVACY_REFERENCES = [
+  {
+    label: "Cloudflare Privacy Policy",
+    href: "https://www.cloudflare.com/privacypolicy/",
+  },
+  {
+    label: "Cloudflare Data Processing Addendum",
+    href: "https://www.cloudflare.com/cloudflare-customer-dpa/",
+  },
+  ...CLOUDFLARE_REFERENCES,
+];
+
 const TERMS_SECTIONS = [
   {
     title: "1. Agreement to these terms",
@@ -65,11 +96,14 @@ const TERMS_SECTIONS = [
     ],
   },
   {
-    title: "9. Third-party services",
+    title: "9. Third-party and upstream provider terms",
     body: [
-      "W7S depends on third-party services such as GitHub, DNS providers, analytics providers, payment processors, infrastructure providers, and other integrations. Their terms and privacy policies may apply to your use of those services.",
+      "W7S depends on third-party services such as GitHub, DNS providers, analytics providers, payment processors, infrastructure providers, and other integrations. Their terms, privacy policies, service-specific terms, acceptable use restrictions, platform limits, and abuse controls may apply to your use of W7S.",
+      "Hosted W7S services use Cloudflare infrastructure and platform services, including products used for programmable hosting, routing, storage, security, observability, and network delivery. You may not use W7S in a way that violates Cloudflare terms or policies that apply to the underlying infrastructure W7S uses.",
+      "If upstream provider terms, abuse controls, sanctions restrictions, data-processing obligations, or service limits require W7S to reject, throttle, suspend, remove, block, report, or modify a deployment, W7S may do so without liability.",
       "W7S is not responsible for third-party services that it does not control.",
     ],
+    links: CLOUDFLARE_REFERENCES,
   },
   {
     title: "10. Disclaimers and liability",
@@ -136,8 +170,11 @@ const PRIVACY_SECTIONS = [
     title: "6. Sharing and subprocessors",
     body: [
       "W7S may share information with service providers that help operate the platform, including hosting and infrastructure providers, GitHub, analytics providers, support tools, billing providers, payment processors, abuse-prevention tools, and professional advisors.",
+      "Hosted W7S services use Cloudflare as an infrastructure provider for routing, network delivery, programmable compute, storage, security, observability, and related platform operations. Cloudflare may process end-user traffic, IP addresses, request metadata, logs, network data, deploy artifacts, and other customer content as needed to provide those underlying services to W7S.",
+      "Cloudflare privacy, data-processing, and service terms may apply to Cloudflare's processing as an infrastructure provider or subprocessor.",
       "W7S may also disclose information when required by law, to protect users or the service, to investigate abuse, to enforce terms, or as part of a merger, acquisition, financing, or transfer of assets.",
     ],
+    links: CLOUDFLARE_PRIVACY_REFERENCES,
   },
   {
     title: "7. Retention",
@@ -273,6 +310,23 @@ export default function LegalPage({ type }) {
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
+                {section.links ? (
+                  <ul className="space-y-2 pt-2 font-mono text-xs leading-relaxed">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-amber-400 underline decoration-amber-400/30 underline-offset-4 transition-colors hover:text-amber-300 hover:decoration-amber-300"
+                        >
+                          {link.label}
+                          <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             </section>
           ))}
