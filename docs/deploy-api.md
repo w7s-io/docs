@@ -160,8 +160,7 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
         "binding": "DB",
         "id": "postgres-binding-id"
       }
-    ],
-    "ai": ["W7S_AI"]
+    ]
   },
   "queues": ["jobs"],
   "schedules": [
@@ -197,8 +196,6 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
 `bindings.durableObjects` declares stateful object classes exported by the JavaScript/TypeScript native backend. W7S creates persistent classes when first deployed. See [Stateful Objects](./backend-durable-objects.md) for examples.
 
 `bindings.hyperdrive` declares existing managed Postgres binding configs by ID. W7S exposes them to the backend at the configured binding name. See [Postgres Bindings](./backend-hyperdrive.md) for examples.
-
-`bindings.ai` declares W7S-provided AI service bindings. W7S exposes the requested service binding plus a generated token and caller metadata, so the repo does not need provider credentials. See [Backend AI](./backend-ai.md) for examples.
 
 See [Storage Bindings](./storage-bindings.md), [Backend AI](./backend-ai.md), [Backend RPC](./backend-rpc.md), and [Backend Queues](./backend-queues.md) for the runtime behavior of the other declarations.
 

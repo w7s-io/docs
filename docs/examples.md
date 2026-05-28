@@ -41,7 +41,7 @@ This example demonstrates a bundled Hono backend, a React frontend, and a `front
 
 This example demonstrates a Vite React frontend, a Hono backend, and a backend-only call through the W7S AI service binding. The browser calls `/api/joke`; the backend calls `env.W7S_AI` with a W7S-generated deployment token, so the repo does not need provider account IDs, provider API tokens, or GitHub secrets.
 
-See [Backend AI](./backend-ai.md) for the binding declaration and request shape.
+See [Backend AI](./backend-ai.md) for the request shape.
 
 ## Backend RPC
 
