@@ -100,6 +100,15 @@ export default function Footer() {
                   Recommendations
                 </a>
               </li>
+              <li>
+                <a
+                  href="/status"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-status"
+                >
+                  Status
+                </a>
+              </li>
             </ul>
           </div>
 

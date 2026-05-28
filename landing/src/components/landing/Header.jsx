@@ -63,6 +63,13 @@ export default function Header() {
             Pricing
           </a>
           <a
+            href="/status"
+            data-testid="nav-status"
+            className="hover:text-amber-400 transition-colors"
+          >
+            Status
+          </a>
+          <a
             href="#faq"
             data-testid="nav-faq"
             className="hover:text-amber-400 transition-colors"

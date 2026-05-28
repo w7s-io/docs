@@ -31,6 +31,10 @@ try {
   fs.cpSync(landingBuildDir, buildDir, {recursive: true});
   fs.cpSync(docsTempDir, path.join(buildDir, 'docs'), {recursive: true});
 
+  const statusDir = path.join(buildDir, 'status');
+  fs.mkdirSync(statusDir, {recursive: true});
+  fs.copyFileSync(path.join(buildDir, 'index.html'), path.join(statusDir, 'index.html'));
+
   if (fs.existsSync(cnamePath)) {
     fs.copyFileSync(cnamePath, path.join(buildDir, 'CNAME'));
   }
