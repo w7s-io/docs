@@ -32,63 +32,69 @@ const OPTIONS = [
 
 const COMPARISON_ROWS = [
   {
-    platform: "W7S",
-    demand: "Launch to real traction",
-    firstDeploy: "GitHub Actions only; no W7S account, card, or cloud setup for hosted deploys.",
-    controlPlane: "Your deployment workflow is the control plane.",
-    growth: "Start free, then pay per use after the app has real demand.",
-    w7sEdge: "Shortest path from repo to public URL.",
+    feature: "GitHub-native deployment",
+    w7s: "Yes (one Action)",
+    vercel: "Good",
+    cloudflare: "Manual",
+    railwayFly: "Good",
     primary: true,
   },
   {
-    platform: "Vercel",
-    demand: "Frontend teams that want a full product platform.",
-    firstDeploy: "Create a Vercel project and connect the repo to their platform.",
-    controlPlane: "Vercel dashboard and Git integration sit between repo and runtime.",
-    growth: "Usage, teams, previews, and platform features scale inside Vercel.",
-    w7sEdge: "W7S keeps deploys in GitHub Actions when GitHub already owns CI.",
+    feature: "Open Source + Self-hostable",
+    w7s: "Yes",
+    vercel: "No",
+    cloudflare: "Partial",
+    railwayFly: "No",
+    primary: true,
   },
   {
-    platform: "AWS",
-    demand: "Teams already standardizing on AWS.",
-    firstDeploy: "AWS account, Amplify app, IAM, and billing context before launch.",
-    controlPlane: "AWS Console and service configuration become part of deployment.",
-    growth: "Powerful pay-as-you-go cloud, with cloud operations entering early.",
-    w7sEdge: "W7S skips AWS setup until the repo actually proves demand.",
+    feature: "Native JS/TS Backends",
+    w7s: "Yes",
+    vercel: "Serverless Functions",
+    cloudflare: "Workers",
+    railwayFly: "Yes",
+    primary: true,
   },
   {
-    platform: "Azure",
-    demand: "Microsoft and Azure-governed organizations.",
-    firstDeploy: "Azure resource, hosting plan, and portal setup before the app is live.",
-    controlPlane: "Azure Portal plus GitHub Actions or Azure DevOps integration.",
-    growth: "Useful when Azure governance matters more than launch speed.",
-    w7sEdge: "W7S is faster for repos that only need deploy, URL, and usage tracking.",
+    feature: "Managed Postgres",
+    w7s: "Yes",
+    vercel: "Yes (paid)",
+    cloudflare: "D1",
+    railwayFly: "Yes",
+    primary: true,
   },
   {
-    platform: "Netlify",
-    demand: "Jamstack teams that want a hosted product workflow.",
-    firstDeploy: "Create a Netlify team/site and connect the Git provider.",
-    controlPlane: "Netlify dashboard and Git app own the deployment surface.",
-    growth: "Usage is shaped by credits, plan choices, and add-on features.",
-    w7sEdge: "W7S keeps the repo central and avoids product-plan decisions upfront.",
+    feature: "Queues, Cron & Workflows",
+    w7s: "Native",
+    vercel: "Limited",
+    cloudflare: "Yes",
+    railwayFly: "Yes",
+    primary: true,
   },
   {
-    platform: "Google Cloud",
-    demand: "Container and serverless workloads already heading to Google Cloud.",
-    firstDeploy: "Google Cloud project, APIs, IAM, region, and billing setup before production.",
-    controlPlane: "Cloud Run, Cloud Build, gcloud, and project configuration.",
-    growth: "Strong pay-per-use runtime once cloud setup is accepted.",
-    w7sEdge: "W7S avoids project, IAM, and container setup for hosted deploys.",
+    feature: "Vendor Lock-in",
+    w7s: "None",
+    vercel: "High",
+    cloudflare: "Medium",
+    railwayFly: "High",
+    primary: true,
+  },
+  {
+    feature: "Pricing",
+    w7s: "Free self-host + hosted",
+    vercel: "Usage-based",
+    cloudflare: "Usage-based",
+    railwayFly: "Usage-based",
+    primary: true,
   },
 ];
 
 const CHART_COLUMNS = [
-  ["platform", "Platform"],
-  ["demand", "Demand fit"],
-  ["firstDeploy", "First deploy"],
-  ["controlPlane", "Control plane"],
-  ["growth", "When usage grows"],
-  ["w7sEdge", "Why W7S wins"],
+  ["feature", "Feature"],
+  ["w7s", "W7S"],
+  ["vercel", "Vercel"],
+  ["cloudflare", "Cloudflare Pages + Workers"],
+  ["railwayFly", "Railway / Fly.io"],
 ];
 
 export default function Comparison() {
@@ -150,20 +156,20 @@ export default function Comparison() {
                 // comparison chart
               </div>
               <h3 className="font-display text-2xl sm:text-3xl text-white leading-tight">
-                W7S vs the default cloud path
+                W7S vs Others
               </h3>
             </div>
             <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
-              A quick read on what each option asks from a developer before and
-              after an app starts getting real traffic.
+              The same comparison table from the docs, focused on deploy
+              ownership, backend support, platform services, lock-in, and cost.
             </p>
           </div>
 
-          <div className="hidden xl:grid grid-cols-[0.85fr_1fr_1.35fr_1.3fr_1.2fr_1.25fr] gap-px text-xs">
+          <div className="hidden lg:grid grid-cols-[1.15fr_0.85fr_1fr_1.45fr_1.05fr] gap-px text-xs">
             {CHART_COLUMNS.map(([, label]) => (
               <div
                 key={label}
-                className="bg-black px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-zinc-500"
+                className={`bg-black px-4 py-3 text-[10px] uppercase tracking-[0.22em] ${label === "W7S" ? "text-amber-400" : "text-zinc-500"}`}
               >
                 {label}
               </div>
@@ -171,15 +177,20 @@ export default function Comparison() {
 
             {COMPARISON_ROWS.map((row) =>
               CHART_COLUMNS.map(([key]) => {
-                const isPlatform = key === "platform";
+                const isFeature = key === "feature";
+                const isW7S = key === "w7s";
                 return (
                   <div
-                    key={`${row.platform}-${key}`}
-                    className={`${row.primary ? "bg-[#0c0a06]" : "bg-[#101012]"} px-4 py-4 leading-relaxed ${row.primary ? "text-zinc-200" : "text-zinc-500"}`}
+                    key={`${row.feature}-${key}`}
+                    className={`${isW7S ? "bg-[#0c0a06] text-zinc-100" : "bg-[#101012] text-zinc-500"} px-4 py-4 leading-relaxed`}
                   >
-                    {isPlatform ? (
-                      <span className={`font-display text-lg ${row.primary ? "text-amber-400" : "text-white"}`}>
-                        {row.platform}
+                    {isFeature ? (
+                      <span className="font-display text-base text-white">
+                        {row.feature}
+                      </span>
+                    ) : isW7S ? (
+                      <span className="font-semibold text-amber-400">
+                        {row[key]}
                       </span>
                     ) : (
                       row[key]
@@ -190,22 +201,22 @@ export default function Comparison() {
             )}
           </div>
 
-          <div className="xl:hidden grid grid-cols-1 sm:grid-cols-2 gap-px">
+          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-px">
             {COMPARISON_ROWS.map((row) => (
               <div
-                key={row.platform}
-                className={`${row.primary ? "bg-[#0c0a06]" : "bg-[#101012]"} p-5`}
+                key={row.feature}
+                className="bg-[#101012] p-5"
               >
-                <div className={`font-display text-2xl mb-4 ${row.primary ? "text-amber-400" : "text-white"}`}>
-                  {row.platform}
+                <div className="font-display text-2xl mb-4 text-white">
+                  {row.feature}
                 </div>
                 <dl className="space-y-4">
                   {CHART_COLUMNS.slice(1).map(([key, label]) => (
-                    <div key={`${row.platform}-${key}`}>
-                      <dt className="text-[10px] uppercase tracking-[0.22em] text-zinc-600 mb-1">
+                    <div key={`${row.feature}-${key}`}>
+                      <dt className={`text-[10px] uppercase tracking-[0.22em] mb-1 ${key === "w7s" ? "text-amber-400" : "text-zinc-600"}`}>
                         {label}
                       </dt>
-                      <dd className={`text-xs leading-relaxed ${row.primary ? "text-zinc-200" : "text-zinc-500"}`}>
+                      <dd className={`text-xs leading-relaxed ${key === "w7s" ? "font-semibold text-amber-400" : "text-zinc-500"}`}>
                         {row[key]}
                       </dd>
                     </div>
