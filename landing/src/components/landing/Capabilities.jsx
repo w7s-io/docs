@@ -40,7 +40,7 @@ const ITEMS = [
   },
   {
     icon: Database,
-    label: "D1 databases",
+    label: "Serverless SQL",
     hint: "serverless SQL",
     href: "/docs/serverless-database/",
   },
@@ -115,7 +115,7 @@ export default function Capabilities() {
           </div>
           <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
             W7S deploys static frontends, JavaScript/TypeScript native backends, fullstack apps and the
-            edge primitives that glue them together — D1 databases, Durable Objects,
+            edge primitives that glue them together — serverless SQL, Durable Objects,
             queues, cron, workflows.
           </p>
         </div>

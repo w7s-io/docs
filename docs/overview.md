@@ -82,7 +82,7 @@ jobs:
 | GitHub-native deployment | <span className="w7s-compare-yes">Yes (one Action)</span> | Good | Manual | Good |
 | Open Source + Self-hostable | <span className="w7s-compare-yes">Yes</span> | No | Partial | No |
 | Native JS/TS Backends | <span className="w7s-compare-yes">Yes</span> | Serverless Functions | Workers | <span className="w7s-compare-yes">Yes</span> |
-| Serverless SQL database | D1 included | Add-on | D1 | External |
+| Serverless SQL database | Included | Add-on | Native SQL | External |
 | External Postgres | Supported | <span className="w7s-compare-yes">Yes (paid)</span> | Manual | <span className="w7s-compare-yes">Yes</span> |
 | Queues, Cron & Workflows | Native | Limited | <span className="w7s-compare-yes">Yes</span> | <span className="w7s-compare-yes">Yes</span> |
 | Vendor Lock-in | None | High | Medium | High |
