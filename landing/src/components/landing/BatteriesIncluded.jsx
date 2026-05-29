@@ -32,9 +32,9 @@ export default function BatteriesIncluded() {
               // batteries included
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-[0.95]">
-              Your app can ship
+              Database included,
               <br />
-              with its database.
+              elastic by default.
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
               W7S includes a serverless SQL database path through D1. For many
