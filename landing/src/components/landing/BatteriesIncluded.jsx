@@ -1,4 +1,4 @@
-import { ArrowUpRight, Coins, Database, Plug } from "lucide-react";
+import { ArrowUpRight, Coins, Database, KeyRound, Plug } from "lucide-react";
 
 const FEATURES = [
   {
@@ -10,6 +10,11 @@ const FEATURES = [
     icon: Coins,
     title: "Cost-aware by design",
     body: "D1 is serverless, cheap to keep around, and efficient for app-local SQL. Reads, writes, and storage are part of W7S usage estimates, so the data layer is included.",
+  },
+  {
+    icon: KeyRound,
+    title: "Native KV cache included",
+    body: "Caches that would normally need Redis can use native KV bindings instead. Declare the binding and W7S provisions app-local key-value storage with the backend.",
   },
   {
     icon: Plug,
@@ -37,9 +42,9 @@ export default function BatteriesIncluded() {
               elastic by default.
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
-              W7S includes a serverless SQL database path through D1. For many
-              apps, that means no external database setup before the first real
-              user shows up.
+              W7S includes a serverless SQL database path through D1 and native
+              KV bindings for app caches. For many apps, that means no external
+              database or Redis setup before the first real user shows up.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
@@ -66,7 +71,7 @@ export default function BatteriesIncluded() {
                     w7s.json
                   </div>
                   <div className="mt-1 text-sm text-white font-medium">
-                    One binding creates app SQL
+                    One file creates SQL and cache
                   </div>
                 </div>
                 <Database className="h-5 w-5 text-amber-400" strokeWidth={1.5} />
@@ -79,13 +84,14 @@ export default function BatteriesIncluded() {
         "binding": "DB",
         "migrations": "migrations"
       }
-    ]
+    ],
+    "kv": ["CACHE"]
   }
 }`}</code>
               </pre>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-px bg-white/10 border border-white/10">
               {FEATURES.map((feature) => {
                 const Icon = feature.icon;
                 return (
