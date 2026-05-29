@@ -55,7 +55,7 @@ export default function Pricing() {
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
               Deploy without a card. For successful apps, billing is usage-based:
-              no subscriptions just to keep an app online. Serverless SQL usage
+              no subscriptions just to keep an app online. Serverless DB usage
               is part of the same W7S usage model.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">

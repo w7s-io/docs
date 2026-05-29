@@ -3,13 +3,13 @@ import { ArrowUpRight, Coins, Database, KeyRound, Plug } from "lucide-react";
 const FEATURES = [
   {
     icon: Database,
-    title: "Serverless SQL included",
-    body: "Declare a SQL binding in w7s.json and W7S provisions a database for the repo and environment. No separate database account needed for typical app data.",
+    title: "Serverless DB included",
+    body: "Declare a DB binding in w7s.json and W7S provisions a database for the repo and environment. No separate database account needed for typical app data.",
   },
   {
     icon: Coins,
     title: "Cost-aware by design",
-    body: "W7S-managed SQL is serverless, cheap to keep around, and efficient for app-local data. Reads, writes, and storage are part of W7S usage estimates, so the data layer is included.",
+    body: "The W7S-managed DB is serverless, cheap to keep around, and efficient for app-local data. Reads, writes, and storage are part of W7S usage estimates, so the data layer is included.",
   },
   {
     icon: KeyRound,
@@ -42,7 +42,7 @@ export default function BatteriesIncluded() {
               elastic by default.
             </h2>
             <p className="mt-6 text-sm text-zinc-400 max-w-lg leading-relaxed">
-              W7S includes a managed serverless SQL database path and native KV
+              W7S includes a managed serverless DB path and native KV
               bindings for app caches. For many apps, that means no external
               database or Redis setup before the first real user shows up.
             </p>
@@ -71,7 +71,7 @@ export default function BatteriesIncluded() {
                     w7s.json
                   </div>
                   <div className="mt-1 text-sm text-white font-medium">
-                    One file creates SQL and cache
+                    One file creates DB and cache
                   </div>
                 </div>
                 <Database className="h-5 w-5 text-amber-400" strokeWidth={1.5} />
@@ -79,7 +79,7 @@ export default function BatteriesIncluded() {
               <pre className="overflow-x-auto bg-black p-5 sm:p-6 text-xs leading-relaxed text-zinc-300">
                 <code>{`{
   "bindings": {
-    "sql": [
+    "db": [
       {
         "binding": "DB",
         "migrations": "migrations"

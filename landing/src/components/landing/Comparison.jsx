@@ -59,11 +59,11 @@ const COMPARISON_ROWS = [
     primary: true,
   },
   {
-    feature: "Serverless SQL database",
+    feature: "Serverless DB",
     w7s: "Included",
     href: "/docs/serverless-database/",
     vercel: "Add-on",
-    cloudflare: "Native SQL",
+    cloudflare: "Native DB",
     railwayFly: "External",
     primary: true,
   },

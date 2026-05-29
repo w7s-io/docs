@@ -74,7 +74,7 @@ The token needs enough access to:
 - read zones;
 - create and read KV namespaces;
 - create and read R2 buckets;
-- create, read, and query D1 databases for app bindings;
+- create, read, and query managed DB resources for app bindings;
 - create and read Workers for Platforms dispatch namespaces;
 - publish scripts into the dispatch namespace;
 - deploy Cloudflare Workflows attached to the core Worker.

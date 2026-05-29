@@ -1,10 +1,10 @@
 ---
 id: serverless-database
 title: Serverless Database
-description: Use the W7S serverless database from JavaScript and TypeScript native backends, with SQL migrations and Drizzle ORM.
+description: Use the W7S serverless DB from JavaScript and TypeScript native backends, with SQL migrations and TypeScript tooling.
 ---
 
-W7S can provision a serverless SQL database for a JavaScript/TypeScript native backend. Declare the database in `w7s.json`, keep SQL migrations in the repo, and read the binding from `env.DB` inside the backend worker.
+W7S can provision a serverless DB for a JavaScript/TypeScript native backend. Declare the database in `w7s.json`, keep SQL migrations in the repo, and read the binding from `env.DB` inside the backend worker.
 
 The full Drizzle example is available here:
 
@@ -14,12 +14,12 @@ The full Drizzle example is available here:
 
 ## Declare The Database
 
-Add a `d1` binding in `w7s.json`. The binding name becomes the property available on `env`.
+Add a `db` binding in `w7s.json`. The binding name becomes the property available on `env`.
 
 ```json
 {
   "bindings": {
-    "d1": [
+    "db": [
       {
         "binding": "DB",
         "migrations": "migrations"
@@ -58,16 +58,16 @@ VALUES ('Hello from the W7S serverless database');
 
 W7S applies `.sql` files in sorted order during deploy. Applied migration filenames are tracked in `_w7s_migrations` inside the app database, so later deploys only run new migrations.
 
-## Use Drizzle
+## Define A Schema
 
-Install Drizzle and a normal TypeScript build toolchain:
+Install Drizzle Kit and a normal TypeScript build toolchain if you want to generate migrations from a TypeScript schema:
 
 ```sh
 npm install drizzle-orm
-npm install -D drizzle-kit esbuild typescript @cloudflare/workers-types
+npm install -D drizzle-kit esbuild typescript
 ```
 
-Define the schema once and let Drizzle type your queries:
+Define the schema once:
 
 ```ts title="backend/src/schema.ts"
 import { sql } from "drizzle-orm";
@@ -97,36 +97,45 @@ export default defineConfig({
 Native backends default-export a `fetch(request, env, ctx)` handler. The database binding is available on `env.DB`.
 
 ```ts title="backend/src/index.ts"
-import type { D1Database } from "@cloudflare/workers-types";
-import { desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/d1";
-import { notes } from "./schema";
+type Note = {
+  id: number;
+  body: string;
+  created_at: string;
+};
+
+type W7SStatement = {
+  bind(...values: unknown[]): W7SStatement;
+  all<T = unknown>(): Promise<{ results: T[] }>;
+  first<T = unknown>(): Promise<T | null>;
+};
+
+type W7SDatabase = {
+  prepare(query: string): W7SStatement;
+};
 
 type Env = {
-  DB: D1Database;
+  DB: W7SDatabase;
 };
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    const db = drizzle(env.DB);
 
     if (url.pathname === "/api/notes" && request.method === "GET") {
-      const rows = await db
-        .select()
-        .from(notes)
-        .orderBy(desc(notes.createdAt))
-        .limit(20);
+      const { results } = await env.DB.prepare(
+        "SELECT id, body, created_at FROM notes ORDER BY created_at DESC LIMIT 20"
+      ).all<Note>();
 
-      return Response.json({ notes: rows });
+      return Response.json({ notes: results });
     }
 
     if (url.pathname === "/api/notes" && request.method === "POST") {
       const { body } = await request.json<{ body: string }>();
-      const [note] = await db
-        .insert(notes)
-        .values({ body, createdAt: new Date().toISOString() })
-        .returning();
+      const note = await env.DB.prepare(
+        "INSERT INTO notes (body, created_at) VALUES (?, ?) RETURNING id, body, created_at"
+      )
+        .bind(body, new Date().toISOString())
+        .first<Note>();
 
       return Response.json({ note }, { status: 201 });
     }

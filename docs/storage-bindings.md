@@ -6,14 +6,14 @@ description: Declare per-app storage, vars, and secrets for W7S backends.
 
 JavaScript/TypeScript native W7S backends can declare durable resources in `w7s.json`. W7S creates one set of resources per repository and environment, then reuses them on later deploys.
 
-For relational app data, the batteries-included path is `bindings.d1`: a serverless SQL database that W7S provisions with the app. Most apps can start there without creating an external database account. See [Serverless Database](./serverless-database.md) for migrations, Drizzle, and a complete example repo. If the app really needs an existing Postgres service, use a [Postgres binding](./backend-hyperdrive.md) instead.
+For relational app data, the batteries-included path is `bindings.db`: a serverless DB that W7S provisions with the app. Most apps can start there without creating an external database account. See [Serverless Database](./serverless-database.md) for migrations and a complete example repo. If the app really needs an existing Postgres service, use a [Postgres binding](./backend-hyperdrive.md) instead.
 
 ```json
 {
   "bindings": {
     "kv": ["CACHE"],
     "r2": ["FILES"],
-    "d1": [
+    "db": [
       {
         "binding": "DB",
         "migrations": "migrations"
@@ -39,10 +39,10 @@ For relational app data, the batteries-included path is `bindings.d1`: a serverl
 { "bindings": { "r2": ["FILES"] } }
 ```
 
-`bindings.d1` creates serverless SQL databases. The full setup flow is documented in [Serverless Database](./serverless-database.md).
+`bindings.db` creates serverless DBs. The full setup flow is documented in [Serverless Database](./serverless-database.md).
 
 ```json
-{ "bindings": { "d1": [{ "binding": "DB" }] } }
+{ "bindings": { "db": [{ "binding": "DB" }] } }
 ```
 
 By default, W7S generates resource names from the environment, owner, repo, resource type, and binding name. You can provide explicit names:
@@ -52,7 +52,7 @@ By default, W7S generates resource names from the environment, owner, repo, reso
   "bindings": {
     "kv": [{ "binding": "CACHE", "name": "my-cache" }],
     "r2": [{ "binding": "FILES", "bucket": "my-files" }],
-    "d1": [{ "binding": "DB", "name": "my-db" }]
+    "db": [{ "binding": "DB", "name": "my-db" }]
   }
 }
 ```
@@ -64,7 +64,7 @@ Point a SQL binding at a migrations directory:
 ```json
 {
   "bindings": {
-    "d1": [{ "binding": "DB", "migrations": "migrations" }]
+    "db": [{ "binding": "DB", "migrations": "migrations" }]
   }
 }
 ```

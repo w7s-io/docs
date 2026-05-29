@@ -49,7 +49,7 @@ jobs:
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
 - Stateful object bindings for JavaScript/TypeScript native backends.
   - [`w7s-io/example-durable-counter`](https://github.com/w7s-io/example-durable-counter)
-- Serverless SQL databases for JavaScript/TypeScript native backends.
+- Serverless DBs for JavaScript/TypeScript native backends.
   - [`w7s-io/example-serverless-database`](https://github.com/w7s-io/example-serverless-database)
 - Postgres bindings for external databases.
   - [`w7s-io/example-postgres-binding`](https://github.com/w7s-io/example-postgres-binding)
@@ -82,7 +82,7 @@ jobs:
 | GitHub-native deployment | <span className="w7s-compare-yes">Yes (one Action)</span> | Good | Manual | Good |
 | Open Source + Self-hostable | <span className="w7s-compare-yes">Yes</span> | No | Partial | No |
 | Native JS/TS Backends | <span className="w7s-compare-yes">Yes</span> | Serverless Functions | Workers | <span className="w7s-compare-yes">Yes</span> |
-| Serverless SQL database | Included | Add-on | Native SQL | External |
+| Serverless DB | Included | Add-on | Native DB | External |
 | External Postgres | Supported | <span className="w7s-compare-yes">Yes (paid)</span> | Manual | <span className="w7s-compare-yes">Yes</span> |
 | Queues, Cron & Workflows | Native | Limited | <span className="w7s-compare-yes">Yes</span> | <span className="w7s-compare-yes">Yes</span> |
 | Vendor Lock-in | None | High | Medium | High |

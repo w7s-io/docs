@@ -129,11 +129,11 @@ kv.write
 kv.delete
 kv.list
 kv.storage_bytes
-d1.rows_read
-d1.rows_written
-d1.read_queries
-d1.write_queries
-d1.storage_bytes
+db.rows_read
+db.rows_written
+db.read_queries
+db.write_queries
+db.storage_bytes
 durable_object.request
 durable_object.duration_ms
 durable_object.rows_read
@@ -173,11 +173,11 @@ kv.write             1000
 kv.delete            1000
 kv.list              1000
 kv.storage_bytes     52428800
-d1.rows_read         100000
-d1.rows_written      10000
-d1.read_queries      10000
-d1.write_queries     1000
-d1.storage_bytes     52428800
+db.rows_read         100000
+db.rows_written      10000
+db.read_queries      10000
+db.write_queries     1000
+db.storage_bytes     52428800
 durable_object.request       5000
 durable_object.duration_ms   300000
 durable_object.rows_read     100000

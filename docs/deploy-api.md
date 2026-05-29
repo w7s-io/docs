@@ -148,7 +148,7 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
   "bindings": {
     "kv": ["CACHE"],
     "r2": ["FILES"],
-    "d1": [{ "binding": "DB", "migrations": "migrations" }],
+    "db": [{ "binding": "DB", "migrations": "migrations" }],
     "durableObjects": [
       {
         "binding": "COUNTER",
