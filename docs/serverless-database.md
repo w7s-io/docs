@@ -1,7 +1,7 @@
 ---
 id: serverless-database
 title: Serverless Database
-description: Use the W7S serverless DB from JavaScript and TypeScript native backends, with SQL migrations and TypeScript tooling.
+description: Use the W7S serverless DB from JavaScript and TypeScript native backends, with SQL migrations and Drizzle ORM.
 ---
 
 W7S can provision a serverless DB for a JavaScript/TypeScript native backend. Declare the database in `w7s.json`, keep SQL migrations in the repo, and read the binding from `env.DB` inside the backend worker.
@@ -58,16 +58,18 @@ VALUES ('Hello from the W7S serverless database');
 
 W7S applies `.sql` files in sorted order during deploy. Applied migration filenames are tracked in `_w7s_migrations` inside the app database, so later deploys only run new migrations.
 
-## Define A Schema
+## Use Drizzle
 
-Install Drizzle Kit and a normal TypeScript build toolchain if you want to generate migrations from a TypeScript schema:
+Install Drizzle and a normal TypeScript build toolchain:
 
 ```sh
 npm install drizzle-orm
-npm install -D drizzle-kit esbuild typescript
+npm install -D drizzle-kit esbuild typescript @cloudflare/workers-types
 ```
 
-Define the schema once:
+The Drizzle example uses Cloudflare D1 types and the D1 adapter because the W7S DB runtime is based on Cloudflare D1 today and exposes the same database features. The public W7S manifest still uses `db` and `DB`, so apps are written against the W7S DB abstraction rather than the backing provider name.
+
+Define the schema once and let Drizzle type your queries:
 
 ```ts title="backend/src/schema.ts"
 import { sql } from "drizzle-orm";
@@ -97,45 +99,36 @@ export default defineConfig({
 Native backends default-export a `fetch(request, env, ctx)` handler. The database binding is available on `env.DB`.
 
 ```ts title="backend/src/index.ts"
-type Note = {
-  id: number;
-  body: string;
-  created_at: string;
-};
-
-type W7SStatement = {
-  bind(...values: unknown[]): W7SStatement;
-  all<T = unknown>(): Promise<{ results: T[] }>;
-  first<T = unknown>(): Promise<T | null>;
-};
-
-type W7SDatabase = {
-  prepare(query: string): W7SStatement;
-};
+import type { D1Database } from "@cloudflare/workers-types";
+import { desc } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { notes } from "./schema";
 
 type Env = {
-  DB: W7SDatabase;
+  DB: D1Database;
 };
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    const db = drizzle(env.DB);
 
     if (url.pathname === "/api/notes" && request.method === "GET") {
-      const { results } = await env.DB.prepare(
-        "SELECT id, body, created_at FROM notes ORDER BY created_at DESC LIMIT 20"
-      ).all<Note>();
+      const rows = await db
+        .select()
+        .from(notes)
+        .orderBy(desc(notes.createdAt))
+        .limit(20);
 
-      return Response.json({ notes: results });
+      return Response.json({ notes: rows });
     }
 
     if (url.pathname === "/api/notes" && request.method === "POST") {
       const { body } = await request.json<{ body: string }>();
-      const note = await env.DB.prepare(
-        "INSERT INTO notes (body, created_at) VALUES (?, ?) RETURNING id, body, created_at"
-      )
-        .bind(body, new Date().toISOString())
-        .first<Note>();
+      const [note] = await db
+        .insert(notes)
+        .values({ body, createdAt: new Date().toISOString() })
+        .returning();
 
       return Response.json({ note }, { status: 201 });
     }
