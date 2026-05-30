@@ -96,6 +96,15 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="/rss.xml"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-rss"
+                >
+                  RSS feed
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://w7s.io/docs/"
                   target="_blank"
                   rel="noopener noreferrer"
