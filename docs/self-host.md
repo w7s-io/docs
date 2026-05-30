@@ -217,6 +217,8 @@ Non-production branches are served from branch-prefixed hosts:
 https://feature-login--acme.example.com/api/
 ```
 
+The branch prefix is the sanitized W7S environment name. W7S lowercases the branch, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps it at 63 characters.
+
 ## Custom Domains
 
 Apps can still declare custom domains with a `CNAME` file:

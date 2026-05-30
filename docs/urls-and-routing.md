@@ -26,6 +26,21 @@ Example:
 https://w7s-io.w7s.cloud/docs/
 ```
 
+## Branch environments
+
+`main` and `master` deploy to `production`, which uses the owner host. Other branches deploy to a branch environment and use a branch-prefixed host:
+
+```text
+https://<branch-environment>--owner.w7s.cloud/repo/
+```
+
+The branch environment is DNS-safe. W7S lowercases the branch name, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps the result at 63 characters. For example:
+
+```text
+feature/API.v2_test -> feature-api-v2-test
+https://feature-api-v2-test--owner.w7s.cloud/repo/
+```
+
 ## Owner roots
 
 If the repository has the same name as the owner:

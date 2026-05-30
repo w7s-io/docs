@@ -53,6 +53,8 @@ By default:
 - `main` and `master` deploy to `production`.
 - Other branches deploy to a sanitized branch environment.
 
+Environment names are DNS-safe. W7S lowercases the branch or explicit override, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps the result at 63 characters.
+
 Production deployments are served from the owner host:
 
 ```text
@@ -62,13 +64,13 @@ https://<owner>.w7s.cloud/<repo>/
 Non-production branch deployments are served from a branch-prefixed host:
 
 ```text
-https://<branch-name>--<owner>.w7s.cloud/<repo>/
+https://<branch-environment>--<owner>.w7s.cloud/<repo>/
 ```
 
-The branch name in the hostname is sanitized for DNS. For example, `feature/login` becomes:
+For example, branch `feature/API.v2_test` becomes environment `feature-api-v2-test`:
 
 ```text
-https://feature-login--owner.w7s.cloud/repo/
+https://feature-api-v2-test--owner.w7s.cloud/repo/
 ```
 
 You can override the environment with either:

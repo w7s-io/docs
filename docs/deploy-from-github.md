@@ -36,6 +36,8 @@ jobs:
 The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy`, and includes the repository, branch, and commit metadata.
 Push and manual runs deploy the repo. For a separate daily workflow that checks quota and free-tier limits without deploying, see [Recommendations](./recommendations.md).
 
+By default, pushes from `main` and `master` deploy to the `production` environment. Pushes from other branches deploy to a branch environment and are served from `https://<branch-environment>--<owner>.w7s.cloud/<repo>/`. W7S lowercases the branch name, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps the result at 63 characters. For example, `feature/API.v2_test` becomes `feature-api-v2-test`.
+
 If the repo contains `w7s.json`, the action also collects declared `vars` and `secrets` from the workflow environment and passes them as backend bindings.
 
 After a successful deploy, the action checks that repo's W7S usage for the deployed day. If any daily limits are near or over the effective policy, or W7S has suspended the app after hourly platform usage sync, it adds a warning section to the GitHub Actions summary and opens or updates a single GitHub issue for that repo/environment. Requests that would exceed a daily limit return HTTP `429`.

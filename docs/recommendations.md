@@ -48,4 +48,6 @@ For non-production environments, pass the W7S environment explicitly:
     environment: staging
 ```
 
+Explicit environment values use the same DNS-safe normalization as branch deployments.
+
 See [Usage Accounting](./usage-accounting.md) for the tracked metrics, current limits, and hard enforcement behavior.

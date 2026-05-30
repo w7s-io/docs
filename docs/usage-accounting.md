@@ -33,6 +33,8 @@ By default, usage reads the `production` environment. Override the environment w
 x-w7s-environment: staging
 ```
 
+Environment values are normalized the same way as deploy environments, so branch names and overrides resolve to DNS-safe names such as `feature-api-v2-test`.
+
 Read the effective limit policy without usage counters:
 
 ```sh
