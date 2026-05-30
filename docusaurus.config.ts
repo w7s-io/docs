@@ -119,7 +119,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright ${new Date().getFullYear()} W7S LLC`,
+      copyright: `Copyright ${new Date().getFullYear()} W7S SERVICES LLS`,
       links: [
         {
           title: 'Docs',

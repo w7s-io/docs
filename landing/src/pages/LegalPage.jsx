@@ -3,7 +3,7 @@ import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import Footer from "../components/landing/Footer";
 
 const UPDATED_AT = "May 28, 2026";
-const COMPANY_NAME = "W7S LLC";
+const COMPANY_NAME = "W7S SERVICES LLS";
 
 const CLOUDFLARE_REFERENCES = [
   {
@@ -154,7 +154,7 @@ const TERMS_SECTIONS = [
     title: "15. Contact",
     body: [
       "Questions about these Terms should be sent to: legal@w7s.io",
-      "W7S LLC",
+      COMPANY_NAME,
       "30 N Gould St, STE R",
       "Sheridan, WY 82801, USA",
     ],
@@ -258,7 +258,7 @@ const LEGAL_PAGES = {
     description:
       "The public terms for using W7S websites, hosted deploys, APIs, GitHub Action integrations, and related services.",
     intro: [
-      'W7S LLC ("W7S", "we", "us", or "our") operates w7s.io, w7s.cloud, and the hosted W7S services. These Terms of Service ("Terms") govern your access to and use of W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services (collectively, the "Service").',
+      `${COMPANY_NAME} ("W7S", "we", "us", or "our") operates w7s.io, w7s.cloud, and the hosted W7S services. These Terms of Service ("Terms") govern your access to and use of W7S websites, documentation, hosted deployment endpoints, APIs, GitHub Actions integrations, and related services (collectively, the "Service").`,
       "By using the Service, you agree to these Terms. If you are using the Service on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms. If you do not agree to these Terms, do not use the Service.",
     ],
     icon: FileText,
