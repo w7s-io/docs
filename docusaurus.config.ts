@@ -72,6 +72,7 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  plugins: ['./plugins/local-search/index.mjs'],
 
   themeConfig: {
     image: socialImage,
@@ -104,6 +105,10 @@ const config: Config = {
           sidebarId: 'docs',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'search',
+          position: 'right',
         },
         {
           href: 'https://github.com/w7s-io/w7s-core',
