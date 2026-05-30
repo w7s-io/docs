@@ -9,7 +9,6 @@ import {
   Clock,
   Workflow,
   Globe2,
-  Activity,
   Terminal,
 } from "lucide-react";
 
@@ -79,12 +78,6 @@ const ITEMS = [
     label: "Custom domains",
     hint: "via CNAME file",
     href: "/docs/custom-domains/",
-  },
-  {
-    icon: Activity,
-    label: "Usage analytics",
-    hint: "authenticated API",
-    href: "/docs/usage-accounting/",
   },
   {
     icon: Terminal,
