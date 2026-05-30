@@ -12,6 +12,185 @@ const categoryIcon = {
 
 const articleUrl = (article) => `/blog/${article.slug}/`;
 
+const javascriptKeywords = new Set([
+  "async",
+  "await",
+  "const",
+  "default",
+  "export",
+  "function",
+  "if",
+  "new",
+  "return",
+]);
+
+const isWordStart = (char) => /[A-Za-z_$]/.test(char);
+const isWordPart = (char) => /[\w$]/.test(char);
+const isDigit = (char) => /\d/.test(char);
+
+const token = (className, text, key) => (
+  <span key={key} className={className}>
+    {text}
+  </span>
+);
+
+function readQuoted(line, index, quote) {
+  let cursor = index + 1;
+  while (cursor < line.length) {
+    if (line[cursor] === "\\") {
+      cursor += 2;
+      continue;
+    }
+    if (line[cursor] === quote) {
+      cursor += 1;
+      break;
+    }
+    cursor += 1;
+  }
+
+  return [line.slice(index, cursor), cursor];
+}
+
+function tokenizeJson(line) {
+  const tokens = [];
+  let index = 0;
+
+  while (index < line.length) {
+    const char = line[index];
+
+    if (char === "\"") {
+      const [value, next] = readQuoted(line, index, "\"");
+      const rest = line.slice(next).trimStart();
+      tokens.push(token(rest.startsWith(":") ? "text-sky-300" : "text-emerald-300", value, index));
+      index = next;
+      continue;
+    }
+
+    if (isDigit(char) || (char === "-" && isDigit(line[index + 1]))) {
+      const match = line.slice(index).match(/^-?\d+(?:\.\d+)?/);
+      tokens.push(token("text-amber-300", match[0], index));
+      index += match[0].length;
+      continue;
+    }
+
+    const word = line.slice(index).match(/^(true|false|null)\b/);
+    if (word) {
+      tokens.push(token("text-violet-300", word[0], index));
+      index += word[0].length;
+      continue;
+    }
+
+    if (/[\[\]{}:,]/.test(char)) {
+      tokens.push(token("text-zinc-500", char, index));
+      index += 1;
+      continue;
+    }
+
+    tokens.push(char);
+    index += 1;
+  }
+
+  return tokens;
+}
+
+function tokenizeJavaScript(line) {
+  const tokens = [];
+  let index = 0;
+
+  while (index < line.length) {
+    const char = line[index];
+
+    if (line.startsWith("//", index)) {
+      tokens.push(token("text-zinc-600", line.slice(index), index));
+      break;
+    }
+
+    if (char === "\"" || char === "'" || char === "`") {
+      const [value, next] = readQuoted(line, index, char);
+      tokens.push(token("text-emerald-300", value, index));
+      index = next;
+      continue;
+    }
+
+    if (isDigit(char)) {
+      const match = line.slice(index).match(/^\d+(?:\.\d+)?/);
+      tokens.push(token("text-amber-300", match[0], index));
+      index += match[0].length;
+      continue;
+    }
+
+    if (isWordStart(char)) {
+      let next = index + 1;
+      while (next < line.length && isWordPart(line[next])) next += 1;
+      const word = line.slice(index, next);
+      const following = line.slice(next).trimStart();
+
+      if (javascriptKeywords.has(word)) {
+        tokens.push(token("text-fuchsia-300", word, index));
+      } else if (/^(true|false|null|undefined)$/.test(word)) {
+        tokens.push(token("text-violet-300", word, index));
+      } else if (following.startsWith("(")) {
+        tokens.push(token("text-sky-300", word, index));
+      } else {
+        tokens.push(word);
+      }
+
+      index = next;
+      continue;
+    }
+
+    if (/[{}()[\].,;:?]/.test(char)) {
+      tokens.push(token("text-zinc-500", char, index));
+      index += 1;
+      continue;
+    }
+
+    if (/[=+\-*/!<>|&]/.test(char)) {
+      tokens.push(token("text-amber-300", char, index));
+      index += 1;
+      continue;
+    }
+
+    tokens.push(char);
+    index += 1;
+  }
+
+  return tokens.length > 0 ? tokens : "\u00A0";
+}
+
+function CodeBlock({ code }) {
+  const language = code.trimStart().startsWith("{") ? "json" : "javascript";
+  const tokenize = language === "json" ? tokenizeJson : tokenizeJavaScript;
+  const label = language === "json" ? "JSON" : "JavaScript";
+
+  return (
+    <div className="mt-6 overflow-hidden border border-white/10 bg-black">
+      <div className="flex items-center justify-between border-b border-white/10 bg-[#0a0a0c] px-4 py-2.5">
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+        </div>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+          {label}
+        </span>
+      </div>
+      <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-zinc-300 sm:text-[13px]">
+        <code>
+          {code.split("\n").map((line, index) => (
+            <span key={index} className="block min-w-max">
+              <span className="inline-block w-8 select-none pr-4 text-right text-zinc-700">
+                {index + 1}
+              </span>
+              <span className="whitespace-pre">{tokenize(line)}</span>
+            </span>
+          ))}
+        </code>
+      </pre>
+    </div>
+  );
+}
+
 function BlogHero() {
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-[#050505] pt-32 pb-14">
@@ -172,9 +351,7 @@ function ArticlePage({ article }) {
                     ))}
                   </div>
                   {section.code && (
-                    <pre className="mt-6 overflow-x-auto border border-white/10 bg-black p-5 text-xs leading-relaxed text-zinc-300">
-                      <code>{section.code}</code>
-                    </pre>
+                    <CodeBlock code={section.code} />
                   )}
                 </section>
               ))}
