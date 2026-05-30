@@ -27,12 +27,12 @@ A W7S cloud is one Cloudflare Worker plus Cloudflare account resources:
 - a public W7S core Worker that serves the landing page, API, static assets, and runtime router;
 - one Workers for Platforms dispatch namespace for native backend Workers;
 - one KV namespace for deployment metadata, manifests, usage, logs, limits, and app records;
-- one R2 bucket for deployed static frontend assets;
+- one FS bucket for deployed static frontend assets;
 - one Cloudflare Workflow binding for app workflow dispatch;
 - optional Analytics Engine dataset for platform event analytics;
 - optional Telegram bot secrets for platform manager and repo notifications.
 
-The core deploy workflow creates or reuses the KV namespace, R2 bucket, and dispatch namespace. DNS records are intentionally manual so the domain owner stays in control.
+The core deploy workflow creates or reuses the KV namespace, FS bucket, and dispatch namespace. DNS records are intentionally manual so the domain owner stays in control.
 
 ## Requirements
 
@@ -73,7 +73,7 @@ The token needs enough access to:
 - manage Workers routes for the W7S zone;
 - read zones;
 - create and read KV namespaces;
-- create and read R2 buckets;
+- create and read FS buckets;
 - create, read, and query managed DB resources for app bindings;
 - create and read Workers for Platforms dispatch namespaces;
 - publish scripts into the dispatch namespace;
@@ -164,7 +164,7 @@ npm run reconcile:cloudflare-routes
 `npm run prepare:cloudflare` creates or reuses:
 
 - the `DEPLOYMENTS_KV` namespace;
-- the `STATIC_ASSETS` R2 bucket;
+- the `STATIC_ASSETS` FS bucket;
 - the `DISPATCHER` Workers for Platforms dispatch namespace;
 - the generated Wrangler config used for the deploy.
 

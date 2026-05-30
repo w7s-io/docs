@@ -126,7 +126,7 @@ static files            1000
 static total bytes      100 MB
 static single file      10 MB
 Key-value bindings      3
-Object storage bindings 3
+FS bindings             3
 SQL bindings            2
 Stateful object classes 2
 queues                  2
@@ -149,7 +149,7 @@ JavaScript/TypeScript native backends can include a `w7s.json` manifest to decla
 {
   "bindings": {
     "kv": ["CACHE"],
-    "r2": ["FILES"],
+    "fs": ["FILES"],
     "db": [{ "binding": "DB", "migrations": "migrations" }],
     "durableObjects": [
       {

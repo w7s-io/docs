@@ -93,7 +93,7 @@ Return any `2xx` response after processing. Non-`2xx` responses make W7S report 
 
 ## With storage
 
-Schedules work well with per-app key-value, object storage, or SQL bindings. For example, a scheduled backend can keep the latest run in key-value storage:
+Schedules work well with per-app key-value, FS, or SQL bindings. For example, a scheduled backend can keep the latest run in key-value storage:
 
 ```json title="w7s.json"
 {

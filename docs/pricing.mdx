@@ -29,7 +29,7 @@ The estimate subtracts the included baseline first, estimates operating cost fro
 | Public traffic | Runtime requests and CPU | W7S routes requests through the platform and app runtime. More requests and heavier handlers increase usage. |
 | Static frontends | Asset storage and origin reads on cache misses | W7S stores deploy assets and caches immutable files. Better cache hit rates reduce origin reads. |
 | Native backends | CPU milliseconds, storage reads/writes, logs | Expensive handlers, chatty data access, and noisy logging increase cost faster than simple request count. |
-| Serverless DB and object storage | Operation counts and stored GB-month | W7S can provision per-app DB, key-value, and object storage bindings; database usage is included in the same usage model. |
+| Serverless DB and FS | Operation counts and stored GB-month | W7S can provision per-app DB, key-value, and FS bindings; database usage is included in the same usage model. |
 | Queues | Operations per message | A normal delivered queue message is roughly one write, one read, and one delete. Retries add more reads. |
 | Stateful coordination | Requests, active duration, and storage | Long-lived stateful workloads can dominate cost even if request volume is low. |
 | Logs | Events written | W7S exposes app console and exception logs, but log volume should stay intentional. |

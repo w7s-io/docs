@@ -12,7 +12,7 @@ For relational app data, the batteries-included path is `bindings.db`: a serverl
 {
   "bindings": {
     "kv": ["CACHE"],
-    "r2": ["FILES"],
+    "fs": ["FILES"],
     "db": [
       {
         "binding": "DB",
@@ -33,10 +33,10 @@ For relational app data, the batteries-included path is `bindings.db`: a serverl
 { "bindings": { "kv": ["CACHE"] } }
 ```
 
-`bindings.r2` creates object storage buckets:
+`bindings.fs` creates FS buckets:
 
 ```json
-{ "bindings": { "r2": ["FILES"] } }
+{ "bindings": { "fs": ["FILES"] } }
 ```
 
 `bindings.db` creates serverless DBs. The full setup flow is documented in [Serverless Database](./serverless-database.md).
@@ -51,7 +51,7 @@ By default, W7S generates resource names from the environment, owner, repo, reso
 {
   "bindings": {
     "kv": [{ "binding": "CACHE", "name": "my-cache" }],
-    "r2": [{ "binding": "FILES", "bucket": "my-files" }],
+    "fs": [{ "binding": "FILES", "name": "my-files" }],
     "db": [{ "binding": "DB", "name": "my-db" }]
   }
 }

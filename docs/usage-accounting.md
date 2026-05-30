@@ -6,7 +6,7 @@ description: Read per-app daily usage rollups for W7S deployments.
 
 W7S records daily usage rollups for each deployed repository and environment. W7S-managed paths update counters directly, and direct runtime and storage usage is synced hourly from platform telemetry into the same rollup.
 
-The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, log ingestion, and internal queue/schedule/workflow deliveries. Direct binding usage such as SQL, object storage, key-value, and stateful object cost is enforced after the hourly platform sync.
+The usage response also includes effective daily limits and warnings. W7S enforces immediate limits on deploys, runtime requests, RPC dispatches, queue sends, workflow starts, log ingestion, and internal queue/schedule/workflow deliveries. Direct binding usage such as SQL, FS, key-value, and stateful object cost is enforced after the hourly platform sync.
 
 Repo events are also mirrored into owner-level and global aggregate rollups. Runtime guards check repo, owner, and global scopes so a single owner cannot multiply the free tier across many repos, and the shared platform has a final circuit breaker.
 
@@ -121,11 +121,11 @@ runtime.request
 worker.request
 runtime.cpu_ms
 worker.script
-static.r2_class_a
-static.r2_class_b
-r2.class_a
-r2.class_b
-r2.storage_bytes
+static.fs_class_a
+static.fs_class_b
+fs.class_a
+fs.class_b
+fs.storage_bytes
 kv.read
 kv.write
 kv.delete
@@ -165,11 +165,11 @@ runtime.request      10000
 worker.request       10000
 runtime.cpu_ms       300000
 worker.script        5
-static.r2_class_a    1000
-static.r2_class_b    20000
-r2.class_a           1000
-r2.class_b           20000
-r2.storage_bytes     104857600
+static.fs_class_a    1000
+static.fs_class_b    20000
+fs.class_a           1000
+fs.class_b           20000
+fs.storage_bytes     104857600
 kv.read              10000
 kv.write             1000
 kv.delete            1000
@@ -287,7 +287,7 @@ app_limit_state:v1:<environment>:<owner>:<repo>
 
 Suspended apps return HTTP `429` before static serving, backend dispatch, deploys, RPC, queue sends, or workflow starts. Apps automatically resume at the next UTC day unless an operator writes a stricter state.
 
-Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and runtime CPU limits on native backends. Static asset storage is capped by deploy shape limits, and immutable static assets are served through a platform cache using versioned asset keys to reduce object storage reads. Stateful object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation telemetry; stored bytes are not per-app attributable in the current platform telemetry schema and remain a tracked gap.
+Direct binding limits are delayed by the hourly sync. Immediate protection comes from deploy shape caps, runtime request limits, short-window burst limits, and runtime CPU limits on native backends. Static asset storage is capped by deploy shape limits, and immutable static assets are served through a platform cache using versioned asset keys to reduce FS reads. Stateful object storage operation units are attributed by namespace ID when W7S can discover namespace IDs from invocation telemetry; stored bytes are not per-app attributable in the current platform telemetry schema and remain a tracked gap.
 
 Queue sends reject JSON envelopes larger than 64 KB by default. New Queue consumers use bounded batch and retry settings: batch size 10, max retries 3, and retry delay 10 seconds.
 

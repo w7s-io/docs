@@ -485,7 +485,7 @@ export default function PricingCalculator() {
         '$0.02 / runtime',
       ),
       makeLine(
-        'Asset and object storage',
+        'Asset and FS storage',
         billable(metrics.objectStorageGb, included.objectStorageGb),
         `${formatNumber(billable(metrics.objectStorageGb, included.objectStorageGb))} GB`,
         1,
@@ -493,7 +493,7 @@ export default function PricingCalculator() {
         '$0.015 / GB',
       ),
       makeLine(
-        'Object write operations',
+        'FS write operations',
         billable(metrics.objectWriteOperations, included.objectWriteOperations),
         formatCompact(billable(metrics.objectWriteOperations, included.objectWriteOperations)),
         1_000_000,
@@ -501,7 +501,7 @@ export default function PricingCalculator() {
         '$4.50 / 1M',
       ),
       makeLine(
-        'Object read operations',
+        'FS read operations',
         billable(metrics.objectReadOperations, included.objectReadOperations),
         formatCompact(billable(metrics.objectReadOperations, included.objectReadOperations)),
         1_000_000,
@@ -836,8 +836,8 @@ export default function PricingCalculator() {
           />
           <SliderField
             id="objectReadsPer100Visitors"
-            label="Object reads per 100 visitors"
-            help="App object reads outside the static asset cache."
+            label="FS reads per 100 visitors"
+            help="App FS reads outside the static asset cache."
             min={FREE_TIER_INPUTS.objectReadsPer100Visitors}
             max={1_000}
             step={1}
@@ -847,8 +847,8 @@ export default function PricingCalculator() {
           />
           <SliderField
             id="objectWritesPer100Visitors"
-            label="Object writes per 100 visitors"
-            help="Uploads or generated files written to object storage."
+            label="FS writes per 100 visitors"
+            help="Uploads or generated files written to FS."
             min={FREE_TIER_INPUTS.objectWritesPer100Visitors}
             max={500}
             step={1}
@@ -913,8 +913,8 @@ export default function PricingCalculator() {
           />
           <SliderField
             id="objectStorageGb"
-            label="App object storage"
-            help="User uploads, generated files, or blobs."
+            label="App FS storage"
+            help="User uploads or generated files stored in FS."
             min={FREE_TIER_INPUTS.objectStorageGb}
             max={10_000}
             step={10}
