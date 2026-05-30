@@ -154,3 +154,30 @@ Then expose them to the deploy step:
   with:
     token: ${{ github.token }}
 ```
+
+W7S exposes those names on the backend `env` object:
+
+```ts title="backend/index.ts"
+type Env = {
+  PUBLIC_API_KEY?: string;
+  PRIVATE_API_KEY?: string;
+};
+
+export default {
+  async fetch(_request: Request, env: Env): Promise<Response> {
+    const response = await fetch("https://api.example.com/data", {
+      headers: {
+        "x-api-key": env.PRIVATE_API_KEY ?? ""
+      }
+    });
+
+    return Response.json({
+      publicApiKeyConfigured: Boolean(env.PUBLIC_API_KEY),
+      privateApiKeyConfigured: Boolean(env.PRIVATE_API_KEY),
+      upstreamOk: response.ok
+    });
+  }
+};
+```
+
+The property names match the entries in `vars` and `secrets`. Secrets are available to backend code, but should not be returned to browsers or logs.
