@@ -25,7 +25,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-zinc-400 font-mono">
               <li>
                 <a
-                  href="#how"
+                  href="/#how"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-how"
                 >
@@ -34,7 +34,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#capabilities"
+                  href="/#capabilities"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-capabilities"
                 >
@@ -43,7 +43,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#batteries"
+                  href="/#batteries"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-batteries"
                 >
@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#try"
+                  href="/#try"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-try"
                 >
@@ -61,7 +61,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#about"
+                  href="/#about"
                   className="hover:text-amber-400 transition-colors"
                   data-testid="footer-about"
                 >
@@ -85,6 +85,15 @@ export default function Footer() {
               Resources
             </div>
             <ul className="space-y-3 text-sm text-zinc-400 font-mono">
+              <li>
+                <a
+                  href="/blog/"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-blog"
+                >
+                  Blog
+                </a>
+              </li>
               <li>
                 <a
                   href="https://w7s.io/docs/"

@@ -3,12 +3,18 @@ import { Toaster } from "sonner";
 import LandingPage from "./pages/LandingPage";
 import LegalPage from "./pages/LegalPage";
 import StatusPage from "./pages/StatusPage";
+import BlogPage from "./pages/BlogPage";
 
 function App() {
   const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  const blogSlug = pathname.startsWith("/blog/") ? pathname.slice("/blog/".length) : "";
   const page =
     pathname === "/status" ? (
       <StatusPage />
+    ) : pathname === "/blog" ? (
+      <BlogPage />
+    ) : blogSlug ? (
+      <BlogPage slug={blogSlug} />
     ) : pathname === "/terms" ? (
       <LegalPage type="terms" />
     ) : pathname === "/privacy" ? (

@@ -3,6 +3,8 @@ import { Github, BookOpen, ArrowUpRight } from "lucide-react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = typeof window === "undefined" ? "/" : window.location.pathname.replace(/\/+$/, "") || "/";
+  const sectionHref = (id) => (pathname === "/" ? `#${id}` : `/#${id}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -21,7 +23,7 @@ export default function Header() {
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <a
-          href="#top"
+          href="/"
           data-testid="logo-link"
           className="flex items-center gap-2 group"
         >
@@ -35,21 +37,21 @@ export default function Header() {
 
         <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-[0.2em] text-zinc-400">
           <a
-            href="#how"
+            href={sectionHref("how")}
             data-testid="nav-how"
             className="hover:text-amber-400 transition-colors"
           >
             How it works
           </a>
           <a
-            href="#capabilities"
+            href={sectionHref("capabilities")}
             data-testid="nav-capabilities"
             className="hover:text-amber-400 transition-colors"
           >
             Capabilities
           </a>
           <a
-            href="#compare"
+            href={sectionHref("compare")}
             data-testid="nav-compare"
             className="hover:text-amber-400 transition-colors"
           >
@@ -70,6 +72,13 @@ export default function Header() {
             Pricing
           </a>
           <a
+            href="/blog/"
+            data-testid="nav-blog"
+            className="hover:text-amber-400 transition-colors"
+          >
+            Blog
+          </a>
+          <a
             href="/status"
             data-testid="nav-status"
             className="hover:text-amber-400 transition-colors"
@@ -77,7 +86,7 @@ export default function Header() {
             Status
           </a>
           <a
-            href="#faq"
+            href={sectionHref("faq")}
             data-testid="nav-faq"
             className="hover:text-amber-400 transition-colors"
           >
