@@ -32,6 +32,18 @@ The short version:
 
 These tools are not interchangeable clones. They sit at different layers.
 
+## Source-Backed Comparison Points
+
+The Coolify side of this comparison is based on the live [Coolify pricing page](https://coolify.io/pricing/) and Coolify docs for [applications](https://coolify.io/docs/applications/), [services](https://coolify.io/docs/services/introduction), and [servers](https://coolify.io/docs/knowledge-base/server/introduction). Those pages back the article's claim that Coolify is organized around apps and services running on connected infrastructure.
+
+The W7S side is based on [Deploy From GitHub](/docs/deploy-from-github/), [Project Layouts](/docs/project-layouts/), [Storage Bindings](/docs/storage-bindings/), and [URLs and Routing](/docs/urls-and-routing/). Those pages back the claim that W7S starts from the repository and deploys app-shaped projects through GitHub Actions.
+
+The self-hosting distinction is backed by Coolify's own pricing and server docs, plus [Self Host W7S](/docs/self-host/). Coolify self-hosting means running a control plane for infrastructure you bring. W7S self-hosting means running the W7S deployment cloud while app repositories keep the same GitHub-native deployment contract.
+
+The backend-platform comparison is supported by W7S docs for [Serverless Database](/docs/serverless-database/), [Backend Queues](/docs/backend-queues/), [Backend Schedules](/docs/backend-schedules/), [Backend Workflows](/docs/backend-workflows/), and [Backend RPC](/docs/backend-rpc/). Those primitives are why W7S can be a real alternative for app-shaped projects that do not need arbitrary containers.
+
+The cost and operations claims use [Coolify pricing](https://coolify.io/pricing/), [W7S pricing](/docs/pricing/), and [W7S Usage Accounting](/docs/usage-accounting/). The article links directly to those pages because server costs, platform prices, and included usage limits can change.
+
 ## What Coolify Is Best At
 
 Coolify is strongest when the operating model starts with servers you control.

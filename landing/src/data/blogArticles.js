@@ -546,24 +546,70 @@ export const blogArticles = [
     slug: "vercel-competitors",
     title: "Vercel Competitors",
     category: "Platforms",
-    readingTime: "8 min",
+    readingTime: "10 min",
     summary:
       "A practical comparison of Vercel alternatives, including Netlify, Cloudflare Pages, Render, Railway, Fly.io, GitHub Pages, AWS Amplify, Firebase, Supabase, and why W7S is better for GitHub-native apps.",
     sections: [
       {
-        heading: "The best competitor depends on what you want to replace",
+        heading: "Start with what Vercel is doing for you",
         paragraphs: [
-          "If you want a similar frontend platform, Netlify and Cloudflare Pages are the obvious comparisons. If you want to run containers or long-lived services, Render, Railway, and Fly.io are closer. If you only need static hosting, GitHub Pages may be enough.",
-          "W7S competes from a different angle: it is the Vercel competitor for teams that want GitHub, not a hosted dashboard, to be the deployment control plane.",
-          "That makes W7S better when the repository should own the deploy workflow, runtime contract, app URL, branch environments, backend bindings, and path to self-hosting."
+          "Vercel is not just a static host. Its public docs cover Git-connected deployments, framework-aware builds, serverless functions, storage products, queues, cron jobs, and spend controls. That is why the right competitor depends on which part of the platform you are replacing.",
+          "If your main need is frontend previews, Netlify and Cloudflare Pages are close comparisons. If your app needs web services, background workers, or containers, Render, Railway, Fly.io, Cloud Run, and App Runner are closer. If the app is a repository-shaped frontend plus backend routes and managed bindings, W7S is a real alternative instead of just another hosting target."
+        ],
+        sources: [
+          {label: "Vercel deployments", url: "https://vercel.com/docs/deployments"},
+          {label: "Vercel functions", url: "https://vercel.com/docs/functions"},
+          {label: "Vercel pricing", url: "https://vercel.com/pricing"}
         ]
       },
       {
-        heading: "Why W7S is better for GitHub-native apps",
+        heading: "Where W7S competes directly",
         paragraphs: [
-          "Vercel makes deployment feel easy by centralizing more behavior in Vercel. W7S makes deployment easier to audit by keeping the behavior in GitHub Actions and the repository.",
-          "W7S deploys static assets and native backend routes together, declares storage and background work in `w7s.json`, derives URLs from GitHub owner and repository, and supports branch environments without making a product dashboard the source of truth.",
-          "Vercel still fits teams that want Vercel-specific framework behavior, dashboard workflows, and integrations. W7S is the sharper choice when the repo should stay in charge."
+          "W7S competes when the team wants the repository to own the deployment contract. The deploy path is a GitHub Actions workflow, the deploy token is the GitHub token, and the app layout is documented in source rather than hidden behind project dashboard settings.",
+          "That matters for production review. Build commands, deployment permissions, output directories, native backend entrypoints, environment behavior, storage bindings, queues, schedules, and workflows can all be reviewed beside the application code."
+        ],
+        sources: [
+          {label: "Deploy from GitHub", url: "/docs/deploy-from-github/"},
+          {label: "Project layouts", url: "/docs/project-layouts/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"}
+        ]
+      },
+      {
+        heading: "Why W7S is not only a static host",
+        paragraphs: [
+          "A Vercel competitor is not convincing if it stops at uploading a frontend build. W7S can deploy static assets with a native JavaScript or TypeScript backend, then attach database, key-value, file storage, queue, schedule, workflow, and RPC primitives to that backend.",
+          "That lets an app grow from marketing pages into real product behavior: form handlers, webhook receivers, checkout routes, background email work, scheduled syncs, internal service calls, and durable processes. The point is not that W7S has every Vercel product. The point is that it has enough app primitives to replace Vercel for many GitHub-native apps."
+        ],
+        sources: [
+          {label: "Backend queues", url: "/docs/backend-queues/"},
+          {label: "Backend schedules", url: "/docs/backend-schedules/"},
+          {label: "Backend workflows", url: "/docs/backend-workflows/"},
+          {label: "Backend RPC", url: "/docs/backend-rpc/"}
+        ]
+      },
+      {
+        heading: "The competitor map",
+        paragraphs: [
+          "Netlify is the closest frontend-platform comparison because its docs emphasize deploy previews, functions, edge functions, forms, and scheduled functions. Render, Railway, and Fly.io are stronger comparisons when the workload is a process or machine. Cloud Run and App Runner are good comparisons when the organization wants containerized HTTP services on a hyperscaler.",
+          "W7S sits in a narrower but useful lane: GitHub-native app deployment for projects that can be expressed as static assets, native backend handlers, and managed runtime bindings. That narrower lane is exactly what makes it simpler when the app fits."
+        ],
+        sources: [
+          {label: "Netlify deploy previews", url: "https://docs.netlify.com/deploy/deploy-types/deploy-previews/"},
+          {label: "Render web services", url: "https://render.com/docs/web-services"},
+          {label: "Fly Machines", url: "https://fly.io/docs/machines/"},
+          {label: "Cloud Run", url: "https://docs.cloud.google.com/run/docs"}
+        ]
+      },
+      {
+        heading: "When W7S is the better choice",
+        paragraphs: [
+          "Choose W7S when the repo should stay in charge: GitHub Actions for deploys, repo-derived URLs, branch environments, native backend code, storage declared with the app, usage feedback near the code, and an open-source or self-hostable platform path.",
+          "Choose Vercel when the team specifically wants Vercel's managed frontend product, framework behavior, collaboration surface, marketplace, and account-level controls. The strongest W7S argument is not that every team should leave Vercel. It is that teams with GitHub-native apps now have a real alternative whose deployment truth lives in the repository."
+        ],
+        sources: [
+          {label: "URLs and routing", url: "/docs/urls-and-routing/"},
+          {label: "Usage accounting", url: "/docs/usage-accounting/"},
+          {label: "Self host W7S", url: "/docs/self-host/"}
         ]
       }
     ]
@@ -572,24 +618,71 @@ export const blogArticles = [
     slug: "heroku-alternatives",
     title: "Heroku Alternatives",
     category: "Platforms",
-    readingTime: "9 min",
+    readingTime: "10 min",
     summary:
       "A practical guide to Heroku alternatives and when W7S is the better fit for apps that do not need always-on processes.",
     sections: [
       {
-        heading: "Start with runtime shape",
+        heading: "Heroku is a process platform",
         paragraphs: [
-          "Heroku and Heroku-like platforms are good when an app needs web dynos, worker processes, containers, or long-running services.",
-          "W7S is a better alternative when the app can be static assets, native backend routes, managed DB, KV, FS, queues, schedules, workflows, and branch environments.",
-          "That changes the platform question from which process host to rent into whether the app needs process hosting at all."
+          "Heroku's own material presents dynos as the heart of a Heroku app: isolated containers that run code, dependencies, and scaling. Its Dev Center documents `Procfile` process types, config vars, add-ons, and one-off dynos. That is a strong model when the app really needs web and worker processes.",
+          "The important migration question is whether your app still needs that process model. A Rails app, Django app, Phoenix app, long-running worker, or custom service can still belong on Heroku or another process platform. A small JavaScript app with frontend assets, a few backend routes, storage, and background jobs may not."
+        ],
+        sources: [
+          {label: "Heroku dynos", url: "https://devcenter.heroku.com/articles/dynos"},
+          {label: "Heroku Procfile", url: "https://devcenter.heroku.com/articles/procfile"},
+          {label: "Heroku config vars", url: "https://devcenter.heroku.com/articles/config-vars"},
+          {label: "Heroku add-ons", url: "https://devcenter.heroku.com/articles/add-ons"}
         ]
       },
       {
-        heading: "Why W7S is different",
+        heading: "W7S replaces the common app shape",
         paragraphs: [
-          "W7S replaces common Heroku concepts with repo-owned pieces: GitHub Actions deploys, native backend handlers, queue routes, schedules, repo-declared vars and secrets, and storage bindings in `w7s.json`.",
-          "The app URL, environment, and deploy identity come from GitHub owner and repository, so the release path stays visible in code review.",
-          "Keep Heroku or a process platform for arbitrary containers, long-running daemons, custom TCP services, shell access, private service networks, and mature process-level controls."
+          "W7S is a Heroku alternative when the process was mostly packaging around request handlers and jobs. A W7S app can deploy static assets, expose a native backend entrypoint, declare DB, KV, and file storage bindings, and run from a GitHub Actions workflow.",
+          "That changes the ownership model. Instead of a `Procfile`, dyno settings, add-on dashboards, and app config spread across a platform console, the repository explains how the app builds, deploys, routes requests, and receives runtime bindings."
+        ],
+        sources: [
+          {label: "Deploy from GitHub", url: "/docs/deploy-from-github/"},
+          {label: "Project layouts", url: "/docs/project-layouts/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"}
+        ]
+      },
+      {
+        heading: "Background work without worker dynos",
+        paragraphs: [
+          "Heroku worker dynos are useful for long-running background processes. W7S uses a different shape for apps that only need asynchronous delivery, cron-style work, or durable business processes: queues, schedules, and workflows declared with the app.",
+          "That is a real replacement for common jobs such as email delivery, webhook retries, billing syncs, content refreshes, and moderation workflows. It is not a replacement for every daemon. It is a way to avoid paying the operational cost of a worker process when the job only needs platform delivery."
+        ],
+        sources: [
+          {label: "Backend queues", url: "/docs/backend-queues/"},
+          {label: "Backend schedules", url: "/docs/backend-schedules/"},
+          {label: "Backend workflows", url: "/docs/backend-workflows/"},
+          {label: "Heroku one-off dynos", url: "https://devcenter.heroku.com/articles/one-off-dynos"}
+        ]
+      },
+      {
+        heading: "How other Heroku alternatives compare",
+        paragraphs: [
+          "Render, Railway, Fly.io, Cloud Run, App Runner, and Coolify are closer to Heroku when you still want processes, services, containers, or servers. Render documents web services, background workers, and cron jobs. Fly.io documents Machines. Cloud Run and App Runner focus on containerized or source-based services.",
+          "W7S is better only when the app fits its narrower model. That narrower model is a strength for repo-shaped apps because it removes instance sizing, process topology, server maintenance, and dashboard drift from everyday deployment decisions."
+        ],
+        sources: [
+          {label: "Render web services", url: "https://render.com/docs/web-services"},
+          {label: "Render workers", url: "https://render.com/docs/background-workers"},
+          {label: "Fly Machines", url: "https://fly.io/docs/machines/"},
+          {label: "AWS App Runner", url: "https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html"}
+        ]
+      },
+      {
+        heading: "When W7S is the better alternative",
+        paragraphs: [
+          "Choose W7S when the app is static assets plus JavaScript or TypeScript backend routes, and when storage, jobs, schedules, workflows, vars, and secrets should be declared with the repository. That is a real platform alternative because the deploy, runtime contract, and usage feedback are all tied to GitHub.",
+          "Keep Heroku or another process platform for arbitrary containers, long-running daemons, non-JavaScript app servers, custom TCP services, direct shell access, private service networks, and mature process controls. W7S is not trying to beat Heroku at dynos. It is replacing the need for dynos when the app no longer needs them."
+        ],
+        sources: [
+          {label: "URLs and routing", url: "/docs/urls-and-routing/"},
+          {label: "Usage accounting", url: "/docs/usage-accounting/"},
+          {label: "W7S pricing", url: "/docs/pricing/"}
         ]
       }
     ]
@@ -598,24 +691,70 @@ export const blogArticles = [
     slug: "netlify-alternative",
     title: "Netlify Alternative",
     category: "Platforms",
-    readingTime: "8 min",
+    readingTime: "10 min",
     summary:
       "Why W7S is a strong Netlify alternative for teams that want deploys, backends, storage, and branch environments owned by the repository.",
     sections: [
       {
-        heading: "When a site becomes an app",
+        heading: "Netlify is a strong frontend platform",
         paragraphs: [
-          "Netlify is strong for hosted frontend workflows, deploy previews, functions, forms, and dashboard-driven collaboration.",
-          "W7S is stronger when the repository should own the deploy workflow and runtime contract, especially after a static site needs backend routes, storage, queues, schedules, workflows, or internal service calls.",
-          "The release path moves from project settings to `.github/workflows/deploy.yml`, where build and deploy behavior can be reviewed with the app."
+          "Netlify is a strong product for frontend teams. Its docs cover deploy previews, serverless functions, edge functions, forms, scheduled functions, and a dashboard-driven workflow. For many marketing sites and frontend-heavy apps, that is exactly the right tool.",
+          "The reason to look at W7S is not that Netlify is weak. It is that some sites become apps. Once the project needs backend routes, storage, queues, workflows, internal calls, and branch-isolated runtime behavior, the deploy platform starts making application architecture decisions."
+        ],
+        sources: [
+          {label: "Netlify previews", url: "https://docs.netlify.com/deploy/deploy-types/deploy-previews/"},
+          {label: "Netlify functions", url: "https://docs.netlify.com/build/functions/overview/"},
+          {label: "Netlify edge functions", url: "https://docs.netlify.com/build/edge-functions/overview/"},
+          {label: "Netlify forms", url: "https://docs.netlify.com/manage/forms/setup/"}
         ]
       },
       {
-        heading: "Backend primitives stay in the repo",
+        heading: "W7S moves the app contract into GitHub",
         paragraphs: [
-          "W7S replaces many function-folder setups with one native backend entrypoint and app bindings declared in `w7s.json`.",
-          "Branch environments can preview backend and storage behavior, not only static frontend output.",
-          "Netlify still fits when its forms, plugins, visual workflow, and mature frontend product are the features you want. W7S fits when GitHub should stay in charge."
+          "W7S deploys from GitHub Actions, so build steps, tests, generated assets, deploy permissions, and release behavior are normal workflow code. That makes the deploy contract reviewable in pull requests instead of scattered between repository files and hosted project settings.",
+          "The runtime contract also stays in the repo. A W7S app can include static output, a native backend handler, DB and storage bindings, queues, schedules, workflows, vars, secrets, and internal RPC. The app is not limited to a static deploy with a few isolated functions bolted on."
+        ],
+        sources: [
+          {label: "Deploy from GitHub", url: "/docs/deploy-from-github/"},
+          {label: "Project layouts", url: "/docs/project-layouts/"},
+          {label: "Backend RPC", url: "/docs/backend-rpc/"}
+        ]
+      },
+      {
+        heading: "Forms and functions become app code",
+        paragraphs: [
+          "Netlify Forms are useful when a form is just a form. W7S is stronger when a form becomes application behavior: validation, database writes, file uploads, notification queues, approval workflows, fraud checks, or account provisioning.",
+          "The same is true for functions. File-per-function routing is convenient early, but shared auth, logging, validation, storage helpers, and service calls often push teams toward a service-shaped backend. W7S gives that backend a first-class place in the repository."
+        ],
+        sources: [
+          {label: "Netlify forms", url: "https://docs.netlify.com/manage/forms/setup/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"},
+          {label: "Serverless database", url: "/docs/serverless-database/"},
+          {label: "Backend queues", url: "/docs/backend-queues/"}
+        ]
+      },
+      {
+        heading: "Previews need runtime isolation too",
+        paragraphs: [
+          "Netlify deploy previews are valuable because reviewers can open the branch at a unique URL. W7S keeps the preview idea but treats branch environments as runtime environments, so backend routes and storage behavior can be tested along with the frontend.",
+          "That matters when a branch changes a schema, queue consumer, scheduled job, or file upload path. A preview that only renders the frontend is not enough once the project is a real app."
+        ],
+        sources: [
+          {label: "Netlify deploy previews", url: "https://docs.netlify.com/deploy/deploy-types/deploy-previews/"},
+          {label: "URLs and routing", url: "/docs/urls-and-routing/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"}
+        ]
+      },
+      {
+        heading: "When W7S is the better Netlify alternative",
+        paragraphs: [
+          "Choose W7S when GitHub should be the release control plane, when backend and storage behavior should be visible in source, and when the project needs queues, schedules, workflows, usage feedback, and a self-hostable path. That is enough to make W7S a real Netlify alternative for app-shaped frontend projects.",
+          "Choose Netlify when its visual collaboration, forms product, plugin ecosystem, dashboard workflow, and frontend platform surface are the features you want. The point is ownership: Netlify centralizes a polished product workflow, while W7S keeps the deployment and runtime contract close to the repository."
+        ],
+        sources: [
+          {label: "Netlify pricing", url: "https://www.netlify.com/pricing/"},
+          {label: "Usage accounting", url: "/docs/usage-accounting/"},
+          {label: "Self host W7S", url: "/docs/self-host/"}
         ]
       }
     ]
@@ -624,24 +763,69 @@ export const blogArticles = [
     slug: "vercel-pricing",
     title: "Vercel Pricing",
     category: "Pricing",
-    readingTime: "9 min",
+    readingTime: "10 min",
     summary:
       "A practical comparison of Vercel pricing and W7S pricing for teams deciding whether GitHub-native deployment is a better fit.",
     sections: [
       {
-        heading: "Plans are only part of the bill",
+        heading: "Vercel is a plan plus usage model",
         paragraphs: [
-          "Vercel pricing combines account plans with usage across infrastructure and product-specific meters such as requests, transfer, functions, builds, storage, observability, images, queues, and workflows.",
-          "W7S starts from a different model: deploy through GitHub Actions without a W7S account, credit card, or separate cloud setup, then estimate cost from app primitives and W7S platform overhead as usage grows.",
-          "The comparison is not only which meter is cheaper. It is whether the paid product should own deployment, or whether the repository should."
+          "Vercel's public pricing page lists Hobby, Pro, and Enterprise plans. It also describes Pro as a monthly plan with additional usage, and its pricing docs explain managed infrastructure usage with meters such as data transfer, request count, and compute duration.",
+          "That model makes sense for a broad commercial frontend cloud. The product includes deployments, compute, storage, image optimization, queues, workflows, observability, security, and spend controls. The tradeoff is that the bill can come from many product-specific meters as the app grows."
+        ],
+        sources: [
+          {label: "Vercel pricing", url: "https://vercel.com/pricing"},
+          {label: "Vercel pricing docs", url: "https://vercel.com/docs/pricing"},
+          {label: "Vercel spend management", url: "https://vercel.com/docs/spend-management"}
         ]
       },
       {
-        heading: "Where W7S is better",
+        heading: "W7S starts from app usage",
         paragraphs: [
-          "W7S is better when the app can be static assets plus native backend routes, and when DB, KV, FS, queues, schedules, workflows, vars, and secrets should live in a repo-readable contract.",
-          "Usage feedback can return to GitHub through deploy summaries and warning issues, keeping cost pressure near the code that caused it.",
-          "Vercel is worth paying for when the team wants Vercel's framework behavior, dashboard workflow, collaboration tools, observability, security products, and mature frontend cloud."
+          "W7S starts from a different premise: deploy from GitHub Actions without a W7S account, credit card, or separate cloud setup, then model cost around the app primitives the repository uses. The W7S pricing page is an estimator for runtime requests, CPU, storage, DB, KV, FS, queues, Stateful Objects, logs, routing, usage guards, platform overhead, and target margin.",
+          "That does not mean W7S is cheaper for every workload. It means the price discussion follows the architecture that is visible in the repo: static assets, backend routes, database bindings, queues, schedules, workflows, and usage accounting."
+        ],
+        sources: [
+          {label: "W7S pricing", url: "/docs/pricing/"},
+          {label: "Usage accounting", url: "/docs/usage-accounting/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"}
+        ]
+      },
+      {
+        heading: "Backend features change the bill",
+        paragraphs: [
+          "A frontend app usually gets more expensive when it stops being only frontend. On Vercel, backend behavior can involve Functions, Blob, Edge Config, Queues, Cron Jobs, Workflows, image optimization, observability, and other platform products.",
+          "On W7S, those choices stay under one app model. A backend route can use declared DB, KV, FS, queue, schedule, workflow, and RPC bindings. Usage still matters, but the app has a single repository-owned contract instead of several dashboard products."
+        ],
+        sources: [
+          {label: "Vercel Functions", url: "https://vercel.com/docs/functions"},
+          {label: "Vercel Blob", url: "https://vercel.com/docs/vercel-blob"},
+          {label: "Vercel Queues", url: "https://vercel.com/docs/queues"},
+          {label: "Backend queues", url: "/docs/backend-queues/"}
+        ]
+      },
+      {
+        heading: "The real comparison is ownership",
+        paragraphs: [
+          "Vercel pricing is attached to a hosted product account. That product may be worth paying for because it gives teams a polished dashboard, framework behavior, collaboration tools, deployment protection, analytics, observability, security products, and support.",
+          "W7S pricing is attached to a repository-shaped deployment model. The deploy workflow, runtime shape, branch environments, app URL, storage bindings, jobs, and usage feedback are closer to source control. That is the real alternative for teams that want fewer dashboard-owned decisions."
+        ],
+        sources: [
+          {label: "Vercel deployments", url: "https://vercel.com/docs/deployments"},
+          {label: "Deploy from GitHub", url: "/docs/deploy-from-github/"},
+          {label: "URLs and routing", url: "/docs/urls-and-routing/"}
+        ]
+      },
+      {
+        heading: "When W7S pricing is better",
+        paragraphs: [
+          "W7S is better when the app fits static assets plus native backend routes and managed bindings, especially before a team needs a paid dashboard-centered frontend cloud. It lets a project start from GitHub and grow into usage-based infrastructure instead of adopting a subscription-shaped product early.",
+          "Vercel is still worth it when Vercel-specific framework behavior, team collaboration, enterprise controls, observability, security products, and the Vercel dashboard are part of the value. The pricing decision should follow that product decision, not only a single headline number."
+        ],
+        sources: [
+          {label: "Vercel pricing", url: "https://vercel.com/pricing"},
+          {label: "W7S pricing", url: "/docs/pricing/"},
+          {label: "Self host W7S", url: "/docs/self-host/"}
         ]
       }
     ]
@@ -650,24 +834,71 @@ export const blogArticles = [
     slug: "coolify-vs-w7s",
     title: "Coolify vs W7S",
     category: "Self-hosting",
-    readingTime: "8 min",
+    readingTime: "10 min",
     summary:
       "A practical comparison of Coolify and W7S for teams choosing between self-hosted server management and GitHub-native app deployment.",
     sections: [
       {
-        heading: "Different platform layers",
+        heading: "Coolify is server-oriented",
         paragraphs: [
-          "Coolify helps you deploy apps, databases, and services on infrastructure you bring. It is strongest when the goal is to operate your own servers with a friendly control plane.",
-          "W7S starts from the repository. Apps deploy through GitHub Actions and use W7S primitives for static assets, native backends, DB, KV, FS, queues, schedules, workflows, branch environments, and internal RPC.",
-          "The first question is what you want to own: servers, or the app deployment contract."
+          "Coolify is strongest when you want a friendly control plane over servers you own or rent. Its pricing page distinguishes self-hosting on your own infrastructure from Coolify Cloud, and its docs organize the product around applications, services, and servers.",
+          "That is a good model for teams that want containers, databases, service deployments, VPS ownership, homelab workflows, or direct server control. Coolify is not just a Vercel-like frontend host. It is a way to operate application infrastructure on machines you bring."
+        ],
+        sources: [
+          {label: "Coolify pricing", url: "https://coolify.io/pricing/"},
+          {label: "Coolify docs", url: "https://coolify.io/docs/get-started/introduction"},
+          {label: "Coolify applications", url: "https://coolify.io/docs/applications/"},
+          {label: "Coolify servers", url: "https://coolify.io/docs/knowledge-base/server/introduction"}
         ]
       },
       {
-        heading: "Choose by ownership",
+        heading: "W7S is repository-oriented",
         paragraphs: [
-          "Choose Coolify when the workload needs arbitrary containers, long-running processes, databases and services you manage directly, server access, and process-level control.",
-          "Choose W7S when the app fits static assets plus JavaScript or TypeScript backend handlers, and when every repo should deploy without sizing, patching, monitoring, and backing up servers.",
-          "Both can be self-hosted in spirit, but Coolify self-hosts your app infrastructure while W7S self-hosts the deployment cloud and keeps the app workflow GitHub-native."
+          "W7S starts from the GitHub repository instead of the server. Apps deploy through GitHub Actions and declare runtime needs through project layout and `w7s.json`: static assets, native backend routes, DB, KV, FS, queues, schedules, workflows, branch environments, and RPC.",
+          "That makes W7S a real alternative when the team wants the app deployment contract, not server management, to be the thing every repository owns. The app team reviews workflow files and runtime declarations rather than choosing servers, patching machines, or managing container lifecycles."
+        ],
+        sources: [
+          {label: "Deploy from GitHub", url: "/docs/deploy-from-github/"},
+          {label: "Project layouts", url: "/docs/project-layouts/"},
+          {label: "Storage bindings", url: "/docs/storage-bindings/"}
+        ]
+      },
+      {
+        heading: "Self-hosting means different things",
+        paragraphs: [
+          "With Coolify, self-hosting usually means you run the control plane and deploy your apps onto servers you manage. You own capacity, OS updates, Docker behavior, disks, backups, network rules, service health, and database operations.",
+          "With W7S, self-hosting means running the W7S deployment cloud under your own domain and infrastructure account while application repositories keep the same GitHub-native workflow. The app still deploys through the W7S action and still uses W7S platform conventions."
+        ],
+        sources: [
+          {label: "Coolify services", url: "https://coolify.io/docs/services/introduction"},
+          {label: "Coolify servers", url: "https://coolify.io/docs/knowledge-base/server/introduction"},
+          {label: "Self host W7S", url: "/docs/self-host/"}
+        ]
+      },
+      {
+        heading: "Where W7S is a real alternative",
+        paragraphs: [
+          "W7S is a real Coolify alternative for teams that wanted self-hostability as an escape hatch, not server ownership as the daily workflow. A repository-shaped app can deploy static assets, backend handlers, storage, queues, schedules, workflows, and internal calls without every project becoming a server operations project.",
+          "That is the practical difference. Coolify gives you control over infrastructure. W7S gives the repository a platform contract. For app teams that do not need arbitrary containers or long-running processes, the W7S contract is easier to reason about and easier to review."
+        ],
+        sources: [
+          {label: "Backend queues", url: "/docs/backend-queues/"},
+          {label: "Backend schedules", url: "/docs/backend-schedules/"},
+          {label: "Backend workflows", url: "/docs/backend-workflows/"},
+          {label: "Backend RPC", url: "/docs/backend-rpc/"}
+        ]
+      },
+      {
+        heading: "When Coolify still wins",
+        paragraphs: [
+          "Choose Coolify when the workload needs arbitrary containers, long-running processes, databases you operate directly, custom service topology, server shell access, private server networks, or a broad self-hosted PaaS over your machines.",
+          "Choose W7S when the app fits static assets plus JavaScript or TypeScript backend handlers, and when GitHub Actions, repo-scoped URLs, branch environments, usage feedback, and self-hostable platform ownership matter more than server control. The better tool is the one that matches what you actually want to own."
+        ],
+        sources: [
+          {label: "Coolify applications", url: "https://coolify.io/docs/applications/"},
+          {label: "URLs and routing", url: "/docs/urls-and-routing/"},
+          {label: "Usage accounting", url: "/docs/usage-accounting/"},
+          {label: "W7S pricing", url: "/docs/pricing/"}
         ]
       }
     ]

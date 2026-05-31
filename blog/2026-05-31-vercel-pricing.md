@@ -30,6 +30,18 @@ This article compares the models, not just the sticker prices.
 
 Vercel can be the right choice. W7S is better when the repo should own deploy behavior and the app fits static assets plus native backends and managed bindings.
 
+## Source-Backed Comparison Points
+
+The Vercel side of this pricing comparison is based on the live [Vercel pricing page](https://vercel.com/pricing), the [Vercel pricing docs](https://vercel.com/docs/pricing), and [Vercel Spend Management](https://vercel.com/docs/spend-management). Those pages are the source for the plan-plus-usage framing, active compute language, and spend-control discussion.
+
+The backend-cost examples cite Vercel product docs for [Vercel Functions](https://vercel.com/docs/functions), [Vercel Blob](https://vercel.com/docs/vercel-blob), [Edge Config](https://vercel.com/docs/edge-config), [Queues](https://vercel.com/docs/queues), [Cron Jobs](https://vercel.com/docs/cron-jobs), and [Workflow](https://vercel.com/docs/workflow). Those sources explain why a Vercel bill can involve several product-specific meters once a frontend becomes an application.
+
+The W7S side is based on [W7S pricing](/docs/pricing/), [Usage Accounting](/docs/usage-accounting/), [Deploy From GitHub](/docs/deploy-from-github/), and [Project Layouts](/docs/project-layouts/). Those pages back the argument that W7S cost should be understood through repository-owned deploys and app primitives rather than only an account plan.
+
+The W7S backend model cited here comes from [Storage Bindings](/docs/storage-bindings/), [Serverless Database](/docs/serverless-database/), [Backend Queues](/docs/backend-queues/), [Backend Schedules](/docs/backend-schedules/), [Backend Workflows](/docs/backend-workflows/), and [Backend RPC](/docs/backend-rpc/). These docs support the claim that W7S can replace many small-app backend needs without moving the control plane into a dashboard.
+
+The ownership and escape-hatch claims are backed by [URLs and Routing](/docs/urls-and-routing/) and [Self Host W7S](/docs/self-host/). Pricing pages change frequently, so the article links to current public sources instead of asking readers to trust a stale table.
+
 ## What Vercel Charges For
 
 As of May 31, 2026, Vercel's public pricing material presents three plan levels:

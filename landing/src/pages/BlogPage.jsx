@@ -28,6 +28,7 @@ const searchTextFor = (article) =>
       section.heading,
       ...section.paragraphs,
       section.code || "",
+      ...(section.sources ?? []).flatMap((source) => [source.label, source.url]),
     ]),
   ]
     .join(" ")
@@ -492,6 +493,24 @@ function ArticlePage({ article }) {
                   </div>
                   {section.code && (
                     <CodeBlock code={section.code} />
+                  )}
+                  {section.sources?.length > 0 && (
+                    <div className="mt-6 border border-white/10 bg-white/[0.025] p-4">
+                      <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-600">Sources</div>
+                      <div className="flex flex-wrap gap-2">
+                        {section.sources.map((source) => (
+                          <a
+                            key={source.url}
+                            className="border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 hover:border-amber-400/40 hover:text-amber-300"
+                            href={source.url}
+                            rel="noreferrer"
+                            target={source.url.startsWith("/") ? undefined : "_blank"}
+                          >
+                            {source.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </section>
               ))}

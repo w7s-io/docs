@@ -34,6 +34,18 @@ That makes W7S better when the repository should own the deploy workflow, runtim
 
 Vercel is still a strong product, especially for Next.js-centric teams that want Vercel's hosted workflow and framework integration. The question is whether that is the workflow you want.
 
+## Source-Backed Comparison Points
+
+Vercel's platform position is documented through its own material on [deployments](https://vercel.com/docs/deployments), [Vercel Functions](https://vercel.com/docs/functions), and [pricing](https://vercel.com/pricing). Those sources show that a Vercel comparison is not only about hosting static files. It is about CI/CD, frontend infrastructure, compute, storage, and product-level controls.
+
+The W7S comparison is grounded in the W7S docs for [deploying from GitHub](/docs/deploy-from-github/), [project layouts](/docs/project-layouts/), [URLs and routing](/docs/urls-and-routing/), and [storage bindings](/docs/storage-bindings/). Those pages describe the repository-first deployment model, static and native backend shapes, owner/repo-derived URLs, and declared runtime resources.
+
+Netlify is the closest frontend-platform comparison because its docs cover [Deploy Previews](https://docs.netlify.com/deploy/deploy-types/deploy-previews/), [Functions](https://docs.netlify.com/build/functions/overview/), [Edge Functions](https://docs.netlify.com/build/edge-functions/overview/), [Forms](https://docs.netlify.com/manage/forms/setup/), and [Scheduled Functions](https://docs.netlify.com/build/functions/scheduled-functions/). That backs the article's claim that Netlify is a frontend workflow alternative, while W7S is a repository-owned app platform alternative.
+
+Process platforms are a different category. Render documents [web services](https://render.com/docs/web-services), [background workers](https://render.com/docs/background-workers), and [cron jobs](https://render.com/docs/cronjobs); Railway describes its [platform model](https://docs.railway.com/platform); Fly.io documents [Machines](https://fly.io/docs/machines/); Google documents [Cloud Run](https://docs.cloud.google.com/run/docs); and AWS documents [App Runner](https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html). Those sources back the distinction between process/container hosting and W7S's narrower app-runtime model.
+
+The argument for W7S as a real alternative depends on backend capability, not only deploy ergonomics. W7S documents [Backend Queues](/docs/backend-queues/), [Backend Schedules](/docs/backend-schedules/), [Backend Workflows](/docs/backend-workflows/), [Backend RPC](/docs/backend-rpc/), [Usage Accounting](/docs/usage-accounting/), and [Self Hosting](/docs/self-host/), which is the set of primitives this article relies on when describing W7S as more than static hosting.
+
 ## What Vercel Is Really Selling
 
 Vercel is not just static hosting. A typical Vercel project gives you:

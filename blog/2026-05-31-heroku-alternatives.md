@@ -35,6 +35,18 @@ Heroku is still useful. Its pricing page describes dynos as the heart of a Herok
 
 W7S competes by changing that model for apps that do not need a long-running process.
 
+## Source-Backed Comparison Points
+
+Heroku's runtime model is documented in its pages for [dynos](https://devcenter.heroku.com/articles/dynos), the [Procfile](https://devcenter.heroku.com/articles/procfile), [config vars](https://devcenter.heroku.com/articles/config-vars), [add-ons](https://devcenter.heroku.com/articles/add-ons), and [one-off dynos](https://devcenter.heroku.com/articles/one-off-dynos). Those sources back the article's description of Heroku as a process-centered app platform.
+
+The W7S replacement model is backed by the W7S docs for [deploying from GitHub](/docs/deploy-from-github/), [project layouts](/docs/project-layouts/), [storage bindings](/docs/storage-bindings/), [serverless database](/docs/serverless-database/), and [URLs and routing](/docs/urls-and-routing/). Those pages show how a repository can own deployment, native backend shape, app URLs, and runtime bindings without a dyno layer.
+
+The background-work comparison is based on the W7S docs for [Backend Queues](/docs/backend-queues/), [Backend Schedules](/docs/backend-schedules/), and [Backend Workflows](/docs/backend-workflows/). Those primitives are the reason W7S can replace worker dynos for common async jobs, scheduled syncs, webhook retries, and durable application processes.
+
+Other Heroku alternatives still matter when an app is process-shaped. Render documents [web services](https://render.com/docs/web-services), [background workers](https://render.com/docs/background-workers), and [cron jobs](https://render.com/docs/cronjobs); Fly.io documents [Machines](https://fly.io/docs/machines/); Google documents [Cloud Run](https://docs.cloud.google.com/run/docs); and AWS documents [App Runner](https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html). Those sources back the article's recommendation to keep process platforms for process-shaped workloads.
+
+The cost and ownership claims are tied to [Heroku pricing](https://www.heroku.com/pricing/), the [W7S pricing calculator](/docs/pricing/), [W7S usage accounting](/docs/usage-accounting/), and [self-hosting W7S](/docs/self-host/). Pricing pages change, so the article points readers to the live sources instead of treating any single number as permanent.
+
 ## What Heroku Gives You
 
 Heroku became popular because it gave developers a simple application surface:

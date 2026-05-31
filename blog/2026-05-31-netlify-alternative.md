@@ -36,6 +36,18 @@ Netlify remains a good fit when the dashboard workflow, visual collaboration, fo
 
 W7S is better when those features are less important than keeping deploys, runtime shape, and app resources visible in the repository.
 
+## Source-Backed Comparison Points
+
+Netlify's frontend platform strengths are documented in its pages for [Deploy Previews](https://docs.netlify.com/deploy/deploy-types/deploy-previews/), [Functions](https://docs.netlify.com/build/functions/overview/), [Edge Functions](https://docs.netlify.com/build/edge-functions/overview/), [Forms](https://docs.netlify.com/manage/forms/setup/), and [Scheduled Functions](https://docs.netlify.com/build/functions/scheduled-functions/). Those sources back the article's claim that Netlify remains a strong frontend workflow product.
+
+The W7S deployment comparison is backed by [Deploy From GitHub](/docs/deploy-from-github/), [Project Layouts](/docs/project-layouts/), and [URLs and Routing](/docs/urls-and-routing/). Those pages show how build and deploy behavior can live in GitHub Actions while the app receives predictable owner/repo and branch URLs.
+
+The backend comparison is backed by [Storage Bindings](/docs/storage-bindings/), [Serverless Database](/docs/serverless-database/), [Backend Queues](/docs/backend-queues/), [Backend Schedules](/docs/backend-schedules/), [Backend Workflows](/docs/backend-workflows/), and [Backend RPC](/docs/backend-rpc/). Those W7S docs are the reason this article describes W7S as an app platform alternative rather than just another static site host.
+
+The preview-environment claim is supported by the combination of Netlify's [Deploy Preview](https://docs.netlify.com/deploy/deploy-types/deploy-previews/) model and W7S docs for [URLs and Routing](/docs/urls-and-routing/) plus [Storage Bindings](/docs/storage-bindings/). Netlify proves the value of branch previews; W7S extends that idea to branch-scoped runtime behavior for apps that need backend resources.
+
+The pricing and ownership claims use [Netlify pricing](https://www.netlify.com/pricing/), [W7S pricing](/docs/pricing/), [Usage Accounting](/docs/usage-accounting/), and [Self Host W7S](/docs/self-host/). These links are included because pricing and platform limits change over time.
+
 ## Why Teams Look for a Netlify Alternative
 
 Teams usually start looking beyond Netlify for one of five reasons:
