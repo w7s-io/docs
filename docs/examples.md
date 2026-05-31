@@ -145,6 +145,15 @@ See [Backend Queues](./backend-queues.md) for copy-pasteable examples showing:
 - splitting producer and consumer into separate backends;
 - same-owner and cross-owner authorization.
 
+## W7S-Native Events Without NATS
+
+- Local example: [`examples/w7s-local-native-events`](https://github.com/w7s-io/docs/tree/main/examples/w7s-local-native-events)
+- Related article: [Replacing NATS With W7S Components](https://w7s.io/docs/blog/replacing-nats-with-w7s-components)
+
+This example turns the event-router pattern from the article into three local repos that can be run with `w7s-local`: an `order-api` publisher, an `event-router` fanout service, and an `email-worker` queue consumer.
+
+It demonstrates how to test W7S-native event fanout locally without running NATS or another broker. The publisher calls the router through a W7S-shaped local URL, and the router delivers a queue-shaped batch to the subscriber.
+
 ## Backend Schedules
 
 - GitHub: [w7s-io/example-schedules](https://github.com/w7s-io/example-schedules)

@@ -341,6 +341,10 @@ export function callAuth(env: Env, cookie: string) {
 
 This keeps local development simple without asking every developer to run a broker just to test two repositories talking to each other.
 
+For a runnable version of the event-router pattern, see
+[`examples/w7s-local-native-events`](https://github.com/w7s-io/docs/tree/main/examples/w7s-local-native-events).
+It starts three local W7S repos with `w7s-local`: an order API, an event router, and a queue consumer.
+
 ## What W7S Still Does Not Replace
 
 There are real NATS capabilities that W7S should not pretend to have today:

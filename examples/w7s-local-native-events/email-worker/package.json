@@ -1,0 +1,18 @@
+{
+  "name": "w7s-local-native-events-email-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../dev-server.mjs --port 5182",
+    "local": "w7s-local --owner acme --repo email-worker --port 8792 --command \"npm run dev\" --backend http://127.0.0.1:5182"
+  },
+  "w7sLocal": {
+    "owner": "acme",
+    "repo": "email-worker",
+    "environment": "production"
+  },
+  "devDependencies": {
+    "w7s-local": "^0.1.1"
+  }
+}

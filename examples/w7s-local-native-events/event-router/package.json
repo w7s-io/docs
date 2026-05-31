@@ -1,0 +1,18 @@
+{
+  "name": "w7s-local-native-events-event-router",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../dev-server.mjs --port 5181",
+    "local": "w7s-local --owner acme --repo event-router --port 8791 --command \"npm run dev\" --backend http://127.0.0.1:5181"
+  },
+  "w7sLocal": {
+    "owner": "acme",
+    "repo": "event-router",
+    "environment": "production"
+  },
+  "devDependencies": {
+    "w7s-local": "^0.1.1"
+  }
+}

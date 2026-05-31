@@ -397,6 +397,13 @@ export const blogArticles = [
         ]
       },
       {
+        heading: "Try the event router locally",
+        paragraphs: [
+          "The docs repo includes a runnable `examples/w7s-local-native-events` suite for this pattern. It starts three local W7S repos with `w7s-local`: an `order-api` publisher, an `event-router` fanout service, and an `email-worker` queue consumer.",
+          "The test path creates an order, routes an `orders.created` event, and verifies that the subscriber received a queue-shaped delivery, all without running NATS or another broker."
+        ]
+      },
+      {
         heading: "Where NATS still wins",
         paragraphs: [
           "W7S should not pretend to replace every NATS capability today. Dynamic wildcard subscriptions, high-volume many-subscriber streams, long-lived service subscriptions, broker clustering, leaf-node topologies, and mature JetStream consumer semantics are real NATS strengths.",
