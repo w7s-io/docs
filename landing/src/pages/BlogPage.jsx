@@ -167,6 +167,35 @@ const sourcesForSection = (article, section, index) => {
   return index === article.sections.length - 1 ? fallbackSourcesFor(article) : [];
 };
 
+const renderInlineText = (text) => {
+  const parts = [];
+  const inlineCodePattern = /`([^`]+)`/g;
+  let cursor = 0;
+  let match;
+
+  while ((match = inlineCodePattern.exec(text)) !== null) {
+    if (match.index > cursor) {
+      parts.push(text.slice(cursor, match.index));
+    }
+
+    parts.push(
+      <code
+        key={`${match.index}-${match[1]}`}
+        className="border border-white/10 bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.9em] text-amber-200"
+      >
+        {match[1]}
+      </code>
+    );
+    cursor = inlineCodePattern.lastIndex;
+  }
+
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
+  }
+
+  return parts.length > 0 ? parts : text;
+};
+
 const tokenizeSearch = (value) =>
   value
     .toLowerCase()
@@ -439,7 +468,7 @@ function ArticleCard({ article, featured = false }) {
       <h2 className={`font-display leading-none text-white group-hover:text-amber-300 ${featured ? "text-3xl" : "text-2xl"}`}>
         {article.title}
       </h2>
-      <p className="mt-4 text-sm leading-relaxed text-zinc-400">{article.summary}</p>
+      <p className="mt-4 text-sm leading-relaxed text-zinc-400">{renderInlineText(article.summary)}</p>
       <div className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-amber-400">
         Read article
         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" strokeWidth={1.8} />
@@ -632,7 +661,7 @@ function ArticlePage({ article }) {
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.92] text-white">
               {article.title}
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-relaxed text-zinc-400">{article.summary}</p>
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-zinc-400">{renderInlineText(article.summary)}</p>
           </div>
         </article>
 
@@ -647,7 +676,7 @@ function ArticlePage({ article }) {
                     <h2 className="font-display text-3xl leading-none text-white">{section.heading}</h2>
                     <div className="mt-5 space-y-5 text-sm leading-8 text-zinc-300">
                       {section.paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
+                        <p key={paragraph}>{renderInlineText(paragraph)}</p>
                       ))}
                     </div>
                     {section.code && (
