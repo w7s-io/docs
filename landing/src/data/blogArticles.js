@@ -517,6 +517,136 @@ export const blogArticles = [
     ]
   },
   {
+    slug: "replacing-vercel-and-netlify-with-w7s",
+    title: "Replacing Vercel and Netlify With W7S",
+    category: "Platforms",
+    readingTime: "9 min",
+    summary:
+      "When a frontend platform starts becoming an app platform, W7S can move deploys, backends, storage, previews, and domains back into the repository.",
+    sections: [
+      {
+        heading: "Frontend hosting becomes app hosting",
+        paragraphs: [
+          "Vercel and Netlify made frontend deployment feel simple: connect a repository, let the platform build it, get a URL, and add functions when the site needs backend behavior.",
+          "W7S keeps the repository-first flow but moves the deploy control plane into GitHub Actions. The workflow builds the app, packages the archive, and deploys with the GitHub token.",
+          "That makes release behavior reviewable with the app instead of splitting it between source code and project dashboard settings."
+        ]
+      },
+      {
+        heading: "Functions become a backend",
+        paragraphs: [
+          "W7S replaces many file-per-function setups with a native backend entrypoint that handles routing in code. Shared auth, validation, logging, database access, and queue helpers can live in one small service shape.",
+          "Storage and background work are declared in `w7s.json`: DB, KV, FS, queues, schedules, workflows, vars, and secrets. Branch deploys become isolated environments rather than only static previews.",
+          "Vercel and Netlify still fit when their framework integrations, dashboard workflows, plugins, forms, analytics, or platform-specific features are the product you want. W7S fits when the repository should own the deployment and runtime contract."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "replacing-heroku-render-railway-and-fly-with-w7s",
+    title: "Replacing Heroku, Render, Railway, and Fly.io With W7S",
+    category: "Platforms",
+    readingTime: "9 min",
+    summary:
+      "Replace process-oriented app hosting with W7S when the app fits static assets, native backends, managed bindings, queues, schedules, and workflows.",
+    sections: [
+      {
+        heading: "Processes are not always the app",
+        paragraphs: [
+          "Heroku, Render, Railway, and Fly.io are good platforms when an application needs a web process, worker, container image, machine, or long-running service with operational controls.",
+          "Many small apps do not need that much runtime. They need a frontend, a few backend routes, a database, a cache, file storage, a background job, a schedule, and a clean deploy path from GitHub.",
+          "For that shape, W7S replaces process management with static assets, native request handlers, and platform-managed bindings."
+        ]
+      },
+      {
+        heading: "Workers become queues",
+        paragraphs: [
+          "Instead of running a worker process beside a web process, W7S lets the app declare queues and consume batches through backend routes. Schedules and workflows cover timed work and durable processes.",
+          "Databases, key-value storage, files, variables, and secrets are declared in `w7s.json`, then injected into the backend. The app runtime contract stays visible in the repository.",
+          "Keep a process platform when the app needs arbitrary containers, long-running daemons, custom TCP listeners, private networking, shell access, or process-level controls. Use W7S when the process was mostly packaging."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "replacing-github-pages-with-w7s",
+    title: "Replacing GitHub Pages With W7S",
+    category: "Platforms",
+    readingTime: "8 min",
+    summary:
+      "GitHub Pages is excellent for static sites. W7S is the next step when the same repository needs backend routes, storage, jobs, or runtime bindings.",
+    sections: [
+      {
+        heading: "Static stays simple",
+        paragraphs: [
+          "GitHub Pages is one of the cleanest ways to publish static HTML, CSS, and JavaScript from a repository. For docs, personal sites, and project pages, that can be exactly enough.",
+          "W7S keeps the static deploy path simple, but gives the repository room to grow into backend routes, database bindings, files, queues, schedules, workflows, and branch environments.",
+          "The migration stays natural because both models start from GitHub."
+        ]
+      },
+      {
+        heading: "The next step after static",
+        paragraphs: [
+          "A Pages site often outgrows static hosting when it needs a form handler, status API, search endpoint, uploaded files, or generated data. W7S lets the same repository add a native backend instead of calling out to a separate service.",
+          "Custom domains can still live in a `CNAME` file, while DNS remains the ownership boundary. Branch deploys can preview runtime changes, not just static output.",
+          "Keep GitHub Pages for purely static sites. Move to W7S when the site becomes an app."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "replacing-cloudflare-workers-with-w7s",
+    title: "Replacing Raw Cloudflare Workers Setup With W7S",
+    category: "Platforms",
+    readingTime: "9 min",
+    summary:
+      "W7S does not replace Cloudflare Workers as infrastructure. It replaces the repeated product workflow around Workers projects, bindings, deploys, URLs, and environments.",
+    sections: [
+      {
+        heading: "Primitives need conventions",
+        paragraphs: [
+          "Cloudflare Workers and the surrounding platform are powerful primitives. Teams still have to choose repository conventions, resource names, routing, environments, deploy flow, service calls, and binding configuration.",
+          "W7S is a product workflow on top of a focused set of those primitives. The app declares intent in `w7s.json`, deploys through GitHub Actions, and gets owner/repo-based URLs and branch environments.",
+          "The goal is not less Cloudflare. The goal is less repeated platform glue."
+        ]
+      },
+      {
+        heading: "Bindings become an app contract",
+        paragraphs: [
+          "W7S turns common Cloudflare-style resources into app-level bindings: DB, KV, FS, queues, workflows, Stateful Objects, RPC, AI, vars, and secrets.",
+          "Use raw Cloudflare when the app needs direct account control, advanced routes, compatibility flags, Terraform ownership, custom Workers for Platforms behavior, or exact product features on day one.",
+          "Use W7S when the repeated questions around deploys, URLs, branch environments, app-to-app calls, and bindings are more expensive than the infrastructure choices."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "replacing-kubernetes-for-small-apps-with-w7s",
+    title: "Replacing Kubernetes for Small Apps With W7S",
+    category: "Platforms",
+    readingTime: "9 min",
+    summary:
+      "Kubernetes is excellent infrastructure for container fleets. W7S is a smaller default when an app only needs static assets, request handlers, storage, queues, schedules, and workflows.",
+    sections: [
+      {
+        heading: "A cluster is often too much",
+        paragraphs: [
+          "Kubernetes can run almost anything, which is why it is often too much for small apps. Many projects need a frontend, backend routes, storage, background work, schedules, workflows, deploys, logs, and usage feedback.",
+          "W7S maps that shape to repository identity, static assets, native backends, managed bindings, queues, schedules, workflows, and GitHub Actions deploys.",
+          "The service boundary becomes the repository instead of a collection of cluster objects."
+        ]
+      },
+      {
+        heading: "Use clusters for cluster-shaped problems",
+        paragraphs: [
+          "Kubernetes still wins for arbitrary containers, long-running processes, private networking, service meshes, custom operators, GPUs, TCP services, strict cluster policy, and existing platform engineering built around Kubernetes.",
+          "W7S fits when the app can be static assets plus JavaScript or TypeScript request handlers and managed platform bindings.",
+          "The mistake is not choosing Kubernetes. The mistake is choosing Kubernetes before the application has Kubernetes-shaped problems."
+        ]
+      }
+    ]
+  },
+  {
     slug: "internal-backend-rpc-without-public-service-urls",
     title: "Internal Backend RPC Without Public Service URLs",
     category: "Backends",
