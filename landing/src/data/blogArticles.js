@@ -414,6 +414,109 @@ export const blogArticles = [
     ]
   },
   {
+    slug: "replacing-dapr-with-w7s-components",
+    title: "Replacing Dapr With W7S Components",
+    category: "Architecture",
+    readingTime: "10 min",
+    summary:
+      "Map Dapr sidecars, service invocation, pub/sub, state stores, bindings, actors, workflows, secrets, config, and observability onto W7S-native primitives.",
+    sections: [
+      {
+        heading: "Start with the runtime boundary",
+        paragraphs: [
+          "Dapr is a strong distributed application runtime. It gives teams a sidecar, service invocation, pub/sub, state management, bindings, actors, workflows, secrets, configuration, and a component model that can sit beside services across different hosting environments.",
+          "W7S starts from a different premise. If the application already deploys through W7S, the platform can own many of those concerns directly: deployment identity, internal routing, managed bindings, storage provisioning, background delivery, workflow dispatch, local multi-repo testing, and usage accounting.",
+          "That makes the useful question narrower than whether W7S can run Dapr. The practical question is whether the product behavior people reach for Dapr to get can be built from W7S components that already exist."
+        ]
+      },
+      {
+        heading: "Sidecars become platform bindings",
+        paragraphs: [
+          "Dapr standardizes through a runtime process beside every service. The app talks to the sidecar over HTTP or gRPC, and the sidecar talks to service discovery, brokers, state stores, secret stores, and external components.",
+          "W7S standardizes through repository deployment metadata and runtime bindings. Native backends receive platform bindings such as `W7S_RPC`, `W7S_QUEUE`, `W7S_WORKFLOW`, `W7S_AI`, storage bindings, owner/repo identity, and environment metadata directly on `env`.",
+          "That removes the sidecar lifecycle from the default path. The repo remains the service boundary, and W7S owns the routing, identity, authorization, and resource wiring."
+        ]
+      },
+      {
+        heading: "Invocation maps to backend RPC",
+        paragraphs: [
+          "Dapr service invocation calls an app ID through the local runtime. In W7S, the app ID is the GitHub owner and repository, and the runtime call becomes Backend RPC.",
+          "A caller uses `env.W7S_RPC.fetch(\"https://w7s.internal/api/v1/rpc/<owner>/<repo>/<path>\")` with its deployment token. W7S resolves the caller, checks authorization, dispatches to the target in the same environment, and injects caller identity headers.",
+          "Use RPC when the caller needs the target response before it can finish its own request. Same-owner calls work by default, while cross-owner calls stay controlled by target allowlists."
+        ],
+        code: `const response = await env.W7S_RPC.fetch(
+  "https://w7s.internal/api/v1/rpc/acme/auth/session",
+  {
+    headers: {
+      authorization: \`Bearer \${env.W7S_RPC_TOKEN}\`,
+      cookie: request.headers.get("cookie") ?? ""
+    }
+  }
+);`
+      },
+      {
+        heading: "Pub sub maps to fanout plus queues",
+        paragraphs: [
+          "Dapr pub/sub gives an app a stable publish API while the underlying broker can change. W7S can cover many product cases with explicit app-level fanout instead.",
+          "A publisher calls an event-router backend through RPC. The router validates the subject and publisher, looks up subscribers from repo metadata or app config, and enqueues one W7S queue message per subscriber.",
+          "This is less dynamic than Dapr broker-backed topics, but easier to review from a repository. The topology lives in code and W7S metadata instead of a sidecar component stack."
+        ],
+        code: `{
+  "queues": [
+    {
+      "name": "events",
+      "consumer": "/_w7s/queues/events"
+    }
+  ]
+}`
+      },
+      {
+        heading: "State stores become app-owned storage",
+        paragraphs: [
+          "Dapr state management gives apps a portable key/value API over a configured store. W7S takes a narrower approach: declare the storage the app actually needs, then read the binding directly from the backend.",
+          "Use Serverless DB for relational app data, KV for cache or latest state by key, FS for files and larger payloads, Stateful Objects for per-entity compute and state, and managed Postgres bindings when the app needs an existing database.",
+          "That gives up Dapr's common state API, but it gives the app a clearer data model and a deployment-owned migration path."
+        ],
+        code: `{
+  "bindings": {
+    "kv": ["CACHE"],
+    "fs": ["FILES"],
+    "db": [
+      {
+        "binding": "DB",
+        "migrations": "migrations"
+      }
+    ]
+  }
+}`
+      },
+      {
+        heading: "Actors map to Stateful Objects",
+        paragraphs: [
+          "Dapr actors provide a virtual actor model with identity, state, single-threaded execution, lifecycle behavior, timers, and reminders.",
+          "W7S Stateful Objects cover the most common app need behind that model: route all operations for one logical entity to one durable object with attached state.",
+          "This is not a full clone of Dapr actors. If an application depends on actor reminders, placement behavior, or Dapr actor SDK semantics, keep Dapr or build those semantics explicitly. If it needs durable per-key compute and state, Stateful Objects are the W7S-native fit."
+        ]
+      },
+      {
+        heading: "Workflows stay workflows",
+        paragraphs: [
+          "Dapr workflows are for long-running, fault-tolerant, stateful processes. W7S Workflows target the same product need: start a named process, persist the instance, dispatch work to the app, retry failures, and expose status.",
+          "The W7S app declares the workflow in `w7s.json`, starts instances through `env.W7S_WORKFLOW`, and receives workflow runs at a backend route.",
+          "W7S deliberately keeps the app API small. The platform owns the workflow runner; the app owns the business step."
+        ]
+      },
+      {
+        heading: "Where Dapr still wins",
+        paragraphs: [
+          "W7S should not pretend to replace Dapr's full surface. Dapr remains the better abstraction when a team needs a language-agnostic sidecar API, broker and state-store portability through component specs, Dapr actor semantics, Kubernetes operator behavior, resiliency policy resources, or sidecar-to-sidecar service mesh behavior.",
+          "If a team is standardizing across Kubernetes, VMs, edge nodes, local containers, and multiple languages, Dapr can still be the right dependency.",
+          "For W7S-native apps, the recommendation is different: use Backend RPC, queues, storage bindings, Stateful Objects, schedules, workflows, vars, secrets, and `w7s-local` first. Let W7S be the platform instead of adding another distributed runtime beside it."
+        ]
+      }
+    ]
+  },
+  {
     slug: "internal-backend-rpc-without-public-service-urls",
     title: "Internal Backend RPC Without Public Service URLs",
     category: "Backends",
