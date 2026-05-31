@@ -543,6 +543,32 @@ export const blogArticles = [
     ]
   },
   {
+    slug: "vercel-competitors",
+    title: "Vercel Competitors",
+    category: "Platforms",
+    readingTime: "8 min",
+    summary:
+      "A practical comparison of Vercel alternatives, including Netlify, Cloudflare Pages, Render, Railway, Fly.io, GitHub Pages, AWS Amplify, Firebase, Supabase, and why W7S is better for GitHub-native apps.",
+    sections: [
+      {
+        heading: "The best competitor depends on what you want to replace",
+        paragraphs: [
+          "If you want a similar frontend platform, Netlify and Cloudflare Pages are the obvious comparisons. If you want to run containers or long-lived services, Render, Railway, and Fly.io are closer. If you only need static hosting, GitHub Pages may be enough.",
+          "W7S competes from a different angle: it is the Vercel competitor for teams that want GitHub, not a hosted dashboard, to be the deployment control plane.",
+          "That makes W7S better when the repository should own the deploy workflow, runtime contract, app URL, branch environments, backend bindings, and path to self-hosting."
+        ]
+      },
+      {
+        heading: "Why W7S is better for GitHub-native apps",
+        paragraphs: [
+          "Vercel makes deployment feel easy by centralizing more behavior in Vercel. W7S makes deployment easier to audit by keeping the behavior in GitHub Actions and the repository.",
+          "W7S deploys static assets and native backend routes together, declares storage and background work in `w7s.json`, derives URLs from GitHub owner and repository, and supports branch environments without making a product dashboard the source of truth.",
+          "Vercel still fits teams that want Vercel-specific framework behavior, dashboard workflows, and integrations. W7S is the sharper choice when the repo should stay in charge."
+        ]
+      }
+    ]
+  },
+  {
     slug: "replacing-heroku-render-railway-and-fly-with-w7s",
     title: "Replacing Heroku, Render, Railway, and Fly.io With W7S",
     category: "Platforms",
