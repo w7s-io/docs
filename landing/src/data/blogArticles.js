@@ -312,6 +312,101 @@ export const blogArticles = [
     ]
   },
   {
+    slug: "replacing-nats-with-w7s-components",
+    title: "Replacing NATS With W7S Components",
+    category: "Architecture",
+    readingTime: "9 min",
+    summary:
+      "Map NATS-style request/reply, queues, pub/sub, durable streams, schedules, and workflows onto W7S-native components before adding a broker.",
+    sections: [
+      {
+        heading: "Start with the behavior, not the broker",
+        paragraphs: [
+          "NATS is a strong general-purpose messaging system. It gives teams subjects, request/reply, publish/subscribe, queue groups, JetStream persistence, and a fast broker that can sit between many services.",
+          "W7S does not need to copy that model to support the same application patterns. In many W7S apps, adding NATS would introduce another control plane, another credential model, another operational surface, and another local development story.",
+          "The better default is to ask whether the same product behavior can be built from W7S components that already exist: RPC, queues, schedules, workflows, DB, KV, R2, and `w7s-local`."
+        ]
+      },
+      {
+        heading: "Request reply maps to backend RPC",
+        paragraphs: [
+          "NATS request/reply is usually a service call: auth returns a session, billing returns entitlement state, or an internal API returns a computed result. That maps cleanly to W7S Backend RPC.",
+          "A caller uses `env.W7S_RPC.fetch(\"https://w7s.internal/api/v1/rpc/<owner>/<repo>/<path>\")` with its W7S deployment token. W7S resolves the caller from the token, loads the target deployment in the same environment, applies authorization rules, and dispatches directly to the target backend.",
+          "That keeps the call HTTP-shaped and easy to debug while preserving repository identity, branch environment isolation, same-owner defaults, cross-owner allowlists, and usage accounting."
+        ],
+        code: `const response = await env.W7S_RPC.fetch(
+  "https://w7s.internal/api/v1/rpc/acme/auth/session",
+  {
+    headers: {
+      authorization: \`Bearer \${env.W7S_RPC_TOKEN}\`,
+      cookie: request.headers.get("cookie") ?? ""
+    }
+  }
+);`
+      },
+      {
+        heading: "Work queues map to W7S queues",
+        paragraphs: [
+          "When a caller does not need an immediate result, W7S queues are the direct replacement. The target repository declares the queue in `w7s.json`, and producers send JSON messages through the `W7S_QUEUE` binding.",
+          "The consumer receives batches at its configured backend path. That keeps ownership clear: the app that owns the work also owns the consumer route, retry behavior, and data model.",
+          "This covers upload processing, emails, cache refreshes, low-priority sync jobs, and other asynchronous tasks without adding a separate queue vendor or broker."
+        ],
+        code: `{
+  "queues": [
+    {
+      "name": "jobs",
+      "consumer": "/_w7s/queues/jobs"
+    }
+  ]
+}`
+      },
+      {
+        heading: "Pub sub becomes explicit event fanout",
+        paragraphs: [
+          "NATS subjects are useful because publishers do not need to know every subscriber. The tradeoff is that the broker becomes the place where important topology lives.",
+          "A W7S-native version can be explicit: an event router receives a publish request, authenticates the publisher, looks up deployment subscription metadata, and forwards one message to each subscriber queue.",
+          "That is less dynamic than wildcard subjects, but easier to review from a repository. The repo declares what it emits and what it consumes, and W7S can reuse queue provisioning, queue delivery, environment scoping, and usage accounting."
+        ],
+        code: `{
+  "events": {
+    "publish": ["orders.created"],
+    "subscribe": [
+      {
+        "subject": "orders.created",
+        "queue": "orders"
+      }
+    ]
+  },
+  "queues": ["orders"]
+}`
+      },
+      {
+        heading: "JetStream-like needs split into storage plus delivery",
+        paragraphs: [
+          "JetStream persistence is not one feature. It can mean audit history, replay, large payload storage, latest state by key, or durable delivery after writing an event.",
+          "In W7S, use Serverless DB for indexed event records, KV for latest small state, R2 for large payloads, queues for async delivery, and workflows for repair or replay operations that need durable steps.",
+          "That does not reproduce every JetStream consumer policy. It gives the application explicit storage, query, replay, and delivery behavior using resources already scoped per repository and environment."
+        ]
+      },
+      {
+        heading: "Schedules and workflows cover orchestration",
+        paragraphs: [
+          "If a subject is mostly fed by cron jobs, W7S schedules are the cleaner primitive. The app declares the cron expression and the backend path that should receive it.",
+          "If the use case is actually orchestration rather than messaging, W7S workflows fit better than raw pub/sub. They provide a named process boundary, durable dispatch, retries, and status around multi-step work.",
+          "That distinction keeps the platform honest: queues move work, schedules create time-based work, workflows coordinate long-running work, and RPC handles synchronous service calls."
+        ]
+      },
+      {
+        heading: "Where NATS still wins",
+        paragraphs: [
+          "W7S should not pretend to replace every NATS capability today. Dynamic wildcard subscriptions, high-volume many-subscriber streams, long-lived service subscriptions, broker clustering, leaf-node topologies, and mature JetStream consumer semantics are real NATS strengths.",
+          "If an app depends on those features directly, NATS can still be the right external service. W7S compatibility would then mean making it possible to connect to that service explicitly, not quietly turning W7S into a broker platform.",
+          "For the default W7S path, the recommendation is different: use RPC, queues, schedules, workflows, DB, KV, R2, and `w7s-local` first. Add a small W7S Events layer only when explicit event fanout becomes a repeated need."
+        ]
+      }
+    ]
+  },
+  {
     slug: "internal-backend-rpc-without-public-service-urls",
     title: "Internal Backend RPC Without Public Service URLs",
     category: "Backends",
