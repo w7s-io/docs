@@ -37,11 +37,12 @@ const parseFrontMatter = (source) => {
   };
 };
 
-const routePathFor = (frontMatter, file) => {
+const routePathFor = (frontMatter, file, routeBasePath = "") => {
   const slug = String(frontMatter.slug || "").trim();
-  if (slug) return slug.startsWith("/") ? slug : `/${slug}/`;
+  const prefix = routeBasePath ? `/${routeBasePath.replace(/^\/|\/$/g, "")}` : "";
+  if (slug) return slug.startsWith("/") ? slug : `${prefix}/${slug}/`;
   const id = String(frontMatter.id || path.basename(file, path.extname(file))).trim();
-  return `/${id}/`;
+  return `${prefix}/${id}/`;
 };
 
 const titleFor = (frontMatter, body, file) => {
@@ -71,9 +72,8 @@ const plainText = (body) =>
     .replace(/\s+/g, " ")
     .trim();
 
-const buildSearchIndex = async (siteDir) => {
-  const docsDir = path.join(siteDir, "docs");
-  const files = await listDocs(docsDir);
+const buildDocuments = async (directory, routeBasePath = "") => {
+  const files = await listDocs(directory);
   return Promise.all(
     files.map(async (file) => {
       const source = await fs.readFile(file, "utf8");
@@ -81,12 +81,18 @@ const buildSearchIndex = async (siteDir) => {
       return {
         title: titleFor(frontMatter, body, file),
         description: String(frontMatter.description || "").trim(),
-        path: routePathFor(frontMatter, file),
+        path: routePathFor(frontMatter, file, routeBasePath),
         headings: collectHeadings(body),
         content: plainText(body).slice(0, 8000)
       };
     })
   );
+};
+
+const buildSearchIndex = async (siteDir) => {
+  const docs = await buildDocuments(path.join(siteDir, "docs"));
+  const blog = await buildDocuments(path.join(siteDir, "blog"), "blog");
+  return [...docs, ...blog];
 };
 
 export default function localSearchPlugin(context) {

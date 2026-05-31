@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from "react";
-import { ArrowLeft, ArrowRight, BookOpen, Clock, Database, FileBox, Server } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight, BookOpen, Clock, Database, FileBox, Search, Server, X } from "lucide-react";
 import Header from "../components/landing/Header";
 import Footer from "../components/landing/Footer";
 import { blogArticles, featuredBlogArticles, getBlogArticle } from "../data/blogArticles";
@@ -11,6 +11,47 @@ const categoryIcon = {
 };
 
 const articleUrl = (article) => `/blog/${article.slug}/`;
+
+const tokenizeSearch = (value) =>
+  value
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((term) => term.length >= 2);
+
+const searchTextFor = (article) =>
+  [
+    article.title,
+    article.summary,
+    article.category,
+    article.slug,
+    ...article.sections.flatMap((section) => [
+      section.heading,
+      ...section.paragraphs,
+      section.code || "",
+    ]),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+const scoreArticle = (article, terms) => {
+  if (terms.length === 0) return 1;
+
+  const title = article.title.toLowerCase();
+  const summary = article.summary.toLowerCase();
+  const category = article.category.toLowerCase();
+  const body = searchTextFor(article);
+
+  let score = 0;
+  for (const term of terms) {
+    if (!body.includes(term)) return 0;
+    if (title.includes(term)) score += 40;
+    if (category.includes(term)) score += 20;
+    if (summary.includes(term)) score += 12;
+    score += 2;
+  }
+
+  return score;
+};
 
 const javascriptKeywords = new Set([
   "async",
@@ -251,6 +292,9 @@ function ArticleCard({ article, featured = false }) {
 }
 
 function BlogIndex() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const featured = useMemo(
     () => featuredBlogArticles
       .map((slug) => getBlogArticle(slug))
@@ -260,6 +304,36 @@ function BlogIndex() {
   const remaining = blogArticles.filter(
     (article) => !featuredBlogArticles.includes(article.slug)
   );
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(blogArticles.map((article) => article.category))).sort()],
+    []
+  );
+  const filteredArticles = useMemo(() => {
+    const terms = tokenizeSearch(searchQuery);
+
+    return blogArticles
+      .map((article, index) => ({
+        article,
+        index,
+        score: scoreArticle(article, terms),
+      }))
+      .filter(({ article, score }) => (
+        score > 0 &&
+        (selectedCategory === "All" || article.category === selectedCategory)
+      ))
+      .sort((a, b) => (
+        terms.length > 0
+          ? b.score - a.score || a.index - b.index
+          : a.index - b.index
+      ))
+      .map(({ article }) => article);
+  }, [searchQuery, selectedCategory]);
+  const isFiltering = searchQuery.trim().length > 0 || selectedCategory !== "All";
+  const libraryArticles = isFiltering ? filteredArticles : remaining;
+  const clearSearch = () => {
+    setSearchQuery("");
+    setSelectedCategory("All");
+  };
 
   useEffect(() => {
     document.title = "W7S Blog - GitHub-native cloud alternatives";
@@ -291,15 +365,81 @@ function BlogIndex() {
 
         <section className="border-t border-white/10 bg-[#08080a] py-16 sm:py-20">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-            <div className="mb-8">
-              <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600">Library</div>
-              <h2 className="mt-2 font-display text-4xl leading-none text-white">Cloud alternatives and migration notes</h2>
+            <div className="mb-8 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+              <div className="max-w-3xl">
+                <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600">Library</div>
+                <h2 className="mt-2 font-display text-4xl leading-none text-white">Cloud alternatives and migration notes</h2>
+              </div>
+              <div className="w-full xl:max-w-xl">
+                <label className="group flex min-h-12 items-center gap-3 border border-white/10 bg-black/30 px-4 text-zinc-400 focus-within:border-amber-400/50 focus-within:text-amber-300">
+                  <Search className="h-4 w-4 shrink-0" strokeWidth={1.7} />
+                  <span className="sr-only">Search blog articles</span>
+                  <input
+                    className="min-w-0 flex-1 bg-transparent py-3 text-sm text-white outline-none placeholder:text-zinc-600"
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="Search blog articles"
+                  />
+                  {isFiltering && (
+                    <button
+                      type="button"
+                      aria-label="Clear blog search"
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-zinc-500 hover:text-amber-300"
+                      onClick={clearSearch}
+                    >
+                      <X className="h-4 w-4" strokeWidth={1.8} />
+                    </button>
+                  )}
+                </label>
+              </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {remaining.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
-              ))}
+
+            <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter blog articles by category">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    aria-pressed={selectedCategory === category}
+                    className={`border px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors ${
+                      selectedCategory === category
+                        ? "border-amber-400 bg-amber-400 text-black"
+                        : "border-white/10 bg-white/[0.025] text-zinc-500 hover:border-amber-400/40 hover:text-amber-300"
+                    }`}
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-600">
+                {libraryArticles.length} {libraryArticles.length === 1 ? "article" : "articles"}
+              </div>
             </div>
+
+            {libraryArticles.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {libraryArticles.map((article) => (
+                  <ArticleCard key={article.slug} article={article} />
+                ))}
+              </div>
+            ) : (
+              <div className="border border-white/10 bg-black/30 px-6 py-12 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center border border-white/10 text-zinc-500">
+                  <Search className="h-5 w-5" strokeWidth={1.7} />
+                </div>
+                <h3 className="mt-5 font-display text-3xl leading-none text-white">No articles found</h3>
+                <button
+                  type="button"
+                  className="mt-6 inline-flex items-center gap-2 bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-black hover:bg-amber-300"
+                  onClick={clearSearch}
+                >
+                  <X className="h-4 w-4" strokeWidth={2} />
+                  Clear search
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </main>
