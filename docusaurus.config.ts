@@ -65,7 +65,12 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/w7s-io/docs/tree/main/',
         },
-        blog: false,
+        blog: {
+          path: 'blog',
+          routeBasePath: 'blog',
+          showReadingTime: true,
+          editUrl: 'https://github.com/w7s-io/docs/tree/main/',
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -108,6 +113,11 @@ const config: Config = {
         },
         {
           type: 'search',
+          position: 'right',
+        },
+        {
+          to: '/blog/',
+          label: 'Blog',
           position: 'right',
         },
         {
