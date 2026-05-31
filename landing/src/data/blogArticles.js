@@ -3,22 +3,24 @@ export const blogArticles = [
     slug: "w7s-vs-vercel-github-native-deploys-without-a-dashboard",
     title: "W7S vs Vercel: GitHub-Native Deploys Without a Dashboard",
     category: "Alternatives",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "A practical look at using GitHub Actions as the deployment control plane instead of routing every project through a hosted dashboard.",
+      "A practical comparison of Vercel's dashboard-led workflow and W7S's GitHub-native deploy path, where the repository stays in charge.",
     sections: [
       {
         heading: "The difference is where control lives",
         paragraphs: [
-          "Vercel is built around a polished hosted workflow. W7S starts from a different premise: the repository and its GitHub Actions workflow should be enough to ship the app. The deploy token is the GitHub token, the archive comes from CI, and the public URL is derived from the GitHub owner and repository.",
-          "That shape works well for teams that already treat GitHub as the source of truth. You can review the deployment workflow like any other code change, keep build steps in the same repo, and avoid teaching contributors a separate product dashboard before they can ship."
+          "Vercel is built around a polished hosted workflow: connect a project, let the platform watch the repo, and manage the rest from a product dashboard. That can feel effortless, especially when a team wants conventional previews and a familiar UI for every project.",
+          "W7S starts from a different premise. The repository and its GitHub Actions workflow should be enough to ship the app. The deploy token is the GitHub token, the archive comes from CI, and the public URL is derived from the GitHub owner and repository.",
+          "That changes the daily rhythm. A deployment is no longer a thing hidden behind project settings; it is a workflow file someone can review, copy, test, and change in the same pull request as the app."
         ]
       },
       {
         heading: "What you trade",
         paragraphs: [
           "The tradeoff is intentional. W7S does not try to copy every hosted platform workflow. It focuses on direct deploys, repo-scoped environments, backend bindings, usage accounting, and self-hostability.",
-          "If your team wants a visual project dashboard with managed previews and commercial integrations, Vercel may still fit. If you want deploy behavior that is explicit, auditable, and portable, W7S is designed for that path."
+          "If your team wants a visual project dashboard with managed previews and commercial integrations, Vercel may still fit. If you want deploy behavior that is explicit, auditable, and portable, W7S is designed for that path.",
+          "The interesting part is not that one model is universally better. It is that teams now have a real choice between outsourcing the deployment surface and keeping more of that surface in code."
         ]
       }
     ]
@@ -27,14 +29,15 @@ export const blogArticles = [
     slug: "w7s-vs-netlify-static-sites-backends-storage-one-repo",
     title: "W7S vs Netlify: Static Sites, Backends, and Storage From One Repo",
     category: "Alternatives",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "How W7S combines static frontends, native backends, and storage declarations inside a GitHub-first deployment model.",
+      "How W7S keeps static sites, backend handlers, and storage declarations together as projects grow beyond a simple frontend.",
     sections: [
       {
         heading: "Beyond static hosting",
         paragraphs: [
-          "Static hosting is only one part of most modern apps. W7S can publish static assets and a JavaScript or TypeScript backend from the same repository archive. A React frontend can live beside a native backend route, with W7S deciding the static-or-backend routing at runtime.",
+          "Netlify helped make static deploys feel simple: push a frontend, get a URL, attach the extras when the site needs more. That workflow is still attractive, but many projects stop being purely static long before they become large applications.",
+          "W7S can publish static assets and a JavaScript or TypeScript backend from the same repository archive. A React frontend can live beside a native backend route, with W7S deciding the static-or-backend routing at runtime.",
           "That matters when a project starts as a landing page and grows into an app. You do not need to move the project to a different platform just because it needs a small API, queue, schedule, or persistent database binding."
         ]
       },
@@ -42,7 +45,8 @@ export const blogArticles = [
         heading: "Storage follows the repository",
         paragraphs: [
           "W7S storage bindings are declared in `w7s.json`. The platform provisions resources per repository and environment, then reuses them on later deploys. That keeps state close to the deployment contract instead of scattered across console setup steps.",
-          "The result is a repo that explains how it runs: build commands in GitHub Actions, runtime shape in `w7s.json`, and public URLs derived from the GitHub owner and repository."
+          "The result is a repo that explains how it runs: build commands in GitHub Actions, runtime shape in `w7s.json`, and public URLs derived from the GitHub owner and repository.",
+          "For small teams, that clarity is the practical win. The person reviewing a feature branch can see not only the UI change, but also the storage, route, and background-work shape that will ship with it."
         ]
       }
     ]
@@ -53,12 +57,13 @@ export const blogArticles = [
     category: "Alternatives",
     readingTime: "6 min",
     summary:
-      "Cloudflare provides powerful primitives. W7S packages a GitHub-native app platform on top of those primitives.",
+      "Cloudflare offers powerful building blocks. W7S turns a focused set of those blocks into a GitHub-native app platform.",
     sections: [
       {
         heading: "Primitives are not the same as a product workflow",
         paragraphs: [
-          "Cloudflare gives developers a deep set of building blocks: Workers, object storage, key-value storage, databases, queues, workflows, and more. Those primitives are powerful, but teams still need conventions for deploys, URLs, resource naming, and access control.",
+          "Cloudflare gives developers a deep set of building blocks: Workers, object storage, key-value storage, databases, queues, workflows, and more. Those primitives are powerful, and they are one reason W7S can stay small.",
+          "The hard part is not always the primitive itself. Teams still need conventions for deploys, URLs, resource naming, branch isolation, access control, and the question every new repo asks: what exactly do I do first?",
           "W7S takes a platform stance on those conventions. A GitHub repository deploys to predictable URLs, branch environments get isolated resource names, and app bindings are generated from a small manifest."
         ]
       },
@@ -66,7 +71,8 @@ export const blogArticles = [
         heading: "Why the wrapper matters",
         paragraphs: [
           "The wrapper saves repeated setup decisions. Instead of wiring every project directly to raw platform resources, W7S creates a repo-level deployment contract that can be reused across static sites, fullstack apps, and native backends.",
-          "You still benefit from edge-native infrastructure, but the workflow feels more like shipping an app than assembling infrastructure every time."
+          "You still benefit from edge-native infrastructure, but the workflow feels more like shipping an app than assembling infrastructure every time.",
+          "That distinction becomes visible after the third or fourth small project. The best platform is often the one that removes the most choices you did not actually want to make again."
         ]
       }
     ]
@@ -75,14 +81,15 @@ export const blogArticles = [
     slug: "w7s-vs-railway-and-fly-edge-native-apps-without-managing-services",
     title: "W7S vs Railway and Fly.io: Edge-Native Apps Without Managing Services",
     category: "Alternatives",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "When the app fits an edge-native model, W7S can remove service management from the deployment path.",
+      "When an app fits an edge-native model, W7S can remove the service-management layer that heavier runtimes require.",
     sections: [
       {
         heading: "Different runtime assumptions",
         paragraphs: [
-          "Railway and Fly.io are strong choices when you need process-oriented services, custom containers, or long-running server workloads. W7S is aimed at apps that fit edge-native request handlers, static assets, and managed bindings.",
+          "Railway and Fly.io are strong choices when you need process-oriented services, custom containers, private networking, or long-running server workloads. They are built for apps that need a real process with real operational knobs.",
+          "W7S is aimed at a different shape: apps that fit edge-native request handlers, static assets, and managed bindings. You do not choose a region, size a process, or keep a tiny service warm just in case traffic arrives.",
           "For those apps, not having to operate always-on services is the point. You publish a repository archive, W7S wires the runtime and bindings, and requests route through the shared control plane."
         ]
       },
@@ -90,6 +97,7 @@ export const blogArticles = [
         heading: "Less infrastructure to babysit",
         paragraphs: [
           "The cost and operational savings come from avoiding idle services, manually managed sidecars, and separate deployment targets for every small app. Static assets, native backends, key-value data, object files, queues, schedules, and workflows can share one deployment model.",
+          "That smaller surface changes what a solo builder or lean team can ship. A side project with a form, upload path, queue, and admin endpoint should not automatically become a miniature infrastructure program.",
           "If you need full containers, use the platform that matches that need. If you need GitHub-native edge apps, W7S keeps the surface smaller."
         ]
       }
@@ -101,20 +109,22 @@ export const blogArticles = [
     category: "Self-hosting",
     readingTime: "6 min",
     summary:
-      "W7S can run as your own deployment cloud on a Cloudflare account and domain you control.",
+      "W7S can run as your own deployment cloud on a Cloudflare account and domain you control, without changing the app workflow.",
     sections: [
       {
         heading: "Hosted is not the only mode",
         paragraphs: [
           "The hosted `w7s.cloud` service is one W7S deployment. The same core can be deployed under your own domain, using your own Cloudflare account resources and GitHub repositories.",
-          "That gives teams a path that many app platforms do not offer: start with the hosted service, then run the same style of cloud yourself when ownership, compliance, cost controls, or internal conventions require it."
+          "That gives teams a path many app platforms do not offer: start with the hosted service, then run the same style of cloud yourself when ownership, compliance, cost controls, or internal conventions require it.",
+          "The important word is same. Self-hosting should not mean relearning the entire deploy story or rewriting every project around a private fork of your infrastructure."
         ]
       },
       {
         heading: "What stays the same",
         paragraphs: [
           "The deployment shape stays familiar. App repositories still use the W7S GitHub Action, but point it at your self-hosted deploy endpoint. URLs are derived from the GitHub owner and repo under your domain, and branch environments use the same prefix model.",
-          "Self-hosting is not about abandoning the workflow. It is about owning the control plane that receives those deploys."
+          "Self-hosting is not about abandoning the workflow. It is about owning the control plane that receives those deploys.",
+          "That can be the difference between renting convenience forever and keeping a practical escape hatch. You still move quickly, but the long-term operating model belongs to you."
         ]
       }
     ]
@@ -123,14 +133,15 @@ export const blogArticles = [
     slug: "why-deploy-from-github-actions-instead-of-a-cloud-dashboard",
     title: "Why Deploy From GitHub Actions Instead of a Cloud Dashboard?",
     category: "Workflow",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "A deploy workflow in code is easier to review, copy, audit, and reproduce than dashboard state.",
+      "A deploy workflow in code is easier to review, copy, audit, and reproduce than settings spread across a platform dashboard.",
     sections: [
       {
         heading: "CI is already the release boundary",
         paragraphs: [
-          "Most teams already trust GitHub Actions to install dependencies, run tests, build apps, and gate merges. Letting that same workflow package and deploy the app keeps release behavior in one place.",
+          "Most teams already trust GitHub Actions to install dependencies, run tests, build apps, and gate merges. The release boundary is already there; deploy is often the only part that gets pushed into a separate product UI.",
+          "Letting that same workflow package and deploy the app keeps release behavior in one place. The person reviewing the workflow can see the build command, the environment, the deploy target, and the permissions in plain text.",
           "W7S leans into that. The action sends the repository, branch, commit, and archive to the deploy API. The cloud verifies the token against GitHub and publishes the app."
         ]
       },
@@ -138,7 +149,8 @@ export const blogArticles = [
         heading: "Fewer invisible settings",
         paragraphs: [
           "Dashboard configuration tends to become hidden infrastructure. A new teammate can read the repository but still miss the settings that decide production behavior.",
-          "A GitHub Actions deploy file makes the install command, build command, deploy directory, secrets, variables, and environment override visible in code review."
+          "A GitHub Actions deploy file makes the install command, build command, deploy directory, secrets, variables, and environment override visible in code review.",
+          "That does not make dashboards bad. It makes code a better home for release rules that must survive team changes, audits, forks, and the next person trying to understand why production works the way it does."
         ]
       }
     ]
@@ -147,22 +159,24 @@ export const blogArticles = [
     slug: "migrating-a-static-site-from-vercel-or-netlify-to-w7s",
     title: "Migrating a Static Site From Vercel or Netlify to W7S",
     category: "Migration",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "Most static site migrations to W7S come down to building in GitHub Actions and deploying the output directory.",
+      "Most static site migrations to W7S are a matter of moving the build into GitHub Actions and deploying the output directory.",
     sections: [
       {
         heading: "Keep the build where it is easiest to see",
         paragraphs: [
-          "A static site usually needs checkout, install, build, and deploy. With W7S, those steps live in `.github/workflows/deploy.yml`. If the build output is `dist/`, `build/`, or another supported directory, W7S can publish it as static assets.",
-          "If the deployable output lives in a generated directory, pass `working-directory` to the action. The action packages that directory and sends it to W7S."
+          "A static site migration sounds bigger than it usually is. The core path is still checkout, install, build, and publish the generated files. W7S simply asks that those steps be visible in `.github/workflows/deploy.yml`.",
+          "If the build output is `dist/`, `build/`, or another supported directory, W7S can publish it as static assets. If the deployable output lives in a generated directory, pass `working-directory` to the action.",
+          "That keeps the migration honest. You are not recreating a project in a dashboard; you are writing down the exact build steps the site already depends on."
         ]
       },
       {
         heading: "URLs and domains",
         paragraphs: [
           "The default URL is based on the GitHub owner and repo, such as `https://owner.w7s.cloud/repo/`. A same-name repository can serve the owner root. Custom domains are declared with a `CNAME` file and verified through DNS ownership rules.",
-          "That gives static sites a path from first deploy to custom domain without creating a separate app record by hand."
+          "That gives static sites a path from first deploy to custom domain without creating a separate app record by hand.",
+          "The best migration test is boring: push a branch, confirm the generated URL, compare the rendered site, then move the domain only after the workflow is repeatable."
         ]
       }
     ]
@@ -173,11 +187,12 @@ export const blogArticles = [
     category: "Migration",
     readingTime: "6 min",
     summary:
-      "Move the frontend, backend handler, and app bindings into a repository shape W7S can detect.",
+      "Move the frontend, backend handler, and platform bindings into a repository shape W7S can detect and reproduce.",
     sections: [
       {
         heading: "Split the runtime shape clearly",
         paragraphs: [
+          "A fullstack migration works best when the repository tells a clear story. Which directory produces static assets? Which file handles requests? Which resources does the app expect at runtime?",
           "W7S detects static frontend output and native backend entrypoints from the uploaded archive. A common shape is `frontend/dist/` for assets and `backend/index.ts` or `worker/index.ts` for the request handler.",
           "Framework SSR outputs can also work when they produce a server entrypoint and client assets. The important part is that CI builds the project before the W7S action packages it."
         ]
@@ -186,7 +201,8 @@ export const blogArticles = [
         heading: "Move platform needs into bindings",
         paragraphs: [
           "Instead of hardcoding provider credentials, declare W7S-managed bindings in `w7s.json`. Key-value stores, files, serverless databases, queues, schedules, workflows, and internal service bindings can all become part of the deploy contract.",
-          "That makes the app easier to promote across production and branch environments because resource names and tokens are generated for each environment."
+          "That makes the app easier to promote across production and branch environments because resource names and tokens are generated for each environment.",
+          "A good migration leaves less mystery behind than it found. The repo should explain the app, the runtime, and the resources well enough that the next deploy is routine."
         ]
       }
     ]
@@ -195,14 +211,15 @@ export const blogArticles = [
     slug: "replacing-serverless-functions-with-w7s-native-backends",
     title: "Replacing Serverless Functions With W7S Native Backends",
     category: "Backends",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "A W7S native backend is a request handler deployed with the same archive as your app.",
+      "A W7S native backend gives small apps one request handler, injected bindings, and routing logic that stays in code.",
     sections: [
       {
         heading: "One backend entrypoint",
         paragraphs: [
-          "Serverless function platforms often encourage many small files mapped to routes. W7S uses a native backend entrypoint that receives requests and decides routing in code.",
+          "Serverless function platforms often encourage many small files mapped to routes. That can be convenient at first, then awkward once shared middleware, auth, logging, and error handling start appearing in every function.",
+          "W7S uses a native backend entrypoint that receives requests and decides routing in code. The result feels closer to a small service than a folder of disconnected handlers.",
           "That model works well with lightweight routers such as Hono, but it does not require a specific framework. The default export just needs to handle `fetch(request, env, ctx)`."
         ]
       },
@@ -210,7 +227,8 @@ export const blogArticles = [
         heading: "Bindings are injected",
         paragraphs: [
           "Native backends receive environment bindings from W7S. That can include key-value stores, file buckets, databases, AI, internal RPC, queues, and workflow services.",
-          "The backend remains normal JavaScript or TypeScript, but the deployment environment is produced by the platform instead of manually assembled in a dashboard."
+          "The backend remains normal JavaScript or TypeScript, but the deployment environment is produced by the platform instead of manually assembled in a dashboard.",
+          "The payoff is composability. A route can read from KV, enqueue a job, write a file, and call another backend without each capability turning into a separate credential-management exercise."
         ]
       }
     ]
@@ -219,13 +237,14 @@ export const blogArticles = [
     slug: "deploy-preview-alternatives-branch-environments-in-w7s",
     title: "Deploy Preview Alternatives: Branch Environments in W7S",
     category: "Workflow",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "W7S uses branch-derived environments for non-production deploys, with separate URLs and resources.",
+      "W7S uses branch-derived environments for non-production deploys, giving previews their own URLs and managed resources.",
     sections: [
       {
         heading: "Branches become environments",
         paragraphs: [
+          "Preview deploys are useful because they make review concrete. Instead of imagining what a branch will do, reviewers can open a URL and test the actual build.",
           "`main` and `master` deploy to `production`. Other branches are normalized into DNS-safe environment names and served from branch-prefixed hosts like `https://feature-login--owner.w7s.cloud/repo/`.",
           "That gives reviewers a predictable URL without needing a platform dashboard to discover it."
         ]
@@ -234,7 +253,8 @@ export const blogArticles = [
         heading: "Isolation is the real feature",
         paragraphs: [
           "Branch environments are not only about URLs. Managed resources are scoped by repository and environment, so a feature branch can test storage, queues, schedules, or workflow changes without sharing the production binding names.",
-          "For teams that review infrastructure changes in branches, that model keeps preview behavior close to the code."
+          "For teams that review infrastructure changes in branches, that model keeps preview behavior close to the code.",
+          "The result is a more honest preview. You are not just looking at a static screenshot of the frontend; you are exercising the app with the resources and runtime shape that branch asked for."
         ]
       }
     ]
@@ -243,13 +263,14 @@ export const blogArticles = [
     slug: "custom-domains-without-a-platform-account-system",
     title: "Custom Domains Without a Platform Account System",
     category: "Domains",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "W7S custom domains are declared from the repository and verified through DNS ownership rules.",
+      "W7S custom domains are declared from the repository and verified through DNS ownership rules instead of dashboard-only settings.",
     sections: [
       {
         heading: "The repository declares the hostname",
         paragraphs: [
+          "Custom domains are often treated as platform account settings, which makes them easy to forget and hard to review. The app depends on the hostname, but the hostname lives somewhere outside the app.",
           "A W7S app can include a `CNAME` file with one or more hostnames. During deploy, W7S reads that file and stores custom-domain mappings for the deployment.",
           "This keeps the custom domain close to the application source instead of turning it into a hidden dashboard setting."
         ]
@@ -258,7 +279,8 @@ export const blogArticles = [
         heading: "DNS still decides ownership",
         paragraphs: [
           "The domain owner points DNS at the W7S cloud. For stronger ownership control, an `_w7s.<zone>` TXT record can allow a whole GitHub owner or an exact `owner/repo`.",
-          "That model is simple enough for small apps but still gives domain owners a way to prevent unwanted claims."
+          "That model is simple enough for small apps but still gives domain owners a way to prevent unwanted claims.",
+          "It also keeps the trust boundary where it belongs. The repository can request a hostname, but DNS decides whether that request should be honored."
         ]
       }
     ]
@@ -267,13 +289,14 @@ export const blogArticles = [
     slug: "serverless-database-without-adding-a-separate-provider",
     title: "Serverless Database Without Adding a Separate Provider",
     category: "Storage",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "For app-local relational data, a W7S-managed database can remove another account, token, and provisioning step.",
+      "For app-local relational data, a W7S-managed database can remove another account, token, and provisioning workflow.",
     sections: [
       {
         heading: "Declare the database with the app",
         paragraphs: [
+          "A small app should not need a procurement story before it can store a row. For notes, settings, tenant metadata, product catalogs, and internal tools, the database often belongs to the app more than it belongs to a separate platform account.",
           "A W7S native backend can declare a database binding in `w7s.json`. W7S provisions the resource per repository and environment, then injects it into the backend as `env.DB` or the binding name you choose.",
           "Migrations can live in the repository, so schema changes travel with the app deploy rather than through a separate manual operation."
         ]
@@ -282,7 +305,8 @@ export const blogArticles = [
         heading: "Good default for app-local data",
         paragraphs: [
           "This is a strong fit for notes, settings, tenant metadata, product catalogs, internal dashboards, and prototypes that need SQL without running a separate database service.",
-          "If the app needs an existing external Postgres service, W7S can bind that too. The point is to make the simple path simple before adding more infrastructure."
+          "If the app needs an existing external Postgres service, W7S can bind that too. The point is to make the simple path simple before adding more infrastructure.",
+          "That default matters because database decisions tend to harden quickly. Starting with a repo-scoped binding gives the app a real persistence layer without turning the first deploy into a platform migration."
         ]
       }
     ]
@@ -293,11 +317,12 @@ export const blogArticles = [
     category: "Backends",
     readingTime: "6 min",
     summary:
-      "Background work can be declared with the app instead of assembled from separate services.",
+      "Background work can be declared with the app instead of assembled from separate queue, scheduler, and worker services.",
     sections: [
       {
         heading: "Queues and schedules belong near code",
         paragraphs: [
+          "The first background job in a product is usually modest: send an email later, process an upload, refresh a cache, or sweep old records. The infrastructure people reach for can be much larger than the job itself.",
           "A backend that needs background work can declare queues and schedules in `w7s.json`. W7S provisions the platform resources and routes delivery back to the declaring backend.",
           "That avoids the common small-app pattern of adding a separate queue vendor, a scheduler account, and a worker service before the product has enough traffic to justify the complexity."
         ]
@@ -306,7 +331,8 @@ export const blogArticles = [
         heading: "Workflows for durable steps",
         paragraphs: [
           "When a job needs retries or durable status, W7S workflows give the backend a platform-managed runner while keeping the app-facing API simple.",
-          "The deployment stays GitHub-native: the same repo describes the HTTP routes, background consumers, and workflow entrypoints."
+          "The deployment stays GitHub-native: the same repo describes the HTTP routes, background consumers, and workflow entrypoints.",
+          "This keeps background work from becoming a separate universe. The app code, deploy workflow, and operational shape stay close enough that a reviewer can understand the whole path."
         ]
       }
     ]
@@ -1011,13 +1037,14 @@ export const blogArticles = [
     slug: "internal-backend-rpc-without-public-service-urls",
     title: "Internal Backend RPC Without Public Service URLs",
     category: "Backends",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "W7S backends can call each other through internal bindings instead of public HTTP endpoints.",
+      "W7S backends can call each other through internal bindings, avoiding public URLs for private service traffic.",
     sections: [
       {
         heading: "Service calls do not need to leave the platform",
         paragraphs: [
+          "Once an app becomes a few backends instead of one, teams often create public HTTP endpoints for service-to-service calls because that is the easiest thing to route. It works, but it also turns private behavior into something that must be protected from the public internet.",
           "Native backends receive a `W7S_RPC` service binding and a deployment token. Calls through that binding stay inside the W7S control plane and identify the caller repository and environment.",
           "This keeps internal service communication separate from public URLs and avoids exposing private routes just because one backend needs to call another."
         ]
@@ -1026,7 +1053,8 @@ export const blogArticles = [
         heading: "Environment-aware by default",
         paragraphs: [
           "A feature branch backend calling another service looks for the target in the same branch environment. Production callers use production targets.",
-          "That behavior makes multi-service testing less surprising because branch deploys do not accidentally call production services unless you explicitly design that bridge."
+          "That behavior makes multi-service testing less surprising because branch deploys do not accidentally call production services unless you explicitly design that bridge.",
+          "The practical benefit is confidence. A branch can test a coordinated change across services without pretending production is the only shared environment that exists."
         ]
       }
     ]
@@ -1035,13 +1063,14 @@ export const blogArticles = [
     slug: "usage-accounting-for-small-apps-before-billing-gets-complicated",
     title: "Usage Accounting for Small Apps Before Billing Gets Complicated",
     category: "Operations",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "W7S exposes per-app usage rollups and warnings before usage surprises become billing surprises.",
+      "W7S exposes per-app usage rollups and GitHub-native warnings before usage surprises become billing surprises.",
     sections: [
       {
         heading: "Measure the app, not just the platform",
         paragraphs: [
+          "Usage problems rarely arrive as one dramatic spike. They usually start as a cache that misses too often, a branch that keeps running jobs, or a small app quietly becoming important.",
           "W7S records usage per repository and environment. Deploys, runtime requests, static asset operations, storage activity, queues, schedules, workflows, and logs can be tracked in the same rollup.",
           "That gives small teams a practical view of which app is consuming shared infrastructure without building their own metering system."
         ]
@@ -1050,7 +1079,8 @@ export const blogArticles = [
         heading: "Warnings belong in GitHub",
         paragraphs: [
           "The W7S deploy action can read usage after a deploy and open or update a GitHub issue when an app is near or over limits. A scheduled workflow can run the same check without redeploying.",
-          "That keeps cost and quota feedback in the same place teams already review work."
+          "That keeps cost and quota feedback in the same place teams already review work.",
+          "It also makes usage a product conversation instead of a surprise bill conversation. The team can see which repository needs attention while the context is still fresh."
         ]
       }
     ]
@@ -1059,13 +1089,14 @@ export const blogArticles = [
     slug: "open-source-deployment-clouds-what-you-own-with-w7s",
     title: "Open Source Deployment Clouds: What You Own With W7S",
     category: "Self-hosting",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "An open deployment platform changes the relationship between hosted convenience and long-term control.",
+      "An open deployment platform changes the relationship between hosted convenience, operational ownership, and long-term control.",
     sections: [
       {
         heading: "The deploy contract is portable",
         paragraphs: [
+          "A hosted platform can be productive and still make the exit path unclear. The code may be yours, but the deploy contract can live in a place that is hard to copy, inspect, or run yourself.",
           "A W7S app deploys from GitHub Actions to a deploy endpoint. That endpoint can be the hosted service or your own self-hosted W7S core.",
           "Because the workflow is code and the app manifest lives in the repo, you can understand and move the deployment contract more easily than a dashboard-only setup."
         ]
@@ -1074,7 +1105,8 @@ export const blogArticles = [
         heading: "Ownership is not only source code",
         paragraphs: [
           "Owning the application code is useful. Owning the deployment path, resource conventions, and URL rules is better.",
-          "W7S gives teams a route toward that ownership without giving up the productivity of a hosted deployment flow."
+          "W7S gives teams a route toward that ownership without giving up the productivity of a hosted deployment flow.",
+          "That is the stronger promise of an open deployment cloud: not that you must operate everything yourself today, but that the operating model remains visible when you need it."
         ]
       }
     ]
@@ -1083,13 +1115,14 @@ export const blogArticles = [
     slug: "building-a-personal-cloud-for-github-repositories",
     title: "Building a Personal Cloud for GitHub Repositories",
     category: "Self-hosting",
-    readingTime: "4 min",
+    readingTime: "5 min",
     summary:
-      "A personal W7S cloud can turn GitHub repositories into deployable apps under your own domain.",
+      "A personal W7S cloud can turn GitHub repositories into deployable apps under your own domain, without turning every project into infrastructure work.",
     sections: [
       {
         heading: "Repos become apps",
         paragraphs: [
+          "A personal cloud sounds grand, but the useful version is simple: push a repository and get a working app under a domain you control. The less ceremony around that loop, the more experiments you actually ship.",
           "With W7S, a repository can become an app with a small workflow file. The default URL maps the GitHub owner and repository to a domain you control.",
           "That is useful for personal projects, demos, client prototypes, internal tools, and experiments that should be easy to ship without becoming permanent infrastructure chores."
         ]
@@ -1098,7 +1131,8 @@ export const blogArticles = [
         heading: "Start small, keep a path forward",
         paragraphs: [
           "A personal cloud does not need to start with every enterprise feature. It needs predictable deploys, static assets, backend handlers, custom domains, and enough storage primitives to build real things.",
-          "W7S is designed to keep that baseline simple while still allowing richer backend features when the app grows."
+          "W7S is designed to keep that baseline simple while still allowing richer backend features when the app grows.",
+          "The appeal is cumulative. Every new repository can reuse the same deploy pattern, so small projects stop dying at the point where setup becomes more work than the idea."
         ]
       }
     ]
@@ -1107,14 +1141,15 @@ export const blogArticles = [
     slug: "from-git-push-to-public-url-how-w7s-deploys-apps",
     title: "From Git Push to Public URL: How W7S Deploys Apps",
     category: "Workflow",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "The W7S deploy flow is a short path from GitHub Actions archive to predictable public URL.",
+      "The W7S deploy flow is a short, auditable path from GitHub Actions archive to predictable public URL.",
     sections: [
       {
         heading: "The deploy request",
         paragraphs: [
-          "The official action builds your project, packages the deployable directory, and posts it to the W7S deploy API with repository, branch, and commit headers.",
+          "A W7S deploy begins in the place most teams already trust: GitHub Actions. The workflow checks out the code, runs the build, and hands the deployable output to the official action.",
+          "The official action packages the deployable directory and posts it to the W7S deploy API with repository, branch, and commit headers.",
           "W7S verifies the bearer token against GitHub repo access. If the token can read the repository, it can deploy that repository."
         ]
       },
@@ -1122,7 +1157,8 @@ export const blogArticles = [
         heading: "Publishing targets",
         paragraphs: [
           "The deploy API inspects the archive for static assets and native backend entrypoints. Static files are published to object storage. Backends are uploaded to the runtime with generated bindings.",
-          "The final response includes deployment metadata and the URL derived from the repository and environment."
+          "The final response includes deployment metadata and the URL derived from the repository and environment.",
+          "That short loop is the point. A push becomes an archive, the archive becomes a runtime shape, and the runtime shape becomes a URL people can open."
         ]
       }
     ]
@@ -1131,14 +1167,15 @@ export const blogArticles = [
     slug: "what-you-lose-and-gain-moving-away-from-hosted-app-platforms",
     title: "What You Lose and Gain Moving Away From Hosted App Platforms",
     category: "Strategy",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "Leaving a hosted app platform is not automatically better. The decision depends on what you want to own.",
+      "Leaving a hosted app platform is not automatically better. The decision depends on what your team wants to own.",
     sections: [
       {
         heading: "What you may lose",
         paragraphs: [
-          "Hosted platforms often provide dashboards, marketplace integrations, visual team management, and a familiar commercial support path. Those features are valuable for some teams.",
+          "Hosted platforms are popular for real reasons. They smooth over messy edges, package common workflows, and give teams a shared place to see what is running.",
+          "They often provide dashboards, marketplace integrations, visual team management, and a familiar commercial support path. Those features are valuable for some teams.",
           "A smaller open platform may ask you to keep more of the workflow in GitHub and understand more of the underlying deployment model."
         ]
       },
@@ -1146,6 +1183,7 @@ export const blogArticles = [
         heading: "What you gain",
         paragraphs: [
           "You gain explicit workflows, fewer hidden settings, self-hosting options, and deployment conventions that are not locked behind one vendor account.",
+          "You also gain leverage. When deploy behavior is described in a repo, it becomes easier to audit, duplicate, modify, and eventually move.",
           "The practical question is whether your app needs the platform dashboard, or whether it needs a clear deploy contract that can live with the code."
         ]
       }
@@ -1155,22 +1193,24 @@ export const blogArticles = [
     slug: "choosing-between-hosted-w7s-and-self-hosted-w7s",
     title: "Choosing Between Hosted W7S and Self-Hosted W7S",
     category: "Self-hosting",
-    readingTime: "5 min",
+    readingTime: "6 min",
     summary:
-      "Use the hosted service for speed, or self-host when ownership and policy matter more.",
+      "Use the hosted service for speed, or self-host when ownership, domain policy, and operational boundaries matter more.",
     sections: [
       {
         heading: "Hosted first",
         paragraphs: [
           "The hosted W7S service is the fastest way to try the deployment model. You add the action, push from GitHub, and get a public URL without creating a W7S account or configuring a cloud account.",
-          "That is the right path for examples, demos, prototypes, small tools, and teams evaluating whether the workflow fits."
+          "That is the right path for examples, demos, prototypes, small tools, and teams evaluating whether the workflow fits.",
+          "It also keeps the first test honest. Before you decide to operate the control plane yourself, you can find out whether GitHub-native deploys actually match how your team wants to ship."
         ]
       },
       {
         heading: "Self-host when you need control",
         paragraphs: [
           "Self-hosting makes sense when you need your own domain conventions, Cloudflare account, resource policies, or operational boundaries.",
-          "The key benefit is continuity: apps still deploy from GitHub Actions using the same style of workflow, but the deploy endpoint and platform resources belong to you."
+          "The key benefit is continuity: apps still deploy from GitHub Actions using the same style of workflow, but the deploy endpoint and platform resources belong to you.",
+          "That means the decision does not have to be permanent on day one. Start hosted when speed matters, move self-hosted when the ownership case is concrete."
         ]
       }
     ]
@@ -1179,14 +1219,15 @@ export const blogArticles = [
     slug: "using-w7s-files-storage-instead-of-s3",
     title: "Using W7S Files Storage Instead of S3",
     category: "Storage",
-    readingTime: "7 min",
+    readingTime: "8 min",
     summary:
-      "Use the W7S `FILES` binding for app-owned uploads and generated objects without S3 credentials or bucket setup.",
+      "Use the W7S `FILES` binding for app-owned uploads and generated objects without S3 credentials, bucket setup, or cross-environment confusion.",
     sections: [
       {
         heading: "Why use Files storage",
         paragraphs: [
-          "Many apps reach for S3 because they need a place to put uploaded files, generated exports, thumbnails, backups, or other binary objects. The hidden cost is setup: bucket creation, credentials, IAM policy, environment variables, CORS, lifecycle rules, and provider-specific SDK wiring.",
+          "Object storage is one of those features that looks small until the setup starts. A profile-photo upload or generated CSV export can quickly pull in bucket creation, credentials, IAM policy, CORS, lifecycle rules, and provider-specific SDK wiring.",
+          "Many apps reach for S3 because they need a place to put uploaded files, generated exports, thumbnails, backups, or other binary objects. The hidden cost is not only the bill; it is the separate control plane every developer now has to understand.",
           "W7S Files storage is designed for the app-local version of that problem. Declare an R2-style file binding in `w7s.json`, and W7S provisions a per-repository, per-environment bucket. Your backend receives the binding as `env.FILES` or whichever binding name you choose."
         ],
         code: `{
@@ -1199,7 +1240,8 @@ export const blogArticles = [
         heading: "Basic usage",
         paragraphs: [
           "A native backend can write, read, and delete objects through the binding. The app does not need an S3 access key in GitHub secrets, and branch environments do not share the same bucket by accident.",
-          "Use stable object keys that match your product model. For example, prefix user files by tenant or account id, and store metadata in your database when you need search, ownership checks, or expiration behavior."
+          "Use stable object keys that match your product model. For example, prefix user files by tenant or account id, and store metadata in your database when you need search, ownership checks, or expiration behavior.",
+          "That separation keeps the file body in object storage and the product meaning in your app. The upload path stays simple, while your database remains the source of truth for who owns what."
         ],
         code: `export default {
   async fetch(request, env) {
@@ -1234,7 +1276,8 @@ export const blogArticles = [
         heading: "Advantages over a separate S3 setup",
         paragraphs: [
           "The biggest advantage is removing another control plane. You do not create a separate object storage account path for every small app, and you do not have to rotate long-lived object-store credentials through GitHub secrets.",
-          "The second advantage is environment isolation. Production and branch deploys receive separate managed resources, so a test upload path does not accidentally write into production. For small teams, that isolation is often worth more than any single storage feature."
+          "The second advantage is environment isolation. Production and branch deploys receive separate managed resources, so a test upload path does not accidentally write into production. For small teams, that isolation is often worth more than any single storage feature.",
+          "S3 is still the right answer for many large or deeply integrated storage systems. W7S Files is for the large number of apps that simply need durable objects close to the app, with fewer steps between the idea and the working upload."
         ]
       }
     ]
@@ -1245,12 +1288,13 @@ export const blogArticles = [
     category: "Storage",
     readingTime: "8 min",
     summary:
-      "Use the W7S `CACHE` binding for low-latency app data, cached API responses, feature state, and read-heavy lookups without running a Redis server.",
+      "Use the W7S `CACHE` binding for low-latency app data, cached API responses, feature state, and read-heavy lookups without running Redis.",
     sections: [
       {
         heading: "Redis is powerful, but many apps need less",
         paragraphs: [
-          "Redis is a full in-memory data system. It is excellent when you need advanced data structures, atomic counters, streams, pub/sub, or very specific latency guarantees. Many web apps, however, use Redis as a cache for API responses, session-adjacent state, computed JSON, or small read-heavy records.",
+          "Redis is a full in-memory data system. It is excellent when you need advanced data structures, atomic counters, streams, pub/sub, or very specific latency guarantees.",
+          "Many web apps, however, use Redis as a cache for API responses, session-adjacent state, computed JSON, or small read-heavy records. They are not really choosing Redis because they need the whole toolbox; they are choosing it because they need something fast.",
           "For that simpler class of work, W7S KV can replace a full Redis database. You declare a key-value binding, W7S provisions it for the repository and environment, and the backend reads and writes through `env.CACHE`."
         ],
         code: `{
@@ -1263,14 +1307,16 @@ export const blogArticles = [
         heading: "What costs it can remove",
         paragraphs: [
           "A Redis setup often means an always-on server or managed cluster, minimum monthly capacity, private networking decisions, memory sizing, backups, upgrades, and alerts. Even a small cache becomes another service with idle cost and operational drag.",
-          "KV changes the default. You pay attention to reads, writes, and stored bytes instead of running a warm database process all month. For small and bursty services, that can remove a surprising amount of fixed cost."
+          "KV changes the default. You pay attention to reads, writes, and stored bytes instead of running a warm database process all month. For small and bursty services, that can remove a surprising amount of fixed cost.",
+          "It also changes the mental model. The cache is no longer a separate pet service; it is an app binding declared in the same repo as the code using it."
         ]
       },
       {
         heading: "Use KV for snappy services",
         paragraphs: [
           "The best pattern is read-through caching. Try KV first. If the value is present, return it immediately. If it is missing, compute or fetch the source data, write it with an expiration, and return the fresh value.",
-          "Keep values compact, use predictable key prefixes, cache public or permission-checked data separately, and choose expirations that match how stale the data can safely be. Do not use KV as a lock manager or a transactional database; use it to avoid repeated slow work."
+          "Keep values compact, use predictable key prefixes, cache public or permission-checked data separately, and choose expirations that match how stale the data can safely be. Do not use KV as a lock manager or a transactional database; use it to avoid repeated slow work.",
+          "That boundary is what makes the pattern durable. KV should make common reads feel instant while your source systems remain responsible for correctness."
         ],
         code: `const json = (body, init) =>
   new Response(JSON.stringify(body), {

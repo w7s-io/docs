@@ -32,6 +32,18 @@ This article maps the common Vercel and Netlify product shape onto W7S component
 | Build settings | GitHub Actions workflow | Install, build, and package steps in code review |
 | Platform dashboard | GitHub workflow plus W7S deploy API | Auditable deploy path |
 
+## Source-Backed Comparison Points
+
+Vercel and Netlify are credible references precisely because they made frontend deployment easy. Vercel documents [deployments](https://vercel.com/docs/deployments) and [functions](https://vercel.com/docs/functions) as core pieces of its app platform, while Netlify documents [deploy previews](https://docs.netlify.com/deploy/deploy-types/deploy-previews/), [functions](https://docs.netlify.com/build/functions/overview/), and product features such as [forms](https://docs.netlify.com/manage/forms/setup/). Those are strong defaults for teams that want the platform dashboard to own the release and app experience.
+
+W7S makes a different architectural bet: the repository should own the release path. [Deploying from GitHub](/docs/deploy-from-github/) makes GitHub Actions the control plane, so build commands, output directories, permissions, and deploy triggers are reviewable with the code. That does not remove the need for a platform; it moves the platform interaction into an auditable workflow.
+
+The backend story is also different. Vercel and Netlify expose functions as platform features attached to a project. W7S uses [project layouts](/docs/project-layouts/) to package static output and a native backend entrypoint from the same repository, then uses [URLs and routing](/docs/urls-and-routing/) to derive public routes from the GitHub owner and repo. For apps that want one backend handler with normal routing, that can be simpler than scattering logic across function files and dashboard settings.
+
+W7S becomes especially attractive once the app needs state. [Storage bindings](/docs/storage-bindings/), [backend queues](/docs/backend-queues/), and [backend workflows](/docs/backend-workflows/) let the repository describe databases, caches, files, async work, and durable processes in the same deployment contract. That is the part that makes W7S a real alternative rather than just another static host.
+
+The pricing and operations argument should be grounded in workflow, not slogans. W7S [usage accounting](/docs/usage-accounting/) focuses on app-level consumption and keeps the control plane self-hostable for teams that need ownership. Vercel and Netlify remain good choices when their integrated dashboards and ecosystem are the goal; W7S is better when the team wants GitHub-native deploys, portable conventions, and fewer hidden platform settings.
+
 W7S is not a drop-in clone of either platform. It is a narrower app platform for repositories that can build in GitHub Actions and run as static assets plus JavaScript/TypeScript native backends.
 
 ## Deployment Moves Back to GitHub Actions

@@ -36,6 +36,18 @@ W7S is built on a focused subset of these primitives. It does not replace Cloudf
 | Durable Objects config | Stateful Objects | Per-key durable state |
 | Dashboard state | GitHub workflow plus manifest | Reviewable deploy surface |
 
+## Source-Backed Comparison Points
+
+Cloudflare's own docs describe [Workers](https://developers.cloudflare.com/workers/) as a serverless execution environment and [Pages](https://developers.cloudflare.com/pages/) as a full-stack deployment product. That is a strong foundation, but it still leaves each team deciding how repositories, deploy credentials, preview branches, routes, and runtime configuration should be standardized across many apps.
+
+The same Cloudflare documentation set also exposes the breadth of the primitive layer: [KV](https://developers.cloudflare.com/kv/) for key-value data, [R2](https://developers.cloudflare.com/r2/) for object storage, [D1](https://developers.cloudflare.com/d1/) for serverless SQL, [Queues](https://developers.cloudflare.com/queues/) for async delivery, and [Workflows](https://developers.cloudflare.com/workflows/) for durable multi-step work. W7S is compelling precisely because it narrows that surface into a repository contract instead of asking every small app to assemble the same menu again.
+
+In W7S, [deploying from GitHub](/docs/deploy-from-github/) is the primary release path. The CI workflow builds the app, the W7S action sends the archive, and the platform derives identity from the GitHub owner, repository, branch, and commit. That makes the deploy mechanism reviewable in code, which is harder to preserve when the important project state is split between Wrangler config, dashboard settings, manually named resources, and external automation.
+
+The runtime shape is also documented in W7S instead of being left to convention. [Project layouts](/docs/project-layouts/) explain how static output and native backend entrypoints are discovered, while [storage bindings](/docs/storage-bindings/) define how databases, key-value stores, and file buckets are declared. This is where W7S becomes more than a thin deploy wrapper: it gives small apps a standard way to ask for platform resources.
+
+The practical conclusion is not that teams should avoid Cloudflare. W7S depends on the same class of edge primitives and can also be [self-hosted](/docs/self-host/) when a team wants its own domain and Cloudflare account boundary. The difference is product shape: raw Cloudflare gives maximum primitive control, while W7S gives a repeatable app-platform workflow for repositories that should not need bespoke infrastructure design.
+
 The goal is not less Cloudflare. The goal is less repeated platform glue.
 
 ## W7S Is a Product Workflow on Top of Primitives

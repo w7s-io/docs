@@ -31,6 +31,18 @@ For that shape, W7S can replace a process platform with a repository-native app 
 | Platform environment vars | W7S vars and secrets | GitHub-provided runtime values |
 | Dashboard deploy | GitHub Actions deploy | Auditable release flow |
 
+## Source-Backed Comparison Points
+
+The platforms in this comparison are strong because they run process-oriented applications well. Heroku documents [dynos](https://devcenter.heroku.com/articles/dynos) and [Procfile process types](https://devcenter.heroku.com/articles/procfile); Render documents [web services](https://render.com/docs/web-services) and [background workers](https://render.com/docs/background-workers); Railway documents projects, services, environments, and deployments in its [platform docs](https://docs.railway.com/platform); and Fly.io exposes low-level control through [Fly Machines](https://fly.io/docs/machines/). Those are useful models when the app needs a real process, container, machine, or worker lifecycle.
+
+W7S competes in a narrower and more specific lane. If the app is static assets plus a JavaScript or TypeScript backend handler, [project layouts](/docs/project-layouts/) and [deploys from GitHub](/docs/deploy-from-github/) can replace the service-definition step. The repository builds in CI, W7S receives the archive, and the runtime dispatches HTTP requests without the team choosing a process size, start command, port, machine count, or idle service behavior.
+
+Background work is where the distinction becomes operationally important. Process platforms commonly model async work as another long-running worker process. W7S models the common small-app version as [backend queues](/docs/backend-queues/), [backend schedules](/docs/backend-schedules/), and [backend workflows](/docs/backend-workflows/). That removes a class of service management when the work can be delivered to a route or coordinated as a durable platform workflow.
+
+Storage follows the same pattern. Instead of treating a database, cache, and file bucket as separate add-ons or external services for every app, W7S lets the repository declare resources with [storage bindings](/docs/storage-bindings/) and [serverless database](/docs/serverless-database/). For small products, that is often the difference between shipping an app and operating a set of support services around the app.
+
+The honest boundary is containers. If a project needs arbitrary processes, custom images, private networking details, long-lived daemons, or VM-level controls, Heroku, Render, Railway, or Fly.io may remain the better fit. If the process is mostly incidental and the app naturally fits request handlers, static assets, managed bindings, queues, schedules, and workflows, W7S is a real replacement with less operational surface.
+
 This is not a claim that W7S replaces containers. It replaces a common subset of process-platform usage where the process was mostly a packaging detail.
 
 ## Processes Become Request Handlers

@@ -34,6 +34,18 @@ W7S is for the moment after "static is enough" stops being true:
 | No storage | DB, KV, FS bindings | App data without another platform |
 | No background jobs | Queues, schedules, workflows | Async and timed work |
 
+## Source-Backed Comparison Points
+
+GitHub's own [Pages documentation](https://docs.github.com/en/pages) makes the core boundary clear: GitHub Pages is a publishing feature for websites from a repository. That is ideal for docs, project pages, and static marketing sites. It is also the reason the article should not frame Pages as weak; it is excellent at the static publishing job it was designed to do.
+
+The W7S argument starts when the repository needs more than static files. W7S keeps the release path in GitHub through [deploys from GitHub Actions](/docs/deploy-from-github/), but it can package a static frontend and native backend from the same repo. The [project layout docs](/docs/project-layouts/) are the important source here because they show how W7S detects frontend output and backend entrypoints without asking the team to split the app into separate platforms.
+
+Custom domains are another practical difference. GitHub documents [custom domain configuration for Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site), and W7S uses a similar repository-visible idea with `CNAME` plus DNS authorization in its [custom domains docs](/docs/custom-domains/). The W7S advantage is not merely owning a hostname; it is keeping that hostname attached to an app that can also have backend routes and bindings.
+
+Once a site needs forms, search, uploads, status endpoints, or per-branch test data, W7S provides the next layer directly. [URLs and routing](/docs/urls-and-routing/) describe the owner/repository URL model, while [storage bindings](/docs/storage-bindings/) explain how databases, key-value stores, and file buckets can be declared by the app. That gives a growing Pages-style site a path to become a small application without creating a separate backend product.
+
+The right conclusion is measured. Stay on GitHub Pages when static publishing is the whole requirement. Move to W7S when the repository should keep its GitHub-native release flow but also needs API routes, persistent state, queues, schedules, workflows, or branch-isolated runtime resources.
+
 This does not make GitHub Pages obsolete. It keeps Pages in its lane and gives growing projects a next step without leaving GitHub as the release surface.
 
 ## Static Deploys Stay Simple

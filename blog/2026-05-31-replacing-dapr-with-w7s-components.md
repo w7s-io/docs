@@ -34,6 +34,18 @@ For many W7S apps, yes.
 | Resiliency policies | Queues, workflows, and explicit retry helpers | Retry where the product needs it |
 | Local runtime | `w7s-local` plus service doubles | Testing repo boundaries without a sidecar mesh |
 
+## Source-Backed Comparison Points
+
+Dapr's current docs describe it as a runtime built around a [sidecar architecture and distributed application building blocks](https://docs.dapr.io/concepts/overview/). That is the right abstraction when a team needs one API surface across different languages, hosts, and infrastructure providers. It is also a meaningful operational choice: every app now depends on the sidecar lifecycle, component configuration, ports, and runtime behavior.
+
+The most common Dapr building blocks map to product behaviors W7S already tries to provide inside the platform. Dapr [service invocation](https://docs.dapr.io/developing-applications/building-blocks/service-invocation/) becomes [Backend RPC](/docs/backend-rpc/) when W7S apps call each other by repository identity. Dapr [publish and subscribe](https://docs.dapr.io/developing-applications/building-blocks/pubsub/) becomes explicit event fanout over [backend queues](/docs/backend-queues/) when the subscribers are known W7S apps.
+
+State is another place where W7S narrows the problem. Dapr has a broad [state management](https://docs.dapr.io/developing-applications/building-blocks/state-management/) abstraction because it must support many backing stores. W7S instead lets a repository declare app-local data through [storage bindings](/docs/storage-bindings/), [serverless database](/docs/serverless-database/), key-value storage, or file storage, with environment-specific provisioning handled by the platform.
+
+Dapr [actors](https://docs.dapr.io/developing-applications/building-blocks/actors/) and [workflow](https://docs.dapr.io/developing-applications/building-blocks/workflow/) are powerful when the application needs virtual actor semantics or durable orchestration across services. W7S should not pretend to be a drop-in implementation of those APIs. The W7S-native path is [stateful objects](/docs/backend-durable-objects/) for per-key state and [backend workflows](/docs/backend-workflows/) for retryable business processes that fit the platform runtime.
+
+That framing keeps the article honest. Dapr remains the better fit for heterogeneous fleets that require its exact API, sidecar model, or portability promise. W7S is the better fit when the app already lives in W7S and the team wants fewer moving parts: repository identity, internal RPC, queues, storage, workflows, local testing with `w7s-local`, and usage accounting from one deployment surface.
+
 This is not a claim that W7S is a drop-in Dapr runtime. Dapr is built to be portable across hosts, languages, and infrastructure providers. W7S is built to make a GitHub repository deploy as an app with first-class platform bindings.
 
 If the app needs Dapr's exact API surface, Dapr can remain an external dependency. If the app is using Dapr mostly to avoid rebuilding common distributed app plumbing, W7S can usually provide a smaller default.

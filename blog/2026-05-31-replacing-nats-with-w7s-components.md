@@ -28,6 +28,18 @@ For many cases, the answer is yes.
 | Long-running orchestration | Workflows | Retryable multi-step processes |
 | Local broker for development | `w7s-local` plus HTTP fallbacks | Testing routing and repo boundaries |
 
+## Source-Backed Comparison Points
+
+NATS is a messaging system with a clear and useful model. Its docs cover [publish-subscribe](https://docs.nats.io/nats-concepts/core-nats/pubsub), [request-reply](https://docs.nats.io/nats-concepts/core-nats/reqreply), [queue groups](https://docs.nats.io/nats-concepts/core-nats/queue), and [JetStream](https://docs.nats.io/nats-concepts/jetstream) for persistence and streaming. That is exactly the right tool when the application needs broker semantics across many services, languages, or hosts.
+
+The W7S replacement is intentionally narrower. Synchronous service-to-service calls map to [Backend RPC](/docs/backend-rpc/), where the caller and target are repository-scoped W7S apps. Async work maps to [backend queues](/docs/backend-queues/), where a known consumer handles delivered jobs. Time-based production of work maps to [backend schedules](/docs/backend-schedules/), and longer business processes map to [backend workflows](/docs/backend-workflows/).
+
+Durability needs a more careful answer than "use queues." If the app needs replayable event history, audit trails, or large payload storage, W7S should pair queue dispatch with [serverless database](/docs/serverless-database/) records or [storage bindings](/docs/storage-bindings/) for object/file payloads. That is not the same as JetStream, but it does cover many product-level event flows where the event log is part of the application's own data model.
+
+Local testing is also different. NATS gives developers a local broker. W7S gives developers `w7s-local` and HTTP-shaped service boundaries, which are documented in the W7S local examples and work well when the goal is to test RPC and route behavior between repos. That keeps development close to the deployed W7S shape instead of introducing a second messaging topology just for tests.
+
+The honest recommendation is to avoid adding NATS until the app truly needs broker semantics. If the product needs subjects, wildcard subscriptions, queue groups, and streaming as core architecture, use NATS. If it needs W7S apps to call each other, queue jobs, fan out known events, schedule work, and persist product state, W7S components can replace the broker with less platform surface.
+
 This is not a claim that W7S is a drop-in NATS server. It is a design choice: use W7S-native components for app-level messaging, and reserve NATS for projects that truly need broker semantics.
 
 ## Request/Reply Becomes Backend RPC

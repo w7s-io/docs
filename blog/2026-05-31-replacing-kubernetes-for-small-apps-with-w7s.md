@@ -42,6 +42,18 @@ W7S is designed for that smaller shape.
 | CronJob | W7S schedule | Time-based work |
 | Operator | W7S managed binding provisioning | Common platform resources |
 
+## Source-Backed Comparison Points
+
+Kubernetes is broad infrastructure, not a small-app deployment product. Its official docs cover [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), [Services](https://kubernetes.io/docs/concepts/services-networking/service/), [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), [Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/), and [CronJobs](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) as separate concepts. That separation is powerful for platform teams, but it is a lot of surface area for a small app that only needs a frontend, a few routes, and some managed state.
+
+W7S replaces that cluster vocabulary with a repository vocabulary. [Deploying from GitHub](/docs/deploy-from-github/) defines the release mechanism, [project layouts](/docs/project-layouts/) define what the archive can contain, and [URLs and routing](/docs/urls-and-routing/) define how owner/repo identity becomes a public app URL. The result is less flexible than Kubernetes, but much easier to standardize for apps that fit the model.
+
+For background work, Kubernetes has Jobs and CronJobs. W7S maps the small-app cases to [backend queues](/docs/backend-queues/), [backend schedules](/docs/backend-schedules/), and [backend workflows](/docs/backend-workflows/). That means the team can express async work as app behavior instead of maintaining queue workers, job manifests, schedule objects, service accounts, and cluster-level operational policy for every small service.
+
+State also moves from infrastructure objects to app bindings. Kubernetes can support persistent volumes, operators, and external managed databases, but that usually creates more platform decisions. W7S [storage bindings](/docs/storage-bindings/) and [serverless database](/docs/serverless-database/) give a smaller default: declare the app resource, let the platform provision it per repository and environment, and keep the runtime access path in code.
+
+The replacement claim should stay precise. W7S is not trying to run arbitrary containers, service meshes, custom controllers, or cluster-native workloads. It is a replacement for the recurring case where Kubernetes is being used as a deploy substrate for an app that could be static assets, request handlers, managed bindings, queues, schedules, and workflows.
+
 This is not "Kubernetes is bad." It is "do not turn every small app into a cluster-management problem."
 
 ## Containers Become Native Backends

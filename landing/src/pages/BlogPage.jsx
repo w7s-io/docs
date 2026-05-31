@@ -12,6 +12,161 @@ const categoryIcon = {
 
 const articleUrl = (article) => `/blog/${article.slug}/`;
 
+const source = (label, url) => ({ label, url });
+
+const articleSources = {
+  "w7s-vs-vercel-github-native-deploys-without-a-dashboard": [
+    source("Vercel deployments", "https://vercel.com/docs/deployments"),
+    source("Vercel pricing", "https://vercel.com/pricing"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("URLs and routing", "/docs/urls-and-routing/"),
+  ],
+  "w7s-vs-netlify-static-sites-backends-storage-one-repo": [
+    source("Netlify deploy previews", "https://docs.netlify.com/deploy/deploy-types/deploy-previews/"),
+    source("Netlify functions", "https://docs.netlify.com/build/functions/overview/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  "w7s-vs-cloudflare-pages-deploy-platform-not-just-primitives": [
+    source("Cloudflare Pages", "https://developers.cloudflare.com/pages/"),
+    source("Cloudflare Workers", "https://developers.cloudflare.com/workers/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Self host W7S", "/docs/self-host/"),
+  ],
+  "w7s-vs-railway-and-fly-edge-native-apps-without-managing-services": [
+    source("Railway platform", "https://docs.railway.com/platform"),
+    source("Fly Machines", "https://fly.io/docs/machines/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Backend queues", "/docs/backend-queues/"),
+  ],
+  "why-deploy-from-github-actions-instead-of-a-cloud-dashboard": [
+    source("GitHub Actions", "https://docs.github.com/en/actions"),
+    source("GITHUB_TOKEN", "https://docs.github.com/en/actions/tutorials/authenticate-with-github_token"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+  ],
+  "replacing-nats-with-w7s-components": [
+    source("NATS pub/sub", "https://docs.nats.io/nats-concepts/core-nats/pubsub"),
+    source("NATS request/reply", "https://docs.nats.io/nats-concepts/core-nats/reqreply"),
+    source("Backend RPC", "/docs/backend-rpc/"),
+    source("Backend queues", "/docs/backend-queues/"),
+  ],
+  "replacing-dapr-with-w7s-components": [
+    source("Dapr overview", "https://docs.dapr.io/concepts/overview/"),
+    source("Dapr service invocation", "https://docs.dapr.io/developing-applications/building-blocks/service-invocation/"),
+    source("Backend RPC", "/docs/backend-rpc/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  "replacing-vercel-and-netlify-with-w7s": [
+    source("Vercel deployments", "https://vercel.com/docs/deployments"),
+    source("Netlify deploy previews", "https://docs.netlify.com/deploy/deploy-types/deploy-previews/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  "replacing-heroku-render-railway-and-fly-with-w7s": [
+    source("Heroku dynos", "https://devcenter.heroku.com/articles/dynos"),
+    source("Render web services", "https://render.com/docs/web-services"),
+    source("Railway platform", "https://docs.railway.com/platform"),
+    source("Fly Machines", "https://fly.io/docs/machines/"),
+  ],
+  "replacing-github-pages-with-w7s": [
+    source("GitHub Pages", "https://docs.github.com/en/pages"),
+    source("GitHub Pages custom domains", "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Custom domains", "/docs/custom-domains/"),
+  ],
+  "replacing-cloudflare-workers-with-w7s": [
+    source("Cloudflare Workers", "https://developers.cloudflare.com/workers/"),
+    source("Cloudflare Pages", "https://developers.cloudflare.com/pages/"),
+    source("Cloudflare KV", "https://developers.cloudflare.com/kv/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  "replacing-kubernetes-for-small-apps-with-w7s": [
+    source("Kubernetes Deployments", "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"),
+    source("Kubernetes Services", "https://kubernetes.io/docs/concepts/services-networking/service/"),
+    source("Backend queues", "/docs/backend-queues/"),
+    source("Backend workflows", "/docs/backend-workflows/"),
+  ],
+  "using-w7s-files-storage-instead-of-s3": [
+    source("Amazon S3", "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+  ],
+  "using-w7s-kv-instead-of-redis-for-snappy-services": [
+    source("Redis docs", "https://redis.io/docs/latest/develop/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+  ],
+};
+
+const categorySources = {
+  Alternatives: [
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("URLs and routing", "/docs/urls-and-routing/"),
+  ],
+  Architecture: [
+    source("Backend RPC", "/docs/backend-rpc/"),
+    source("Backend queues", "/docs/backend-queues/"),
+    source("Backend workflows", "/docs/backend-workflows/"),
+  ],
+  Backends: [
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Backend RPC", "/docs/backend-rpc/"),
+    source("Backend queues", "/docs/backend-queues/"),
+  ],
+  Domains: [
+    source("Custom domains", "/docs/custom-domains/"),
+    source("URLs and routing", "/docs/urls-and-routing/"),
+    source("GitHub Pages custom domains", "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site"),
+  ],
+  Migration: [
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  Operations: [
+    source("Usage accounting", "/docs/usage-accounting/"),
+    source("W7S pricing", "/docs/pricing/"),
+  ],
+  Platforms: [
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+  ],
+  Pricing: [
+    source("W7S pricing", "/docs/pricing/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+    source("Vercel pricing", "https://vercel.com/pricing"),
+  ],
+  "Self-hosting": [
+    source("Self host W7S", "/docs/self-host/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Cloudflare Workers", "https://developers.cloudflare.com/workers/"),
+  ],
+  Storage: [
+    source("Storage bindings", "/docs/storage-bindings/"),
+    source("Serverless database", "/docs/serverless-database/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+  ],
+  Strategy: [
+    source("Self host W7S", "/docs/self-host/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+  ],
+  Workflow: [
+    source("GitHub Actions", "https://docs.github.com/en/actions"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("URLs and routing", "/docs/urls-and-routing/"),
+  ],
+};
+
+const fallbackSourcesFor = (article) => articleSources[article.slug] ?? categorySources[article.category] ?? [];
+
+const sourcesForSection = (article, section, index) => {
+  if (section.sources?.length > 0) return section.sources;
+  return index === article.sections.length - 1 ? fallbackSourcesFor(article) : [];
+};
+
 const tokenizeSearch = (value) =>
   value
     .toLowerCase()
@@ -24,6 +179,7 @@ const searchTextFor = (article) =>
     article.summary,
     article.category,
     article.slug,
+    ...fallbackSourcesFor(article).flatMap((source) => [source.label, source.url]),
     ...article.sections.flatMap((section) => [
       section.heading,
       ...section.paragraphs,
@@ -483,37 +639,41 @@ function ArticlePage({ article }) {
         <section className="border-t border-white/10 bg-[#050505] py-14 sm:py-16">
           <div className="max-w-[1040px] mx-auto px-6 lg:px-10">
             <div className="max-w-3xl space-y-12">
-              {article.sections.map((section) => (
-                <section key={section.heading}>
-                  <h2 className="font-display text-3xl leading-none text-white">{section.heading}</h2>
-                  <div className="mt-5 space-y-5 text-sm leading-8 text-zinc-300">
-                    {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </div>
-                  {section.code && (
-                    <CodeBlock code={section.code} />
-                  )}
-                  {section.sources?.length > 0 && (
-                    <div className="mt-6 border border-white/10 bg-white/[0.025] p-4">
-                      <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-600">Sources</div>
-                      <div className="flex flex-wrap gap-2">
-                        {section.sources.map((source) => (
-                          <a
-                            key={source.url}
-                            className="border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 hover:border-amber-400/40 hover:text-amber-300"
-                            href={source.url}
-                            rel="noreferrer"
-                            target={source.url.startsWith("/") ? undefined : "_blank"}
-                          >
-                            {source.label}
-                          </a>
-                        ))}
-                      </div>
+              {article.sections.map((section, index) => {
+                const sources = sourcesForSection(article, section, index);
+
+                return (
+                  <section key={section.heading}>
+                    <h2 className="font-display text-3xl leading-none text-white">{section.heading}</h2>
+                    <div className="mt-5 space-y-5 text-sm leading-8 text-zinc-300">
+                      {section.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
                     </div>
-                  )}
-                </section>
-              ))}
+                    {section.code && (
+                      <CodeBlock code={section.code} />
+                    )}
+                    {sources.length > 0 && (
+                      <div className="mt-6 border border-white/10 bg-white/[0.025] p-4">
+                        <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-600">Sources</div>
+                        <div className="flex flex-wrap gap-2">
+                          {sources.map((source) => (
+                            <a
+                              key={source.url}
+                              className="border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 hover:border-amber-400/40 hover:text-amber-300"
+                              href={source.url}
+                              rel="noreferrer"
+                              target={source.url.startsWith("/") ? undefined : "_blank"}
+                            >
+                              {source.label}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                );
+              })}
             </div>
 
             {related.length > 0 && (
