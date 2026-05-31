@@ -58,6 +58,13 @@ See [Backend RPC](./backend-rpc.md) for copy-pasteable examples showing:
 - a reusable RPC helper;
 - same-owner and cross-owner authorization.
 
+Local `w7s-local` RPC examples:
+
+- Target service: [`examples/w7s-local-rpc-time-service`](https://github.com/w7s-io/docs/tree/main/examples/w7s-local-rpc-time-service)
+- Client service: [`examples/w7s-local-rpc-client`](https://github.com/w7s-io/docs/tree/main/examples/w7s-local-rpc-client)
+
+These examples run two local W7S routers on different ports and let the client call the target through the target's local W7S URL. See [Local Development](./local-development.md#test-rpc-between-two-local-repos) for the terminal commands.
+
 ## Stateful Objects
 
 - GitHub: [w7s-io/example-durable-counter](https://github.com/w7s-io/example-durable-counter)

@@ -8,6 +8,7 @@ const sidebars: SidebarsConfig = {
     'recommendations',
     'pricing',
     'project-layouts',
+    'local-development',
     'storage-bindings',
     'serverless-database',
     'backend-durable-objects',

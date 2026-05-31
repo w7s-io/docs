@@ -11,6 +11,8 @@ Working example repositories:
 - [`w7s-io/example-rpc-datetime`](https://github.com/w7s-io/example-rpc-datetime): target backend that returns the current UTC datetime.
 - [`w7s-io/example-rpc-client`](https://github.com/w7s-io/example-rpc-client): public backend that calls the datetime service through RPC.
 
+For local two-repo testing before deploy, see [Local Development](./local-development.md#test-rpc-between-two-local-repos).
+
 ## Runtime bindings
 
 Every JavaScript/TypeScript native backend receives:

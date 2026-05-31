@@ -1,0 +1,13 @@
+{
+  "name": "w7s-local-rpc-time-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs --port 5178",
+    "local": "w7s-local --owner acme --repo rpc-time --port 8788 --command \"npm run dev\" --backend http://127.0.0.1:5178"
+  },
+  "devDependencies": {
+    "w7s-local": "^0.1.1"
+  }
+}

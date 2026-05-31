@@ -1,0 +1,13 @@
+{
+  "name": "w7s-local-rpc-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs --port 5179",
+    "local": "w7s-local --owner acme --repo rpc-client --port 8789 --command \"npm run dev\" --backend http://127.0.0.1:5179"
+  },
+  "devDependencies": {
+    "w7s-local": "^0.1.1"
+  }
+}
