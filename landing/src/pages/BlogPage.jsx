@@ -466,19 +466,21 @@ function tokenizeJavaScript(line) {
   return tokens.length > 0 ? tokens : "\u00A0";
 }
 
-function CodeBlock({ code }) {
+function CodeBlock({ code, codePath }) {
   const language = code.trimStart().startsWith("{") ? "json" : "javascript";
   const tokenize = language === "json" ? tokenizeJson : tokenizeJavaScript;
-  const label = language === "json" ? "JSON" : "JavaScript";
+  const label = codePath?.endsWith(".yml") || codePath?.endsWith(".yaml")
+    ? "YAML"
+    : language === "json"
+      ? "JSON"
+      : "Text";
 
   return (
     <div className="mt-6 overflow-hidden border border-white/10 bg-black">
       <div className="flex items-center justify-between border-b border-white/10 bg-[#0a0a0c] px-4 py-2.5">
-        <div className="flex items-center gap-2" aria-hidden="true">
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-        </div>
+        <span className="min-w-0 truncate font-mono text-[11px] text-zinc-300">
+          {codePath || "Snippet"}
+        </span>
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
           {label}
         </span>
@@ -788,7 +790,7 @@ function ArticlePage({ article }) {
                       ))}
                     </div>
                     {section.code && (
-                      <CodeBlock code={section.code} />
+                      <CodeBlock code={section.code} codePath={section.codePath} />
                     )}
                     {sources.length > 0 && (
                       <div className="mt-6 border border-white/10 bg-white/[0.025] p-4">

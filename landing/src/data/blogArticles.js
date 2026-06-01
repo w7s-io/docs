@@ -23,8 +23,8 @@ export const blogArticles = [
           "W7S fits after generation. Use the AI builder to create the site, put the result in GitHub, then create `.github/workflows/deploy.yml` in the repository. That path means a `.github` folder at the repo root, a `workflows` folder inside it, and a `deploy.yml` file inside `workflows`.",
           "Paste the W7S workflow into that file, commit it, and push to `main`. GitHub Actions reads files from `.github/workflows/` and runs this deploy automatically. The full beginner reference is [Deploy From GitHub](/docs/deploy-from-github/), with framework build steps in [Build before deploy](/docs/deploy-from-github/#build-before-deploy)."
         ],
-        code: `# .github/workflows/deploy.yml
-name: Deploy
+        codePath: ".github/workflows/deploy.yml",
+        code: `name: Deploy
 
 on:
   push:
@@ -67,6 +67,7 @@ jobs:
           "Then create DNS for that hostname with a CNAME pointing to w7w.cloud. W7S also recommends a TXT allowlist, such as _w7s.example.com with the value acme/bookkeeping-site, so only that GitHub owner or repo can claim the hostname later.",
           "The W7S docs cover the exact steps in [Deploy From GitHub](/docs/deploy-from-github/), [URLs And Routing](/docs/urls-and-routing/), [Custom Domains](/docs/custom-domains/), and [Project Layouts](/docs/project-layouts/). The same repo can also grow later with backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ],
+        codePath: "CNAME and DNS record",
         code: `CNAME
 www.example.com
 
@@ -194,6 +195,7 @@ Target: w7w.cloud`
           "Ask for a small site first: homepage, services, pricing, about, and contact. Simple files are easier to deploy and improve than a first draft that tries to become a full platform immediately.",
           "Before deployment, check the generated files and remove fake secrets, placeholder API keys, or anything the AI invented that should not be committed."
         ],
+        codePath: "AI prompt",
         code: `Create a clean five-page website for a local bookkeeping business.
 Pages: Home, Services, Pricing, About, Contact.
 Use plain HTML, CSS, and JavaScript.
@@ -258,8 +260,8 @@ Keep the files simple and easy to edit.`
           "The repo-first workflow is create with AI, export or copy the files, put them in GitHub, create `.github/workflows/deploy.yml`, deploy from GitHub Actions, and keep improving the repository.",
           "That file path is literal: create `.github` in the repository root, create `workflows` inside it, and create `deploy.yml` inside `workflows`. GitHub Actions reads that file and W7S deploys from it. Use [Deploy From GitHub](/docs/deploy-from-github/) for the complete setup."
         ],
-        code: `# .github/workflows/deploy.yml
-name: Deploy
+        codePath: ".github/workflows/deploy.yml",
+        code: `name: Deploy
 
 on:
   push:
@@ -381,6 +383,7 @@ jobs:
           "At that point, the project has a permanent home and a first checkpoint. That alone is already better than keeping the only copy in a downloads folder or an exported zip.",
           "The next step is adding a workflow file so GitHub Actions can deploy the repository."
         ],
+        codePath: "Repository folder structure",
         code: `.github/
   workflows/
     deploy.yml`
