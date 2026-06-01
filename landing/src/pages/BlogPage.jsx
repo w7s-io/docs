@@ -15,6 +15,41 @@ const articleUrl = (article) => `/blog/${article.slug}/`;
 const source = (label, url) => ({ label, url });
 
 const articleSources = {
+  "ai-website-builder-to-real-website": [
+    source("Lovable", "https://lovable.dev/"),
+    source("Bolt.new", "https://bolt.new/"),
+    source("Emergent", "https://emergent.sh/"),
+    source("W7S Build", "https://build.w7s.io/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+  ],
+  "best-ai-website-builder-own-the-code": [
+    source("Lovable", "https://lovable.dev/"),
+    source("Bolt.new", "https://bolt.new/"),
+    source("Cloudflare Build", "https://build.cloudflare.dev/"),
+    source("Replit Agent", "https://docs.replit.com/core-concepts/agent/"),
+    source("Claude Code", "https://www.anthropic.com/product/claude-code"),
+  ],
+  "free-ai-website-builder-vs-free-hosting": [
+    source("W7S pricing", "/docs/pricing/"),
+    source("Usage accounting", "/docs/usage-accounting/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Lovable pricing", "https://lovable.dev/pricing"),
+    source("Bolt pricing", "https://bolt.new/pricing"),
+  ],
+  "build-a-website-with-ai-and-deploy-from-github": [
+    source("W7S Build", "https://build.w7s.io/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Project layouts", "/docs/project-layouts/"),
+    source("Cursor docs", "https://docs.cursor.com/"),
+    source("Claude Code", "https://www.anthropic.com/product/claude-code"),
+  ],
+  "create-website-with-ai-without-builder-subscription": [
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("W7S pricing", "/docs/pricing/"),
+    source("W7S Build", "https://build.w7s.io/"),
+    source("Emergent", "https://emergent.sh/"),
+    source("Bolt.new", "https://bolt.new/"),
+  ],
   "netlify-drop-vs-github-first-deploys": [
     source("Netlify Drop", "https://app.netlify.com/drop"),
     source("Get Started with Netlify Drop", "https://docs.netlify.com/start/get-started-with-drop/"),

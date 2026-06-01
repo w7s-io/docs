@@ -1,5 +1,202 @@
 export const blogArticles = [
   {
+    slug: "ai-website-builder-to-real-website",
+    title: "AI Website Builder: Turn an AI-Generated Site Into a Real Website",
+    category: "AI",
+    readingTime: "8 min",
+    summary:
+      "AI website builders can generate the first draft. The next step is owning the code, putting it in GitHub, deploying it repeatably, and attaching the real-world pieces a business site needs.",
+    sections: [
+      {
+        heading: "The first draft is not the whole website",
+        paragraphs: [
+          "AI website builders are good at producing momentum. They can turn a rough idea into pages, components, styling, and starter copy much faster than the old blank-canvas workflow.",
+          "The important question comes next: where does the code live, can you edit it later, can you deploy it again, and can the website grow beyond the original builder session?",
+          "A website becomes a real project when the files are recoverable, the edits are tracked, the deploy is repeatable, and another person can understand how it ships."
+        ]
+      },
+      {
+        heading: "The vibe-coding tools all need a handoff",
+        paragraphs: [
+          "Lovable, Bolt.new, Emergent, Cloudflare Build, and W7S Build are all part of the prompt-to-app generation wave. Replit Agent, Cursor, and Claude Code sit nearby as cloud IDE, AI editor, and terminal-agent workflows.",
+          "They are not the same category, but they create the same downstream need: the generated work has to become a durable project. That usually means source code, GitHub, and a deployment path that can run more than once.",
+          "W7S fits after generation. Use the AI builder to create the site, put the result in GitHub, and let W7S deploy from the repository."
+        ],
+        code: `name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: \${{ github.token }}`
+      },
+      {
+        heading: "AI creates speed, GitHub creates ownership",
+        paragraphs: [
+          "For a business site, keep the generated output somewhere the owner can maintain: homepage, service pages, local pages, contact page, FAQs, and future SEO improvements should all live in a repository.",
+          "The deployment layer should not erase that ownership. A workflow file is easier to review, copy, fork, audit, and repair than hidden publish settings in a one-off builder session.",
+          "Use an AI website builder for speed, GitHub for ownership, and W7S when the deploy path should stay close to the repository."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "best-ai-website-builder-own-the-code",
+    title: "Best AI Website Builder for People Who Want to Own the Code",
+    category: "AI",
+    readingTime: "8 min",
+    summary:
+      "The best AI website builder depends on whether you want a hosted builder, a cloud IDE, an AI editor, or a repo-first workflow that can deploy from GitHub.",
+    sections: [
+      {
+        heading: "Best depends on what happens after generation",
+        paragraphs: [
+          "The best AI website builder is not just the one that produces the prettiest first screen. The better question is what happens after the AI builds the first version.",
+          "If the website is a disposable prototype, the answer may not matter much. If the website belongs to a business, creator, agency, or product, code ownership and deployment ownership matter quickly.",
+          "That is why Lovable, Bolt.new, Emergent, Cloudflare Build, W7S Build, Replit, Cursor, and Claude Code should not be judged by the same single checklist."
+        ]
+      },
+      {
+        heading: "The practical shortlist",
+        paragraphs: [
+          "Lovable, Bolt.new, Emergent, Cloudflare Build, and W7S Build are strongest as prompt-to-app or prompt-to-site builders. Replit Agent adds a cloud IDE and hosting environment. Cursor and Claude Code are better understood as AI coding environments that still need a hosting decision.",
+          "If you want the fastest first draft, use the tool that matches your creative style. If you want ownership, look for source code you can inspect, a GitHub repository you control, and a deployment path that can run again without rebuilding the project by hand.",
+          "For W7S, the sweet spot is clear: generated code that should live in GitHub and deploy from GitHub Actions."
+        ]
+      },
+      {
+        heading: "Choose creation and deployment separately",
+        paragraphs: [
+          "A small business website needs a dependable shape: homepage, services, pricing, local pages, contact, testimonials, FAQs, analytics, custom domain, and a way to edit and redeploy.",
+          "AI can draft the content and layout. The deployment path decides how maintainable the site is after launch.",
+          "Choose the AI builder based on how you like to create. Choose W7S when the code should belong in GitHub and the deploy workflow should be visible in the repository."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "free-ai-website-builder-vs-free-hosting",
+    title: "Free AI Website Builder vs Free Hosting: What Actually Stays Free?",
+    category: "AI",
+    readingTime: "7 min",
+    summary:
+      "Free AI website builders can create a prototype quickly, but hosting, domains, exports, forms, databases, and future changes decide what the site really costs.",
+    sections: [
+      {
+        heading: "Free generation is not the full cost",
+        paragraphs: [
+          "Free AI website builder searches usually mean one thing: the user wants to describe a website and get something online without committing to a large bill.",
+          "The free part is often generation or experimentation: prompt a first version, edit a few screens, preview the result, and test whether the idea is worth continuing.",
+          "That is useful, but the first draft is not the full cost of ownership."
+        ]
+      },
+      {
+        heading: "Check what happens after the draft",
+        paragraphs: [
+          "Before committing to a builder, check custom domains, hosting limits, bandwidth, form submissions, storage, databases, authentication, code export, team access, analytics, branding, and whether the site can be redeployed from GitHub.",
+          "Hosting is a separate question from generation. W7S Cloud lets projects deploy from GitHub Actions without a W7S account, credit card, or separate cloud setup for the hosted starter path.",
+          "The workflow is simple: generate or write the site, put it in GitHub, deploy with W7S, and keep future changes in the repository."
+        ]
+      },
+      {
+        heading: "Use free builders intentionally",
+        paragraphs: [
+          "Pay for a builder when visual editing, CMS features, booking tools, ecommerce, templates, forms, team roles, support, or one-click publishing remain valuable every week.",
+          "Use GitHub plus W7S when the site was generated as code, developer edits are likely, and you do not want hosting tied forever to the builder that produced the first draft.",
+          "Use a free AI website builder to explore, GitHub to keep the project, and W7S to deploy it when the site should become more than a one-time prototype."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "build-a-website-with-ai-and-deploy-from-github",
+    title: "How to Build a Website With AI and Deploy It From GitHub",
+    category: "AI",
+    readingTime: "8 min",
+    summary:
+      "A practical workflow for using AI to create a website, putting the files in GitHub, and deploying the result with W7S.",
+    sections: [
+      {
+        heading: "Use AI for the first version",
+        paragraphs: [
+          "Start with the tool that matches how you work. Use Lovable, Bolt.new, Emergent, Cloudflare Build, or W7S Build for prompt-to-site creation; Cursor or Claude Code when you want AI working directly against files; Replit Agent when you want a cloud IDE.",
+          "Ask for a small site first: homepage, services, pricing, about, and contact. Simple files are easier to deploy and improve than a first draft that tries to become a full platform immediately.",
+          "Before deployment, check the generated files and remove fake secrets, placeholder API keys, or anything the AI invented that should not be committed."
+        ],
+        code: `Create a clean five-page website for a local bookkeeping business.
+Pages: Home, Services, Pricing, About, Contact.
+Use plain HTML, CSS, and JavaScript.
+Keep the files simple and easy to edit.`
+      },
+      {
+        heading: "Put the generated site in GitHub",
+        paragraphs: [
+          "GitHub is the handoff from AI-generated output to maintainable project. Once the site is in a repository, every change has history, another person can review it, and the project can move between tools.",
+          "Add a W7S deploy workflow after the first commit. For a static site, the minimal workflow can publish directly. For a framework app, add install and build steps before the W7S action.",
+          "The best workflow is not 'AI does everything.' The best workflow is AI creates momentum, GitHub creates ownership, and W7S creates a repeatable deploy path."
+        ]
+      },
+      {
+        heading: "Improve for SEO after launch",
+        paragraphs: [
+          "After the first deploy, improve the parts search engines and customers actually read: unique titles and descriptions, service pages, local pages, contact information, fast images, internal links, FAQs, testimonials, and schema when useful.",
+          "AI can help draft those improvements, but the repository should keep the final version.",
+          "That gives the owner a website they can keep, not just a generated preview."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "create-website-with-ai-without-builder-subscription",
+    title: "Create a Website With AI Without a Website Builder Subscription",
+    category: "AI",
+    readingTime: "7 min",
+    summary:
+      "Use AI to generate the website, GitHub to own it, and W7S to deploy it without turning the first draft into a permanent website-builder subscription.",
+    sections: [
+      {
+        heading: "AI changes the subscription decision",
+        paragraphs: [
+          "Before AI, many people paid for a builder because they needed the builder to create the site. Now the first version can come from a prompt.",
+          "That makes the next question more important: do you need a permanent website-builder subscription, or do you need a clean way to deploy the code AI created?",
+          "A subscription can be worth it when visual editing, CMS features, booking tools, ecommerce, forms, team roles, support, and one-click publishing are central to the workflow."
+        ]
+      },
+      {
+        heading: "Sometimes the builder is just hosting",
+        paragraphs: [
+          "The tradeoff is weaker when the site is mostly static, the code can be exported, a developer or AI agent will edit files later, GitHub can hold the project, and CI can deploy it.",
+          "In that case, the builder helped create the first version, but it does not need to own the future of the site.",
+          "The repo-first workflow is create with AI, export or copy the files, put them in GitHub, deploy from GitHub Actions, and keep improving the repository."
+        ],
+        code: `- uses: actions/checkout@v5
+- uses: w7s-io/w7s-cloud@v1
+  with:
+    token: \${{ github.token }}`
+      },
+      {
+        heading: "Keep what matters",
+        paragraphs: [
+          "With the repo-first path, you keep source code, commit history, deploy history, portability, a path to custom domains, and a path to backend routes or storage later.",
+          "You may give up a visual dashboard editor, native booking or ecommerce features, bundled support, and product-managed templates. That is why the decision should be honest.",
+          "Use AI for the first draft. Use a builder subscription only if its ongoing features are worth paying for. Use W7S when what you need is hosting and a repeatable deploy path from GitHub."
+        ]
+      }
+    ]
+  },
+  {
     slug: "netlify-drop-vs-github-first-deploys",
     title: "Netlify Drop Is Easy. GitHub First Is Still Worth It.",
     category: "Workflow",
