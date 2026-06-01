@@ -231,24 +231,43 @@ const sourcesForSection = (article, section, index) => {
 
 const renderInlineText = (text) => {
   const parts = [];
-  const inlineCodePattern = /`([^`]+)`/g;
+  const inlinePattern = /`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|(https?:\/\/[^\s]+)/g;
   let cursor = 0;
   let match;
 
-  while ((match = inlineCodePattern.exec(text)) !== null) {
+  while ((match = inlinePattern.exec(text)) !== null) {
     if (match.index > cursor) {
       parts.push(text.slice(cursor, match.index));
     }
 
-    parts.push(
-      <code
-        key={`${match.index}-${match[1]}`}
-        className="border border-white/10 bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.9em] text-amber-200"
-      >
-        {match[1]}
-      </code>
-    );
-    cursor = inlineCodePattern.lastIndex;
+    if (match[1]) {
+      parts.push(
+        <code
+          key={`${match.index}-${match[1]}`}
+          className="border border-white/10 bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.9em] text-amber-200"
+        >
+          {match[1]}
+        </code>
+      );
+    } else {
+      const rawHref = match[3] ?? match[4];
+      const trailing = match[4]?.match(/[.,;:!?]+$/)?.[0] ?? "";
+      const href = trailing ? rawHref.slice(0, -trailing.length) : rawHref;
+      parts.push(
+        <a
+          key={`${match.index}-${href}`}
+          className="font-semibold text-amber-300 underline decoration-amber-400/40 underline-offset-4 transition-colors hover:text-amber-200 hover:decoration-amber-200"
+          href={href}
+          rel="noreferrer"
+          target={href.startsWith("/") ? undefined : "_blank"}
+        >
+          {match[2] ?? href}
+        </a>
+      );
+      if (trailing) parts.push(trailing);
+    }
+
+    cursor = inlinePattern.lastIndex;
   }
 
   if (cursor < text.length) {

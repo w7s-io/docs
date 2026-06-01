@@ -18,7 +18,7 @@ export const blogArticles = [
       {
         heading: "The vibe-coding tools all need a handoff",
         paragraphs: [
-          "Lovable, Bolt.new, Emergent, Cloudflare Build, and W7S Build are all part of the prompt-to-app generation wave. Replit Agent, Cursor, and Claude Code sit nearby as cloud IDE, AI editor, and terminal-agent workflows.",
+          "[Lovable](https://lovable.dev/), [Bolt.new](https://bolt.new/), [Emergent](https://emergent.sh/), [Cloudflare Build](https://build.cloudflare.dev/), and [W7S Build](https://build.w7s.io/) are all part of the prompt-to-app generation wave. [Replit Agent](https://docs.replit.com/core-concepts/agent/), [Cursor](https://docs.cursor.com/), and [Claude Code](https://www.anthropic.com/product/claude-code) sit nearby as cloud IDE, AI editor, and terminal-agent workflows.",
           "They are not the same category, but they create the same downstream need: the generated work has to become a durable project. That usually means source code, GitHub, and a deployment path that can run more than once.",
           "W7S fits after generation. Use the AI builder to create the site, put the result in GitHub, and let W7S deploy from the repository."
         ],
@@ -63,7 +63,7 @@ jobs:
         paragraphs: [
           "The default w7s.cloud URL is useful for testing and sharing, but a production business site can use a normal domain. Add a CNAME file to the deployed output with a hostname like www.example.com.",
           "Then create DNS for that hostname with a CNAME pointing to w7w.cloud. W7S also recommends a TXT allowlist, such as _w7s.example.com with the value acme/bookkeeping-site, so only that GitHub owner or repo can claim the hostname later.",
-          "The W7S docs cover the exact steps in Deploy From GitHub, URLs And Routing, Custom Domains, and Project Layouts. The same repo can also grow later with backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and usage checks."
+          "The W7S docs cover the exact steps in [Deploy From GitHub](/docs/deploy-from-github/), [URLs And Routing](/docs/urls-and-routing/), [Custom Domains](/docs/custom-domains/), and [Project Layouts](/docs/project-layouts/). The same repo can also grow later with backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ],
         code: `CNAME
 www.example.com
@@ -94,7 +94,7 @@ Target: w7w.cloud`
       {
         heading: "The practical shortlist",
         paragraphs: [
-          "Lovable, Bolt.new, Emergent, Cloudflare Build, and W7S Build are strongest as prompt-to-app or prompt-to-site builders. Replit Agent adds a cloud IDE and hosting environment. Cursor and Claude Code are better understood as AI coding environments that still need a hosting decision.",
+          "[Lovable](https://lovable.dev/), [Bolt.new](https://bolt.new/), [Emergent](https://emergent.sh/), [Cloudflare Build](https://build.cloudflare.dev/), and [W7S Build](https://build.w7s.io/) are strongest as prompt-to-app or prompt-to-site builders. [Replit Agent](https://docs.replit.com/core-concepts/agent/) adds a cloud IDE and hosting environment. [Cursor](https://docs.cursor.com/) and [Claude Code](https://www.anthropic.com/product/claude-code) are better understood as AI coding environments that still need a hosting decision.",
           "If you want the fastest first draft, use the tool that matches your creative style. If you want ownership, look for source code you can inspect, a GitHub repository you control, and a deployment path that can run again without rebuilding the project by hand.",
           "For W7S, the sweet spot is clear: generated code that should live in GitHub and deploy from GitHub Actions."
         ]
@@ -120,7 +120,7 @@ Target: w7w.cloud`
         paragraphs: [
           "To use a non-w7s.cloud hostname, add a CNAME file to the deployed files and point the DNS CNAME at w7w.cloud.",
           "For stronger ownership protection, add a TXT allowlist naming the GitHub owner or exact repo that is allowed to claim the hostname.",
-          "Use the Custom Domains docs for DNS setup, URLs And Routing for the default W7S URL rules, and Project Layouts to make sure the CNAME file is included in the deployed archive. The same repository can later add backend routes, storage, queues, schedules, workflows, logs, and usage checks."
+          "Use the [Custom Domains](/docs/custom-domains/) docs for DNS setup, [URLs And Routing](/docs/urls-and-routing/) for the default W7S URL rules, and [Project Layouts](/docs/project-layouts/) to make sure the CNAME file is included in the deployed archive. The same repository can later add backend routes, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       }
     ]
@@ -170,7 +170,7 @@ Target: w7w.cloud`
         paragraphs: [
           "When the site is ready for customers, add a CNAME file with a hostname like www.example.com and point that hostname to w7w.cloud in DNS.",
           "Add a TXT allowlist when you want to restrict future custom-domain claims to a GitHub owner or exact repo.",
-          "Check Custom Domains for DNS details, Deploy From GitHub for the workflow, URLs And Routing for the default URL, and Deploy API for current shape limits such as custom-domain count. If the project grows, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
+          "Check [Custom Domains](/docs/custom-domains/) for DNS details, [Deploy From GitHub](/docs/deploy-from-github/) for the workflow, [URLs And Routing](/docs/urls-and-routing/) for the default URL, and [Deploy API](/docs/deploy-api/#free-tier-shape-caps) for current shape limits such as custom-domain count. If the project grows, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       }
     ]
@@ -186,7 +186,7 @@ Target: w7w.cloud`
       {
         heading: "Use AI for the first version",
         paragraphs: [
-          "Start with the tool that matches how you work. Use Lovable, Bolt.new, Emergent, Cloudflare Build, or W7S Build for prompt-to-site creation; Cursor or Claude Code when you want AI working directly against files; Replit Agent when you want a cloud IDE.",
+          "Start with the tool that matches how you work. Use [Lovable](https://lovable.dev/), [Bolt.new](https://bolt.new/), [Emergent](https://emergent.sh/), [Cloudflare Build](https://build.cloudflare.dev/), or [W7S Build](https://build.w7s.io/) for prompt-to-site creation; [Cursor](https://docs.cursor.com/) or [Claude Code](https://www.anthropic.com/product/claude-code) when you want AI working directly against files; [Replit Agent](https://docs.replit.com/core-concepts/agent/) when you want a cloud IDE.",
           "Ask for a small site first: homepage, services, pricing, about, and contact. Simple files are easier to deploy and improve than a first draft that tries to become a full platform immediately.",
           "Before deployment, check the generated files and remove fake secrets, placeholder API keys, or anything the AI invented that should not be committed."
         ],
@@ -208,7 +208,7 @@ Keep the files simple and easy to edit.`
         paragraphs: [
           "After the workflow succeeds, the URL comes from the repo. github.com/acme/bookkeeping deploys from main or master to https://acme.w7s.cloud/bookkeeping/.",
           "A branch named feature/contact-form deploys to https://feature-contact-form--acme.w7s.cloud/bookkeeping/. A repo named github.com/acme/acme can serve https://acme.w7s.cloud/.",
-          "If the site does not deploy, check Project Layouts and confirm the built output is in a supported folder such as dist, build, or out."
+          "If the site does not deploy, check [Project Layouts](/docs/project-layouts/) and confirm the built output is in a supported folder such as dist, build, or out."
         ]
       },
       {
@@ -216,7 +216,7 @@ Keep the files simple and easy to edit.`
         paragraphs: [
           "The w7s.cloud URL is enough to test the site. For production, add a CNAME file to the deployed output with www.example.com, then point that DNS name to w7w.cloud.",
           "For safer ownership, add a TXT record such as _w7s.example.com with the GitHub repo value acme/bookkeeping.",
-          "The exact instructions live in Custom Domains, while Deploy From GitHub and URLs And Routing explain the deploy workflow and default URL. The same GitHub-first workflow can later add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
+          "The exact instructions live in [Custom Domains](/docs/custom-domains/), while [Deploy From GitHub](/docs/deploy-from-github/) and [URLs And Routing](/docs/urls-and-routing/) explain the deploy workflow and default URL. The same GitHub-first workflow can later add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       },
       {
@@ -278,7 +278,7 @@ Keep the files simple and easy to edit.`
         paragraphs: [
           "The W7S workflow can keep deploying from GitHub while the public site uses www.example.com or another non-w7s.cloud hostname.",
           "Add a CNAME file to the deployed output, point the DNS CNAME to w7w.cloud, and add a TXT allowlist when you want the domain claim restricted to your owner or exact repository.",
-          "Use Custom Domains for the DNS setup, URLs And Routing for the default URL rules, and Deploy From GitHub for the workflow file. If the site becomes an app, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
+          "Use [Custom Domains](/docs/custom-domains/) for the DNS setup, [URLs And Routing](/docs/urls-and-routing/) for the default URL rules, and [Deploy From GitHub](/docs/deploy-from-github/) for the workflow file. If the site becomes an app, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       }
     ]
