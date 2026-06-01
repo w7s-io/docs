@@ -84,7 +84,27 @@ The better pattern is:
 3. deploy it with W7S from GitHub Actions;
 4. add backend routes and bindings only when the site needs them.
 
-The minimum deploy workflow is small:
+For a new user, the deploy step is just a file in the repository. In the root of the GitHub project, create this folder path:
+
+```text
+.github/workflows/
+```
+
+Inside that folder, create this file:
+
+```text
+deploy.yml
+```
+
+The full file path should be:
+
+```text
+.github/workflows/deploy.yml
+```
+
+GitHub Actions reads YAML files from `.github/workflows/`. When you push to `main`, GitHub runs this workflow. The workflow checks out the repository and hands it to the official W7S deploy action. The complete W7S reference is [Deploy From GitHub](/docs/deploy-from-github/), and supported app folders are listed in [Project Layouts](/docs/project-layouts/).
+
+Paste this into `.github/workflows/deploy.yml`:
 
 ```yaml title=".github/workflows/deploy.yml"
 name: Deploy
@@ -107,6 +127,8 @@ jobs:
         with:
           token: ${{ github.token }}
 ```
+
+Commit that file and push it to GitHub. If the site is plain HTML, CSS, and JavaScript, this can be enough. If the AI generated a React, Vite, Astro, Docusaurus, or other framework project, build it in GitHub Actions before the W7S step; [Deploy From GitHub](/docs/deploy-from-github/#build-before-deploy) shows the build-before-deploy pattern.
 
 That gives the project a repeatable release path without adding a separate dashboard project first.
 

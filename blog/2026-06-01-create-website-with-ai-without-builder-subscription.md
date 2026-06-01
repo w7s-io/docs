@@ -54,19 +54,48 @@ The repo-first workflow is:
 1. create the site with AI;
 2. export or copy the files;
 3. put them in GitHub;
-4. deploy from GitHub Actions;
-5. keep improving the repository.
+4. create `.github/workflows/deploy.yml`;
+5. deploy from GitHub Actions;
+6. keep improving the repository.
 
 W7S is built for that deployment step.
 
-It keeps the release path in a workflow file instead of a website-builder dashboard:
+It keeps the release path in a workflow file instead of a website-builder dashboard. The file lives here:
+
+```text
+your-repo/
+  .github/
+    workflows/
+      deploy.yml
+```
+
+Create the `.github` folder in the repository root, create `workflows` inside it, and create `deploy.yml` inside `workflows`. GitHub Actions runs YAML files from that folder. The W7S docs walk through the complete setup in [Deploy From GitHub](/docs/deploy-from-github/).
+
+For a plain static site, the file can use the minimal workflow:
 
 ```yaml title=".github/workflows/deploy.yml"
-- uses: actions/checkout@v5
-- uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: ${{ github.token }}
 ```
+
+If the AI generated a framework project, add the install and build steps from [Build before deploy](/docs/deploy-from-github/#build-before-deploy) before the W7S action. If you are unsure where the built files should be, use [Project Layouts](/docs/project-layouts/).
 
 ## What You Keep
 

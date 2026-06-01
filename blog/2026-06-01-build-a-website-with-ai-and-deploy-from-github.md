@@ -70,7 +70,30 @@ Once it is in GitHub:
 
 ## Step 4: Deploy With W7S
 
-Add `.github/workflows/deploy.yml`:
+Now add the deploy file. This is the part that is easy to miss if you are new to GitHub.
+
+In the root of the repository, create this folder path:
+
+```text
+.github/workflows/
+```
+
+Then create this file inside it:
+
+```text
+deploy.yml
+```
+
+The final path should look like this:
+
+```text
+your-repo/
+  .github/
+    workflows/
+      deploy.yml
+```
+
+GitHub Actions automatically looks inside `.github/workflows/` for automation files. W7S documents this setup in [Deploy From GitHub](/docs/deploy-from-github/). Paste this into `.github/workflows/deploy.yml`:
 
 ```yaml title=".github/workflows/deploy.yml"
 name: Deploy
@@ -94,7 +117,9 @@ jobs:
           token: ${{ github.token }}
 ```
 
-For a Node build, add install and build steps before the deploy action.
+Commit the file and push to `main`. GitHub will open an Actions run, check out your repository, and call W7S. You can also run it manually from the GitHub Actions tab because the workflow includes `workflow_dispatch`.
+
+For a Node or framework build, add install and build steps before the deploy action. W7S does not guess your build command; GitHub Actions should build the site first. See [Build before deploy](/docs/deploy-from-github/#build-before-deploy) and [Project Layouts](/docs/project-layouts/) for the output folders W7S can deploy.
 
 ```yaml title=".github/workflows/deploy.yml"
 steps:

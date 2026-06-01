@@ -54,6 +54,17 @@ That is where repo-first workflows matter.
 
 An AI builder can generate the code, but the repository should become the durable home. A deployment workflow in `.github/workflows/deploy.yml` is easier to review, copy, fork, audit, and repair than settings scattered across a product dashboard.
 
+If you are new to GitHub Actions, that path means:
+
+```text
+your-repo/
+  .github/
+    workflows/
+      deploy.yml
+```
+
+`.github` is a folder in the repository. `workflows` is a folder inside `.github`. `deploy.yml` is the YAML file GitHub Actions runs. Put the W7S workflow there, commit it, and push it to `main`. The beginner reference for that exact setup is [Deploy From GitHub](/docs/deploy-from-github/). If your generated site needs a build step, use [Build before deploy](/docs/deploy-from-github/#build-before-deploy). If you are not sure whether your files are in the right place, check [Project Layouts](/docs/project-layouts/).
+
 ## If You Want a Small Business Website
 
 Most small business websites need a boring, dependable shape:

@@ -20,9 +20,11 @@ export const blogArticles = [
         paragraphs: [
           "[Lovable](https://lovable.dev/), [Bolt.new](https://bolt.new/), [Emergent](https://emergent.sh/), [Cloudflare Build](https://build.cloudflare.dev/), and [W7S Build](https://build.w7s.io/) are all part of the prompt-to-app generation wave. [Replit Agent](https://docs.replit.com/core-concepts/agent/), [Cursor](https://docs.cursor.com/), and [Claude Code](https://www.anthropic.com/product/claude-code) sit nearby as cloud IDE, AI editor, and terminal-agent workflows.",
           "They are not the same category, but they create the same downstream need: the generated work has to become a durable project. That usually means source code, GitHub, and a deployment path that can run more than once.",
-          "W7S fits after generation. Use the AI builder to create the site, put the result in GitHub, and let W7S deploy from the repository."
+          "W7S fits after generation. Use the AI builder to create the site, put the result in GitHub, then create `.github/workflows/deploy.yml` in the repository. That path means a `.github` folder at the repo root, a `workflows` folder inside it, and a `deploy.yml` file inside `workflows`.",
+          "Paste the W7S workflow into that file, commit it, and push to `main`. GitHub Actions reads files from `.github/workflows/` and runs this deploy automatically. The full beginner reference is [Deploy From GitHub](/docs/deploy-from-github/), with framework build steps in [Build before deploy](/docs/deploy-from-github/#build-before-deploy)."
         ],
-        code: `name: Deploy
+        code: `# .github/workflows/deploy.yml
+name: Deploy
 
 on:
   push:
@@ -46,7 +48,7 @@ jobs:
         heading: "AI creates speed, GitHub creates ownership",
         paragraphs: [
           "For a business site, keep the generated output somewhere the owner can maintain: homepage, service pages, local pages, contact page, FAQs, and future SEO improvements should all live in a repository.",
-          "The deployment layer should not erase that ownership. A workflow file is easier to review, copy, fork, audit, and repair than hidden publish settings in a one-off builder session.",
+          "The deployment layer should not erase that ownership. A workflow file like `.github/workflows/deploy.yml` is easier to review, copy, fork, audit, and repair than hidden publish settings in a one-off builder session.",
           "Use an AI website builder for speed, GitHub for ownership, and W7S when the deploy path should stay close to the repository."
         ]
       },
@@ -96,7 +98,8 @@ Target: w7w.cloud`
         paragraphs: [
           "[Lovable](https://lovable.dev/), [Bolt.new](https://bolt.new/), [Emergent](https://emergent.sh/), [Cloudflare Build](https://build.cloudflare.dev/), and [W7S Build](https://build.w7s.io/) are strongest as prompt-to-app or prompt-to-site builders. [Replit Agent](https://docs.replit.com/core-concepts/agent/) adds a cloud IDE and hosting environment. [Cursor](https://docs.cursor.com/) and [Claude Code](https://www.anthropic.com/product/claude-code) are better understood as AI coding environments that still need a hosting decision.",
           "If you want the fastest first draft, use the tool that matches your creative style. If you want ownership, look for source code you can inspect, a GitHub repository you control, and a deployment path that can run again without rebuilding the project by hand.",
-          "For W7S, the sweet spot is clear: generated code that should live in GitHub and deploy from GitHub Actions."
+          "For W7S, the sweet spot is clear: generated code that should live in GitHub and deploy from GitHub Actions.",
+          "For a beginner, that deployment path is one file: `.github/workflows/deploy.yml`. Create `.github` at the repository root, create `workflows` inside it, create `deploy.yml` inside `workflows`, paste the workflow from [Deploy From GitHub](/docs/deploy-from-github/), commit the file, and push to `main`."
         ]
       },
       {
@@ -146,7 +149,8 @@ Target: w7w.cloud`
         paragraphs: [
           "Before committing to a builder, check custom domains, hosting limits, bandwidth, form submissions, storage, databases, authentication, code export, team access, analytics, branding, and whether the site can be redeployed from GitHub.",
           "Hosting is a separate question from generation. W7S Cloud lets projects deploy from GitHub Actions without a W7S account, credit card, or separate cloud setup for the hosted starter path.",
-          "The workflow is simple: generate or write the site, put it in GitHub, deploy with W7S, and keep future changes in the repository."
+          "The workflow is simple: generate or write the site, put it in GitHub, create `.github/workflows/deploy.yml`, deploy with W7S, and keep future changes in the repository.",
+          "The file path matters: `.github` is a folder at the repository root, `workflows` is a folder inside `.github`, and `deploy.yml` is the file inside `workflows`. GitHub Actions runs that file when you push. Start with [Deploy From GitHub](/docs/deploy-from-github/) and add [Build before deploy](/docs/deploy-from-github/#build-before-deploy) if the site uses a framework."
         ]
       },
       {
@@ -199,7 +203,8 @@ Keep the files simple and easy to edit.`
         heading: "Put the generated site in GitHub",
         paragraphs: [
           "GitHub is the handoff from AI-generated output to maintainable project. Once the site is in a repository, every change has history, another person can review it, and the project can move between tools.",
-          "Add a W7S deploy workflow after the first commit. For a static site, the minimal workflow can publish directly. For a framework app, add install and build steps before the W7S action.",
+          "Add a W7S deploy workflow after the first commit. In the repository root, create `.github/workflows/deploy.yml`: a `.github` folder, then a `workflows` folder, then a `deploy.yml` file. Paste the workflow from [Deploy From GitHub](/docs/deploy-from-github/) into that file.",
+          "For a static site, the minimal workflow can publish directly. For a framework app, add install and build steps before the W7S action using [Build before deploy](/docs/deploy-from-github/#build-before-deploy). If you are unsure where the generated output should live, check [Project Layouts](/docs/project-layouts/).",
           "The best workflow is not 'AI does everything.' The best workflow is AI creates momentum, GitHub creates ownership, and W7S creates a repeatable deploy path."
         ]
       },
@@ -250,12 +255,29 @@ Keep the files simple and easy to edit.`
         paragraphs: [
           "The tradeoff is weaker when the site is mostly static, the code can be exported, a developer or AI agent will edit files later, GitHub can hold the project, and CI can deploy it.",
           "In that case, the builder helped create the first version, but it does not need to own the future of the site.",
-          "The repo-first workflow is create with AI, export or copy the files, put them in GitHub, deploy from GitHub Actions, and keep improving the repository."
+          "The repo-first workflow is create with AI, export or copy the files, put them in GitHub, create `.github/workflows/deploy.yml`, deploy from GitHub Actions, and keep improving the repository.",
+          "That file path is literal: create `.github` in the repository root, create `workflows` inside it, and create `deploy.yml` inside `workflows`. GitHub Actions reads that file and W7S deploys from it. Use [Deploy From GitHub](/docs/deploy-from-github/) for the complete setup."
         ],
-        code: `- uses: actions/checkout@v5
-- uses: w7s-io/w7s-cloud@v1
-  with:
-    token: \${{ github.token }}`
+        code: `# .github/workflows/deploy.yml
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: \${{ github.token }}`
       },
       {
         heading: "Keep what matters",
