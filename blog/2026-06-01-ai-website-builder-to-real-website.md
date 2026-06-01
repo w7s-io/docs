@@ -110,6 +110,69 @@ jobs:
 
 That gives the project a repeatable release path without adding a separate dashboard project first.
 
+## What Happens After It Deploys
+
+After the GitHub Action finishes, W7S serves the site from a URL based on the GitHub repository name.
+
+If the repository is:
+
+```text
+github.com/acme/bookkeeping-site
+```
+
+then the production deployment from `main` or `master` is served at:
+
+```text
+https://acme.w7s.cloud/bookkeeping-site/
+```
+
+If you deploy a branch, W7S creates a branch environment. A branch named `feature/new-homepage` becomes `feature-new-homepage`, so the branch deploy is served at:
+
+```text
+https://feature-new-homepage--acme.w7s.cloud/bookkeeping-site/
+```
+
+There is one special case: if the repository has the same name as the GitHub owner, such as `github.com/acme/acme`, it can serve the owner root:
+
+```text
+https://acme.w7s.cloud/
+```
+
+That means a beginner does not need to choose a platform project name first. The GitHub owner and repository already define the default W7S URL. See [URLs And Routing](/docs/urls-and-routing/) for the full mapping rules and [Deploy From GitHub](/docs/deploy-from-github/) for the workflow.
+
+## Adding Your Own Domain
+
+The default `w7s.cloud` URL is useful immediately, but most business websites eventually use their own domain.
+
+To serve the same deployment from a non-`w7s.cloud` hostname, add a `CNAME` file to the deployed files:
+
+```text title="CNAME"
+www.example.com
+```
+
+W7S looks for `CNAME` in common deploy output locations, including the repository root, `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`.
+
+Then create DNS for that hostname and point it at W7S:
+
+```text
+Type: CNAME
+Name: www
+Target: w7w.cloud
+Proxy: enabled
+```
+
+W7S can claim the first custom domain without TXT verification, but the safer long-term setup is to add a TXT allowlist so only your GitHub owner or exact repository can claim it later:
+
+```text
+Type: TXT
+Name: _w7s.example.com
+Value: acme/bookkeeping-site
+```
+
+Use [Custom Domains](/docs/custom-domains/) for the exact DNS shape and [Project Layouts](/docs/project-layouts/) to confirm where your built files should live before deployment.
+
+From there, the same repository can stay static or grow into more of an app. W7S supports static frontends, JavaScript or TypeScript backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, usage checks, and custom domains. Start with [Deploy From GitHub](/docs/deploy-from-github/), then use [Project Layouts](/docs/project-layouts/) and the backend docs when the site needs more than static pages.
+
 ## The SEO Angle
 
 If you are using AI to create a business website, do not stop at the homepage.
@@ -149,3 +212,7 @@ That is the practical path from "AI generated a site" to "this is a real website
 - [Cursor docs](https://docs.cursor.com/)
 - [Claude Code](https://www.anthropic.com/product/claude-code)
 - [Deploy From GitHub](/docs/deploy-from-github/)
+- [URLs And Routing](/docs/urls-and-routing/)
+- [Custom Domains](/docs/custom-domains/)
+- [Project Layouts](/docs/project-layouts/)
+- [Observability](/docs/observability/)

@@ -82,6 +82,67 @@ With the repo-first path, you keep:
 
 That matters because successful websites rarely stay exactly as generated.
 
+## What Happens After the Deploy
+
+W7S uses the GitHub repository to decide the default public URL.
+
+If your repo is:
+
+```text
+github.com/acme/ai-made-site
+```
+
+then a production deploy from `main` or `master` is served at:
+
+```text
+https://acme.w7s.cloud/ai-made-site/
+```
+
+Branches get their own deploy environments. For example, a branch named `draft/new-services-page` becomes:
+
+```text
+https://draft-new-services-page--acme.w7s.cloud/ai-made-site/
+```
+
+If the repository has the same name as the owner, such as `github.com/acme/acme`, it can serve:
+
+```text
+https://acme.w7s.cloud/
+```
+
+So the repo-first path gives you a live URL without creating a separate hosting account or app project. See [Deploy From GitHub](/docs/deploy-from-github/) for the workflow and [URLs And Routing](/docs/urls-and-routing/) for the exact URL rules.
+
+## Moving From w7s.cloud to Your Own Domain
+
+You can keep the W7S deployment workflow and still use a normal business domain.
+
+Add a `CNAME` file to the deployed output:
+
+```text title="CNAME"
+www.example.com
+```
+
+Then create a DNS CNAME that points to W7S:
+
+```text
+Type: CNAME
+Name: www
+Target: w7w.cloud
+Proxy: enabled
+```
+
+W7S reads `CNAME` from the root and common output folders, including `dist/`, `build/`, `out/`, and frontend variants. If multiple repositories could claim the same hostname, use a TXT allowlist:
+
+```text
+Type: TXT
+Name: _w7s.example.com
+Value: acme/ai-made-site
+```
+
+That lets the custom domain stay attached to the repository you control. The complete instructions are in [Custom Domains](/docs/custom-domains/).
+
+If the project needs more later, the repo-first path still works. W7S can serve static output first, then add JavaScript or TypeScript backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, usage checks, and custom domains from the same repository model.
+
 ## What You Give Up
 
 You may give up:
@@ -105,6 +166,10 @@ If what you really need is hosting and a repeatable deploy path, put the site in
 ## Sources
 
 - [Deploy From GitHub](/docs/deploy-from-github/)
+- [URLs And Routing](/docs/urls-and-routing/)
+- [Custom Domains](/docs/custom-domains/)
+- [Project Layouts](/docs/project-layouts/)
+- [Observability](/docs/observability/)
 - [W7S pricing](/docs/pricing/)
 - [W7S Build](https://build.w7s.io/)
 - [Lovable](https://lovable.dev/)

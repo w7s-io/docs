@@ -49,6 +49,29 @@ jobs:
           "The deployment layer should not erase that ownership. A workflow file is easier to review, copy, fork, audit, and repair than hidden publish settings in a one-off builder session.",
           "Use an AI website builder for speed, GitHub for ownership, and W7S when the deploy path should stay close to the repository."
         ]
+      },
+      {
+        heading: "What happens after it deploys",
+        paragraphs: [
+          "W7S serves production deploys from a URL based on the GitHub owner and repository. A repo like github.com/acme/bookkeeping-site is served at https://acme.w7s.cloud/bookkeeping-site/ after a successful deploy from main or master.",
+          "Branch deploys get their own environment URL. For example, feature/new-homepage becomes feature-new-homepage, so the branch is served at https://feature-new-homepage--acme.w7s.cloud/bookkeeping-site/.",
+          "If the repository has the same name as the owner, such as github.com/acme/acme, it can serve the owner root at https://acme.w7s.cloud/."
+        ]
+      },
+      {
+        heading: "Use your own domain",
+        paragraphs: [
+          "The default w7s.cloud URL is useful for testing and sharing, but a production business site can use a normal domain. Add a CNAME file to the deployed output with a hostname like www.example.com.",
+          "Then create DNS for that hostname with a CNAME pointing to w7w.cloud. W7S also recommends a TXT allowlist, such as _w7s.example.com with the value acme/bookkeeping-site, so only that GitHub owner or repo can claim the hostname later.",
+          "The W7S docs cover the exact steps in Deploy From GitHub, URLs And Routing, Custom Domains, and Project Layouts. The same repo can also grow later with backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and usage checks."
+        ],
+        code: `CNAME
+www.example.com
+
+DNS
+Type: CNAME
+Name: www
+Target: w7w.cloud`
       }
     ]
   },
@@ -82,6 +105,22 @@ jobs:
           "A small business website needs a dependable shape: homepage, services, pricing, local pages, contact, testimonials, FAQs, analytics, custom domain, and a way to edit and redeploy.",
           "AI can draft the content and layout. The deployment path decides how maintainable the site is after launch.",
           "Choose the AI builder based on how you like to create. Choose W7S when the code should belong in GitHub and the deploy workflow should be visible in the repository."
+        ]
+      },
+      {
+        heading: "The deployed URL is repo-based",
+        paragraphs: [
+          "With W7S, the GitHub repository becomes the project identity. github.com/acme/landing-page deploys from main or master to https://acme.w7s.cloud/landing-page/.",
+          "Branches get separate URLs, so experiment/pricing-page becomes https://experiment-pricing-page--acme.w7s.cloud/landing-page/. A repo named the same as the owner, like github.com/acme/acme, can serve https://acme.w7s.cloud/.",
+          "That makes the default URL predictable before a new user even opens a hosting dashboard."
+        ]
+      },
+      {
+        heading: "Custom domains stay repo-first",
+        paragraphs: [
+          "To use a non-w7s.cloud hostname, add a CNAME file to the deployed files and point the DNS CNAME at w7w.cloud.",
+          "For stronger ownership protection, add a TXT allowlist naming the GitHub owner or exact repo that is allowed to claim the hostname.",
+          "Use the Custom Domains docs for DNS setup, URLs And Routing for the default W7S URL rules, and Project Layouts to make sure the CNAME file is included in the deployed archive. The same repository can later add backend routes, storage, queues, schedules, workflows, logs, and usage checks."
         ]
       }
     ]
@@ -117,6 +156,22 @@ jobs:
           "Use GitHub plus W7S when the site was generated as code, developer edits are likely, and you do not want hosting tied forever to the builder that produced the first draft.",
           "Use a free AI website builder to explore, GitHub to keep the project, and W7S to deploy it when the site should become more than a one-time prototype."
         ]
+      },
+      {
+        heading: "What stays free after launch",
+        paragraphs: [
+          "A W7S deploy from github.com/acme/free-ai-site is served at https://acme.w7s.cloud/free-ai-site/ when it deploys from main or master. Branches get separate URLs such as https://test-new-copy--acme.w7s.cloud/free-ai-site/.",
+          "That gives a beginner a real public URL without naming a separate app or creating a cloud project first.",
+          "If the repo is named the same as the owner, such as github.com/acme/acme, it can serve the owner root at https://acme.w7s.cloud/."
+        ]
+      },
+      {
+        heading: "Free hosting can still use a real domain",
+        paragraphs: [
+          "When the site is ready for customers, add a CNAME file with a hostname like www.example.com and point that hostname to w7w.cloud in DNS.",
+          "Add a TXT allowlist when you want to restrict future custom-domain claims to a GitHub owner or exact repo.",
+          "Check Custom Domains for DNS details, Deploy From GitHub for the workflow, URLs And Routing for the default URL, and Deploy API for current shape limits such as custom-domain count. If the project grows, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
+        ]
       }
     ]
   },
@@ -146,6 +201,22 @@ Keep the files simple and easy to edit.`
           "GitHub is the handoff from AI-generated output to maintainable project. Once the site is in a repository, every change has history, another person can review it, and the project can move between tools.",
           "Add a W7S deploy workflow after the first commit. For a static site, the minimal workflow can publish directly. For a framework app, add install and build steps before the W7S action.",
           "The best workflow is not 'AI does everything.' The best workflow is AI creates momentum, GitHub creates ownership, and W7S creates a repeatable deploy path."
+        ]
+      },
+      {
+        heading: "Open the W7S URL",
+        paragraphs: [
+          "After the workflow succeeds, the URL comes from the repo. github.com/acme/bookkeeping deploys from main or master to https://acme.w7s.cloud/bookkeeping/.",
+          "A branch named feature/contact-form deploys to https://feature-contact-form--acme.w7s.cloud/bookkeeping/. A repo named github.com/acme/acme can serve https://acme.w7s.cloud/.",
+          "If the site does not deploy, check Project Layouts and confirm the built output is in a supported folder such as dist, build, or out."
+        ]
+      },
+      {
+        heading: "Add your own domain",
+        paragraphs: [
+          "The w7s.cloud URL is enough to test the site. For production, add a CNAME file to the deployed output with www.example.com, then point that DNS name to w7w.cloud.",
+          "For safer ownership, add a TXT record such as _w7s.example.com with the GitHub repo value acme/bookkeeping.",
+          "The exact instructions live in Custom Domains, while Deploy From GitHub and URLs And Routing explain the deploy workflow and default URL. The same GitHub-first workflow can later add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
         ]
       },
       {
@@ -192,6 +263,22 @@ Keep the files simple and easy to edit.`
           "With the repo-first path, you keep source code, commit history, deploy history, portability, a path to custom domains, and a path to backend routes or storage later.",
           "You may give up a visual dashboard editor, native booking or ecommerce features, bundled support, and product-managed templates. That is why the decision should be honest.",
           "Use AI for the first draft. Use a builder subscription only if its ongoing features are worth paying for. Use W7S when what you need is hosting and a repeatable deploy path from GitHub."
+        ]
+      },
+      {
+        heading: "The live URL comes from GitHub",
+        paragraphs: [
+          "A repo like github.com/acme/ai-made-site deploys from main or master to https://acme.w7s.cloud/ai-made-site/.",
+          "A branch named draft/new-services-page is served from https://draft-new-services-page--acme.w7s.cloud/ai-made-site/.",
+          "If the owner and repo names match, such as github.com/acme/acme, the deployment can serve https://acme.w7s.cloud/."
+        ]
+      },
+      {
+        heading: "Move to a normal business domain",
+        paragraphs: [
+          "The W7S workflow can keep deploying from GitHub while the public site uses www.example.com or another non-w7s.cloud hostname.",
+          "Add a CNAME file to the deployed output, point the DNS CNAME to w7w.cloud, and add a TXT allowlist when you want the domain claim restricted to your owner or exact repository.",
+          "Use Custom Domains for the DNS setup, URLs And Routing for the default URL rules, and Deploy From GitHub for the workflow file. If the site becomes an app, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and usage checks."
         ]
       }
     ]

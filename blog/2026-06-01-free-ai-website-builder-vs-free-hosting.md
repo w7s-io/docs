@@ -88,6 +88,67 @@ Use GitHub plus W7S when:
 
 AI generation can be temporary. The repository should be durable.
 
+## What the Free W7S URL Looks Like
+
+When W7S deploys from GitHub, it does not ask you to invent a separate app name first. The URL is based on the GitHub owner and repository.
+
+For example:
+
+```text
+github.com/acme/free-ai-site
+```
+
+deploys from `main` or `master` to:
+
+```text
+https://acme.w7s.cloud/free-ai-site/
+```
+
+If you push a branch named `test/new-copy`, W7S serves that branch environment at:
+
+```text
+https://test-new-copy--acme.w7s.cloud/free-ai-site/
+```
+
+If your repository is named the same as the owner, such as `github.com/acme/acme`, it can serve the owner root:
+
+```text
+https://acme.w7s.cloud/
+```
+
+Those routing rules are covered in [URLs And Routing](/docs/urls-and-routing/). The deployment workflow itself is covered in [Deploy From GitHub](/docs/deploy-from-github/).
+
+## What If You Do Not Want a w7s.cloud Domain?
+
+Use a custom domain when the site is ready for customers.
+
+Add a `CNAME` file to the deployed files:
+
+```text title="CNAME"
+www.example.com
+```
+
+Then add DNS for that hostname:
+
+```text
+Type: CNAME
+Name: www
+Target: w7w.cloud
+Proxy: enabled
+```
+
+W7S reads `CNAME` from the root or common build output folders like `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`. Add a TXT allowlist if you want to restrict future claims to your GitHub owner or exact repository:
+
+```text
+Type: TXT
+Name: _w7s.example.com
+Value: acme/free-ai-site
+```
+
+See [Custom Domains](/docs/custom-domains/) for the DNS details. Custom domains are also part of the free-tier shape limits listed in [Deploy API](/docs/deploy-api/#free-tier-shape-caps), so check the current limits when planning multiple hostnames.
+
+If the site grows, the same repository can add more W7S features instead of starting over: backend routes, runtime values, key-value or database bindings, queues, schedules, workflows, logs, usage warnings, and custom domains. Start with the static deploy, then add only the pieces the site actually needs.
+
 ## Recommendation
 
 Use a free AI website builder to explore.
@@ -101,6 +162,11 @@ Use W7S to deploy it when the site should become more than a one-time prototype.
 - [W7S pricing](/docs/pricing/)
 - [Usage Accounting](/docs/usage-accounting/)
 - [Deploy From GitHub](/docs/deploy-from-github/)
+- [URLs And Routing](/docs/urls-and-routing/)
+- [Custom Domains](/docs/custom-domains/)
+- [Deploy API](/docs/deploy-api/#free-tier-shape-caps)
+- [Project Layouts](/docs/project-layouts/)
+- [Observability](/docs/observability/)
 - [W7S Build](https://build.w7s.io/)
 - [Lovable pricing](https://lovable.dev/pricing)
 - [Bolt pricing](https://bolt.new/pricing)

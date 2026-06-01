@@ -110,7 +110,70 @@ steps:
       token: ${{ github.token }}
 ```
 
-## Step 5: Improve for SEO
+## Step 5: Open the W7S URL
+
+After the workflow succeeds, W7S serves the website from a URL based on the GitHub repo.
+
+If your repository is:
+
+```text
+github.com/acme/bookkeeping
+```
+
+and you deploy from `main` or `master`, the live site is:
+
+```text
+https://acme.w7s.cloud/bookkeeping/
+```
+
+If you deploy from a branch, W7S creates a branch environment. A branch named `feature/contact-form` becomes `feature-contact-form`, so the branch URL is:
+
+```text
+https://feature-contact-form--acme.w7s.cloud/bookkeeping/
+```
+
+If your GitHub owner and repo have the same name, such as `github.com/acme/acme`, the repo can serve the owner root:
+
+```text
+https://acme.w7s.cloud/
+```
+
+The full mapping is in [URLs And Routing](/docs/urls-and-routing/). If the deploy fails because W7S cannot find a deployable frontend, check [Project Layouts](/docs/project-layouts/) and make sure the built site is in a supported output folder such as `dist/`, `build/`, or `out/`.
+
+## Step 6: Add Your Own Domain
+
+The `w7s.cloud` URL is enough to test and share the site. For a production business site, use your own hostname.
+
+Add a `CNAME` file to the site output:
+
+```text title="CNAME"
+www.example.com
+```
+
+If your framework builds into `dist/`, the file can be `dist/CNAME`. If it builds into `build/`, it can be `build/CNAME`. W7S also checks the repository root and common frontend output folders.
+
+Then create DNS:
+
+```text
+Type: CNAME
+Name: www
+Target: w7w.cloud
+Proxy: enabled
+```
+
+For a safer long-term setup, add a TXT allowlist that says which GitHub owner or repository can claim the hostname:
+
+```text
+Type: TXT
+Name: _w7s.example.com
+Value: acme/bookkeeping
+```
+
+Follow [Custom Domains](/docs/custom-domains/) for the complete DNS setup.
+
+This is also the point where the project can grow. A first AI site may only need static files, but the same GitHub-first workflow can later deploy JavaScript or TypeScript backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, usage checks, and custom domains. Use [Project Layouts](/docs/project-layouts/) when the file structure changes.
+
+## Step 7: Improve for SEO
 
 After the first deploy, improve the parts search engines and customers actually read:
 
@@ -142,7 +205,10 @@ That is how an AI-generated site becomes a website you can keep.
 
 - [W7S Build](https://build.w7s.io/)
 - [Deploy From GitHub](/docs/deploy-from-github/)
+- [URLs And Routing](/docs/urls-and-routing/)
+- [Custom Domains](/docs/custom-domains/)
 - [Project Layouts](/docs/project-layouts/)
+- [Observability](/docs/observability/)
 - [Lovable](https://lovable.dev/)
 - [Bolt.new](https://bolt.new/)
 - [Emergent](https://emergent.sh/)
