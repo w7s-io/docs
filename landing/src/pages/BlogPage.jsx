@@ -15,6 +15,23 @@ const articleUrl = (article) => `/blog/${article.slug}/`;
 const source = (label, url) => ({ label, url });
 
 const articleSources = {
+  "netlify-drop-vs-github-first-deploys": [
+    source("Netlify Drop", "https://app.netlify.com/drop"),
+    source("Get Started with Netlify Drop", "https://docs.netlify.com/start/get-started-with-drop/"),
+    source("Netlify create deploys", "https://docs.netlify.com/deploy/create-deploys/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+  ],
+  "github-basics-for-first-w7s-deploy": [
+    source("GitHub Actions", "https://docs.github.com/en/actions"),
+    source("GitHub quickstart", "https://docs.github.com/en/get-started/start-your-journey/hello-world"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+  ],
+  "from-empty-folder-to-w7s": [
+    source("GitHub quickstart", "https://docs.github.com/en/get-started/start-your-journey/hello-world"),
+    source("GitHub Actions", "https://docs.github.com/en/actions"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Project layouts", "/docs/project-layouts/"),
+  ],
   "w7s-vs-vercel-github-native-deploys-without-a-dashboard": [
     source("Vercel deployments", "https://vercel.com/docs/deployments"),
     source("Vercel pricing", "https://vercel.com/pricing"),
@@ -435,7 +452,7 @@ function BlogHero() {
             W7S Blog
           </div>
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.92] text-white">
-            Notes for building outside the usual cloud path.
+            Notes for building (and deploying) without friction
           </h1>
           <p className="mt-6 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-400">
             Practical migration notes, storage patterns, and platform comparisons for teams that want GitHub-native deploys, explicit infrastructure, and a self-hostable path.
@@ -487,8 +504,16 @@ function BlogIndex() {
       .filter(Boolean),
     []
   );
+  const latest = useMemo(() => blogArticles.slice(0, 4), []);
+  const promotedSlugs = useMemo(
+    () => new Set([
+      ...featuredBlogArticles,
+      ...latest.map((article) => article.slug),
+    ]),
+    [latest]
+  );
   const remaining = blogArticles.filter(
-    (article) => !featuredBlogArticles.includes(article.slug)
+    (article) => !promotedSlugs.has(article.slug)
   );
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(blogArticles.map((article) => article.category))).sort()],
@@ -530,6 +555,25 @@ function BlogIndex() {
       <Header />
       <main>
         <BlogHero />
+        <section className="border-t border-white/10 bg-[#070708] py-16 sm:py-20">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-600">Newest</div>
+                <h2 className="mt-2 font-display text-4xl leading-none text-white">Latest articles</h2>
+              </div>
+              <a href="/rss.xml" className="text-xs font-bold uppercase tracking-[0.22em] text-zinc-500 hover:text-amber-400">
+                RSS feed
+              </a>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {latest.map((article) => (
+                <ArticleCard key={article.slug} article={article} />
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#050505] py-16 sm:py-20">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

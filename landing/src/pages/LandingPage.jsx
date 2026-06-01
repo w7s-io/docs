@@ -5,6 +5,7 @@ import Capabilities from "../components/landing/Capabilities";
 import BatteriesIncluded from "../components/landing/BatteriesIncluded";
 import Comparison from "../components/landing/Comparison";
 import Pricing from "../components/landing/Pricing";
+import LatestBlogPosts from "../components/landing/LatestBlogPosts";
 import TryItNow from "../components/landing/TryItNow";
 import FAQ from "../components/landing/FAQ";
 import AboutProject from "../components/landing/AboutProject";
@@ -21,6 +22,7 @@ export default function LandingPage() {
         <BatteriesIncluded />
         <Comparison />
         <Pricing />
+        <LatestBlogPosts />
         <TryItNow />
         <FAQ />
         <AboutProject />

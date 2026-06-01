@@ -1,5 +1,144 @@
 export const blogArticles = [
   {
+    slug: "netlify-drop-vs-github-first-deploys",
+    title: "Netlify Drop Is Easy. GitHub First Is Still Worth It.",
+    category: "Workflow",
+    readingTime: "6 min",
+    summary:
+      "Netlify Drop is a fast way to publish a folder, but putting the project in GitHub first gives beginners a repeatable path to W7S deploys, history, rollbacks, and reviewable changes.",
+    sections: [
+      {
+        heading: "Drag and drop optimizes for the first publish",
+        paragraphs: [
+          "Netlify Drop is one of the lowest-friction ways to put a static project online. Drop a folder, zip file, or single HTML file into the browser, and Netlify gives you a shareable URL. That is useful, especially for prototypes and projects exported from AI coding tools.",
+          "The problem shows up on the second deploy. Netlify's own docs describe the update path for a Drop project as rebuilding or editing the local folder, then dragging the updated output folder into Netlify again.",
+          "That is fine for a disposable preview. It is weaker when the project is something you expect to keep changing."
+        ]
+      },
+      {
+        heading: "GitHub first turns a folder into a project",
+        paragraphs: [
+          "Putting the project into GitHub before deploying to W7S adds one step, but that step buys history, repeatability, collaboration, and a deploy workflow that can grow with the app.",
+          "Every change has a checkpoint, the current source is visible, old versions can be recovered, and deploy rules live beside the code instead of inside a manual upload habit.",
+          "That is the practical reason the extra step is worth it. Drag and drop is great for 'look at this.' GitHub first is better for 'this is the project.'"
+        ],
+        code: `name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: w7s-io/w7s-cloud@v1
+        with:
+          token: \${{ github.token }}`
+      },
+      {
+        heading: "The beginner-friendly recommendation",
+        paragraphs: [
+          "If you have a folder on your computer, create a GitHub repository, upload or commit the files, add `.github/workflows/deploy.yml`, push to `main`, and open the W7S URL for the repository.",
+          "That is a little more work than dropping a folder into a browser, but it creates a project that has memory. A beginner learns the durable loop: save a change, push it, let automation deploy it.",
+          "Use Netlify Drop for quick public previews, one-off demos, and throwaway static files. Use GitHub plus W7S when the project should keep living."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "github-basics-for-first-w7s-deploy",
+    title: "GitHub Basics for Your First W7S Deploy",
+    category: "Workflow",
+    readingTime: "7 min",
+    summary:
+      "A beginner-friendly path from no GitHub experience to a repository that can deploy with W7S.",
+    sections: [
+      {
+        heading: "You only need a few GitHub ideas first",
+        paragraphs: [
+          "You do not need to become a Git expert before deploying to W7S. You do need one basic idea: GitHub should become the home of the project, not just a place you visit after the project is finished.",
+          "A repository is the project folder on GitHub. A commit is a saved checkpoint. A branch is a line of work, usually starting with `main`. A push sends changes to GitHub. GitHub Actions runs automation from the repository.",
+          "W7S uses those pieces instead of asking you to recreate the project in a separate dashboard."
+        ]
+      },
+      {
+        heading: "Start in the GitHub website",
+        paragraphs: [
+          "If the command line is still unfamiliar, start in the GitHub web UI. Create an account, create a new repository, choose a short name, upload your `index.html`, CSS, JavaScript, images, and other files, then commit the upload to `main`.",
+          "At that point, the project has a permanent home and a first checkpoint. That alone is already better than keeping the only copy in a downloads folder or an exported zip.",
+          "The next step is adding a workflow file so GitHub Actions can deploy the repository."
+        ],
+        code: `.github/
+  workflows/
+    deploy.yml`
+      },
+      {
+        heading: "Add the deploy workflow",
+        paragraphs: [
+          "Create `.github/workflows/deploy.yml`, paste the W7S workflow, and commit it. The next push to `main` runs the deploy. You can also run it manually from the Actions tab because the workflow includes `workflow_dispatch`.",
+          "If your project is plain HTML, CSS, and JavaScript, the minimal workflow can deploy it directly. If your project uses React, Vite, Astro, Docusaurus, or another build tool, add Node setup, dependency install, and build steps before the W7S action.",
+          "This teaches enough GitHub to be productive: where the project lives, how to save a change, where deploy automation runs, and how to see whether a deploy failed."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "from-empty-folder-to-w7s",
+    title: "From Empty Folder to W7S Deploy",
+    category: "Workflow",
+    readingTime: "7 min",
+    summary:
+      "Start from scratch with a tiny website, put it in GitHub, and deploy it to W7S with GitHub Actions.",
+    sections: [
+      {
+        heading: "Create the smallest useful site",
+        paragraphs: [
+          "Start with a new folder named `hello-w7s`. Add an `index.html` file and a `style.css` file. Open the HTML file in a browser before thinking about deployment.",
+          "The first version should stay boring. A heading, a paragraph, and a stylesheet are enough. The goal is to prove the repository, workflow, and W7S URL before adding a framework or backend.",
+          "Once it works locally, the folder is ready to become a GitHub repository."
+        ],
+        code: `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello W7S</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Hello W7S</h1>
+      <p>This page deploys from GitHub Actions.</p>
+    </main>
+  </body>
+</html>`
+      },
+      {
+        heading: "Put it in GitHub",
+        paragraphs: [
+          "Create a new repository named `hello-w7s`. If you are using the GitHub website, upload both files and commit them to `main`. If you are using the command line, initialize Git, commit the files, add the GitHub remote, and push `main`.",
+          "This is the moment where the project becomes easier to maintain. GitHub now has the source, the commit history, and the place where deploy automation will run.",
+          "After that, add `.github/workflows/deploy.yml` with the W7S action and commit it."
+        ]
+      },
+      {
+        heading: "Keep the loop simple",
+        paragraphs: [
+          "After the first deploy, the daily workflow is edit files, commit the change, push to `main`, and let GitHub Actions deploy. Every deploy comes from a saved checkpoint.",
+          "From there you can add a frontend build step, a backend route in `backend/index.ts`, a custom domain with `CNAME`, storage bindings with `w7s.json`, or branch deploys for experiments.",
+          "The right first milestone is not a complicated app. It is a tiny app that deploys in a way you can repeat."
+        ]
+      }
+    ]
+  },
+  {
     slug: "w7s-vs-vercel-github-native-deploys-without-a-dashboard",
     title: "W7S vs Vercel: GitHub-Native Deploys Without a Dashboard",
     category: "Alternatives",
