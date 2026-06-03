@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import {usePluginData} from '@docusaurus/useGlobalData';
 
 type SearchDocument = {
+  type?: 'docs' | 'blog';
   title: string;
   description: string;
   path: string;
@@ -58,6 +59,8 @@ const snippetFor = (doc: SearchDocument, terms: string[]) => {
   const suffix = end < source.length ? '...' : '';
   return `${prefix}${source.slice(start, end).trim()}${suffix}`;
 };
+
+const typeLabelFor = (doc: SearchDocument) => (doc.type === 'blog' ? 'Blog' : 'Docs');
 
 const isEditableTarget = (target: EventTarget | null) => {
   if (!(target instanceof HTMLElement)) return false;
@@ -139,7 +142,7 @@ export default function SearchBar(): React.ReactNode {
         <div className="w7s-search-overlay" onMouseDown={() => setOpen(false)}>
           <section
             aria-modal="true"
-            aria-label="Search docs"
+            aria-label="Search docs and blog"
             className="w7s-search-panel"
             role="dialog"
             onMouseDown={(event) => event.stopPropagation()}>
@@ -147,9 +150,9 @@ export default function SearchBar(): React.ReactNode {
               <SearchIcon />
               <input
                 ref={inputRef}
-                aria-label="Search docs"
+                aria-label="Search docs and blog"
                 className="w7s-search-input"
-                placeholder="Search docs"
+                placeholder="Search docs and blog"
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
@@ -179,7 +182,10 @@ export default function SearchBar(): React.ReactNode {
                     key={result.path}
                     to={result.path}
                     onClick={() => setOpen(false)}>
-                    <span className="w7s-search-result-title">{result.title}</span>
+                    <span className="w7s-search-result-header">
+                      <span className="w7s-search-result-title">{result.title}</span>
+                      <span className="w7s-search-result-type">{typeLabelFor(result)}</span>
+                    </span>
                     <span className="w7s-search-result-snippet">{result.snippet}</span>
                     {result.headings[0] && (
                       <span className="w7s-search-result-meta">{result.headings[0]}</span>
@@ -187,7 +193,7 @@ export default function SearchBar(): React.ReactNode {
                   </Link>
                 ))
               ) : (
-                <div className="w7s-search-empty">No matching docs</div>
+                <div className="w7s-search-empty">No matching docs or blog posts</div>
               )}
             </div>
           </section>

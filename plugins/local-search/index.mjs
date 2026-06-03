@@ -72,13 +72,14 @@ const plainText = (body) =>
     .replace(/\s+/g, " ")
     .trim();
 
-const buildDocuments = async (directory, routeBasePath = "") => {
+const buildDocuments = async (directory, routeBasePath = "", type = "docs") => {
   const files = await listDocs(directory);
   return Promise.all(
     files.map(async (file) => {
       const source = await fs.readFile(file, "utf8");
       const { frontMatter, body } = parseFrontMatter(source);
       return {
+        type,
         title: titleFor(frontMatter, body, file),
         description: String(frontMatter.description || "").trim(),
         path: routePathFor(frontMatter, file, routeBasePath),
@@ -90,8 +91,8 @@ const buildDocuments = async (directory, routeBasePath = "") => {
 };
 
 const buildSearchIndex = async (siteDir) => {
-  const docs = await buildDocuments(path.join(siteDir, "docs"));
-  const blog = await buildDocuments(path.join(siteDir, "blog"), "blog");
+  const docs = await buildDocuments(path.join(siteDir, "docs"), "", "docs");
+  const blog = await buildDocuments(path.join(siteDir, "blog"), "blog", "blog");
   return [...docs, ...blog];
 };
 
