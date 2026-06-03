@@ -86,7 +86,7 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            <em className="text-amber-400 italic">Instant cloud</em> infra for the agentic era
+            Instant cloud infra <em className="text-amber-400 italic">for the agentic era</em>
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
