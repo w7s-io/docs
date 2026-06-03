@@ -1,8 +1,10 @@
 ---
 id: security
 title: Security
-description: Security best practices for W7S deployments, tenant isolation, cookies, XSS, browser storage, and abuse prevention.
+description: Security best practices for apps deployed on W7S, including tenant isolation, cookies, XSS, browser storage, uploads, and GitHub workflows.
 ---
+
+This page is for developers deploying frontend and backend applications on W7S.
 
 W7S Cloud serves organization deployments from `*.w7s.cloud`.
 
@@ -31,8 +33,9 @@ Avoid designs that rely on the shared parent domain:
 - Do not use parent-domain cookies for auth.
 - Do not trust requests because they came from another `*.w7s.cloud` subdomain.
 - Do not share browser storage assumptions across tenants.
-- Do not host multiple GitHub organizations on the same tenant hostname.
-- Do not put privileged W7S control-plane apps inside the tenant wildcard.
+- Do not build authorization logic that accepts every `*.w7s.cloud` origin.
+- Do not mix unrelated applications with different trust levels on the same
+  tenant hostname unless they are designed to share the same users and storage.
 
 If your application needs admin pages, API routes, previews, or uploads, prefer
 tenant-owned paths:
@@ -76,20 +79,24 @@ Set-Cookie: __Host-session=...; Path=/; Secure; HttpOnly; SameSite=Lax
 ## Cookie bombing
 
 Cookie bombing happens when a browser sends too many or too-large cookies,
-causing requests to exceed header limits or consume platform resources.
+causing requests to exceed header limits or break your backend routes.
 
 Best practices:
 
 - Never set cookies for `.w7s.cloud`.
 - Keep cookie values small.
-- Reject oversized `Cookie` headers at the edge or in middleware.
+- Reject oversized `Cookie` headers in your backend before doing expensive work.
 - Keep an allowlist of expected cookie names when your app controls them.
 - Log and investigate unusually large cookie headers or cookie counts.
 
-Recommended default:
+Recommended backend check:
 
-```text
-Reject Cookie headers over 8 KB.
+```js
+const cookie = request.headers.get("cookie") || "";
+
+if (cookie.length > 8 * 1024) {
+  return new Response("Cookie header too large", { status: 431 });
+}
 ```
 
 If you can allowlist cookies, keep it small:
@@ -126,6 +133,10 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 For existing apps, start with CSP report-only mode, review violations, then
 enforce the policy.
 
+If your backend returns HTML, set these headers from your backend response. If
+your frontend is static, configure your framework or build output to send the
+headers where supported.
+
 ## Storage poisoning
 
 Browser storage is scoped to the exact origin, so these are separate:
@@ -157,13 +168,16 @@ Set-Cookie: __Host-session=...; Path=/; Secure; HttpOnly; SameSite=Lax
 If your app uses browser cookies, state-changing requests should validate the
 request origin and CSRF token.
 
-For mutating methods:
+For mutating methods in your backend:
 
-```text
-If method is POST, PUT, PATCH, or DELETE
-and Origin is present
-and Origin does not exactly match the tenant origin
-then block.
+```js
+const mutates = ["POST", "PUT", "PATCH", "DELETE"].includes(request.method);
+const origin = request.headers.get("origin");
+const expectedOrigin = new URL(request.url).origin;
+
+if (mutates && origin && origin !== expectedOrigin) {
+  return new Response("Invalid origin", { status: 403 });
+}
 ```
 
 Do not allow requests just because the origin ends in `.w7s.cloud`.
@@ -209,13 +223,13 @@ Only add broader permissions when a workflow needs them.
 
 ## Monitoring
 
-Log and alert on security-relevant events:
+Log security-relevant events from your application:
 
-- blocked parent-domain `Set-Cookie` attempts
+- attempts to set or use parent-domain cookies
 - oversized `Cookie` headers
 - excessive cookie counts
 - CSP violations
-- XSS or injection WAF matches
+- rejected XSS, injection, or unsafe upload attempts
 - mutating requests with unexpected origins
 - uploaded-content responses attempting to set cookies
 - repeated auth failures
@@ -230,7 +244,7 @@ Before treating a deployment as production-ready:
 
 - Use host-only `__Host-` cookies for sessions.
 - Do not set `Domain=.w7s.cloud` or `Domain=w7s.cloud`.
-- Reject oversized cookie headers.
+- Reject oversized cookie headers in backend routes.
 - Add a CSP and `nosniff`.
 - Validate exact origins on mutating browser requests.
 - Use CSRF protection when browser cookies authorize writes.
