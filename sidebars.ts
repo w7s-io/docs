@@ -6,6 +6,7 @@ const sidebars: SidebarsConfig = {
     'deploy-from-github',
     'self-host',
     'recommendations',
+    'security',
     'pricing',
     'project-layouts',
     'local-development',
