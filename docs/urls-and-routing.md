@@ -72,3 +72,31 @@ points at:
 ```text
 https://github.com/sadasant/example
 ```
+
+## Custom-domain only routing
+
+If your deployment has a `CNAME` custom domain, you can disable the default
+`w7s.cloud` route:
+
+```json title="w7s.json"
+{
+  "routing": {
+    "defaultDomain": false
+  }
+}
+```
+
+When this is set, the deployment only serves through custom domains declared in
+`CNAME`. The deploy fails if no custom domain attaches successfully.
+
+Use this when a production app should have one canonical origin, such as:
+
+```text
+https://app.example.com/
+```
+
+instead of also being reachable at:
+
+```text
+https://owner.w7s.cloud/repo/
+```

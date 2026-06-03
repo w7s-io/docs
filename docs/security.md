@@ -36,6 +36,7 @@ Avoid designs that rely on the shared parent domain:
 - Do not build authorization logic that accepts every `*.w7s.cloud` origin.
 - Do not mix unrelated applications with different trust levels on the same
   tenant hostname unless they are designed to share the same users and storage.
+- For production custom-domain apps, consider `routing.defaultDomain=false`.
 
 If your application needs admin pages, API routes, previews, or uploads, prefer
 tenant-owned paths:
@@ -46,6 +47,20 @@ https://<org>.w7s.cloud/api/
 ```
 
 For scriptable uploaded content, use a separate content domain when possible.
+
+For production apps with a custom domain, consider disabling the default
+`w7s.cloud` route so the app has one canonical origin:
+
+```json title="w7s.json"
+{
+  "routing": {
+    "defaultDomain": false
+  }
+}
+```
+
+This requires a `CNAME` custom domain and prevents the same deployment from also
+being served from `https://<org>.w7s.cloud/...`.
 
 ## Cookie leakage
 
@@ -75,6 +90,10 @@ Set-Cookie: __Host-session=...; Path=/; Secure; HttpOnly; SameSite=Lax
 
 `__Host-` cookies must be secure, must use `Path=/`, and must not include a
 `Domain` attribute. That makes them bound to the exact tenant hostname.
+
+If you use `routing.defaultDomain=false`, set cookies only for your custom
+domain origin. That reduces confusion around which hostname owns sessions,
+redirects, storage, and CSRF checks.
 
 ## Cookie bombing
 
@@ -244,6 +263,8 @@ Before treating a deployment as production-ready:
 
 - Use host-only `__Host-` cookies for sessions.
 - Do not set `Domain=.w7s.cloud` or `Domain=w7s.cloud`.
+- Use `routing.defaultDomain=false` when production traffic should only use a
+  custom domain.
 - Reject oversized cookie headers in backend routes.
 - Add a CSP and `nosniff`.
 - Validate exact origins on mutating browser requests.

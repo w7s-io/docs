@@ -56,3 +56,26 @@ w7s-io/docs,guerrerocarlos
 ```
 
 If multiple repositories try to claim the same hostname, the TXT allowlist decides which repository is allowed.
+
+## Custom-domain only
+
+By default, W7S serves a deployment from both its default `w7s.cloud` URL and
+any custom domain declared in `CNAME`.
+
+For production apps that should only be reachable from your own hostname, add
+`routing.defaultDomain=false` to `w7s.json`:
+
+```json title="w7s.json"
+{
+  "routing": {
+    "defaultDomain": false
+  }
+}
+```
+
+With this setting, the deployment must include a `CNAME` file and at least one
+custom domain must attach successfully. Requests to the default `w7s.cloud` URL
+will behave as if the deployment is not present.
+
+This is recommended when you want one canonical origin for cookies, browser
+storage, CSP, redirects, and application security policy.
