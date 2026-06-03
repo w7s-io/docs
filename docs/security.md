@@ -59,7 +59,7 @@ For production apps with a custom domain, consider disabling the default
 }
 ```
 
-This requires a `CNAME` custom domain and prevents the same deployment from also
+This requires a [`CNAME`](https://w7s.io/docs/custom-domains/) custom domain and prevents the same deployment from also
 being served from `https://<org>.w7s.cloud/...`.
 
 ## Cookie leakage

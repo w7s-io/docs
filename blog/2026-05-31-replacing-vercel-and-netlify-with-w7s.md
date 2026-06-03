@@ -28,7 +28,7 @@ This article maps the common Vercel and Netlify product shape onto W7S component
 | Edge functions | Native backend on the W7S runtime | Small request handlers near the app |
 | Environment variables | `w7s.json` vars and secrets | Repo-declared runtime contract |
 | Storage integrations | DB, KV, FS, queues, workflows | Managed resources scoped by repo and environment |
-| Custom domains | `CNAME` file plus DNS authorization | Domain claims visible in the repo |
+| Custom domains | [`CNAME`](https://w7s.io/docs/custom-domains/) file plus DNS authorization | Domain claims visible in the repo |
 | Build settings | GitHub Actions workflow | Install, build, and package steps in code review |
 | Platform dashboard | GitHub workflow plus W7S deploy API | Auditable deploy path |
 
@@ -186,7 +186,7 @@ This is the more important preview feature. The URL is useful. The isolated runt
 
 On many platforms, custom domains are project settings. That is convenient until the domain becomes part of the app contract and no one remembers where it is configured.
 
-W7S lets the repository declare hostnames with a `CNAME` file:
+W7S lets the repository declare hostnames with a [`CNAME`](https://w7s.io/docs/custom-domains/) file:
 
 ```text title="CNAME"
 www.example.com

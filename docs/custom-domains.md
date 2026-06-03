@@ -4,14 +4,14 @@ title: Custom Domains
 description: Serve a W7S deployment from your own hostname.
 ---
 
-Add a `CNAME` file to claim one or more custom hostnames for a deployment.
+Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to claim one or more custom hostnames for a deployment.
 
 ```text title="CNAME"
 fullstack-example.w7s.io
 www.fullstack-example.w7s.io
 ```
 
-W7S reads `CNAME` from the deployed archive. Common locations include:
+W7S reads [`CNAME`](https://w7s.io/docs/custom-domains/) from the deployed archive. Common locations include:
 
 ```text
 CNAME
@@ -26,7 +26,7 @@ out/CNAME
 
 Create DNS for each hostname and point it at W7S.
 
-For a subdomain, create a proxied CNAME:
+For a subdomain, create a proxied [CNAME](https://w7s.io/docs/custom-domains/):
 
 ```text
 Type: CNAME
@@ -60,7 +60,7 @@ If multiple repositories try to claim the same hostname, the TXT allowlist decid
 ## Custom-domain only
 
 By default, W7S serves a deployment from both its default `w7s.cloud` URL and
-any custom domain declared in `CNAME`.
+any custom domain declared in [`CNAME`](https://w7s.io/docs/custom-domains/).
 
 For production apps that should only be reachable from your own hostname, add
 `routing.defaultDomain=false` to `w7s.json`:
@@ -73,7 +73,7 @@ For production apps that should only be reachable from your own hostname, add
 }
 ```
 
-With this setting, the deployment must include a `CNAME` file and at least one
+With this setting, the deployment must include a [`CNAME`](https://w7s.io/docs/custom-domains/) file and at least one
 custom domain must attach successfully. Requests to the default `w7s.cloud` URL
 will behave as if the deployment is not present.
 

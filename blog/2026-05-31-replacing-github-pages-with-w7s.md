@@ -28,7 +28,7 @@ W7S is for the moment after "static is enough" stops being true:
 | Static site | Static asset deploy | HTML, CSS, JS, docs, landing pages |
 | Jekyll or Actions build | GitHub Actions build | Any build toolchain |
 | `github.io` URL | W7S owner/repo URL | Predictable app URL |
-| Custom domain | `CNAME` plus DNS authorization | Repo-visible hostname claims |
+| Custom domain | [`CNAME`](https://w7s.io/docs/custom-domains/) plus DNS authorization | Repo-visible hostname claims |
 | Branch or docs folder source | Workflow-selected output directory | Explicit packaging |
 | No backend | Native backend | API routes beside static assets |
 | No storage | DB, KV, FS bindings | App data without another platform |
@@ -40,7 +40,7 @@ GitHub's own [Pages documentation](https://docs.github.com/en/pages) makes the c
 
 The W7S argument starts when the repository needs more than static files. W7S keeps the release path in GitHub through [deploys from GitHub Actions](/docs/deploy-from-github/), but it can package a static frontend and native backend from the same repo. The [project layout docs](/docs/project-layouts/) are the important source here because they show how W7S detects frontend output and backend entrypoints without asking the team to split the app into separate platforms.
 
-Custom domains are another practical difference. GitHub documents [custom domain configuration for Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site), and W7S uses a similar repository-visible idea with `CNAME` plus DNS authorization in its [custom domains docs](/docs/custom-domains/). The W7S advantage is not merely owning a hostname; it is keeping that hostname attached to an app that can also have backend routes and bindings.
+Custom domains are another practical difference. GitHub documents [custom domain configuration for Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site), and W7S uses a similar repository-visible idea with [`CNAME`](https://w7s.io/docs/custom-domains/) plus DNS authorization in its [custom domains docs](/docs/custom-domains/). The W7S advantage is not merely owning a hostname; it is keeping that hostname attached to an app that can also have backend routes and bindings.
 
 Once a site needs forms, search, uploads, status endpoints, or per-branch test data, W7S provides the next layer directly. [URLs and routing](/docs/urls-and-routing/) describe the owner/repository URL model, while [storage bindings](/docs/storage-bindings/) explain how databases, key-value stores, and file buckets can be declared by the app. That gives a growing Pages-style site a path to become a small application without creating a separate backend product.
 
@@ -175,7 +175,7 @@ The backend receives queue and schedule deliveries at declared paths. There is n
 
 ## Custom Domains Stay Reviewable
 
-GitHub Pages supports custom domains. W7S keeps the same repository-friendly idea with a `CNAME` file:
+GitHub Pages supports custom domains. W7S keeps the same repository-friendly idea with a [`CNAME`](https://w7s.io/docs/custom-domains/) file:
 
 ```text title="CNAME"
 docs.example.com

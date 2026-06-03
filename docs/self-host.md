@@ -221,7 +221,7 @@ The branch prefix is the sanitized W7S environment name. W7S lowercases the bran
 
 ## Custom Domains
 
-Apps can still declare custom domains with a `CNAME` file:
+Apps can still declare custom domains with a [`CNAME`](https://w7s.io/docs/custom-domains/) file:
 
 ```text
 app.customer.com

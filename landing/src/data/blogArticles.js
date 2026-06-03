@@ -63,8 +63,8 @@ jobs:
       {
         heading: "Use your own domain",
         paragraphs: [
-          "The default w7s.cloud URL is useful for testing and sharing, but a production business site can use a normal domain. Add a CNAME file to the deployed output with a hostname like www.example.com.",
-          "Then create DNS for that hostname with a CNAME pointing to w7w.cloud. W7S also recommends a TXT allowlist, such as _w7s.example.com with the value acme/bookkeeping-site, so only that GitHub owner or repo can claim the hostname later.",
+          "The default w7s.cloud URL is useful for testing and sharing, but a production business site can use a normal domain. Add a [CNAME](https://w7s.io/docs/custom-domains/) file to the deployed output with a hostname like www.example.com.",
+          "Then create DNS for that hostname with a [CNAME](https://w7s.io/docs/custom-domains/) pointing to w7w.cloud. W7S also recommends a TXT allowlist, such as _w7s.example.com with the value acme/bookkeeping-site, so only that GitHub owner or repo can claim the hostname later.",
           "The W7S docs cover the exact steps in [Deploy From GitHub](/docs/deploy-from-github/), [URLs And Routing](/docs/urls-and-routing/), [Custom Domains](/docs/custom-domains/), and [Project Layouts](/docs/project-layouts/). The same repo can also grow later with backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ],
         codePath: "CNAME and DNS record",
@@ -122,9 +122,9 @@ Target: w7w.cloud`
       {
         heading: "Custom domains stay repo-first",
         paragraphs: [
-          "To use a non-w7s.cloud hostname, add a CNAME file to the deployed files and point the DNS CNAME at w7w.cloud.",
+          "To use a non-w7s.cloud hostname, add a [CNAME](https://w7s.io/docs/custom-domains/) file to the deployed files and point the DNS [CNAME](https://w7s.io/docs/custom-domains/) at w7w.cloud.",
           "For stronger ownership protection, add a TXT allowlist naming the GitHub owner or exact repo that is allowed to claim the hostname.",
-          "Use the [Custom Domains](/docs/custom-domains/) docs for DNS setup, [URLs And Routing](/docs/urls-and-routing/) for the default W7S URL rules, and [Project Layouts](/docs/project-layouts/) to make sure the CNAME file is included in the deployed archive. The same repository can later add backend routes, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
+          "Use the [Custom Domains](/docs/custom-domains/) docs for DNS setup, [URLs And Routing](/docs/urls-and-routing/) for the default W7S URL rules, and [Project Layouts](/docs/project-layouts/) to make sure the [CNAME](https://w7s.io/docs/custom-domains/) file is included in the deployed archive. The same repository can later add backend routes, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       }
     ]
@@ -173,7 +173,7 @@ Target: w7w.cloud`
       {
         heading: "Free hosting can still use a real domain",
         paragraphs: [
-          "When the site is ready for customers, add a CNAME file with a hostname like www.example.com and point that hostname to w7w.cloud in DNS.",
+          "When the site is ready for customers, add a [CNAME](https://w7s.io/docs/custom-domains/) file with a hostname like www.example.com and point that hostname to w7w.cloud in DNS.",
           "Add a TXT allowlist when you want to restrict future custom-domain claims to a GitHub owner or exact repo.",
           "Check [Custom Domains](/docs/custom-domains/) for DNS details, [Deploy From GitHub](/docs/deploy-from-github/) for the workflow, [URLs And Routing](/docs/urls-and-routing/) for the default URL, and [Deploy API](/docs/deploy-api/#free-tier-shape-caps) for current shape limits such as custom-domain count. If the project grows, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
@@ -221,7 +221,7 @@ Keep the files simple and easy to edit.`
       {
         heading: "Add your own domain",
         paragraphs: [
-          "The w7s.cloud URL is enough to test the site. For production, add a CNAME file to the deployed output with www.example.com, then point that DNS name to w7w.cloud.",
+          "The w7s.cloud URL is enough to test the site. For production, add a [CNAME](https://w7s.io/docs/custom-domains/) file to the deployed output with www.example.com, then point that DNS name to w7w.cloud.",
           "For safer ownership, add a TXT record such as _w7s.example.com with the GitHub repo value acme/bookkeeping.",
           "The exact instructions live in [Custom Domains](/docs/custom-domains/), while [Deploy From GitHub](/docs/deploy-from-github/) and [URLs And Routing](/docs/urls-and-routing/) explain the deploy workflow and default URL. The same GitHub-first workflow can later add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
@@ -301,7 +301,7 @@ jobs:
         heading: "Move to a normal business domain",
         paragraphs: [
           "The W7S workflow can keep deploying from GitHub while the public site uses www.example.com or another non-w7s.cloud hostname.",
-          "Add a CNAME file to the deployed output, point the DNS CNAME to w7w.cloud, and add a TXT allowlist when you want the domain claim restricted to your owner or exact repository.",
+          "Add a [CNAME](https://w7s.io/docs/custom-domains/) file to the deployed output, point the DNS [CNAME](https://w7s.io/docs/custom-domains/) to w7w.cloud, and add a TXT allowlist when you want the domain claim restricted to your owner or exact repository.",
           "Use [Custom Domains](/docs/custom-domains/) for the DNS setup, [URLs And Routing](/docs/urls-and-routing/) for the default URL rules, and [Deploy From GitHub](/docs/deploy-from-github/) for the workflow file. If the site becomes an app, the same repo can add backend routes, runtime values, storage, queues, schedules, workflows, logs, and [usage checks](/docs/usage-accounting/)."
         ]
       }
@@ -441,7 +441,7 @@ jobs:
         heading: "Keep the loop simple",
         paragraphs: [
           "After the first deploy, the daily workflow is edit files, commit the change, push to `main`, and let GitHub Actions deploy. Every deploy comes from a saved checkpoint.",
-          "From there you can add a frontend build step, a backend route in `backend/index.ts`, a custom domain with `CNAME`, storage bindings with `w7s.json`, or branch deploys for experiments.",
+          "From there you can add a frontend build step, a backend route in `backend/index.ts`, a custom domain with [`CNAME`](https://w7s.io/docs/custom-domains/), storage bindings with `w7s.json`, or branch deploys for experiments.",
           "The right first milestone is not a complicated app. It is a tiny app that deploys in a way you can repeat."
         ]
       }
@@ -622,7 +622,7 @@ jobs:
       {
         heading: "URLs and domains",
         paragraphs: [
-          "The default URL is based on the GitHub owner and repo, such as `https://owner.w7s.cloud/repo/`. A same-name repository can serve the owner root. Custom domains are declared with a `CNAME` file and verified through DNS ownership rules.",
+          "The default URL is based on the GitHub owner and repo, such as `https://owner.w7s.cloud/repo/`. A same-name repository can serve the owner root. Custom domains are declared with a [`CNAME`](https://w7s.io/docs/custom-domains/) file and verified through DNS ownership rules.",
           "That gives static sites a path from first deploy to custom domain without creating a separate app record by hand.",
           "The best migration test is boring: push a branch, confirm the generated URL, compare the rendered site, then move the domain only after the workflow is repeatable."
         ]
@@ -719,7 +719,7 @@ jobs:
         heading: "The repository declares the hostname",
         paragraphs: [
           "Custom domains are often treated as platform account settings, which makes them easy to forget and hard to review. The app depends on the hostname, but the hostname lives somewhere outside the app.",
-          "A W7S app can include a `CNAME` file with one or more hostnames. During deploy, W7S reads that file and stores custom-domain mappings for the deployment.",
+          "A W7S app can include a [`CNAME`](https://w7s.io/docs/custom-domains/) file with one or more hostnames. During deploy, W7S reads that file and stores custom-domain mappings for the deployment.",
           "This keeps the custom domain close to the application source instead of turning it into a hidden dashboard setting."
         ]
       },
@@ -1423,7 +1423,7 @@ jobs:
         heading: "The next step after static",
         paragraphs: [
           "A Pages site often outgrows static hosting when it needs a form handler, status API, search endpoint, uploaded files, or generated data. W7S lets the same repository add a native backend instead of calling out to a separate service.",
-          "Custom domains can still live in a `CNAME` file, while DNS remains the ownership boundary. Branch deploys can preview runtime changes, not just static output.",
+          "Custom domains can still live in a [`CNAME`](https://w7s.io/docs/custom-domains/) file, while DNS remains the ownership boundary. Branch deploys can preview runtime changes, not just static output.",
           "Keep GitHub Pages for purely static sites. Move to W7S when the site becomes an app."
         ]
       }

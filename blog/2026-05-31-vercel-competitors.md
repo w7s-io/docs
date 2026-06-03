@@ -75,7 +75,7 @@ W7S is better than Vercel when these are your priorities:
 - static assets and backend routes should deploy together;
 - storage, queues, schedules, workflows, vars, and secrets should be declared in the repo;
 - service-to-service calls should use repository identity;
-- custom domains should be visible in a `CNAME` file;
+- custom domains should be visible in a [`CNAME`](https://w7s.io/docs/custom-domains/) file;
 - the platform should have an open-source/self-hostable path.
 
 That is the difference. Vercel makes deployment feel easy by centralizing more behavior in Vercel. W7S makes deployment easier to audit by keeping the behavior in GitHub and the repository.

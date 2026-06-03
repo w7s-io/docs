@@ -169,7 +169,7 @@ The full mapping is in [URLs And Routing](/docs/urls-and-routing/). If the deplo
 
 The `w7s.cloud` URL is enough to test and share the site. For a production business site, use your own hostname.
 
-Add a `CNAME` file to the site output:
+Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to the site output:
 
 ```text title="CNAME"
 www.example.com

@@ -31,7 +31,7 @@ See [Project Layouts](./project-layouts.md#native-backend-function-shape) for th
 - W7S URL: [w7s-io.w7s.cloud/example-fullstack-ts](https://w7s-io.w7s.cloud/example-fullstack-ts/)
 - Custom domain: [fullstack-example.w7s.io](https://fullstack-example.w7s.io/)
 
-This example demonstrates a bundled Hono backend, a React frontend, and a `frontend/CNAME` custom-domain claim deployed together through W7S.
+This example demonstrates a bundled Hono backend, a React frontend, and a [`frontend/CNAME`](https://w7s.io/docs/custom-domains/) custom-domain claim deployed together through W7S.
 
 ## AI Joke Generator
 
@@ -231,7 +231,7 @@ The repo uses the same GitHub Actions deployment flow documented here: install d
     token: ${{ github.token }}
 ```
 
-Its `static/CNAME` file declares the canonical apex host and the `www` redirect host:
+Its [`static/CNAME`](https://w7s.io/docs/custom-domains/) file declares the canonical apex host and the `www` redirect host:
 
 ```text
 w7s.io

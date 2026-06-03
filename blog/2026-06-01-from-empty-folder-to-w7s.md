@@ -126,7 +126,7 @@ Once the static page works, you can add:
 
 - a frontend build step;
 - a backend route in `backend/index.ts`;
-- a custom domain with `CNAME`;
+- a custom domain with [`CNAME`](https://w7s.io/docs/custom-domains/);
 - storage bindings with `w7s.json`;
 - branch deploys for experiments.
 

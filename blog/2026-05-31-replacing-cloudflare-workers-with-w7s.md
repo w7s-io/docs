@@ -128,7 +128,7 @@ github.com/acme/docs -> https://acme.w7s.cloud/docs/
 github.com/acme/api  -> https://acme.w7s.cloud/api/
 ```
 
-Branch environments get branch-prefixed hosts. Custom domains can be declared in a `CNAME` file and authorized through DNS.
+Branch environments get branch-prefixed hosts. Custom domains can be declared in a [`CNAME`](https://w7s.io/docs/custom-domains/) file and authorized through DNS.
 
 That convention is not as flexible as direct Cloudflare routing, but it removes decisions most small apps do not need to make.
 

@@ -131,7 +131,7 @@ That is the key difference from many builder-first workflows: the repository is 
 
 ## Using a Real Domain
 
-Owning the code should not force you to keep a `w7s.cloud` address. You can add your own hostname with a `CNAME` file in the deployed output:
+Owning the code should not force you to keep a `w7s.cloud` address. You can add your own hostname with a [`CNAME`](https://w7s.io/docs/custom-domains/) file in the deployed output:
 
 ```text title="CNAME"
 www.example.com
@@ -154,7 +154,7 @@ Name: _w7s.example.com
 Value: acme/landing-page
 ```
 
-The full setup is documented in [Custom Domains](/docs/custom-domains/). For framework sites, also check [Project Layouts](/docs/project-layouts/) so your `CNAME` file lands in the deployed archive, such as `dist/CNAME`, `build/CNAME`, `out/CNAME`, or the repository root.
+The full setup is documented in [Custom Domains](/docs/custom-domains/). For framework sites, also check [Project Layouts](/docs/project-layouts/) so your [`CNAME`](https://w7s.io/docs/custom-domains/) file lands in the deployed archive, such as `dist/CNAME`, `build/CNAME`, `out/CNAME`, or the repository root.
 
 The same repo can later grow beyond static pages. W7S can deploy supported frontend outputs, native JavaScript or TypeScript backend routes, runtime values, storage bindings, queues, schedules, workflows, logs, and usage checks. That means an AI-generated brochure site can become a more capable app without changing the basic GitHub-first workflow.
 

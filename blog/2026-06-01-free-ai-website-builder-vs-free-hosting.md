@@ -134,7 +134,7 @@ Those routing rules are covered in [URLs And Routing](/docs/urls-and-routing/). 
 
 Use a custom domain when the site is ready for customers.
 
-Add a `CNAME` file to the deployed files:
+Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to the deployed files:
 
 ```text title="CNAME"
 www.example.com
@@ -149,7 +149,7 @@ Target: w7w.cloud
 Proxy: enabled
 ```
 
-W7S reads `CNAME` from the root or common build output folders like `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`. Add a TXT allowlist if you want to restrict future claims to your GitHub owner or exact repository:
+W7S reads [`CNAME`](https://w7s.io/docs/custom-domains/) from the root or common build output folders like `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`. Add a TXT allowlist if you want to restrict future claims to your GitHub owner or exact repository:
 
 ```text
 Type: TXT

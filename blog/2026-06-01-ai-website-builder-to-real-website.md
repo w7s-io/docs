@@ -166,13 +166,13 @@ That means a beginner does not need to choose a platform project name first. The
 
 The default `w7s.cloud` URL is useful immediately, but most business websites eventually use their own domain.
 
-To serve the same deployment from a non-`w7s.cloud` hostname, add a `CNAME` file to the deployed files:
+To serve the same deployment from a non-`w7s.cloud` hostname, add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to the deployed files:
 
 ```text title="CNAME"
 www.example.com
 ```
 
-W7S looks for `CNAME` in common deploy output locations, including the repository root, `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`.
+W7S looks for [`CNAME`](https://w7s.io/docs/custom-domains/) in common deploy output locations, including the repository root, `dist/`, `build/`, `out/`, `frontend/dist/`, `frontend/build/`, and `frontend/out/`.
 
 Then create DNS for that hostname and point it at W7S:
 

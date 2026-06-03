@@ -145,13 +145,13 @@ So the repo-first path gives you a live URL without creating a separate hosting 
 
 You can keep the W7S deployment workflow and still use a normal business domain.
 
-Add a `CNAME` file to the deployed output:
+Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to the deployed output:
 
 ```text title="CNAME"
 www.example.com
 ```
 
-Then create a DNS CNAME that points to W7S:
+Then create a DNS [CNAME](https://w7s.io/docs/custom-domains/) that points to W7S:
 
 ```text
 Type: CNAME
@@ -160,7 +160,7 @@ Target: w7w.cloud
 Proxy: enabled
 ```
 
-W7S reads `CNAME` from the root and common output folders, including `dist/`, `build/`, `out/`, and frontend variants. If multiple repositories could claim the same hostname, use a TXT allowlist:
+W7S reads [`CNAME`](https://w7s.io/docs/custom-domains/) from the root and common output folders, including `dist/`, `build/`, `out/`, and frontend variants. If multiple repositories could claim the same hostname, use a TXT allowlist:
 
 ```text
 Type: TXT
