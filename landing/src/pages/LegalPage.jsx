@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import Footer from "../components/landing/Footer";
 
-const UPDATED_AT = "May 28, 2026";
+const UPDATED_AT = "June 3, 2026";
 const COMPANY_NAME = "W7S SERVICES LLC";
 
 const CLOUDFLARE_REFERENCES = [
@@ -69,6 +69,8 @@ const TERMS_SECTIONS = [
       "Infringe intellectual property rights",
       "Engage in harassment, abuse, or harmful behavior",
       "Perform crypto mining, denial-of-service attacks, or unauthorized scanning",
+      "Attempt to exploit, test, or abuse another tenant, customer, end user, repository, workflow, domain, or deployment without authorization",
+      "Create or intentionally trigger cookie bombing, cross-site scripting, storage poisoning, credential theft, session fixation, header exhaustion, or similar attacks",
       "Bypass platform limits or engage in abusive automation",
       "Violate any applicable laws or regulations",
     ],
@@ -95,63 +97,87 @@ const TERMS_SECTIONS = [
     body: [
       "We store Your Content only temporarily as needed to provide the Service and delete it as soon as operationally feasible, retaining the minimum data necessary for functionality, security, and billing.",
       "We use reasonable technical and organizational measures to protect the Service. However, no system is completely secure.",
+      "You are responsible for the security of applications, code, dependencies, configuration, cookies, browser storage, authentication flows, authorization logic, headers, uploaded files, third-party scripts, and any data processing implemented by Your Content.",
+      "You are responsible for preventing vulnerabilities in Your Content, including cross-site scripting, cookie leakage, cookie bombing, storage poisoning, insecure redirects, injection, broken access control, unsafe file handling, exposed secrets, and insecure dependency or workflow configuration.",
+      "W7S may apply platform-level protections, filters, limits, monitoring, suspension, takedown, or other mitigations to protect the Service, other tenants, end users, or infrastructure. These measures do not make W7S responsible for securing Your Content or guarantee that attacks, vulnerabilities, data loss, unauthorized access, or service interruptions will not occur.",
       "Do not send sensitive regulated data, payment card information, health data, government IDs, etc. to the Service unless we have expressly agreed in writing.",
       "We use Stripe for billing and Simple Analytics for basic traffic statistics. These providers have their own privacy practices.",
     ],
   },
   {
-    title: "8. Third-Party Services",
+    title: "8. Tenant Isolation and Shared Domains",
+    body: [
+      "Hosted W7S deployments may be served from organization subdomains under shared parent domains such as w7s.cloud. Each organization subdomain is treated as a separate tenant and a separate trust boundary.",
+      "You must not set cookies, authentication state, authorization decisions, browser storage assumptions, or security controls that rely on trusting sibling subdomains or the shared parent domain.",
+      "You are responsible for using host-only cookies, appropriate SameSite, Secure, and HttpOnly attributes, safe browser storage practices, content security policies, origin checks, CSRF protections, upload handling, and other application-level controls suitable for your deployment.",
+      "W7S may remove, reject, rewrite, rate limit, or block traffic, headers, cookies, content, or deployments that appear to threaten tenant isolation, platform reliability, security, or legal compliance.",
+    ],
+  },
+  {
+    title: "9. Third-Party Services",
     body: [
       "The Service depends on third parties, including GitHub, infrastructure providers, DNS providers, and other service providers. We are not responsible for their performance or terms.",
     ],
   },
   {
-    title: "9. Indemnification",
+    title: "10. Security Incidents and Abuse Response",
+    body: [
+      "You must promptly notify W7S at security@w7s.io if you discover a vulnerability, compromise, abusive use, unauthorized access, data exposure, or security incident involving the Service, Your Content, your deployment, your users, your GitHub organization, or credentials used with W7S.",
+      "You are responsible for investigating, remediating, notifying affected parties, and complying with laws that apply to incidents caused by or involving Your Content, your repositories, your credentials, your users, your domains, your third-party services, or your configuration.",
+      "W7S may investigate suspected abuse or security issues and may preserve logs, disable deploys, suspend traffic, remove content, rotate or revoke platform credentials, notify infrastructure providers, notify affected parties, or cooperate with legal process when we believe it is necessary to protect the Service, users, third parties, or the public.",
+    ],
+  },
+  {
+    title: "11. Indemnification",
     body: [
       "You agree to indemnify, defend, and hold harmless W7S, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses, including reasonable legal fees, arising from:",
     ],
     list: [
       "Your Content",
       "Your use of the Service",
+      "Your applications, end users, data processing, privacy notices, security practices, authentication, authorization, cookies, browser storage, uploaded files, third-party scripts, domains, repositories, workflows, credentials, or dependencies",
+      "Any vulnerability, attack, compromise, data breach, data loss, service interruption, abuse report, takedown request, regulatory inquiry, or third-party claim caused by or relating to Your Content, your configuration, your users, or your use of the Service",
       "Your violation of these Terms or applicable laws",
     ],
   },
   {
-    title: "10. Disclaimers and Limitation of Liability",
+    title: "12. Disclaimers and Limitation of Liability",
     body: [
       'The Service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind.',
       "To the fullest extent permitted by law, W7S disclaims all warranties, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.",
+      "W7S does not warrant that the Service, any deployment, any tenant subdomain, any security control, or any third-party service will be uninterrupted, error-free, secure, immune from attack, free of vulnerabilities, or that data will not be lost, corrupted, disclosed, or accessed without authorization.",
+      "W7S is not responsible for vulnerabilities, attacks, data exposure, data loss, legal claims, end-user claims, outages, or damages arising from Your Content, your application code, your dependencies, your GitHub workflows, your credentials, your configuration, your domains, your users, third-party services, or misuse of the Service by you or others.",
       "W7S will not be liable for any indirect, incidental, special, consequential, or punitive damages. Our total aggregate liability shall not exceed the greater of USD $100 or the amount you paid to W7S in the six months preceding the claim.",
     ],
   },
   {
-    title: "11. Termination",
+    title: "13. Termination",
     body: [
       "You may stop using the Service at any time. We may suspend or terminate your access if you violate these Terms, create risk for the Service, or fail to pay charges.",
       "Upon termination, we may delete Your Content according to our data retention practices.",
     ],
   },
   {
-    title: "12. Governing Law and Dispute Resolution",
+    title: "14. Governing Law and Dispute Resolution",
     body: [
       "These Terms are governed by the laws of the State of Wyoming, USA, without regard to conflict of laws principles.",
       "Any disputes shall be resolved exclusively in the state or federal courts located in Sheridan, Wyoming.",
     ],
   },
   {
-    title: "13. DMCA and Copyright",
+    title: "15. DMCA and Copyright",
     body: [
       "We respect copyright and will respond to valid DMCA takedown notices. Please send notices to legal@w7s.io.",
     ],
   },
   {
-    title: "14. Changes to These Terms",
+    title: "16. Changes to These Terms",
     body: [
       'We may update these Terms from time to time. Continued use of the Service after changes constitutes acceptance of the new Terms. We will update the "Last updated" date above.',
     ],
   },
   {
-    title: "15. Contact",
+    title: "17. Contact",
     body: [
       "Questions about these Terms should be sent to: legal@w7s.io",
       COMPANY_NAME,
@@ -174,7 +200,7 @@ const PRIVACY_SECTIONS = [
     body: [
       "Website and docs data: page views, referrers, browser and device details, approximate location derived from IP address, interaction data, cookies, and similar analytics information.",
       "GitHub and deployment data: repository owner, repository name, branch, commit SHA, workflow run metadata, GitHub token verification data, deploy archive metadata, custom domain declarations, configuration files, and generated deployment URLs.",
-      "Runtime and operational data: request paths, status codes, timestamps, region or edge metadata, IP addresses, user agents, performance timings, error data, usage counters, bandwidth, storage, worker execution metrics, application logs, and abuse-prevention signals.",
+      "Runtime and operational data: request paths, status codes, timestamps, region or edge metadata, IP addresses, user agents, performance timings, error data, usage counters, bandwidth, storage, worker execution metrics, application logs, security events, cookie and header metadata, origin and referrer metadata, and abuse-prevention signals.",
       "Billing and contact data: email address, organization details, invoice data, and payment processor references if you use paid hosted features.",
     ],
   },
@@ -189,6 +215,7 @@ const PRIVACY_SECTIONS = [
     title: "4. Customer app data",
     body: [
       "Applications deployed on W7S may collect data from their own end users. The developer or organization that deploys the application is responsible for that application, its privacy notices, and its compliance obligations.",
+      "Developers and organizations are responsible for explaining to their own end users how their deployed applications use cookies, browser storage, logs, analytics, authentication, uploaded files, and third-party services.",
       "W7S processes customer app traffic and logs only as needed to operate, secure, route, debug, measure, and enforce limits for hosted deployments.",
     ],
   },
@@ -220,6 +247,7 @@ const PRIVACY_SECTIONS = [
     title: "8. Security",
     body: [
       "W7S uses reasonable safeguards to protect information, including access controls and operational monitoring. No system is perfectly secure, and you are responsible for securing your repositories, workflows, secrets, dependencies, and application code.",
+      "W7S may monitor, inspect, filter, block, or retain security-relevant metadata to detect abuse, investigate vulnerabilities, enforce tenant isolation, respond to attacks, and protect the Service.",
       "If you believe you found a security issue, contact security@w7s.io.",
     ],
   },
