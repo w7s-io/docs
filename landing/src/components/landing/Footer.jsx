@@ -204,7 +204,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between text-[11px] text-zinc-600 font-mono">
           <div>
-            © {new Date().getFullYear()} W7S SERVICES LLS · Open source under permissive license
+            © {new Date().getFullYear()} W7S SERVICES LLC · Open source under permissive license
           </div>
           <div className="flex flex-wrap items-center gap-4">
             <a href="/terms" className="transition-colors hover:text-amber-400">

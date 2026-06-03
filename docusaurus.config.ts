@@ -134,7 +134,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright ${new Date().getFullYear()} W7S SERVICES LLS`,
+      copyright: `Copyright ${new Date().getFullYear()} W7S SERVICES LLC`,
       links: [
         {
           title: 'Docs',

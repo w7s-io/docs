@@ -3,7 +3,7 @@ import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import Footer from "../components/landing/Footer";
 
 const UPDATED_AT = "May 28, 2026";
-const COMPANY_NAME = "W7S SERVICES LLS";
+const COMPANY_NAME = "W7S SERVICES LLC";
 
 const CLOUDFLARE_REFERENCES = [
   {
