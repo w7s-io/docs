@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Copy, Check, ArrowRight, Terminal, Zap, Cloud } from "lucide-react";
 import { toast } from "sonner";
-import W7SCloudLink from "./W7SCloudLink";
 
 const YAML = `name: Deploy
 
@@ -87,14 +86,12 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
-            The Cloud that <em className="text-amber-400 italic">just works</em>.
+            <em className="text-amber-400 italic">Instant cloud</em> infra for the agentic era
           </h1>
 
           <p className="mt-8 text-sm sm:text-base text-zinc-400 max-w-xl leading-relaxed">
-            GitHub Actions builds your app; W7S ships the deploy output to W7S
-            Live environments and serves it at a public URL. No W7S account,
-            card, or cloud setup required for <W7SCloudLink /> deploys.{" "}
-            <span className="text-zinc-100">Your deployment workflow <em className="italic">is</em> the control plane.</span>
+            Deploy new apps in one push; no auth, no card, no config,{" "}
+            <em className="text-zinc-100 italic">one commit away from shipping live</em>.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
