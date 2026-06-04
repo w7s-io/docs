@@ -12,7 +12,7 @@ const COMMANDS = [
 const OUTPUT = [
   "› Run actions/checkout@v5",
   "› Run w7s-io/w7s-cloud@v1",
-  "› Verifying GitHub token... ok",
+  "› Verifying GitHub OIDC claims... ok",
   "› Uploading deploy archive to W7S Cloud (12.4 kB)...",
   "› Provisioning edge runtime...",
   "› ✓ Deployed in 28.4s",

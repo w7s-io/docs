@@ -12,7 +12,7 @@ const QA = [
     a: (
       <>
         No for <W7SCloudLink /> deploys. GitHub Actions builds your app, then
-        the W7S action authenticates with your repo's GITHUB_TOKEN and uploads
+        the W7S action authenticates with GitHub Actions OIDC and uploads
         the deploy output for W7S to serve.
       </>
     ),

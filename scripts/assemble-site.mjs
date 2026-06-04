@@ -327,7 +327,7 @@ const writeLlmsTxt = (articles) => {
 
 > W7S is an open source deploy platform for GitHub-native apps. GitHub Actions builds the app, the W7S deploy action uploads the deploy output, and W7S serves it from hosted or self-hosted infrastructure.
 
-W7S is for static frontends, JavaScript/TypeScript native backends, and fullstack apps that should deploy directly from a repository workflow. W7S Cloud deploys can use the repository GITHUB_TOKEN instead of a separate W7S account, card, dashboard, or cloud setup. The deployment workflow is the control plane.
+W7S is for static frontends, JavaScript/TypeScript native backends, and fullstack apps that should deploy directly from a repository workflow. W7S Cloud deploys use GitHub Actions OIDC instead of a separate W7S account, card, dashboard, or cloud setup. The deployment workflow is the control plane.
 
 Important notes:
 - Hosted W7S Cloud deploys use the \`w7s-io/w7s-cloud@v1\` GitHub Action.

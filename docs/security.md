@@ -235,6 +235,7 @@ Minimal deploy permissions:
 
 ```yaml
 permissions:
+  id-token: write
   contents: read
 ```
 

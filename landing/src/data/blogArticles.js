@@ -33,6 +33,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -40,9 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: \${{ github.token }}`
+      - uses: w7s-io/w7s-cloud@v1`
       },
       {
         heading: "AI creates speed, GitHub creates ownership",
@@ -270,6 +269,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -277,9 +277,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: \${{ github.token }}`
+      - uses: w7s-io/w7s-cloud@v1`
       },
       {
         heading: "Keep what matters",
@@ -339,6 +337,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -346,9 +345,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: \${{ github.token }}`
+      - uses: w7s-io/w7s-cloud@v1`
       },
       {
         heading: "The beginner-friendly recommendation",
@@ -459,7 +456,7 @@ jobs:
         heading: "The difference is where control lives",
         paragraphs: [
           "Vercel is built around a polished hosted workflow: connect a project, let the platform watch the repo, and manage the rest from a product dashboard. That can feel effortless, especially when a team wants conventional previews and a familiar UI for every project.",
-          "W7S starts from a different premise. The repository and its GitHub Actions workflow should be enough to ship the app. The deploy token is the GitHub token, the archive comes from CI, and the public URL is derived from the GitHub owner and repository.",
+          "W7S starts from a different premise. The repository and its GitHub Actions workflow should be enough to ship the app. GitHub Actions OIDC is the deploy identity, the archive comes from CI, and the public URL is derived from the GitHub owner and repository.",
           "That changes the daily rhythm. A deployment is no longer a thing hidden behind project settings; it is a workflow file someone can review, copy, test, and change in the same pull request as the app."
         ]
       },
@@ -1002,7 +999,7 @@ jobs:
         heading: "Frontend hosting becomes app hosting",
         paragraphs: [
           "Vercel and Netlify made frontend deployment feel simple: connect a repository, let the platform build it, get a URL, and add functions when the site needs backend behavior.",
-          "W7S keeps the repository-first flow but moves the deploy control plane into GitHub Actions. The workflow builds the app, packages the archive, and deploys with the GitHub token.",
+          "W7S keeps the repository-first flow but moves the deploy control plane into GitHub Actions. The workflow builds the app, packages the archive, and deploys with GitHub Actions OIDC.",
           "That makes release behavior reviewable with the app instead of splitting it between source code and project dashboard settings."
         ]
       },
@@ -1039,7 +1036,7 @@ jobs:
       {
         heading: "Where W7S competes directly",
         paragraphs: [
-          "W7S competes when the team wants the repository to own the deployment contract. The deploy path is a GitHub Actions workflow, the deploy token is the GitHub token, and the app layout is documented in source rather than hidden behind project dashboard settings.",
+          "W7S competes when the team wants the repository to own the deployment contract. The deploy path is a GitHub Actions workflow, the deploy identity comes from GitHub Actions OIDC, and the app layout is documented in source rather than hidden behind project dashboard settings.",
           "That matters for production review. Build commands, deployment permissions, output directories, native backend entrypoints, environment behavior, storage bindings, queues, schedules, and workflows can all be reviewed beside the application code."
         ],
         sources: [
@@ -1598,7 +1595,7 @@ jobs:
         paragraphs: [
           "A W7S deploy begins in the place most teams already trust: GitHub Actions. The workflow checks out the code, runs the build, and hands the deployable output to the official action.",
           "The official action packages the deployable directory and posts it to the W7S deploy API with repository, branch, and commit headers.",
-          "W7S verifies the bearer token against GitHub repo access. If the token can read the repository, it can deploy that repository."
+          "W7S verifies the GitHub Actions OIDC token and requires its repository claim to match the target repository."
         ]
       },
       {

@@ -12,18 +12,18 @@ Repo events are also mirrored into owner-level and global aggregate rollups. Run
 
 ## Read usage
 
-Use the usage API with a GitHub token that can access the target repo:
+Use the usage API with a GitHub Actions OIDC token for the target repo:
 
 ```sh
 curl "https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=2026-05-26" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
 Include hourly platform records:
 
 ```sh
 curl "https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=2026-05-26&include=hourly" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
 By default, usage reads the `production` environment. Override the environment with either:
@@ -39,10 +39,10 @@ Read the effective limit policy without usage counters:
 
 ```sh
 curl "https://w7s.cloud/api/v1/limits/<owner>/<repo>" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
-The bearer token must be able to access the same GitHub repository.
+The bearer token must be a GitHub Actions OIDC token whose `repository` claim matches the same GitHub repository.
 
 ## Response
 
@@ -215,6 +215,7 @@ Issue notifications require this workflow permission:
 
 ```yaml
 permissions:
+  id-token: write
   contents: read
   issues: write
 ```
@@ -226,7 +227,6 @@ Daily quota checks can run the action in usage-check-only mode from a separate w
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
   with:
-    token: ${{ github.token }}
     usage-check-only: true
 ```
 

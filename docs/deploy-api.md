@@ -17,7 +17,7 @@ The request body is a zip archive.
 ## Headers
 
 ```text
-Authorization: Bearer <github-token>
+Authorization: Bearer <github-actions-oidc-token>
 x-github-repository: owner/repo
 x-github-sha: <commit-sha>
 x-github-branch: <branch-name>
@@ -37,14 +37,17 @@ The official GitHub Action writes these headers from `w7s.json` and the workflow
 
 ## Authentication
 
-W7S checks the token against GitHub:
+W7S authenticates deploys with a GitHub Actions OIDC JWT. The token must be issued by `https://token.actions.githubusercontent.com`, use `w7s.cloud`, `https://w7s.cloud`, or the default GitHub owner URL as the audience, and include a `repository` claim matching `x-github-repository`.
 
-```text
-GET https://api.github.com/repos/owner/repo
-Authorization: Bearer <github-token>
+Workflows must grant OIDC token access:
+
+```yaml
+permissions:
+  id-token: write
+  contents: read
 ```
 
-If GitHub returns `401`, `403`, or `404`, W7S rejects the deploy.
+Legacy GitHub API bearer tokens are still accepted for compatibility.
 
 ## Environments
 
@@ -209,14 +212,14 @@ W7S also exposes per-app daily usage rollups with daily limits and warning thres
 
 ```text
 GET https://w7s.cloud/api/v1/usage/<owner>/<repo>?date=YYYY-MM-DD
-Authorization: Bearer <github-token>
+Authorization: Bearer <github-actions-oidc-token>
 ```
 
 Effective limit policies are available without usage counters:
 
 ```text
 GET https://w7s.cloud/api/v1/limits/<owner>/<repo>
-Authorization: Bearer <github-token>
+Authorization: Bearer <github-actions-oidc-token>
 ```
 
 The token must have access to the GitHub repository, just like deploys. See [Usage Accounting](./usage-accounting.md) for the response shape and current limits.

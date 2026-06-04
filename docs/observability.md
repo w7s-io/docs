@@ -11,11 +11,11 @@ W7S exposes two observability streams:
 
 ## Analytics API
 
-Read per-repository platform analytics with a GitHub token that can access the repo:
+Read per-repository platform analytics with a GitHub Actions OIDC token for the repo:
 
 ```sh
 curl "https://w7s.cloud/api/v1/analytics/<owner>/<repo>?hours=24&limit=50" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
 Query parameters:
@@ -39,18 +39,18 @@ If Analytics Engine is not configured, the endpoint returns `configured: false` 
 
 ## Backend logs API
 
-Read recent per-repository backend logs with the same kind of GitHub token:
+Read recent per-repository backend logs with the same kind of GitHub Actions OIDC token:
 
 ```sh
 curl "https://w7s.cloud/api/v1/logs/<owner>/<repo>?hours=1&limit=100" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
 For example:
 
 ```sh
 curl "https://w7s.cloud/api/v1/logs/w7s-io/example-logs?hours=1&limit=20" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"
+  -H "Authorization: Bearer $GITHUB_ACTIONS_OIDC_TOKEN"
 ```
 
 Query parameters:
@@ -152,6 +152,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -160,7 +161,6 @@ jobs:
     steps:
       - uses: w7s-io/w7s-cloud@v1
         with:
-          token: ${{ github.token }}
           logs-check-only: true
           logs-hours: 1
           logs-limit: 25
@@ -170,7 +170,6 @@ The action prints a compact log table in the job output and adds a `W7S Logs` se
 
 ```yaml
 with:
-  token: ${{ github.token }}
   logs-check-only: true
   logs-kind: exception
   logs-limit: 10

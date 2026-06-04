@@ -227,8 +227,6 @@ The repo uses the same GitHub Actions deployment flow documented here: install d
 
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
 ```
 
 Its [`static/CNAME`](https://w7s.io/docs/custom-domains/) file declares the canonical apex host and the `www` redirect host:

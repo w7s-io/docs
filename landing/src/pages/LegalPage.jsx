@@ -199,7 +199,7 @@ const PRIVACY_SECTIONS = [
     title: "2. Information W7S collects",
     body: [
       "Website and docs data: page views, referrers, browser and device details, approximate location derived from IP address, interaction data, cookies, and similar analytics information.",
-      "GitHub and deployment data: repository owner, repository name, branch, commit SHA, workflow run metadata, GitHub token verification data, deploy archive metadata, custom domain declarations, configuration files, and generated deployment URLs.",
+      "GitHub and deployment data: repository owner, repository name, branch, commit SHA, workflow run metadata, GitHub Actions OIDC verification data, deploy archive metadata, custom domain declarations, configuration files, and generated deployment URLs.",
       "Runtime and operational data: request paths, status codes, timestamps, region or edge metadata, IP addresses, user agents, performance timings, error data, usage counters, bandwidth, storage, worker execution metrics, application logs, security events, cookie and header metadata, origin and referrer metadata, and abuse-prevention signals.",
       "Billing and contact data: email address, organization details, invoice data, and payment processor references if you use paid hosted features.",
     ],

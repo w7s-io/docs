@@ -12,7 +12,7 @@ The core idea is simple:
 1. Put an app in a GitHub repository.
 2. Add the W7S GitHub Action.
 3. Push to GitHub.
-4. W7S verifies the GitHub token, receives the deploy archive, and serves the app.
+4. W7S verifies the GitHub Actions OIDC token, receives the deploy archive, and serves the app.
 
 ## Minimal workflow
 
@@ -26,6 +26,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -35,8 +36,6 @@ jobs:
       - uses: actions/checkout@v5
 
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 ## What W7S can deploy

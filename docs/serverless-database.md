@@ -165,6 +165,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -182,8 +183,6 @@ jobs:
       - run: npm run check
 
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 ## When To Use It

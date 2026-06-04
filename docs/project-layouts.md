@@ -137,8 +137,6 @@ Install and bundle dependencies before the deploy action uploads the repository 
 - run: npm ci
 - run: npm run build
 - uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
 ```
 
 If the backend uses `hono` directly from `backend/index.ts`, make sure the build step bundles it into the deployed JavaScript output or keeps the dependency available in the uploaded backend files.

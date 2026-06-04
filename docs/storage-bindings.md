@@ -80,8 +80,6 @@ Names listed in `vars` and `secrets` are collected automatically by the official
   env:
     PUBLIC_API_KEY: ${{ vars.PUBLIC_API_KEY }}
     PRIVATE_API_KEY: ${{ secrets.PRIVATE_API_KEY }}
-  with:
-    token: ${{ github.token }}
 ```
 
 You can also pass names directly:
@@ -91,7 +89,6 @@ You can also pass names directly:
   env:
     PUBLIC_API_KEY: ${{ vars.PUBLIC_API_KEY }}
   with:
-    token: ${{ github.token }}
     vars: PUBLIC_API_KEY
 ```
 

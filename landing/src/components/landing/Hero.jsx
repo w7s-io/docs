@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -17,15 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: \${{ github.token }}`;
+      - uses: w7s-io/w7s-cloud@v1`;
 
 const W7S_ACTION = "w7s-io/w7s-cloud@v1";
 const W7S_STEP_LINES = new Set([
   `      - uses: ${W7S_ACTION}`,
-  "        with:",
-  "          token: ${{ github.token }}",
+  "  id-token: write",
 ]);
 
 function CodeLine({ line }) {

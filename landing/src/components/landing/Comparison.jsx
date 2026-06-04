@@ -11,7 +11,7 @@ const OPTIONS = [
     icon: Github,
     eyebrow: <W7SCloudLink className="text-amber-400 hover:text-amber-300" />,
     title: "Repo-native deploys",
-    desc: "Best when the GitHub repo should own the deploy path. The workflow uses GITHUB_TOKEN, W7S hosts the runtime, and usage tracking is built in.",
+    desc: "Best when the GitHub repo should own the deploy path. The workflow uses GitHub Actions OIDC, W7S hosts the runtime, and usage tracking is built in.",
     tone: "primary",
   },
   {

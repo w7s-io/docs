@@ -190,6 +190,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
   issues: write
 
@@ -201,7 +202,6 @@ jobs:
 
       - uses: w7s-io/w7s-cloud@v1
         with:
-          token: ${{ github.token }}
           deploy-url: https://example.com/api/v1/deploy
 ```
 
@@ -264,4 +264,4 @@ Keep these in place from day one:
 - the daily GitHub Actions quota-check workflow for app repos;
 - Telegram manager notifications for deploy warnings, deploy errors, app suspensions, and usage collection failures.
 
-Because deploys are still authorized with the app repo's GitHub token, you do not need a separate W7S account system for app owners. If the workflow token can read `owner/repo`, it can deploy `owner/repo` to your W7S cloud.
+Because deploys are still authorized with GitHub Actions OIDC, you do not need a separate W7S account system for app owners. If the workflow can request an OIDC token for `owner/repo`, it can deploy `owner/repo` to your W7S cloud.

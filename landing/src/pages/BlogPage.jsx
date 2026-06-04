@@ -103,7 +103,7 @@ const articleSources = {
   ],
   "why-deploy-from-github-actions-instead-of-a-cloud-dashboard": [
     source("GitHub Actions", "https://docs.github.com/en/actions"),
-    source("GITHUB_TOKEN", "https://docs.github.com/en/actions/tutorials/authenticate-with-github_token"),
+    source("GitHub Actions OIDC", "https://docs.github.com/en/actions/reference/security/oidc"),
     source("Deploy from GitHub", "/docs/deploy-from-github/"),
   ],
   "replacing-nats-with-w7s-components": [

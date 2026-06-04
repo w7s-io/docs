@@ -4,7 +4,7 @@ title: Deploy From GitHub
 description: Deploy a repository to W7S with GitHub Actions.
 ---
 
-W7S deploys are authorized with the repository's GitHub token. If the workflow token can read the repository, it can deploy that repository to W7S.
+W7S deploys are authorized with GitHub Actions OIDC. If the workflow can request an OIDC token for the repository, it can deploy that repository to W7S without a separate W7S API key.
 
 ## Add the workflow
 
@@ -20,6 +20,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -29,8 +30,6 @@ jobs:
       - uses: actions/checkout@v5
 
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 The action packages the repository, sends it to `https://w7s.cloud/api/v1/deploy`, and includes the repository, branch, and commit metadata.
@@ -47,7 +46,6 @@ After a successful deploy, the action checks that repo's W7S usage for the deplo
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
   with:
-    token: ${{ github.token }}
     usage-warnings-issue: false
 ```
 
@@ -74,6 +72,7 @@ on:
   push:
   workflow_dispatch:
 permissions:
+  id-token: write
   contents: read
 jobs:
   deploy:
@@ -82,7 +81,6 @@ jobs:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
         with:
-          token: ${{ github.token }}
           telegram-chat-id: "123456789"
           telegram-events: deploy_success,deploy_warning,deploy_error,app_suspended,payment_request
 ```
@@ -93,7 +91,6 @@ Add that chat id to the deploy step:
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
   with:
-    token: ${{ github.token }}
     telegram-chat-id: "123456789"
     telegram-events: deploy_success,deploy_warning,deploy_error,app_suspended,payment_request
 ```
@@ -116,8 +113,6 @@ steps:
   - run: npm ci
   - run: npm run build
   - uses: w7s-io/w7s-cloud@v1
-    with:
-      token: ${{ github.token }}
 ```
 
 ## Deploy a subdirectory
@@ -127,7 +122,6 @@ If your deployable output lives in a staging directory, use `working-directory`:
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
   with:
-    token: ${{ github.token }}
     working-directory: build
 ```
 
@@ -151,8 +145,6 @@ Then expose them to the deploy step:
   env:
     PUBLIC_API_KEY: ${{ vars.PUBLIC_API_KEY }}
     PRIVATE_API_KEY: ${{ secrets.PRIVATE_API_KEY }}
-  with:
-    token: ${{ github.token }}
 ```
 
 W7S exposes those names on the backend `env` object:

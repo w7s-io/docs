@@ -19,6 +19,7 @@ on:
     - cron: "17 9 * * *"
 
 permissions:
+  id-token: write
   contents: read
   issues: write
 
@@ -28,7 +29,6 @@ jobs:
     steps:
       - uses: w7s-io/w7s-cloud@v1
         with:
-          token: ${{ github.token }}
           usage-check-only: true
 ```
 
@@ -43,7 +43,6 @@ For non-production environments, pass the W7S environment explicitly:
 ```yaml
 - uses: w7s-io/w7s-cloud@v1
   with:
-    token: ${{ github.token }}
     usage-check-only: true
     environment: staging
 ```
@@ -51,3 +50,9 @@ For non-production environments, pass the W7S environment explicitly:
 Explicit environment values use the same DNS-safe normalization as branch deployments.
 
 See [Usage Accounting](./usage-accounting.md) for the tracked metrics, current limits, and hard enforcement behavior.
+
+## Best practices
+
+Keep deploy workflows simple: check out the repository before `w7s-io/w7s-cloud@v1` so push and manual runs always upload the current app archive.
+
+For scheduled quota checks, use a separate workflow with `usage-check-only: true` and omit `actions/checkout`. That workflow does not package or deploy the repo, so it does not need source files and should not include `if: github.event_name != 'schedule'` in the main deploy workflow.
