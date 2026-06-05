@@ -5,7 +5,7 @@ title: W7S
 description: Open source deploy platform for GitHub-native apps. Ship frontend apps and JavaScript/TypeScript backends from GitHub Actions to W7S Cloud, with no dashboard, card, or cloud setup required.
 ---
 
-W7S is an [open source](https://github.com/w7s-io/w7s-core) deployment platform managed directly from GitHub Actions workflows. The W7S core currently powers [W7S.cloud](https://w7s.cloud) but can also be [self-hosted](https://w7s.io/docs/self-host/).
+W7S is an [open source](https://github.com/w7s-io/w7s-core) deployment platform managed directly from GitHub Actions workflows. The [core](https://github.com/w7s-io/w7s-core) currently powers [W7S.cloud](https://w7s.cloud) and can also be [self-hosted](https://w7s.io/docs/self-host/). 
 
 The core idea is simple:
 
@@ -73,6 +73,10 @@ jobs:
   - [`w7s-io/example-logs`](https://github.com/w7s-io/example-logs)
 - Custom domains declared with a [`CNAME`](https://w7s.io/docs/custom-domains/) file.
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
+
+### Note:
+
+This documentation is also an example, deployed from [github](https://github.com/w7s-io/docs) using a [Github Actions workflow](https://github.com/w7s-io/docs/blob/main/.github/workflows/deploy.yml).
 
 ## W7S vs Others
 
