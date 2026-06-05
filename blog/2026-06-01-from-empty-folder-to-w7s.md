@@ -101,8 +101,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 Commit and push that file.

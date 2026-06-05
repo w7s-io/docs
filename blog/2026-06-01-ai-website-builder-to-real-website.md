@@ -124,8 +124,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 Commit that file and push it to GitHub. If the site is plain HTML, CSS, and JavaScript, this can be enough. If the AI generated a React, Vite, Astro, Docusaurus, or other framework project, build it in GitHub Actions before the W7S step; [Deploy From GitHub](/docs/deploy-from-github/#build-before-deploy) shows the build-before-deploy pattern.

@@ -91,8 +91,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 If the AI generated a framework project, add the install and build steps from [Build before deploy](/docs/deploy-from-github/#build-before-deploy) before the W7S action. If you are unsure where the built files should be, use [Project Layouts](/docs/project-layouts/).

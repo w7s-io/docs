@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 concurrency:
@@ -40,6 +41,5 @@ jobs:
       - name: Deploy to W7S
         uses: w7s-io/w7s-cloud@v1
         with:
-          token: ${{ github.token }}
           deploy-timeout: 300
           telegram-chat-id: "-5057216465"

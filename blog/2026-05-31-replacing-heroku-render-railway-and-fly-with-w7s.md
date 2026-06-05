@@ -208,8 +208,6 @@ W7S keeps one boring default:
 - run: npm ci
 - run: npm run build
 - uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
 ```
 
 If the app needs tests, migrations, type checks, generated files, or a custom build directory, put those steps in the workflow. The release behavior is code-reviewed with the app.

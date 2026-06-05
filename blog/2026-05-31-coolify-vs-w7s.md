@@ -89,8 +89,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 The runtime contract lives in `w7s.json`:

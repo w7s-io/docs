@@ -458,8 +458,6 @@ Pass them from GitHub Actions:
   env:
     PUBLIC_STRIPE_KEY: ${{ vars.PUBLIC_STRIPE_KEY }}
     STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-  with:
-    token: ${{ github.token }}
 ```
 
 Read them from `env` in the backend:

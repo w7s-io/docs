@@ -130,8 +130,6 @@ Kubernetes uses ConfigMaps and Secrets as API objects. W7S keeps common app conf
   env:
     PUBLIC_API_ORIGIN: ${{ vars.PUBLIC_API_ORIGIN }}
     STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-  with:
-    token: ${{ github.token }}
 ```
 
 The app reads values from `env`. Deploy summaries can count secrets without exposing secret values.
@@ -240,8 +238,6 @@ W7S keeps the default smaller:
 - run: npm ci
 - run: npm run build
 - uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
 ```
 
 For apps that fit the W7S runtime, this removes entire categories of release machinery.

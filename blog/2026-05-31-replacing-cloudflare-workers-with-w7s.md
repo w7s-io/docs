@@ -109,8 +109,6 @@ That is good for direct control. W7S makes GitHub Actions the default release bo
 - run: npm ci
 - run: npm run build
 - uses: w7s-io/w7s-cloud@v1
-  with:
-    token: ${{ github.token }}
 ```
 
 The deploy token is the GitHub token. The archive comes from CI. The platform verifies repository identity and publishes the app.

@@ -107,8 +107,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 The practical advantage is control. Build commands, checks, generated files, deploy directory, environment inputs, and deployment permissions are all normal workflow code.

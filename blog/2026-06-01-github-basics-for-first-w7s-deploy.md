@@ -70,8 +70,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 Commit the file.
@@ -108,8 +106,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 This says: check out the code, install Node, install dependencies, build the project, then deploy.

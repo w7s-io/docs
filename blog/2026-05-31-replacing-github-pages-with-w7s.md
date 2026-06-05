@@ -73,8 +73,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 If the build output is `dist/`, `build/`, or another supported output directory, W7S publishes the static assets.

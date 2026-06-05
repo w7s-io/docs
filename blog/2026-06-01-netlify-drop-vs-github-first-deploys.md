@@ -62,8 +62,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 For a plain HTML, CSS, and JavaScript site, that can be enough. For a project that needs a build, add install and build steps before the W7S action.

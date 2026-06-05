@@ -89,8 +89,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: w7s-io/w7s-cloud@v1
-        with:
-          token: ${{ github.token }}
 ```
 
 The workflow can run tests, generate assets, build multiple packages, run migrations, package a specific directory, and deploy only after the checks you choose.
