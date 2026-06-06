@@ -80,7 +80,7 @@ export default function Hero() {
         <div className="lg:col-span-7 fade-up" style={{ animationDelay: "0.05s" }}>
           <div className="inline-flex items-center gap-2 border border-white/10 px-3 py-1.5 mb-8 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
             <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
-            Open source · GitHub-native deploys
+            W7S = "WorkflowS"
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] text-white">
