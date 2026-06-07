@@ -17,6 +17,14 @@ const defaultDescription =
 const blogDescription =
   'Practical migration notes, storage patterns, and platform comparisons for teams that want GitHub-native deploys, explicit infrastructure, and a self-hostable path.';
 const feedPublishedAt = new Date('2026-05-30T00:00:00Z').toUTCString();
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'W7S SERVICES LLC',
+  url: canonicalOrigin,
+  logo: 'https://github.com/w7s-io.png',
+  sameAs: ['https://github.com/w7s-io'],
+};
 
 const assertDir = (dir, message) => {
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
@@ -44,6 +52,9 @@ const htmlAttrEscape = (value) =>
     .replace(/'/g, '&#39;');
 
 const siteUrl = (pathname) => `${canonicalOrigin}${pathname}`;
+
+const schemaScript = (schema) =>
+  `<script type="application/ld+json" data-w7s-schema="true">${htmlTextEscape(JSON.stringify(schema))}</script>`;
 
 const stripFrontMatter = (source) => source.replace(/^---\n[\s\S]*?\n---\n?/, '');
 
@@ -133,6 +144,7 @@ const patchHtmlMetadata = (html, metadata) => {
   const description = metadata.description || defaultDescription;
   const url = metadata.url || siteUrl('/');
   const type = metadata.type || 'website';
+  const schema = metadata.schema;
 
   let next = html;
   next = replaceOrInsertHeadTag(next, /<title>[\s\S]*?<\/title>/i, `<title>${htmlTextEscape(title)}</title>`);
@@ -181,6 +193,13 @@ const patchHtmlMetadata = (html, metadata) => {
     /<meta\s+name="twitter:url"\s+content="[^"]*"\s*\/?>/i,
     `<meta name="twitter:url" content="${htmlAttrEscape(url)}" />`
   );
+  if (schema) {
+    next = replaceOrInsertHeadTag(
+      next,
+      /<script\s+type="application\/ld\+json"\s+data-w7s-schema="true">[\s\S]*?<\/script>/i,
+      schemaScript(schema)
+    );
+  }
 
   return next;
 };
@@ -209,10 +228,12 @@ const readBlogArticles = () => {
 };
 
 const readDocsSitemapUrls = () => {
-  const docsSitemapPath = path.join(buildDir, 'docs', 'sitemap.xml');
-  if (!fs.existsSync(docsSitemapPath)) return [];
-  const source = fs.readFileSync(docsSitemapPath, 'utf8');
-  return [...source.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  const docsUrls = readDocsEntries().map((entry) => entry.url);
+  return [
+    ...docsUrls,
+    siteUrl('/docs/llms.txt'),
+    siteUrl('/docs/llms-full.txt'),
+  ];
 };
 
 const uniqueByLocation = (entries) => {
@@ -237,6 +258,34 @@ const writeRobotsTxt = () => {
   fs.writeFileSync(path.join(buildDir, 'robots.txt'), robots);
 };
 
+const writeDocsSitemapXml = () => {
+  const now = new Date().toISOString().slice(0, 10);
+  const entries = uniqueByLocation(readDocsSitemapUrls().map((loc) => ({
+    loc,
+    changefreq: 'weekly',
+    priority: loc === siteUrl('/docs/') ? '0.8' : '0.6',
+  })));
+  const urls = entries
+    .map(
+      (entry) => `  <url>
+    <loc>${xmlEscape(entry.loc)}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+  </url>`
+    )
+    .join('\n');
+
+  fs.writeFileSync(
+    path.join(buildDir, 'docs', 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`
+  );
+};
+
 const writeSitemapXml = (articles) => {
   const now = new Date().toISOString().slice(0, 10);
   const entries = uniqueByLocation([
@@ -256,8 +305,6 @@ const writeSitemapXml = (articles) => {
       changefreq: 'weekly',
       priority: loc === siteUrl('/docs/') ? '0.8' : '0.6',
     })),
-    {loc: siteUrl('/docs/llms.txt'), changefreq: 'weekly', priority: '0.6'},
-    {loc: siteUrl('/docs/llms-full.txt'), changefreq: 'weekly', priority: '0.5'},
   ]);
 
   const urls = entries
@@ -394,6 +441,86 @@ ${docsLinks}
   fs.writeFileSync(path.join(buildDir, 'docs', 'llms-full.txt'), `${fullDocs}\n`);
 };
 
+const pageSchema = ({type = 'WebPage', title, description, url}) => ({
+  '@context': 'https://schema.org',
+  '@type': type,
+  name: title,
+  headline: title,
+  description,
+  url,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'W7S',
+    url: canonicalOrigin,
+  },
+  publisher: organizationSchema,
+});
+
+const homeSchema = () => [
+  organizationSchema,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'W7S',
+    url: canonicalOrigin,
+    description: defaultDescription,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'W7S Cloud',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Cloudflare Workers',
+    url: canonicalOrigin,
+    description: defaultDescription,
+    publisher: organizationSchema,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  },
+];
+
+const blogSchema = (articles) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'W7S Blog',
+  description: blogDescription,
+  url: siteUrl('/blog/'),
+  publisher: organizationSchema,
+  blogPost: articles.map((article) => ({
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.summary,
+    url: siteUrl(`/blog/${article.slug}/`),
+  })),
+});
+
+const articleSchema = (article) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: article.title,
+  description: article.summary,
+  url: siteUrl(`/blog/${article.slug}/`),
+  mainEntityOfPage: siteUrl(`/blog/${article.slug}/`),
+  publisher: organizationSchema,
+});
+
+const patchRootPage = () => {
+  const indexPath = path.join(buildDir, 'index.html');
+  const html = fs.readFileSync(indexPath, 'utf8');
+  fs.writeFileSync(
+    indexPath,
+    patchHtmlMetadata(html, {
+      title: defaultTitle,
+      description: defaultDescription,
+      url: siteUrl('/'),
+      schema: homeSchema(),
+    })
+  );
+};
+
 assertDir(buildDir, 'Missing Docusaurus build directory. Run npm run build:docs first.');
 assertDir(landingBuildDir, 'Missing landing build directory. Run npm run build:landing first.');
 
@@ -410,27 +537,45 @@ try {
   fs.mkdirSync(buildDir, {recursive: true});
   fs.cpSync(landingBuildDir, buildDir, {recursive: true});
   fs.cpSync(docsTempDir, path.join(buildDir, 'docs'), {recursive: true});
+  fs.rmSync(path.join(buildDir, 'docs', 'blog'), {recursive: true, force: true});
 
   const articles = readBlogArticles();
+  patchRootPage();
   writeSpaRoute('status', {
     title: 'W7S Status',
     description: 'Current availability and component status for W7S hosted services.',
     url: siteUrl('/status'),
+    schema: pageSchema({
+      title: 'W7S Status',
+      description: 'Current availability and component status for W7S hosted services.',
+      url: siteUrl('/status'),
+    }),
   });
   writeSpaRoute('terms', {
     title: 'W7S Terms of Service',
     description: 'Terms for using W7S websites, documentation, hosted deployment services, APIs, and GitHub Actions integrations.',
     url: siteUrl('/terms'),
+    schema: pageSchema({
+      title: 'W7S Terms of Service',
+      description: 'Terms for using W7S websites, documentation, hosted deployment services, APIs, and GitHub Actions integrations.',
+      url: siteUrl('/terms'),
+    }),
   });
   writeSpaRoute('privacy', {
     title: 'W7S Privacy Policy',
     description: 'How W7S collects and uses information for w7s.io, documentation, hosted deployment services, APIs, and GitHub Actions integrations.',
     url: siteUrl('/privacy'),
+    schema: pageSchema({
+      title: 'W7S Privacy Policy',
+      description: 'How W7S collects and uses information for w7s.io, documentation, hosted deployment services, APIs, and GitHub Actions integrations.',
+      url: siteUrl('/privacy'),
+    }),
   });
   writeSpaRoute('blog', {
     title: 'W7S Blog - GitHub-native cloud alternatives',
     description: blogDescription,
     url: siteUrl('/blog/'),
+    schema: blogSchema(articles),
   });
   for (const article of articles) {
     writeSpaRoute(path.join('blog', article.slug), {
@@ -438,6 +583,7 @@ try {
       description: article.summary,
       url: siteUrl(`/blog/${article.slug}/`),
       type: 'article',
+      schema: articleSchema(article),
     });
   }
 
@@ -448,6 +594,7 @@ try {
   writeRobotsTxt();
   writeLlmsTxt(articles);
   writeDocsLlmsTxt();
+  writeDocsSitemapXml();
   writeSitemapXml(articles);
   writeRssFeed(articles);
 
