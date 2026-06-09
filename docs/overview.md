@@ -71,6 +71,8 @@ jobs:
   - [`w7s-io/example-logs`](https://github.com/w7s-io/example-logs)
 - Backend console and exception logs exposed through an authenticated API.
   - [`w7s-io/example-logs`](https://github.com/w7s-io/example-logs)
+- Read-only agent-facing infrastructure inspection for deployments, routes, resources, observability links, and safe next actions.
+  - [`Agent API`](./agent-api.md)
 - Custom domains declared with a [`CNAME`](https://w7s.io/docs/custom-domains/) file.
   - [`w7s-io/example-fullstack-ts`](https://github.com/w7s-io/example-fullstack-ts)
 

@@ -10,6 +10,7 @@ import {
   Workflow,
   Globe2,
   Terminal,
+  Bot,
 } from "lucide-react";
 
 const ITEMS = [
@@ -85,6 +86,12 @@ const ITEMS = [
     hint: "exceptions exposed",
     href: "/docs/observability/",
   },
+  {
+    icon: Bot,
+    label: "Agent API",
+    hint: "read-only infra state",
+    href: "/docs/agent-api/",
+  },
 ];
 
 export default function Capabilities() {
@@ -109,7 +116,7 @@ export default function Capabilities() {
           <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
             W7S deploys static frontends, JavaScript/TypeScript native backends, fullstack apps and the
             edge primitives that glue them together — serverless DB, Durable Objects,
-            queues, cron, workflows.
+            queues, cron, workflows, and agent-readable infrastructure state.
           </p>
         </div>
 
