@@ -55,4 +55,6 @@ See [Usage Accounting](./usage-accounting.md) for the tracked metrics, current l
 
 Keep deploy workflows simple: check out the repository before `w7s-io/w7s-cloud@v1` so push and manual runs always upload the current app archive.
 
+For custom domains, keep a single `CNAME` file with the production hostname, such as `app.example.com`. W7S uses that hostname on `main` and automatically derives branch hostnames such as `dev--app.example.com`, so branch previews stay isolated without editing `CNAME` per branch. Create DNS records for the branch-prefixed hostnames you plan to use.
+
 For scheduled quota checks, use a separate workflow with `usage-check-only: true` and omit `actions/checkout`. That workflow does not package or deploy the repo, so it does not need source files and should not include `if: github.event_name != 'schedule'` in the main deploy workflow.

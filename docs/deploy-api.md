@@ -56,7 +56,7 @@ By default:
 - `main` and `master` deploy to `production`.
 - Other branches deploy to a sanitized branch environment.
 
-Custom domains declared with `CNAME` are only honored from the `main` branch. Other branches ignore `CNAME` declarations and use their default branch environment URL.
+Custom domains declared with `CNAME` use the declared hostname on `main`. Other branches prefix the sanitized branch name to the first hostname label, so branch `dev` with `app.example.com` uses `dev--app.example.com`.
 
 Environment names are DNS-safe. W7S lowercases the branch or explicit override, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps the result at 63 characters.
 

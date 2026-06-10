@@ -75,7 +75,7 @@ https://github.com/sadasant/example
 
 ## Custom-domain only routing
 
-If your `main` branch deployment has a [`CNAME`](https://w7s.io/docs/custom-domains/) custom domain, you can disable the default
+If your deployment has a [`CNAME`](https://w7s.io/docs/custom-domains/) custom domain, you can disable the default
 `w7s.cloud` route:
 
 ```json title="w7s.json"
@@ -86,8 +86,8 @@ If your `main` branch deployment has a [`CNAME`](https://w7s.io/docs/custom-doma
 }
 ```
 
-When this is set on `main`, the deployment only serves through custom domains declared in
-[`CNAME`](https://w7s.io/docs/custom-domains/). The deploy fails if no custom domain attaches successfully. Non-`main` branch deploys ignore `CNAME` and keep using their default branch URL.
+When this is set, the deployment only serves through custom domains declared in
+[`CNAME`](https://w7s.io/docs/custom-domains/). The deploy fails if no custom domain attaches successfully. Branch deploys use branch-prefixed custom domains such as `dev--app.example.com`.
 
 Use this when a production app should have one canonical origin, such as:
 
