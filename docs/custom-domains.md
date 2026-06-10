@@ -4,14 +4,14 @@ title: Custom Domains
 description: Serve a W7S deployment from your own hostname.
 ---
 
-Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to claim one or more custom hostnames for a deployment.
+Add a [`CNAME`](https://w7s.io/docs/custom-domains/) file to claim one or more custom hostnames for a `main` branch deployment.
 
 ```text title="CNAME"
 fullstack-example.w7s.io
 www.fullstack-example.w7s.io
 ```
 
-W7S reads [`CNAME`](https://w7s.io/docs/custom-domains/) from the deployed archive. Common locations include:
+W7S reads [`CNAME`](https://w7s.io/docs/custom-domains/) from the deployed archive only when the GitHub branch is `main`. Non-`main` branch deploys ignore `CNAME` declarations and continue to use their default W7S branch URL. Common locations include:
 
 ```text
 CNAME
@@ -59,7 +59,7 @@ If multiple repositories try to claim the same hostname, the TXT allowlist decid
 
 ## Custom-domain only
 
-By default, W7S serves a deployment from both its default `w7s.cloud` URL and
+By default, W7S serves a `main` branch deployment from both its default `w7s.cloud` URL and
 any custom domain declared in [`CNAME`](https://w7s.io/docs/custom-domains/).
 
 For production apps that should only be reachable from your own hostname, add
@@ -73,9 +73,10 @@ For production apps that should only be reachable from your own hostname, add
 }
 ```
 
-With this setting, the deployment must include a [`CNAME`](https://w7s.io/docs/custom-domains/) file and at least one
+With this setting on `main`, the deployment must include a [`CNAME`](https://w7s.io/docs/custom-domains/) file and at least one
 custom domain must attach successfully. Requests to the default `w7s.cloud` URL
-will behave as if the deployment is not present.
+will behave as if the deployment is not present. Non-`main` branch deploys ignore
+`CNAME` and remain reachable from their default branch URL.
 
 This is recommended when you want one canonical origin for cookies, browser
 storage, CSP, redirects, and application security policy.
