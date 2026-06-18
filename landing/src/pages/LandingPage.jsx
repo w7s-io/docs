@@ -7,6 +7,7 @@ import Comparison from "../components/landing/Comparison";
 import Pricing from "../components/landing/Pricing";
 import LatestBlogPosts from "../components/landing/LatestBlogPosts";
 import TryItNow from "../components/landing/TryItNow";
+import Support from "../components/landing/Support";
 import FAQ from "../components/landing/FAQ";
 import AboutProject from "../components/landing/AboutProject";
 import Footer from "../components/landing/Footer";
@@ -24,6 +25,7 @@ export default function LandingPage() {
         <Pricing />
         <LatestBlogPosts />
         <TryItNow />
+        <Support />
         <FAQ />
         <AboutProject />
       </main>

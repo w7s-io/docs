@@ -1,4 +1,4 @@
-import { Github, BookOpen, Cloud } from "lucide-react";
+import { Github, BookOpen, Cloud, MessageCircle } from "lucide-react";
 import W7SCloudLink from "./W7SCloudLink";
 
 export default function Footer() {
@@ -57,6 +57,15 @@ export default function Footer() {
                   data-testid="footer-try"
                 >
                   Try it now
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/#support"
+                  className="hover:text-amber-400 transition-colors"
+                  data-testid="footer-support"
+                >
+                  Support
                 </a>
               </li>
               <li>
@@ -188,6 +197,15 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-amber-400 transition-colors font-mono"
               >
                 <BookOpen className="h-4 w-4" strokeWidth={1.5} /> docs
+              </a>
+              <a
+                href="https://discord.gg/qJefeyEGZx"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="footer-discord"
+                className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-amber-400 transition-colors font-mono"
+              >
+                <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> Discord support
               </a>
             </div>
           </div>
