@@ -15,6 +15,24 @@ const articleUrl = (article) => `/blog/${article.slug}/`;
 const source = (label, url) => ({ label, url });
 
 const articleSources = {
+  "w7s-vs-n8n-javascript-automation": [
+    source("n8n pricing", "https://n8n.io/pricing/"),
+    source("W7S schedules", "/docs/backend-schedules/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+    source("Backend AI", "/docs/backend-ai/"),
+  ],
+  "replace-n8n-cron-workflows-with-w7s": [
+    source("n8n pricing FAQ", "https://n8n.io/pricing/"),
+    source("W7S schedules", "/docs/backend-schedules/"),
+    source("Storage bindings", "/docs/storage-bindings/"),
+    source("Deploy from GitHub", "/docs/deploy-from-github/"),
+  ],
+  "ai-automation-with-w7s-bindings": [
+    source("n8n pricing", "https://n8n.io/pricing/"),
+    source("Backend AI", "/docs/backend-ai/"),
+    source("Backend queues", "/docs/backend-queues/"),
+    source("Backend workflows", "/docs/backend-workflows/"),
+  ],
   "ai-website-builder-to-real-website": [
     source("Lovable", "https://lovable.dev/"),
     source("Bolt.new", "https://bolt.new/"),

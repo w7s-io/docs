@@ -1,5 +1,172 @@
 export const blogArticles = [
   {
+    slug: "w7s-vs-n8n-javascript-automation",
+    title: "W7S vs n8n: JavaScript Automation Without the Workflow Tax",
+    category: "Alternatives",
+    readingTime: "8 min",
+    summary:
+      "n8n is excellent for visual workflows. W7S is the code-first alternative when the automation is really scheduled JavaScript with API calls, storage, queues, and AI.",
+    sections: [
+      {
+        heading: "Not every automation needs a canvas",
+        paragraphs: [
+          "n8n is a strong automation product for teams that need a visual editor, a large integration catalog, saved executions, and workflows that non-developers can inspect or adjust.",
+          "A lot of production automation is simpler than that: run every few minutes, call two or three APIs, transform JSON, ask an AI model to classify or summarize something, store the result, and notify a team.",
+          "For that class of work, W7S lets the workflow live as normal JavaScript or TypeScript. The schedule is declared in the repository, the backend route handles the job, and GitHub Actions deploys the whole thing."
+        ]
+      },
+      {
+        heading: "The cost difference starts with the unit of work",
+        paragraphs: [
+          "n8n Cloud plans are priced around monthly workflow executions. As of June 28, 2026, n8n's official annual cloud pricing page showed Starter at 20 EUR/month for 2.5K executions, Pro at 50 EUR/month for 10K executions, and Business at 667 EUR/month for 40K executions.",
+          "That execution model is reasonable for visual workflow software, but it makes frequent jobs worth watching. A workflow that runs every five minutes is roughly 8,600 to 8,900 executions per month before it has done anything complex.",
+          "W7S approaches the same work as an app runtime. You pay for the platform resources the app actually uses instead of maintaining a workflow-editor subscription just to run a small scheduled script."
+        ]
+      },
+      {
+        heading: "A cron job is often enough",
+        paragraphs: [
+          "A typical n8n scheduled workflow might use a cron trigger, an HTTP request node, a code node, an AI node, a filter, another HTTP request, and a notification node.",
+          "In W7S, that same flow can be one route. The route fetches records, calls AI, validates the output, writes the result, and returns a JSON summary. The schedule sits beside the code in `w7s.json`.",
+          "The result is automation that behaves like software: pull requests show the real diff, tests can run before deploy, secrets and bindings are explicit, rollbacks are Git-based, and `/health` can show the branch, commit hash, and deploy time."
+        ],
+        codePath: "w7s.json",
+        code: `{
+  "schedules": [
+    {
+      "cron": "*/5 * * * *",
+      "path": "/_w7s/schedules/enrich-leads"
+    }
+  ]
+}`
+      },
+      {
+        heading: "Where each tool wins",
+        paragraphs: [
+          "Choose n8n when non-developers need to edit workflows, the node catalog matters more than code control, saved execution history is central, or the workflow changes constantly through a visual UI.",
+          "Choose W7S when the automation is developer-owned, should be reviewed in GitHub, needs tests, uses custom state or queues, calls AI with careful validation, or runs often enough that execution-count pricing becomes the thing you optimize around.",
+          "The practical rule is simple: use n8n when the workflow belongs in a canvas. Use W7S when the workflow belongs in Git."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "replace-n8n-cron-workflows-with-w7s",
+    title: "Replace n8n Cron Workflows With W7S Scheduled JavaScript",
+    category: "Migration",
+    readingTime: "7 min",
+    summary:
+      "Cron workflows are the easiest n8n automations to replace with W7S because the core logic is usually a small JavaScript program.",
+    sections: [
+      {
+        heading: "Start with scheduled workflows",
+        paragraphs: [
+          "The easiest n8n workflows to move into W7S are cron workflows. They usually fetch data, transform it, check a condition, and push results somewhere else.",
+          "That shape maps cleanly to W7S: declare a schedule in `w7s.json`, implement a backend route, commit the repository, and let GitHub Actions deploy the app.",
+          "No workflow editor is required. W7S runs the platform scheduler, checks deployed app schedules, and dispatches due jobs to the route you declared."
+        ]
+      },
+      {
+        heading: "What is a good fit",
+        paragraphs: [
+          "Good candidates include API syncs, product monitors, daily digests, content refreshes, AI classification jobs, cleanup tasks, reminders, analytics reports, RSS checks, and static JSON updates.",
+          "Poor candidates are workflows that non-developers must edit every week, ad hoc processes that need visual debugging, or automations that depend heavily on a prebuilt no-code connector catalog your team does not want to maintain.",
+          "W7S is strongest when the automation is closer to backend code than business process modeling."
+        ]
+      },
+      {
+        heading: "The W7S schedule model",
+        paragraphs: [
+          "Each schedule has a five-field UTC cron expression and a backend path. When the schedule is due, W7S sends a request to that path with schedule metadata.",
+          "Your backend handles the request like any other route. There is no hidden workflow state machine unless you choose to build one.",
+          "Because the route is code, the job can use normal JavaScript modules, typed helpers, validation libraries, storage bindings, queues, workflows, service bindings, and AI bindings."
+        ],
+        codePath: "w7s.json",
+        code: `{
+  "schedules": [
+    {
+      "cron": "0 8 * * *",
+      "path": "/_w7s/schedules/daily-report"
+    },
+    {
+      "cron": "*/15 * * * *",
+      "path": "/_w7s/schedules/sync-products"
+    }
+  ]
+}`
+      },
+      {
+        heading: "Migration checklist",
+        paragraphs: [
+          "For each n8n cron workflow, identify the trigger schedule, external APIs, secrets, stored state, retry behavior, and expected failure mode.",
+          "Then ask two questions: does a non-developer need to edit this visually, and can the core logic be tested as a JavaScript function?",
+          "If the answer is developer-owned and testable, start by replacing one workflow. Keep the route small, add logs, expose `/health`, deploy from GitHub, and move the next workflow once the pattern is boring."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "ai-automation-with-w7s-bindings",
+    title: "AI Automation With W7S Bindings: An n8n Alternative for Developers",
+    category: "Backends",
+    readingTime: "8 min",
+    summary:
+      "Modern automation increasingly needs prompts, validation, retries, storage, and queues. W7S keeps that AI automation as code instead of canvas state.",
+    sections: [
+      {
+        heading: "AI changed automation",
+        paragraphs: [
+          "The old automation pattern was mostly deterministic: trigger, fetch, filter, transform, send. Visual workflow tools are good at that.",
+          "Modern automation often needs to classify an email, summarize a support conversation, extract products from a page, turn messy text into JSON, score a lead, draft a reply, or route a task to the right queue.",
+          "At that point, the workflow is no longer just plumbing. It is application logic, and application logic deserves code review, tests, typed helpers, retries, and deploy history."
+        ]
+      },
+      {
+        heading: "Why canvas AI workflows get messy",
+        paragraphs: [
+          "AI workflows start simple: a trigger, an LLM node, a parser, a branch, and an output node. Then production shows up.",
+          "You need schema validation, retry rules, prompt safety, caching, dedupe, output tracking, model comparisons, and a way to change prompts without breaking a business-critical path.",
+          "Visual nodes can express that logic, but they often hide the hard parts. W7S makes the hard parts explicit in JavaScript."
+        ]
+      },
+      {
+        heading: "Call AI from a scheduled backend",
+        paragraphs: [
+          "A W7S backend route can receive a `W7S_AI` service binding and a deployment-scoped token. The route can fetch candidate records, call AI, validate the response, persist results, enqueue follow-up work, and return a JSON summary.",
+          "The prompt lives in Git. The parser can be tested. The schedule path is explicit. The deployment has a commit hash. The logs point to the actual code that ran.",
+          "That makes W7S a strong replacement for developer-owned n8n AI workflows that run frequently or need more control than a visual canvas gives you."
+        ],
+        codePath: "backend/index.ts",
+        code: `async function classifyMessage(env, message) {
+  const response = await env.W7S_AI.fetch("https://w7s.internal/api/v1/ai/run", {
+    method: "POST",
+    headers: {
+      authorization: \`Bearer \${env.W7S_AI_TOKEN}\`,
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: "Return strict JSON with category, priority, and summary." },
+        { role: "user", content: JSON.stringify(message) }
+      ]
+    })
+  });
+
+  if (!response.ok) throw new Error(\`AI request failed: \${response.status}\`);
+  return response.json();
+}`
+      },
+      {
+        heading: "What you can build",
+        paragraphs: [
+          "W7S can cover a large share of developer-owned n8n use cases: AI email triage, lead scoring, daily sales summaries, support routing, product extraction, competitor monitoring, review sentiment, invoice categorization, CRM enrichment, and scheduled report generation.",
+          "For heavier jobs, a schedule can enqueue work, queue consumers can process records, and workflows can coordinate multi-step processes. The primitives stay code-first.",
+          "W7S does not make computation or AI free. It removes the workflow tax when the workflow should have been a scheduled JavaScript program."
+        ]
+      }
+    ]
+  },
+  {
     slug: "ai-website-builder-to-real-website",
     title: "AI Website Builder: Turn an AI-Generated Site Into a Real Website",
     category: "AI",
