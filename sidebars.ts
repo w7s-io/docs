@@ -15,6 +15,7 @@ const sidebars: SidebarsConfig = {
     'serverless-database',
     'backend-durable-objects',
     'backend-hyperdrive',
+    'backend-email',
     'backend-ai',
     'backend-rpc',
     'backend-queues',
