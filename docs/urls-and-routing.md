@@ -89,6 +89,10 @@ If your deployment has a [`CNAME`](https://w7s.io/docs/custom-domains/) custom d
 When this is set, the deployment only serves through custom domains declared in
 [`CNAME`](https://w7s.io/docs/custom-domains/). The deploy fails if no custom domain attaches successfully. Branch deploys use branch-prefixed custom domains such as `dev--app.example.com`.
 
+Custom domain entries can also include a path prefix, such as `example.com/app`.
+W7S routes matching requests to that deployment and strips `/app` before the app
+sees the request.
+
 Use this when a production app should have one canonical origin, such as:
 
 ```text

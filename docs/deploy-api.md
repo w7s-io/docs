@@ -58,6 +58,8 @@ By default:
 
 Custom domains declared with `CNAME` use the declared hostname on `main`. Other branches prefix the sanitized branch name to the first hostname label, so branch `dev` with `app.example.com` uses `dev--app.example.com`.
 
+`CNAME` entries may include a path prefix, such as `omattic.com/compress-video`. W7S attaches that deployment under the hostname path and strips the prefix before dispatching to the app. The deploy response reports the custom domain as the declared `host/path` string and uses it for `publicDeploymentUrl`.
+
 Environment names are DNS-safe. W7S lowercases the branch or explicit override, replaces runs of characters outside `a-z`, `0-9`, and `-` with `-`, collapses repeated hyphens, trims leading/trailing hyphens, and caps the result at 63 characters.
 
 Production deployments are served from the owner host:
