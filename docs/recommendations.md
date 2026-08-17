@@ -58,3 +58,17 @@ Keep deploy workflows simple: check out the repository before `w7s-io/w7s-cloud@
 For custom domains, keep a single `CNAME` file with the production hostname, such as `app.example.com`. W7S uses that hostname on `main` and automatically derives branch hostnames such as `dev--app.example.com`, so branch previews stay isolated without editing `CNAME` per branch. Create DNS records for the branch-prefixed hostnames you plan to use.
 
 For scheduled quota checks, use a separate workflow with `usage-check-only: true` and omit `actions/checkout`. That workflow does not package or deploy the repo, so it does not need source files and should not include `if: github.event_name != 'schedule'` in the main deploy workflow.
+
+## Platform alternatives
+
+If you are evaluating deployment platforms, start with the job to be done:
+
+- Use W7S when a GitHub repository should deploy as an app with frontend assets, native backend routes, storage, queues, schedules, workflows, and branch environments.
+- Consider Koyeb when the workload is infrastructure-shaped: APIs, services, containers, AI inference, GPUs, accelerators, or global serverless services.
+- Consider Elestio when the need is managed open-source software, such as databases, analytics tools, automation platforms, CMS products, or dev tools on managed VMs.
+
+For deeper comparisons, see:
+
+- [Koyeb vs W7S](/docs/blog/koyeb-vs-w7s/)
+- [Elestio vs W7S](/docs/blog/elestio-vs-w7s/)
+- [Koyeb vs Elestio vs W7S](/docs/blog/koyeb-elestio-w7s-comparison/)

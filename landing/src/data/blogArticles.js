@@ -1,5 +1,83 @@
 export const blogArticles = [
   {
+    slug: "koyeb-elestio-w7s-comparison",
+    title: "Koyeb vs Elestio vs W7S: Infrastructure, Managed Open Source, or GitHub-Native Apps?",
+    category: "Alternatives",
+    readingTime: "8 min",
+    summary:
+      "Koyeb, Elestio, and W7S solve different platform problems. Koyeb is infrastructure-first, Elestio is managed software-first, and W7S is repository-first.",
+    sections: [
+      {
+        heading: "Three different starting points",
+        paragraphs: [
+          "Koyeb, Elestio, and W7S are all alternatives to traditional cloud deployment, but they are not the same kind of platform.",
+          "Koyeb is strongest when the workload is a service, API, container, inference endpoint, or AI workload that needs managed infrastructure.",
+          "Elestio is strongest when the software already exists and the team wants managed open-source hosting with backups, SSL, updates, monitoring, and VM operations handled."
+        ]
+      },
+      {
+        heading: "Where W7S fits",
+        paragraphs: [
+          "W7S is strongest when the source of truth is a GitHub repository. The repository contains the app, the deployment workflow, and the runtime contract.",
+          "That makes W7S a better fit for static sites, TypeScript backends, webhook handlers, dashboards, queue consumers, schedules, workflows, and branch environments.",
+          "The simple rule: use Koyeb for infrastructure-shaped workloads, Elestio for managed open-source software, and W7S for repository-shaped custom apps."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "elestio-vs-w7s",
+    title: "Elestio vs W7S: Managed Open Source or GitHub-Native App Deployment?",
+    category: "Alternatives",
+    readingTime: "7 min",
+    summary:
+      "Elestio is a strong fit for managed open-source software. W7S is a better fit when the thing you are shipping is your own GitHub repository.",
+    sections: [
+      {
+        heading: "Managed catalog vs custom app platform",
+        paragraphs: [
+          "Elestio starts from a catalog of open-source software. You choose a tool, provider, and region, then Elestio handles setup and maintenance.",
+          "W7S starts from your repository. You commit frontend code, backend routes, storage bindings, queues, schedules, and workflows, then deploy through GitHub Actions.",
+          "Both reduce operations, but they reduce different kinds of operations."
+        ]
+      },
+      {
+        heading: "When W7S is the better fit",
+        paragraphs: [
+          "Use W7S when you are deploying your own application, not a packaged open-source product.",
+          "The app can include static assets, native backend routes, database bindings, file storage, queue consumers, scheduled jobs, durable workflows, internal RPC, custom domains, and branch environments.",
+          "Elestio can still be part of the stack as a managed dependency. W7S can deploy the custom app while Elestio runs a managed database, analytics tool, or automation tool."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "koyeb-vs-w7s",
+    title: "Koyeb vs W7S: Global Serverless Infrastructure or GitHub-Native Apps?",
+    category: "Alternatives",
+    readingTime: "7 min",
+    summary:
+      "Koyeb is strong for APIs, containers, inference, and global infrastructure. W7S is strong when the app should deploy from GitHub with built-in platform primitives.",
+    sections: [
+      {
+        heading: "Infrastructure-first vs repository-first",
+        paragraphs: [
+          "Koyeb is a serverless infrastructure platform for services, APIs, applications, databases, and AI workloads. Its public positioning emphasizes CPUs, GPUs, accelerators, global regions, and intensive applications.",
+          "W7S is a GitHub-native deployment platform. Its core unit is the repository, branch, and environment, with GitHub Actions owning deployment.",
+          "That difference matters because it changes what every project has to think about."
+        ]
+      },
+      {
+        heading: "The practical choice",
+        paragraphs: [
+          "Choose Koyeb when the workload needs infrastructure flexibility, container support, AI inference, GPU or accelerator options, or global service placement.",
+          "Choose W7S when the app can be static assets plus TypeScript backend routes, storage bindings, queues, schedules, workflows, and internal RPC.",
+          "Koyeb gives more infrastructure surface. W7S removes more app deployment decisions when the repository fits the W7S runtime."
+        ]
+      }
+    ]
+  },
+  {
     slug: "w7s-vs-n8n-javascript-automation",
     title: "W7S vs n8n: JavaScript Automation Without the Workflow Tax",
     category: "Alternatives",
