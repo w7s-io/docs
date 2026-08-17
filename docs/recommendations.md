@@ -69,6 +69,6 @@ If you are evaluating deployment platforms, start with the job to be done:
 
 For deeper comparisons, see:
 
-- [Koyeb vs W7S](/blog/koyeb-vs-w7s/)
-- [Elestio vs W7S](/blog/elestio-vs-w7s/)
-- [Koyeb vs Elestio vs W7S](/blog/koyeb-elestio-w7s-comparison/)
+- [Koyeb vs W7S](https://w7s.io/blog/koyeb-vs-w7s/)
+- [Elestio vs W7S](https://w7s.io/blog/elestio-vs-w7s/)
+- [Koyeb vs Elestio vs W7S](https://w7s.io/blog/koyeb-elestio-w7s-comparison/)
