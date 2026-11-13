@@ -59,7 +59,7 @@ const STEPS = [
         >
           CNAME file
         </a>{" "}
-        and point DNS at w7w.cloud.
+        and point DNS at w7s.cloud.
       </>
     ),
     code: "https://<your-github>.w7s.cloud/nodepad\ncustom.domain.com + CNAME file -> w7s.cloud",

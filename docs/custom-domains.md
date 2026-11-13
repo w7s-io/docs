@@ -42,7 +42,7 @@ For a subdomain, create a proxied [CNAME](https://w7s.io/docs/custom-domains/):
 ```text
 Type: CNAME
 Name: fullstack-example
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 
@@ -51,7 +51,7 @@ For a branch custom domain, create the branch-prefixed DNS record too:
 ```text
 Type: CNAME
 Name: dev--fullstack-example
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 
@@ -60,7 +60,7 @@ For a path route such as `omattic.com/compress-video`, point only the hostname a
 ```text
 Type: CNAME
 Name: @
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 

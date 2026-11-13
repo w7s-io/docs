@@ -177,7 +177,7 @@ Then create DNS for that hostname and point it at W7S:
 ```text
 Type: CNAME
 Name: www
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 

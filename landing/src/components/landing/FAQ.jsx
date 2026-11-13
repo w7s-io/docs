@@ -34,7 +34,7 @@ const QA = [
         >
           CNAME file
         </a>{" "}
-        in the deploy plus DNS pointing at w7w.cloud.
+        in the deploy plus DNS pointing at w7s.cloud.
       </>
     ),
   },

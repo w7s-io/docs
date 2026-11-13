@@ -154,7 +154,7 @@ Then create a DNS [CNAME](https://w7s.io/docs/custom-domains/) that points to W7
 ```text
 Type: CNAME
 Name: www
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 

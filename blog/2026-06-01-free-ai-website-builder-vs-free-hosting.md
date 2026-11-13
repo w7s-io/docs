@@ -145,7 +145,7 @@ Then add DNS for that hostname:
 ```text
 Type: CNAME
 Name: www
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 

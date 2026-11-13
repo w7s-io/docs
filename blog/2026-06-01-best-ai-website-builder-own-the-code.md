@@ -142,7 +142,7 @@ Then point that hostname to W7S in DNS:
 ```text
 Type: CNAME
 Name: www
-Target: w7w.cloud
+Target: w7s.cloud
 Proxy: enabled
 ```
 
